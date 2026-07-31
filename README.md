@@ -1,8 +1,8 @@
 # Malay Tech Journal
 
-Source for **Malay Tech Journal** — a Bahasa Malaysia technical blog
-covering cloud security, AI guardrail engineering, and military
-AI/defence topics for Malaysian engineers.
+Source for **Malay Tech Journal** — a bilingual language but mainly
+Bahasa Melayu technical blog covering cloud security, AI guardrail
+engineering, and military AI/defence topics for Malaysian engineers.
 
 This project also serves as a case study in local harness agent
 capability — testing whether a fully static, production-ready web
