@@ -41,7 +41,7 @@ deployment pipeline.
 
 ```mermaid
 flowchart TD
-    A[💻 Local Development<br/>Debian/WSL + AI coding assistant] --> B
+    A[💻 Local Development<br/>Debian/WSL + Local Harness Agent] --> B
 
     subgraph B[Build & Styling Stack]
         direction LR
