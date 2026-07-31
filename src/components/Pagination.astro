@@ -1,0 +1,117 @@
+---
+/**
+ * Pagination — single source of truth for page-number navigation.
+ *
+ * Shared component used by:
+ *   - src/pages/[...locale]/index.astro           (homepage)
+ *   - src/pages/[...locale]/page/[page].astro     (page 2+)
+ *   - any future paginated route (categories with many posts, etc.)
+ *
+ * Markup uses the same .mtj-pagination / .mtj-page-btn classes as the
+ * rest of the design system (see global.css). Replaces the previous
+ * daisyUI-based `btn` / `join` / `btn-ghost` / `btn-primary` classes
+ * which no longer resolve after daisyUI removal.
+ *
+ * Behavior:
+ *   - Shows Prev (←) and Next (→) buttons flanking the page numbers.
+ *   - Prev disabled on page 1; Next disabled on last page.
+ *   - Current page uses the filled `.mtj-page-btn--active` style.
+ *   - Renders a compact window of page numbers: first, current±1, last,
+ *     with "…" ellipses when there is a gap. For ≤7 pages, shows all.
+ *   - Returns null when there is only one page.
+ */
+import type { Locale } from '../config';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  /** Function that returns the URL for a given page number. */
+  // eslint-disable-next-line no-unused-vars
+  hrefForPage: (page: number) => string;
+  locale: Locale;
+}
+
+const { currentPage, lastPage, hrefForPage, locale } = Astro.props;
+const t = useTranslations(locale);
+
+if (lastPage <= 1) return null;
+
+const prev = currentPage > 1;
+const next = currentPage < lastPage;
+
+// ── Compact paginator: first, current-1, current, current+1, last (with ellipses) ──
+const numbers: Array<number | '…'> = [];
+const push = (n: number | '…') => {
+  if (numbers[numbers.length - 1] !== n) numbers.push(n);
+};
+
+if (lastPage <= 7) {
+  // Small total: show every page number, no ellipses.
+  for (let n = 1; n <= lastPage; n++) push(n);
+} else {
+  push(1);
+  if (currentPage - 1 > 2) push('…');
+  for (let p = Math.max(2, currentPage - 1); p <= Math.min(lastPage - 1, currentPage + 1); p++) {
+    push(p);
+  }
+  if (currentPage + 1 < lastPage - 1) push('…');
+  push(lastPage);
+}
+---
+
+<nav class="mtj-pagination" aria-label={`${t('pagination.page')} ${currentPage} ${t('pagination.of')} ${lastPage}`}>
+  {prev ? (
+    <a
+      rel="prev"
+      href={hrefForPage(currentPage - 1)}
+      class="mtj-page-btn mtj-page-btn--nav"
+      aria-label={t('pagination.previous')}
+    >
+      <span aria-hidden="true">←</span>
+      <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
+    </a>
+  ) : (
+    <span
+      class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled"
+      aria-disabled="true"
+    >
+      <span aria-hidden="true">←</span>
+      <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
+    </span>
+  )}
+
+  {numbers.map((n) =>
+    n === '…' ? (
+      <span class="mtj-page-btn mtj-page-btn--ellipsis" aria-hidden="true">…</span>
+    ) : (
+      <a
+        href={hrefForPage(n)}
+        aria-current={n === currentPage ? 'page' : undefined}
+        class={`mtj-page-btn ${n === currentPage ? 'mtj-page-btn--active' : ''}`}
+      >
+        {n}
+      </a>
+    ),
+  )}
+
+  {next ? (
+    <a
+      rel="next"
+      href={hrefForPage(currentPage + 1)}
+      class="mtj-page-btn mtj-page-btn--nav"
+      aria-label={t('pagination.next')}
+    >
+      <span class="mtj-page-btn__label">{t('pagination.next')}</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  ) : (
+    <span
+      class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled"
+      aria-disabled="true"
+    >
+      <span class="mtj-page-btn__label">{t('pagination.next')}</span>
+      <span aria-hidden="true">→</span>
+    </span>
+  )}
+</nav>

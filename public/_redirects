@@ -1,0 +1,11 @@
+/ms/blog/ground-truth/* /posts/gt-:splat 301
+/en/blog/ground-truth/* /en/posts/gt-:splat 301
+/ms/blog/military-ai-defence/* /posts/mad-:splat 301
+/en/blog/military-ai-defence/* /en/posts/mad-:splat 301
+/ms/blog/ai-guardrail-engineering/* /posts/age-:splat 301
+/en/blog/ai-guardrail-engineering/* /en/posts/age-:splat 301
+/ms/blog/cloud-security-engineering/* /posts/cse-:splat 301
+/en/blog/cloud-security-engineering/* /en/posts/cse-:splat 301
+/ms/blog/* /posts/:splat 301
+/en/blog/* /en/posts/:splat 301
+/blog/* /posts/:splat 301

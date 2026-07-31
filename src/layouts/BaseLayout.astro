@@ -1,0 +1,172 @@
+---
+import '../styles/global.css';
+
+import { Font } from 'astro:assets';
+import Topbar from '../components/Topbar.astro';
+import Footer from '../components/Footer.astro';
+import Panel from '../components/Panel.astro';
+import SEO from '../components/SEO.astro';
+import BackToTop from '../components/islands/BackToTop.astro';
+import faviconImg from '../assets/images/site/favicon.svg';
+import { SITE, type Locale } from '../config';
+import { detectLocale, htmlLang, useTranslations, stripLocale, withBase } from '../i18n/utils';
+import { buildSeo, type SeoMeta } from '../utils/seo';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  /** Logical path WITHOUT locale prefix (used for hreflang). */
+  pathWithoutLocale?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: string[];
+  /** Hide the right panel (e.g. on post pages where TOC takes its place). */
+  hidePanel?: boolean;
+  /** Homepage layout flag (uses mtj-page grid with bento). */
+  homepage?: boolean;
+  /** Constrain main content width (used by Pages like About/404). */
+  narrow?: boolean;
+  /**
+   * `flush` = the page handles its own padding (e.g. via `.mtj-page`).
+   * Skips the default `py-6 lg:pr-2` on `<main>` so the inner wrapper
+   * has full control over its own spacing — matches the homepage, which
+   * uses the same pattern (it bypasses `<main>` entirely with `homepage`).
+   */
+  flush?: boolean;
+  /** Breadcrumb segments shown in the topbar. */
+  crumbs?: Array<{ label: string; href?: string }>;
+  /** Pre-built SEO meta override. */
+  seo?: SeoMeta;
+  /**
+   * Locales for which a translation of the current page actually
+   * exists. Used to limit the language switcher to working links and
+   * to scope hreflang alternates. Defaults to all `SITE.locales`.
+   */
+  availableLocales?: readonly Locale[];
+}
+
+const {
+  title,
+  description,
+  ogImage,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  tags,
+  hidePanel = false,
+  homepage = false,
+  narrow = false,
+  flush = false,
+  crumbs = [],
+  seo,
+  availableLocales,
+} = Astro.props;
+
+const locale: Locale = detectLocale(Astro.url.pathname);
+const t = useTranslations(locale);
+const lang = htmlLang(locale);
+
+const pathWithoutLocale = Astro.props.pathWithoutLocale ?? stripLocale(Astro.url.pathname);
+const meta: SeoMeta =
+  seo ??
+  buildSeo({
+    title,
+    description,
+    pathWithoutLocale,
+    fullPath: Astro.url.pathname,
+    locale,
+    ogImage,
+    type,
+    publishedTime,
+    modifiedTime,
+    tags,
+    availableLocales,
+  });
+---
+
+<!doctype html>
+<html lang={lang} data-theme="chirpy-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0f1117" />
+    <link rel="icon" type="image/svg+xml" href={withBase(faviconImg.src)} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.title} (EN)`}
+      href={withBase('/rss.xml')}
+    />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.title} (MS)`}
+      href={withBase('/ms/rss.xml')}
+    />
+    <SEO meta={meta} />
+    {/* Custom fonts configured via Astro Fonts API (see astro.config.mjs).
+       Preload the two above-the-fold display fonts: Space Grotesk (nav-title,
+       bento/featured/card titles) and Inter (body text). JetBrains Mono is
+       used in panels, search, and post body inline code — preload it too. */}
+    <Font cssVariable="--font-space-grotesk" preload />
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-jetbrains-mono" preload />
+    {/* No ClientRouter — full page navigation. No view transitions, no flicker.
+       No theme toggle — site is dark-only by design; all colors come from
+       the single --mtj-* token set in :root. */}
+  </head>
+
+  <body>
+    <a
+      href="#main"
+      class="focus:bg-mtj-accent focus:text-mtj-accent-content sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:px-3 focus:py-2"
+    >
+      {t('site.skipToContent')}
+    </a>
+
+    <div class="chirpy-main-wrapper">
+      <div class="chirpy-shell">
+        <Topbar locale={locale} crumbs={crumbs} currentPath={pathWithoutLocale} availableLocales={availableLocales} />
+
+        {homepage ? (
+          // Homepage provides its own mtj-page + main structure.
+          <>
+            <slot />
+          </>
+        ) : (
+          <div class="flex flex-1 gap-10">
+            <div class="flex min-w-0 flex-1 flex-col">
+              <main
+                id="main"
+                aria-label="Main Content"
+                class:list={[
+                  'min-w-0 flex-1',
+                  flush ? '' : 'py-6 lg:pr-2',
+                  narrow ? 'mx-auto w-full max-w-3xl' : '',
+                ]}
+              >
+                <slot />
+              </main>
+            </div>
+
+            {
+              !hidePanel && (
+                <aside class="chirpy-panel-rail" aria-label="Sidebar widgets">
+                  <Panel locale={locale} />
+                  <slot name="aside-bottom" />
+                </aside>
+              )
+            }
+          </div>
+        )}
+
+        <Footer locale={locale} />
+      </div>
+    </div>
+
+    <BackToTop />
+  </body>
+</html>

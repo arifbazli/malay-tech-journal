@@ -1,0 +1,275 @@
+---
+import { SITE, type Locale } from '../config';
+import { formatDate, isoDate } from '../i18n/utils';
+import { type Post, postPath, heroImage, shouldShowHero } from '../utils/posts';
+import SmartImage from './SmartImage.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  post: Post;
+  locale: Locale;
+  prioritizeLcp?: boolean;
+  /**
+   * Layout variant:
+   *   featured    — hero card: full-width, large image top, oversized title
+   *   grid        — 2-col grid: medium image, medium title
+   *   compact     — text-only horizontal row
+   *   series-card — series browser tile with article count
+   *   default     — original horizontal Chirpy card
+   */
+  variant?: 'featured' | 'grid' | 'compact' | 'series-card' | 'default';
+  /** Number of articles in this series (used by series-card variant). */
+  seriesCount?: number;
+}
+
+const { post, locale, prioritizeLcp = false, variant = 'default', seriesCount } = Astro.props;
+const href = postPath(post);
+const heroAsset = heroImage(post);
+const hasImage = Boolean(heroAsset) && shouldShowHero(post);
+const heroAlt = post.data.heroImageAlt ?? '';
+const isDynamicCardHeight = post.data.dynamicPostCardHeight ?? SITE.dynamicPostCardHeight;
+
+const postType = (post.data as any).postType as string | undefined;
+const postTypeLabel =
+  postType === 'essay'        ? (locale === 'ms' ? 'Esei' : 'Essay') :
+  postType === 'case-study'   ? (locale === 'ms' ? 'Kajian Kes' : 'Case Study') :
+  postType === 'series-index' ? (locale === 'ms' ? 'Siri' : 'Series') :
+  postType === 'field-note'   ? (locale === 'ms' ? 'Nota Lapangan' : 'Field Note') :
+  undefined;
+
+const dateStr = formatDate(post.data.pubDate, locale, {
+  year: 'numeric', month: 'short', day: 'numeric',
+});
+---
+
+{variant === 'featured' && (
+  <article class="bento-featured">
+    <a href={href} class="bento-featured__link">
+      {hasImage && (
+        <div class="bento-featured__img-wrap">
+          <SmartImage
+            src={heroAsset!}
+            alt={heroAlt}
+            class="bento-featured__img"
+            loading={prioritizeLcp ? 'eager' : 'lazy'}
+            fetchpriority={prioritizeLcp ? 'high' : 'auto'}
+            widths={[800, 1200, 1600]}
+            sizes="(max-width: 767px) 100vw, 60vw"
+            quality={80}
+          />
+          <div class="bento-featured__img-overlay" />
+        </div>
+      )}
+      <div class="bento-featured__body">
+        <div class="bento-featured__eyebrow">
+          {postType && postTypeLabel && (
+            <span class="post-type-badge" data-type={postType}>
+              <span class="post-type-dot" />
+              {postTypeLabel}
+            </span>
+          )}
+          {post.data.categories[0] && (
+            <span class="eyebrow-label">{post.data.categories[0]}</span>
+          )}
+        </div>
+        <h2 class="bento-featured__title">{post.data.title}</h2>
+        {post.data.description && (
+          <p class="bento-featured__desc">{post.data.description}</p>
+        )}
+        <div class="bento-featured__meta">
+          <span class="inline-flex items-center gap-1">
+            <Icon name="lucide:calendar" width={12} height={12} />
+            <time datetime={isoDate(post.data.pubDate)}>{dateStr}</time>
+          </span>
+          <span class="bento-featured__read-more">
+            {locale === 'ms' ? 'Baca sekarang' : 'Read now'}
+            <Icon name="lucide:arrow-right" width={13} height={13} />
+          </span>
+        </div>
+      </div>
+    </a>
+  </article>
+)}
+
+{variant === 'grid' && (
+  <article class="bento-grid-card">
+    <a href={href} class="bento-grid-card__link">
+      {hasImage && (
+        <div class="bento-grid-card__img-wrap">
+          <SmartImage
+            src={heroAsset!}
+            alt={heroAlt}
+            class="bento-grid-card__img"
+            loading="lazy"
+            widths={[400, 800]}
+            sizes="(max-width: 767px) 100vw, 50vw"
+            quality={75}
+          />
+        </div>
+      )}
+      <div class="bento-grid-card__body">
+        {postType && postTypeLabel && (
+          <span class="post-type-badge" data-type={postType}>
+            <span class="post-type-dot" />
+            {postTypeLabel}
+          </span>
+        )}
+        <h2 class="bento-grid-card__title">{post.data.title}</h2>
+        {post.data.description && (
+          <p class="bento-grid-card__desc">{post.data.description}</p>
+        )}
+        <div class="bento-grid-card__meta">
+          <Icon name="lucide:calendar" width={11} height={11} />
+          <time datetime={isoDate(post.data.pubDate)}>{dateStr}</time>
+          {post.data.categories[0] && (
+            <>
+              <span class="opacity-30">·</span>
+              <span>{post.data.categories[0]}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </a>
+  </article>
+)}
+
+{variant === 'compact' && (
+  <article class="bento-compact">
+    <a href={href} class="bento-compact__link">
+      <div class="bento-compact__body">
+        <div class="bento-compact__top">
+          {postType && postTypeLabel && (
+            <span class="post-type-badge" data-type={postType}>
+              <span class="post-type-dot" />
+              {postTypeLabel}
+            </span>
+          )}
+          <span class="eyebrow-label">{post.data.categories[0]}</span>
+        </div>
+        <h2 class="bento-compact__title">{post.data.title}</h2>
+        <div class="bento-compact__meta">
+          <time datetime={isoDate(post.data.pubDate)}>{dateStr}</time>
+        </div>
+      </div>
+      {hasImage && (
+        <div class="bento-compact__img-wrap">
+          <SmartImage
+            src={heroAsset!}
+            alt={heroAlt}
+            class="bento-compact__img"
+            loading="lazy"
+            widths={[160, 320]}
+            sizes="120px"
+            quality={70}
+          />
+        </div>
+      )}
+    </a>
+  </article>
+)}
+
+{variant === 'series-card' && (
+  <article class="series-tile">
+    <a href={href} class="series-tile__link">
+      {hasImage && (
+        <div class="series-tile__img-wrap">
+          <SmartImage
+            src={heroAsset!}
+            alt={heroAlt}
+            class="series-tile__img"
+            loading="lazy"
+            widths={[400, 800]}
+            sizes="(max-width: 640px) 100vw, 50vw"
+            quality={70}
+          />
+          <div class="series-tile__img-overlay" />
+        </div>
+      )}
+      <div class="series-tile__body">
+        {post.data.categories[0] && (
+          <span class="eyebrow-label">{locale === 'ms' ? 'Siri' : 'Series'}</span>
+        )}
+        <h2 class="series-tile__title">{post.data.title}</h2>
+        {post.data.description && (
+          <p class="series-tile__desc">{post.data.description}</p>
+        )}
+        <div class="series-tile__footer">
+          {seriesCount != null && (
+            <span class="series-tile__count">
+              <Icon name="lucide:file-text" width={12} height={12} />
+              {seriesCount} {locale === 'ms' ? 'catatan' : 'posts'}
+            </span>
+          )}
+          <span class="series-tile__cta">
+            {locale === 'ms' ? 'Lihat siri' : 'View series'}
+            <Icon name="lucide:arrow-right" width={12} height={12} />
+          </span>
+        </div>
+      </div>
+    </a>
+  </article>
+)}
+
+
+  <article class="chirpy-card">
+    <a
+      href={href}
+      class:list={[
+        'chirpy-card-link',
+        hasImage ? 'has-image' : 'no-image',
+        isDynamicCardHeight ? 'dynamic-size' : 'fixed-size',
+      ]}
+    >
+      {hasImage && (
+        <div class="chirpy-card-image-wrap">
+          <SmartImage
+            src={heroAsset!}
+            alt={heroAlt}
+            class="chirpy-card-image"
+            loading={prioritizeLcp ? 'eager' : 'lazy'}
+            fetchpriority={prioritizeLcp ? 'high' : 'auto'}
+            widths={[384, 768, 960]}
+            sizes="(max-width: 767px) 100vw, 378px"
+            quality={75}
+          />
+        </div>
+      )}
+      <div class:list={['chirpy-card-body', hasImage ? '' : 'full']}>
+        <h2 class:list={['chirpy-card-title', hasImage ? '' : 'compact']}>
+          {post.data.title}
+        </h2>
+        {postType && postTypeLabel && (
+          <span class="post-type-badge mt-1 mb-2" data-type={postType}>
+            <span class="post-type-dot" />
+            {postTypeLabel}
+          </span>
+        )}
+        <p class:list={[
+          'text-mtj-text/70 text-base',
+          hasImage ? 'mt-2 mb-3 line-clamp-2' : 'mt-1 mb-2 line-clamp-3',
+        ]}>
+          {post.data.description}
+        </p>
+        <div class="text-mtj-text/70 mt-3 flex items-end justify-between gap-2 text-xs">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <span class="inline-flex items-center gap-1">
+              <Icon name="lucide:clock" width={12} height={12} />
+              <time datetime={isoDate(post.data.pubDate)}>{dateStr}</time>
+            </span>
+            {post.data.categories.length > 0 && (
+              <span class="inline-flex items-center gap-1">
+                <Icon name="lucide:folder" width={12} height={12} />
+                <span>{post.data.categories.join(', ')}</span>
+              </span>
+            )}
+          </div>
+          {post.data.pinned && (
+            <span class="text-mtj-accent inline-flex items-center gap-1" title="Pinned" aria-label="Pinned">
+              <Icon name="lucide:pin" width={14} height={14} />
+            </span>
+          )}
+        </div>
+      </div>
+    </a>
+  </article>
+)}

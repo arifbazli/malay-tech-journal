@@ -1,0 +1,68 @@
+---
+/**
+ * PostList — Month-grouped article cards.
+ *
+ * Shared component used by:
+ *   - src/pages/[...locale]/index.astro  (homepage, with bento above)
+ *   - src/pages/[...locale]/page/[page].astro
+ *   - src/pages/[...locale]/categories/[category].astro
+ *   - src/pages/[...locale]/tags/[tag].astro
+ *
+ * The per-row markup is in PostCardItem.astro, which is also used by
+ * Panel.astro so the sidebar "Recently Updated" widget matches the
+ * main feed typography exactly. The bento "featured" grid stays
+ * inline in index.astro because it's homepage-only decoration.
+ */
+import type { Locale } from '../config';
+import { useTranslations } from '../i18n/utils';
+import type { Post } from '../utils/posts';
+import PostCardItem from './PostCardItem.astro';
+
+interface Props {
+  posts: Post[];
+  locale: Locale;
+}
+
+const { posts, locale } = Astro.props;
+const t = useTranslations(locale);
+const ms = locale === 'ms';
+
+// ── Group posts by month-year ──────────────────────────
+type Group = { label: string; posts: Post[] };
+const groups: Group[] = [];
+
+const monthYearFmt = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', {
+  month: 'long',
+  year: 'numeric',
+});
+
+for (const post of posts) {
+  const label = monthYearFmt.format(post.data.pubDate);
+  const last = groups[groups.length - 1];
+  if (last?.label === label) {
+    last.posts.push(post);
+  } else {
+    groups.push({ label, posts: [post] });
+  }
+}
+---
+
+{posts.length === 0 ? (
+  <p class="text-[var(--mtj-muted)]">{t('list.empty')}</p>
+) : (
+  <>
+    {groups.map((group) => (
+      <section>
+        <div class="mtj-month">
+          <span class="mtj-month__label">{group.label}</span>
+          <div class="mtj-month__rule"></div>
+        </div>
+        <ol class="mtj-articles">
+          {group.posts.map((post) => (
+            <PostCardItem post={post} locale={locale} />
+          ))}
+        </ol>
+      </section>
+    ))}
+  </>
+)}

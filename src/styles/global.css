@@ -1,0 +1,3162 @@
+/* Tailwind CSS v4 entry point (daisyUI removed; site is dark-only). */
+
+@import 'tailwindcss';
+
+/* The `chirping-astro/` directory is the upstream template (unused at build
+   time but contains its own .astro files). Tailwind's content scanner would
+   otherwise pick up its daisyUI utility classes and fail the strict-mode
+   build. Exclude it explicitly. */
+@source not './chirping-astro';
+@source not './.backup-task12';
+
+/* ---------- Remark-alert safelist ----------
+   remark-alert.ts generates .mtj-alert-* HTML in markdown.
+   The plain selectors live in this file; we only need to safelist the
+   responsive Tailwind variant. */
+@source inline('sm:mtj-alert--horizontal');
+
+/* ---------- Alert plugin safelist ---------- */
+
+
+/* ---------- Chirpy-specific tokens (non-daisyUI) ---------- */
+@theme {
+  /* Sidebar/panel widths — matches Chirpy ($sidebar-width 260px, $sidebar-width-large 300px) */
+  --width-panel: 13.75rem; /* 220px */
+
+  /* Top bar height — Chirpy $topbar-height: 3rem */
+  --height-topbar: 3rem; /* 48px */
+
+  /* Reading column max width on post pages */
+  --width-prose: 50rem;
+
+  /* Fonts — configured via Astro Fonts API (astro.config.mjs).
+     --font-sans  : body text  → Inter
+     --font-display: headings/titles → Space Grotesk
+     --font-mono  : code, panels, chips → JetBrains Mono */
+  --font-sans: var(--font-inter, system-ui, sans-serif);
+  --font-display: var(--font-space-grotesk, system-ui, sans-serif);
+  --font-mono: var(--font-jetbrains-mono, ui-monospace, monospace);
+}
+
+{
+  /* Glow tokens — used for card hover, social icons, headings */
+  --chirpy-glow: oklch(70% 0.20 264 / 0.18);
+  --chirpy-glow-hover: oklch(70% 0.20 264 / 0.30);
+  --chirpy-glow-cyan: oklch(74% 0.17 200 / 0.18);
+  --chirpy-gradient-text: linear-gradient(135deg, oklch(92% 0.010 264) 0%, oklch(78% 0.018 264) 100%);
+}
+
+/* ---------- Base layer ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    /* Inter specifically renders sharper with these — disables ligatures
+       on headings (more geometric feel) and turns on contextual alternates
+       (e.g. `f` + `i` don't collide). Applied via the universal selector
+       because the values come from --font-* CSS variables, not the
+       element's font-family property. */
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss03' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Body — primary reading surface. Inter at 17px desktop with a 1.75 line
+     height is the modern sweet spot: long-form text reads comfortably
+     without feeling oversized. Tight tracking (-0.011em) is Inter's
+     official recommendation at this size — it tightens letter spacing
+     just enough to feel modern without hurting legibility. */
+  body {
+    @apply bg-[var(--mtj-bg)] text-[var(--mtj-text)] min-h-screen antialiased;
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.75;
+    letter-spacing: -0.011em;
+    font-synthesis: none; /* never synthesize fake bold/italic */
+    overflow-x: hidden; /* prevent horizontal scroll on mobile */
+  }
+
+  /* Headings — Space Grotesk with tighter tracking (-0.025em to -0.04em)
+     and optical kerning. text-wrap: balance prevents orphan lines on
+     short headings (Chrome 114+, Safari 17.5+, Firefox 121+); the
+     `pretty` fallback is the gentler version for longer headings. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  }
+  h1 { font-weight: 700; letter-spacing: -0.035em; }
+  h2 { font-weight: 600; letter-spacing: -0.028em; }
+  h3, h4 { font-weight: 600; letter-spacing: -0.022em; }
+
+  /* Paragraphs — pretty wrap prevents awkward orphan lines, mostly on
+     Safari/Firefox (Chrome prefers balance on headings only). */
+  p { text-wrap: pretty; }
+
+  /* Bold and strong — use Space Grotesk semibold when inside a display
+     context, otherwise Inter semibold. The `:where()` selector keeps
+     specificity at 0 so user style overrides still win. */
+  :where(strong, b) {
+    font-weight: 600;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* Numbers — use tabular-nums for stats, dates, progress bars, and any
+     other place where vertical alignment matters. pnum keeps proportional
+     widths so the digits don't look weird in running prose. */
+  :where(time, .mtj-metric, [data-tabular]) {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'kern' 1, 'tnum' 1;
+  }
+
+  /* Reading progress bar — scroll-driven CSS animation, zero JS */
+  .reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    height: 2px;
+    width: 100%;
+    transform-origin: left center;
+    background: linear-gradient(90deg,
+      oklch(70% 0.20 264),
+      oklch(74% 0.17 200),
+      oklch(72% 0.16 145)
+    );
+    animation: reading-progress linear;
+    animation-timeline: scroll(root block);
+    transform: scaleX(0);
+  }
+  @keyframes reading-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reading-progress-bar { display: none; }
+  }
+
+  :focus-visible {
+    @apply outline-[var(--mtj-accent)] outline-2 outline-offset-2;
+  }
+
+  ::selection {
+    @apply bg-[var(--mtj-accent)-25] text-[var(--mtj-text)];
+  }
+
+  /* Navigation is full-page (no ClientRouter) — no view transition animation
+     fires on page navigation. Theme toggle uses document.startViewTransition
+     directly and is handled by the @supports block below. */
+
+  /* Anchored headings (rehype-autolink-headings, behavior:"wrap") */
+  .heading-anchor {
+    @apply text-inherit no-underline;
+  }
+  .heading-anchor:hover::after {
+    content: '#';
+    @apply text-[var(--mtj-text)-30] ml-2;
+  }
+
+  /* Custom scrollbar (Webkit) — Chirpy-like thin grey thumb */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--mtj-text) 20%, transparent);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--mtj-text) 35%, transparent);
+  }
+}
+
+/* ---------- Layout chrome ---------- */
+@layer components {
+  /* ── 2026 MOCKUP: left vertical sidebar removed — nav is in the topbar. ── */
+  .chirpy-main-wrapper {
+    @apply flex min-h-screen w-full flex-col px-4 sm:px-6;
+    overflow-x: hidden;
+  }
+  @media (min-width: 1024px) {
+    .chirpy-main-wrapper {
+      margin-left: 0;
+      width: 100%;
+      max-width: 100%;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .chirpy-main-wrapper {
+      padding-left: 3.5rem;
+      padding-right: 3.5rem;
+    }
+  }
+
+  /* Inner shell that horizontally centers the main content (topbar +
+     post cards + panel + footer) inside the area to the right of the
+     sidebar. Caps at Chirpy's $main-content-max-width: 1250px. */
+  .chirpy-shell {
+    @apply mx-auto flex w-full flex-1 flex-col;
+    max-width: 1250px;
+  }
+
+  /* Top bar — uses min-height (not a fixed height) plus vertical padding
+     so the controls aren't flush against the browser chrome on either
+     mobile or desktop. */
+  .chirpy-topbar {
+    @apply sticky top-0 z-30 flex min-h-(--height-topbar) items-center justify-between gap-3 py-2 sm:py-3;
+    background: color-mix(in oklab, var(--mtj-bg) 82%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--mtj-text) 6%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    /* ANTI-FLICKER #1: own composite layer prevents scroll repaint cascade */
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    padding: 0 1.5rem;
+    gap: 1rem;
+  }
+
+  /* ─────────────────────────────────────────────
+     2026 TOPBAR — brand | nav links | lang+search
+     ───────────────────────────────────────────── */
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .logo-icon {
+    background: oklch(0.22 0.013 250);
+    box-shadow: 0 0 0 1.5px oklch(0.30 0.022 250);
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: box-shadow 200ms ease, transform 200ms ease;
+    will-change: transform;
+  }
+  .logo-icon:hover {
+    box-shadow: 0 0 0 1.5px oklch(0.72 0.18 250);
+    transform: translateY(-1px);
+  }
+  .nav-title-block { display: flex; flex-direction: column; min-width: 0; }
+  .nav-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--mtj-text-95);
+    white-space: nowrap;
+    line-height: 1.1;
+  }
+  .nav-title .accent { color: oklch(0.72 0.18 250); }
+  .nav-tagline {
+    font-size: 0.68rem;
+    color: var(--mtj-text-45);
+    line-height: 1.1;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+    flex: 1;
+    justify-content: center;
+  }
+  .nav-links a {
+    color: var(--mtj-text-55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    /* ANTI-FLICKER: only composite-safe properties animated */
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+  .nav-links a:hover {
+    color: var(--mtj-text-95);
+    background-color: var(--mtj-text-4);
+  }
+  .nav-links a.active {
+    color: oklch(0.72 0.18 250);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE TOPBAR — hide nav links, tighter padding
+     ───────────────────────────────────────────── */
+  @media (max-width: 767px) {
+    .chirpy-topbar {
+      padding: 0 0.65rem;
+      gap: 0.5rem;
+    }
+    .nav-links { display: none; }
+    .nav-title { display: none; }
+    .nav-tagline { display: none; }
+  }
+  @media (max-width: 380px) {
+    .nav-right { gap: 0.3rem; }
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE HAMBURGER — 3-line button, mobile only
+     ───────────────────────────────────────────── */
+  .nav-burger {
+    display: none;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 12%, transparent);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    color: var(--mtj-text-65);
+    /* ANTI-FLICKER: only composite-safe properties animated */
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+  .nav-burger:hover {
+    background: var(--mtj-text-5);
+    border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+  }
+  .nav-burger__line {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+    transform-origin: center;
+    /* ANTI-FLICKER: transform-only transition */
+    will-change: transform, opacity;
+    transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 180ms ease;
+  }
+  .nav-burger__line:nth-child(1) { transform: translate(-50%, -5px); }
+  .nav-burger__line:nth-child(2) { transform: translate(-50%, 0); }
+  .nav-burger__line:nth-child(3) { transform: translate(-50%, 5px); }
+
+  /* Open state — morph to X */
+  .nav-burger.is-open .nav-burger__line:nth-child(1) {
+    transform: translate(-50%, 0) rotate(45deg);
+  }
+  .nav-burger.is-open .nav-burger__line:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-burger.is-open .nav-burger__line:nth-child(3) {
+    transform: translate(-50%, 0) rotate(-45deg);
+  }
+
+  @media (max-width: 767px) {
+    .nav-burger { display: inline-flex; align-items: center; justify-content: center; }
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE NAV PANEL — slide-down dropdown
+     Uses `transform` + `opacity` (composite-only) to avoid flicker.
+     ───────────────────────────────────────────── */
+  .nav-mobile {
+    position: sticky;
+    top: var(--height-topbar, 3rem);
+    z-index: 29;
+    width: 100%;
+    background: color-mix(in oklab, var(--mtj-bg) 95%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border-bottom: 1px solid color-mix(in oklab, var(--mtj-text) 6%, transparent);
+    /* ANTI-FLICKER: own layer so transform doesn't trigger layout */
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    transform-origin: top center;
+  }
+  /* Closed state — `hidden` attr hides element, this is for re-open anim */
+  .nav-mobile:not(.is-open) {
+    pointer-events: none;
+  }
+  /* Open state — visible + slide in */
+  .nav-mobile.is-open {
+    pointer-events: auto;
+    animation: navMobileDrop 180ms ease-out;
+  }
+  @keyframes navMobileDrop {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .nav-mobile__inner {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1rem 0.875rem;
+    max-width: 100%;
+  }
+
+  .nav-mobile__link {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 0.5rem;
+    color: var(--mtj-text-75);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 8px;
+    /* ANTI-FLICKER: composite-only transition */
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+  .nav-mobile__link:hover {
+    background: var(--mtj-text-5);
+    color: var(--mtj-text-95);
+  }
+  .nav-mobile__link.active {
+    color: oklch(0.72 0.18 250);
+    background: color-mix(in oklab, oklch(0.72 0.18 250) 8%, transparent);
+  }
+
+  /* The mobile panel itself is always rendered (hidden by [hidden]),
+     so the desktop layout never sees it. We still need to make sure
+     the desktop topbar nav-links restore at >=768px. */
+  @media (min-width: 768px) {
+    .nav-mobile { display: none; }
+  }
+
+  /* Right rail wrapper. Holds the global Panel widget followed by an
+     optional aside-bottom slot (e.g. the post TOC). The rail intentionally
+     does NOT use `self-start` so that, on long pages, it stretches to
+     match `<main>`'s height — giving any sticky child (e.g. the TOC)
+     enough vertical room to remain pinned while the article scrolls. */
+  .chirpy-panel-rail {
+    @apply hidden shrink-0 pt-6 text-sm xl:block;
+    width: var(--width-panel);
+    /* ANTI-FLICKER #2: own layer on sticky sidebar prevents repaint cascade */
+    transform: translateZ(0);
+  }
+  @media (min-width: 1440px) {
+    .chirpy-panel-rail {
+      width: 15rem; /* 240px */
+    }
+  }
+  @media (min-width: 1650px) {
+    .chirpy-panel-rail {
+      width: 16.25rem; /* 260px */
+    }
+  }
+  .chirpy-panel-rail > * + * {
+    margin-top: 2rem;
+  }
+  /* Search slot inside the topbar — on xl+ its width matches the right
+     panel rail so the search pill aligns vertically over the panel column.
+     Below xl, the right rail is hidden so the slot shrinks to fit. */
+  .chirpy-topbar__search {
+    @apply flex shrink-0 items-center justify-start gap-2 px-1;
+  }
+  @media (min-width: 1280px) {
+    .chirpy-topbar__search {
+      width: calc(var(--width-panel) + 2.5rem);
+      padding-left: 2.5rem;
+    }
+  }
+  @media (min-width: 1440px) {
+    .chirpy-topbar__search {
+      width: calc(15rem + 2.5rem);
+    }
+  }
+  @media (min-width: 1650px) {
+    .chirpy-topbar__search {
+      width: calc(16.25rem + 2.5rem);
+    }
+  }
+  /* Tight phones — shrink gaps so topbar fits in 320px */
+  @media (max-width: 380px) {
+    .chirpy-topbar__search { gap: 0.25rem; padding-inline: 0; }
+  }
+  /* Very small screens — tighten topbar right side gap */
+  @media (max-width: 380px) {
+    .chirpy-topbar__search { gap: 0.25rem; padding-inline: 0; }
+  }
+  /* Search row at the very top of the right panel rail. */
+  .chirpy-panel-rail__search {
+    @apply w-full;
+  }
+
+  /* Inner Panel widget (Recently Updated + Trending Tags). Width and
+     visibility are owned by the rail wrapper, so this is content-only. */
+  .chirpy-panel {
+    @apply block text-sm;
+  }
+
+  /* ─────────────────────────────────────────────
+     2026 PANEL — Siri Aktif bars + Kemaskini + Tags
+     Anti-flicker:
+     - series-bar uses composite layer (transform: translateZ(0))
+     - transitions only on width (composite-safe)
+     - hover uses color/background (no border shifts)
+     ───────────────────────────────────────────── */
+  .panel-section {
+    background: var(--mtj-surface);
+    box-shadow: 0 0 0 1px var(--mtj-text-8);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 0.875rem;
+  }
+  .panel-heading {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mtj-text-42);
+    margin: 0 0 0.875rem;
+  }
+
+  /* Series progress bars */
+  .series-list { display: flex; flex-direction: column; }
+  .series-item { margin-bottom: 0.75rem; }
+  .series-item:last-child { margin-bottom: 0; }
+  .series-name {
+    font-size: 0.78rem;
+    color: var(--mtj-text-88);
+    margin-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .series-count {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--mtj-text-45);
+    flex-shrink: 0;
+  }
+  .series-bar {
+    height: 3px;
+    background: var(--mtj-text-8);
+    border-radius: 99px;
+    overflow: hidden;
+    /* ANTI-FLICKER: own layer so width animation doesn't trigger layout */
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  .series-fill {
+    height: 100%;
+    border-radius: 99px;
+    /* ANTI-FLICKER: width transition only — no height/border changes */
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: width;
+  }
+  .series-fill--ground { background: oklch(0.72 0.18 250); }
+  .series-fill--ai     { background: oklch(0.72 0.19 280); }
+  .series-fill--mil    { background: oklch(0.76 0.17 145); }
+
+  /* Recent posts list */
+  .recent-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .recent-item {
+    border-bottom: 1px solid var(--mtj-text-6);
+  }
+  .recent-item:last-child { border-bottom: none; }
+  .recent-link {
+    display: block;
+    padding: 0.55rem 0;
+    text-decoration: none;
+    color: inherit;
+    /* ANTI-FLICKER: transition only color */
+    transition: opacity 150ms ease;
+  }
+  .recent-link:hover { opacity: 0.75; }
+  .recent-title {
+    font-size: 0.78rem;
+    color: var(--mtj-text-88);
+    line-height: 1.4;
+    margin-bottom: 0.2rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    /* ANTI-FLICKER: color-only transition */
+    transition: color 150ms ease;
+  }
+  .recent-link:hover .recent-title { color: oklch(0.72 0.18 250); }
+  .recent-date {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--mtj-text-40);
+  }
+
+  /* Tag cloud */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tag-pill {
+    background: var(--mtj-bg);
+    box-shadow: inset 0 0 0 1px var(--mtj-text-8);
+    border: none;
+    border-radius: 4px;
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--mtj-text-55);
+    padding: 0.25rem 0.55rem;
+    cursor: pointer;
+    text-decoration: none;
+    /* ANTI-FLICKER: composite-only properties */
+    transition: box-shadow 150ms ease, color 150ms ease, background-color 150ms ease;
+  }
+  .tag-pill:hover {
+    box-shadow: inset 0 0 0 1px oklch(0.72 0.18 250);
+    color: oklch(0.72 0.18 250);
+    background-color: oklch(0.72 0.18 250 / 0.07);
+  }
+
+  /* Subtle left rail for aside items (Recently Updated, TOC, etc.).
+     Each item gets a faint left border that turns primary on hover/active. */
+  .chirpy-aside-list {
+    @apply flex flex-col;
+    border-left: 1px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
+  }
+  .chirpy-aside-item {
+    @apply text-[var(--mtj-text)-75] block py-1.5 pr-2 pl-3 text-sm transition;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+  }
+  .chirpy-aside-item:hover {
+    @apply text-[var(--mtj-accent)];
+    border-left-color: var(--mtj-accent);
+  }
+  .chirpy-aside-item[data-active='true'] {
+    @apply text-[var(--mtj-accent)] font-semibold;
+    border-left-color: var(--mtj-accent);
+  }
+
+  /* Post card — horizontal Chirpy card */
+  .chirpy-card {
+    @apply bg-[var(--mtj-surface)] mb-5 overflow-hidden rounded-xl transition-all duration-200;
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 8%, transparent);
+  }
+  .chirpy-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--mtj-accent) 30%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--mtj-accent) 15%, transparent),
+      0 8px 28px -4px color-mix(in oklab, var(--mtj-bg) 60%, transparent),
+      0 2px 8px -2px color-mix(in oklab, var(--mtj-accent) 12%, transparent);
+  }
+  .chirpy-card-link {
+    @apply grid grid-cols-1 gap-0 md:grid-cols-12;
+  }
+  /* Image cards can be fixed-size (default Chirpy behavior) or dynamic
+     based on `SITE.dynamicPostCardHeight`. */
+  .chirpy-card-link.has-image {
+    @apply md:grid-cols-12;
+  }
+
+  .chirpy-card-body {
+    @apply flex min-w-0 flex-col p-4 sm:p-5 md:col-span-7 md:p-6;
+  }
+  .chirpy-card-body.full {
+    @apply md:col-span-12;
+  }
+  .chirpy-card-link.no-image .chirpy-card-body {
+    @apply md:p-5;
+  }
+  /* Title and description gain line-clamps so a very long title (or a
+     verbose description) cannot push the card past the fixed height. */
+  .chirpy-card-title {
+    @apply mt-0 text-2xl leading-snug font-bold tracking-tight sm:text-[1.55rem];
+    color: var(--mtj-text);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.15s ease;
+  }
+  .chirpy-card:hover .chirpy-card-title {
+    color: color-mix(in oklab, var(--mtj-accent) 70%, var(--mtj-text));
+  }
+  .chirpy-card-title.compact {
+    @apply md:text-[1.4rem];
+  }
+  @media (min-width: 768px) {
+    .chirpy-card-link.has-image.dynamic-size .chirpy-card-title {
+      display: block;
+      -webkit-line-clamp: unset;
+      line-clamp: unset;
+      -webkit-box-orient: unset;
+      overflow: visible;
+    }
+    .chirpy-card-link.has-image.dynamic-size .chirpy-card-body > p {
+      -webkit-line-clamp: unset;
+      line-clamp: unset;
+      overflow: visible;
+      display: block;
+    }
+  }
+  .chirpy-card-image-wrap {
+    @apply order-first overflow-hidden md:order-last md:col-span-5 md:flex md:flex-col;
+    position: relative;
+  }
+  .chirpy-card-image {
+    @apply h-44 w-full object-cover md:min-h-0 md:flex-1 md:rounded-r-xl;
+    object-position: center 30%;
+    transition: transform 0.4s ease;
+  }
+  .chirpy-card:hover .chirpy-card-image {
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- Prose tuning for the post body ---------- */
+@layer components {
+  .prose-chirpy {
+    @apply text-[var(--mtj-text)];
+    /* Reading column — modern 2026 long-form prose: 17px body (1rem would
+       be 16px, we want slightly larger), generous 1.75 line height, and
+       Inter's recommended tight tracking. The slightly negative tracking
+       plus 1.75 leading gives the body a "designed" feel rather than the
+       flat default. */
+    font-size: 17px;
+    line-height: 1.75;
+    letter-spacing: -0.011em;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-wrap: pretty; /* Safari/Firefox orphan control */
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  /* Desktop — bump to 18px for comfortable reading on widescreens. The
+     old code went to 17px at sm+ which felt just-barely-bigger; the new
+     step up to 18px at md+ matches Linear, Vercel docs, and Stripe Press. */
+  @media (min-width: 768px) {
+    .prose-chirpy { font-size: 18px; }
+  }
+
+  /* Headings inside prose — tighter tracking and balanced wrap. We
+     intentionally don't override font-size here: each level has its own
+     tuned clamp(). font-feature-settings enables stylistic alternates
+     that make Space Grotesk look slightly more modern. */
+  .prose-chirpy h1,
+  .prose-chirpy h2,
+  .prose-chirpy h3,
+  .prose-chirpy h4 {
+    @apply text-[var(--mtj-text)] scroll-mt-24 font-semibold;
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  }
+  .prose-chirpy h1 {
+    @apply mt-10 mb-5;
+    font-size: clamp(1.75rem, 4.5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+  }
+  .prose-chirpy h2 {
+    @apply mt-12 mb-4 pb-2;
+    font-size: clamp(1.35rem, 3.6vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.2;
+    border-bottom: 1px solid color-mix(in oklab, var(--mtj-accent) 25%, var(--mtj-border));
+  }
+  .prose-chirpy h3 {
+    @apply mt-9 mb-3;
+    font-size: clamp(1.15rem, 3vw, 1.35rem);
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    line-height: 1.25;
+  }
+  .prose-chirpy h4 {
+    @apply mt-7 mb-2;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.3;
+  }
+  /* Paragraphs — the prose body is the most-read surface on the site.
+     Bumping from my-4 to my-5 (20px gap above/below) gives paragraphs
+     room to breathe with the larger 18px body. */
+  .prose-chirpy p {
+    @apply my-5;
+  }
+  .prose-chirpy a:not(.heading-anchor) {
+    @apply text-[var(--mtj-accent)] decoration-[var(--mtj-accent)-30] hover:decoration-[var(--mtj-accent)] underline underline-offset-2;
+  }
+  .prose-chirpy a.heading-anchor {
+    @apply text-inherit no-underline;
+  }
+  .prose-chirpy ul {
+    @apply my-5 list-disc pl-6;
+  }
+  .prose-chirpy ol {
+    @apply my-5 list-decimal pl-6;
+  }
+  /* Blockquote — same font family as the body but slightly muted, with
+     Space Grotesk on the optional leading element. */
+  .prose-chirpy blockquote {
+    @apply border-[var(--mtj-accent)-50] bg-[var(--mtj-bg)] text-[var(--mtj-text)-80] my-6 rounded-r-sm border-l-4 px-5 py-3 italic;
+    font-style: italic;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+  .prose-chirpy hr {
+    @apply border-[var(--mtj-border)] my-10;
+  }
+  .prose-chirpy code:not(pre code) {
+    @apply bg-[var(--mtj-bg)] text-[var(--mtj-accent-2)] rounded px-1.5 py-0.5 font-mono text-[0.92em];
+    font-family: var(--font-mono);
+    font-feature-settings: 'kern' 1, 'liga' 0, 'calt' 1;
+  }
+  /* Code blocks — JetBrains Mono at 0.875rem (14px) is the modern sweet
+     spot. line-height 1.65 keeps code scannable without feeling airy.
+     The font-feature-settings turn off the ligature for `=>` (often
+     misread) and enable zero-width features for diff highlighting. */
+  .prose-chirpy pre {
+    @apply border-[var(--mtj-border)] relative my-6 overflow-x-auto rounded-md border p-4 text-sm leading-relaxed;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.65;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'zero' 1;
+    -moz-tab-size: 2;
+    tab-size: 2;
+  }
+  .prose-chirpy pre code {
+    @apply bg-transparent p-0;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'zero' 1;
+  }
+  .prose-chirpy img {
+    @apply border-[var(--mtj-border)] mx-auto my-6 rounded-md border;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Figures — mirror the hero image treatment so the caption feels
+     visually attached to the image rather than floating below. */
+  .prose-chirpy figure {
+    @apply my-6;
+  }
+  .prose-chirpy figure > img,
+  .prose-chirpy figure > picture > img {
+    @apply mx-auto rounded-md border-0;
+    margin-top: 0;
+    margin-bottom: 0;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  .prose-chirpy figcaption {
+    @apply text-[var(--mtj-text)-70] mt-2 text-center text-xs italic;
+  }
+
+  /* Video embeds — responsive 16:9 iframe container */
+  .video-embed__frame {
+    @apply relative overflow-hidden rounded-md;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    background: var(--mtj-surface);
+  }
+  .video-embed__frame > iframe {
+    @apply absolute inset-0 h-full w-full;
+    border: 0;
+  }
+
+  /* Hero image — contained within content width, using the sidebar's
+     subtle gradient as a placeholder background. */
+  .post-hero {
+    @apply mx-auto;
+    max-width: 100%;
+  }
+  .post-hero__frame {
+    @apply relative overflow-hidden rounded-md;
+    background: var(--mtj-surface);
+  }
+  .post-hero__img {
+    @apply block w-full;
+    height: auto;
+    object-fit: cover;
+  }
+  .prose-chirpy table {
+    @apply my-6 w-full border-collapse text-left text-sm;
+  }
+  .prose-chirpy table th,
+  .prose-chirpy table td {
+    @apply border-[var(--mtj-border)] border px-3 py-2;
+  }
+  .prose-chirpy table thead {
+    @apply bg-[var(--mtj-bg)];
+  }
+
+  /* Callouts (.callout.callout-info / -success / -warning / -error) */
+  .callout {
+    @apply my-6 rounded-md border-l-4 px-4 py-3;
+  }
+  .callout-info {
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+  }
+  .callout-success {
+    @apply border-[var(--mtj-green)] bg-[var(--mtj-green)-10];
+  }
+  .callout-warning {
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+  }
+  .callout-error {
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+  }
+
+  /* Alert plugin: only add space when alerts are stacked together. */
+  .prose-chirpy div[role='alert'] + div[role='alert'] {
+    @apply mt-4;
+  }
+}
+
+/* ---------- Expressive Code -----------------------------
+ * Code blocks are rendered by `astro-expressive-code`. It emits its own
+ * scoped styles (`.expressive-code`) and drives the active theme via the
+ * `data-theme="chirpy-dark"` attribute on <html>
+ * (configured via `themeCssSelector` in astro.config.mjs).
+ *
+ * The few overrides below just make the code-block frames sit nicely
+ * inside our prose container.
+ */
+@layer components {
+  .prose-chirpy .expressive-code {
+    @apply my-6;
+  }
+  .prose-chirpy .expressive-code pre {
+    @apply bg-transparent p-0;
+  }
+  .prose-chirpy :not(pre) > code {
+    @apply text-[var(--mtj-accent)] bg-[var(--mtj-bg)] rounded px-1.5 py-0.5 text-[0.9em] font-medium;
+  }
+
+  /* Collapsible <details> blocks inside prose. Authors can wrap long
+     code blocks, raw lists, or examples to keep the reading column
+     scannable. Native HTML <details>/<summary> gives us keyboard +
+     a11y for free; we only style the chrome and the open marker. */
+  .prose-chirpy details {
+    @apply border-[var(--mtj-border)] bg-[var(--mtj-bg)] my-6 rounded-md border;
+  }
+  .prose-chirpy details > summary {
+    @apply text-[var(--mtj-text)] hover:text-[var(--mtj-accent)] cursor-pointer list-none px-4 py-3 text-sm font-medium transition-colors;
+    /* Custom disclosure marker — chevron rotates on open. */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .prose-chirpy details > summary::-webkit-details-marker {
+    display: none; /* hide default triangle in WebKit */
+  }
+  .prose-chirpy details > summary::before {
+    content: '';
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform 180ms ease;
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+  .prose-chirpy details[open] > summary::before {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+  .prose-chirpy details > summary:hover::before {
+    opacity: 1;
+  }
+  /* Inner content: wrap in a padded box. The summary's open state must
+     not collapse the rounded corners visually — apply overflow only to
+     the body. */
+  .prose-chirpy details > :not(summary) {
+    @apply px-4 pb-4 text-sm;
+  }
+  .prose-chirpy details[open] > :not(summary) {
+    animation: mtj-details-fade-in 180ms ease;
+  }
+  @keyframes mtj-details-fade-in {
+    from { opacity: 0; transform: translateY(-2px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+}
+
+/* ---------- TOC sticky highlight (uses chirpy-aside rail) ---------- */
+@layer components {
+  .toc ol {
+    border-left: 1px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
+  }
+  .toc a {
+    @apply text-[var(--mtj-text)-70] block py-1 pr-2 pl-3 text-sm transition-colors;
+    margin-left: -1px;
+    border-left: 1px solid transparent;
+  }
+  .toc a:hover {
+    @apply text-[var(--mtj-accent)];
+    border-left-color: var(--mtj-accent);
+  }
+  .toc a[data-active='true'] {
+    @apply text-[var(--mtj-accent)] font-semibold;
+    border-left-color: var(--mtj-accent);
+  }
+  .toc .toc-level-3 a {
+    @apply pl-6;
+  }
+  .toc .toc-level-4 a {
+    @apply pl-9;
+  }
+
+  /* Smart TOC: H3/H4 entries are hidden until their parent H2 is the
+     active section (set by the scroll-spy script via data-section-active).
+     H2 entries are always visible. */
+  .toc .toc-level-3,
+  .toc .toc-level-4 {
+    display: none;
+  }
+  .toc .toc-level-3[data-section-active='true'],
+  .toc .toc-level-4[data-section-active='true'] {
+    display: list-item;
+    animation: toc-fade-in 180ms ease-out;
+  }
+
+  @keyframes toc-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ---------- .icon-btn — 2026 Linear-style ghost icon button ---------- */
+@layer components {
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    color: var(--mtj-text-50);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition:
+      color 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 180ms ease;
+  }
+  .icon-btn:hover {
+    color: var(--mtj-text-92);
+    background: var(--mtj-text-8);
+    transform: scale(1.10);
+  }
+  /* Per-brand accent hover glow */
+  .icon-btn[data-social='linkedin']:hover {
+    color: #5aabff;
+    box-shadow: 0 0 10px oklch(0.65 0.17 240 / 0.30);
+  }
+  .icon-btn[data-social='email']:hover {
+    color: oklch(0.78 0.17 200);
+    box-shadow: 0 0 10px oklch(0.78 0.17 200 / 0.30);
+  }
+  .icon-btn[data-social='rss']:hover {
+    color: oklch(0.80 0.18 55);
+    box-shadow: 0 0 10px oklch(0.80 0.18 55 / 0.30);
+  }
+  .post-tag {
+    @apply bg-[var(--mtj-surface)] text-[var(--mtj-accent)] inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium transition-all duration-150;
+    border-color: color-mix(in oklab, var(--mtj-accent) 35%, transparent);
+  }
+  .post-tag:hover {
+    @apply text-[var(--mtj-bg)];
+    background: var(--mtj-accent);
+    box-shadow: 0 0 10px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+  }
+}
+
+/* ---------- Header search pill ---------- */
+@layer components {
+  .search-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--mtj-surface);
+    box-shadow: inset 0 0 0 1px var(--mtj-border);
+    border: none;
+    border-radius: 6px;
+    color: var(--mtj-muted);
+    font-size: 0.72rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    padding: 0.32rem 0.65rem;
+    cursor: pointer;
+    height: 32px;
+    /* ANTI-FLICKER: composite-only */
+    transition: box-shadow 150ms ease, color 150ms ease;
+  }
+  .search-pill:hover {
+    box-shadow: inset 0 0 0 1px var(--mtj-accent);
+    color: var(--mtj-accent);
+  }
+  .search-pill__icon {
+    flex-shrink: 0;
+  }
+  .search-pill__label {
+    flex: 1;
+  }
+  .search-pill__kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mtj-surface-2);
+    box-shadow: inset 0 0 0 1px var(--mtj-border),
+                inset 0 -1px 0 var(--mtj-border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    color: var(--mtj-muted);
+    line-height: 1.2;
+    min-width: 18px;
+    /* ANTI-FLICKER: composite-only */
+    transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+  }
+  /* Primary badge (⌘K / Ctrl K) — the platform-aware shortcut. */
+  .search-pill__kbd--primary {
+    background: var(--mtj-surface-2);
+    color: var(--mtj-text);
+    box-shadow: inset 0 0 0 1px var(--mtj-muted),
+                inset 0 -1px 0 var(--mtj-muted);
+    letter-spacing: 0.02em;
+  }
+  /* Slash fallback — smaller, lighter, visually demoted. */
+  .search-pill__kbd--slash {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--mtj-border);
+    color: var(--mtj-muted);
+    padding: 1px 4px;
+    font-size: 0.6rem;
+    margin-left: 2px;
+    opacity: 0.7;
+  }
+  .search-pill:hover .search-pill__kbd--primary {
+    color: var(--mtj-accent);
+    box-shadow: inset 0 0 0 1px var(--mtj-accent),
+                inset 0 -1px 0 var(--mtj-accent);
+  }
+  .search-pill:hover .search-pill__kbd--slash {
+    color: var(--mtj-accent);
+    border-color: var(--mtj-accent);
+  }
+  /* On narrow viewports the topbar gets crowded (hamburger + breadcrumb +
+     site title + search + language switcher). Hide the slash fallback
+     first (it's just a secondary hint), then collapse to icon-only —
+     the ⌘K primary badge hides earliest to keep the search pill compact. */
+  @media (max-width: 767px) {
+    .search-pill__kbd--slash { display: none; }
+  }
+  @media (max-width: 639px) {
+    .search-pill {
+      @apply h-9 w-9 justify-center gap-0 px-0;
+    }
+    .search-pill__label,
+    .search-pill__kbd { display: none; }
+  }
+}
+
+/* ---------- Back-to-top floating button ---------- */
+@layer components {
+  .back-to-top {
+    @apply border-[var(--mtj-border)] bg-[var(--mtj-surface)] text-[var(--mtj-text)] fixed right-6 bottom-6 z-30 flex h-11 w-11 items-center justify-center rounded-full border shadow-md transition;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ========== Post Article Layout (2026 redesign) ========== */
+
+/* Full-bleed hero banner */
+.post-hero-banner {
+  margin: 0 0 0 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 1rem;
+  position: relative;
+  aspect-ratio: 16 / 6.5;
+  max-height: 380px;
+}
+.post-hero-banner__img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.post-hero-banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.post-hero-banner:hover .post-hero-banner__img {
+  transform: scale(1.015);
+}
+.post-hero-banner__overlay {
+  position: absolute;
+  inset: 0;
+  /* Vignette: dark at edges, clear in center */
+  background:
+    linear-gradient(to bottom,
+      transparent 40%,
+      color-mix(in oklab, var(--mtj-bg) 65%, transparent) 100%),
+    linear-gradient(to right,
+      color-mix(in oklab, var(--mtj-bg) 25%, transparent) 0%,
+      transparent 20%,
+      transparent 80%,
+      color-mix(in oklab, var(--mtj-bg) 25%, transparent) 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Article header */
+.post-article-header {}
+
+/* Meta row chips */
+.post-meta-row { color: oklch(60% 0.010 264); }
+.post-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.post-meta-sep {
+  display: inline-block;
+  margin: 0 0.25rem;
+  opacity: 0.35;
+}
+
+/* Header rule — gradient line */
+.post-header-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--mtj-accent) 45%, transparent) 0%,
+    color-mix(in oklab, var(--mtj-text) 8%, transparent) 60%,
+    transparent 100%
+  );
+}
+
+/* End Post Article Layout */
+
+
+/* Post page H1 — subtle gradient on dark, solid on light */
+.post-title {
+  color: var(--mtj-text);
+}
+.post-title {
+  background: linear-gradient(
+    135deg,
+    oklch(95% 0.010 264) 0%,
+    oklch(80% 0.022 264) 60%,
+    oklch(74% 0.17 200) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Avatar ring glow removed (no .chirpy-sidebar) */
+
+/* Scrollbar — darker thumb in dark mode */
+::-webkit-scrollbar-thumb {
+  background: oklch(24% 0.014 264);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(35% 0.020 264);
+}
+
+/* Back-to-top button glow on dark */
+.back-to-top:hover {
+  border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--mtj-accent) 25%, transparent);
+  color: var(--mtj-accent);
+}
+
+/* Blockquote — stronger visual in dark mode */
+.prose-chirpy blockquote {
+  border-left-color: oklch(74% 0.17 200 / 0.6);
+  background: oklch(15% 0.010 264 / 0.6);
+}
+
+/* Inline code — more defined in dark */
+.prose-chirpy code:not(pre code) {
+  background: oklch(20% 0.015 264);
+  color: oklch(74% 0.17 200);
+  border: 1px solid oklch(24% 0.014 264);
+}
+
+/* Table head — subtle tint in dark */
+.prose-chirpy table thead {
+  background: oklch(18% 0.010 264);
+}
+
+/* Aside/TOC active item glow */
+.chirpy-aside-item:hover,
+.chirpy-aside-item[data-active='true'] {
+  text-shadow: 0 0 8px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+}
+/* End 2026 Polish */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Theme switch via View Transitions — REMOVED. Site is dark-only by
+   design; the theme toggle UI was deleted. The base ::view-transition
+   fade rules above (lines ~1130) stay as a no-op safety net in case any
+   future view-transition usage appears. */
+
+/* ---------- Custom search modal (Pagefind headless API) ---------- */
+/*
+ * The site uses Pagefind's headless `pagefind.js` API and renders all
+ * results with our own Tailwind / daisyUI markup. We intentionally do
+ * NOT load `pagefind-ui.css`, so none of Pagefind's default styles
+ * apply. The rules below cover the few visual states the JS layer
+ * cannot express purely with utility classes.
+ */
+
+/* Highlight the keyboard-focused result. */
+.search-result[data-active='true'] {
+  background: color-mix(in oklab, var(--mtj-accent) 8%, transparent);
+}
+.search-result[data-active='true'] h3 {
+  color: var(--mtj-accent);
+}
+
+/* Hover wash mirrors the keyboard-focus state. */
+.search-result:hover {
+  background: color-mix(in oklab, var(--mtj-accent) 5%, transparent);
+}
+
+/* `<mark>` in result excerpts (Pagefind wraps matched terms). */
+[data-search-results] mark {
+  background: color-mix(in oklab, var(--mtj-accent) 30%, transparent);
+  color: var(--mtj-text);
+  padding: 0 0.15em;
+  border-radius: 0.2rem;
+  font-weight: 600;
+}
+
+/* Hide the native clear (×) the browser adds to <input type="search">. */
+[data-search-input]::-webkit-search-cancel-button,
+[data-search-input]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ============================================================
+   2026 UI UPGRADES — Modern controls, tags, buttons
+   ============================================================ */
+
+/* ── 1. Theme Toggle — REMOVED ───────────────────────────────
+   The site is dark-only by design and the ThemeToggle.astro component
+   was deleted. All .theme-morph-* selectors were orphaned; their CSS
+   had no DOM element to attach to. Reference removed entirely.
+   ---------------------------------------------------------- */
+
+/* ── 2. postType badges — upgraded shimmer + glow ───────────
+   Replaces the basic Tailwind bg-*/10 approach with richer
+   tokens: gradient border, animated shimmer scan line, glow.
+   ---------------------------------------------------------- */
+@layer components {
+  .post-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: box-shadow 0.25s ease, transform 0.2s ease;
+
+    /* Shimmer scan-line */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 30%,
+        oklch(100% 0 0 / 0.18) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%);
+      transition: transform 0s;
+    }
+
+    &:hover::after {
+      transform: translateX(100%);
+      transition: transform 0.5s ease;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  /* Dot indicator inside badge */
+  .post-type-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* Essay — amber */
+  .post-type-badge[data-type='essay'] {
+    background: oklch(48% 0.12 75 / 0.12);
+    color: oklch(78% 0.14 75);
+    border-color: oklch(65% 0.14 75 / 0.30);
+  }
+  .post-type-badge[data-type='essay']:hover {
+    box-shadow: 0 0 12px oklch(65% 0.14 75 / 0.35);
+  }
+  .post-type-badge[data-type='essay'] .post-type-dot { background: oklch(72% 0.15 75); }
+
+  /* Case Study — cyan */
+  .post-type-badge[data-type='case-study'] {
+    background: oklch(55% 0.18 200 / 0.10);
+    color: oklch(74% 0.17 200);
+    border-color: oklch(65% 0.18 200 / 0.30);
+  }
+  .post-type-badge[data-type='case-study']:hover {
+    box-shadow: 0 0 12px oklch(65% 0.18 200 / 0.35);
+  }
+  .post-type-badge[data-type='case-study'] .post-type-dot { background: oklch(72% 0.18 200); }
+
+  /* Series Index — violet */
+  .post-type-badge[data-type='series-index'] {
+    background: oklch(50% 0.18 290 / 0.10);
+    color: oklch(74% 0.17 290);
+    border-color: oklch(60% 0.18 290 / 0.30);
+  }
+  .post-type-badge[data-type='series-index']:hover {
+    box-shadow: 0 0 12px oklch(60% 0.18 290 / 0.35);
+  }
+  .post-type-badge[data-type='series-index'] .post-type-dot { background: oklch(70% 0.18 290); }
+
+  /* Field Note — green */
+  .post-type-badge[data-type='field-note'] {
+    background: oklch(50% 0.15 145 / 0.10);
+    color: oklch(72% 0.16 145);
+    border-color: oklch(60% 0.15 145 / 0.30);
+  }
+  .post-type-badge[data-type='field-note']:hover {
+    box-shadow: 0 0 12px oklch(60% 0.15 145 / 0.35);
+  }
+  .post-type-badge[data-type='field-note'] .post-type-dot { background: oklch(68% 0.16 145); }
+}
+
+/* ── 3. Tag pills — gradient-border shimmer upgrade ─────────
+   Keeps .post-tag class; adds animated gradient border on hover
+   via background-clip trick.
+   ---------------------------------------------------------- */
+@layer components {
+  .post-tag {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-all duration-200;
+    position: relative;
+    color: var(--mtj-accent);
+    background: color-mix(in oklab, var(--mtj-accent) 6%, var(--mtj-surface));
+    border: 1px solid color-mix(in oklab, var(--mtj-accent) 28%, transparent);
+    letter-spacing: 0.03em;
+  }
+
+  .post-tag:hover {
+    color: oklch(74% 0.17 200);
+    background: color-mix(in oklab, oklch(74% 0.17 200) 10%, var(--mtj-surface));
+    border-color: oklch(74% 0.17 200 / 0.45);
+    box-shadow:
+      0 0 0 2px oklch(74% 0.17 200 / 0.08),
+      0 0 10px oklch(74% 0.17 200 / 0.22);
+    transform: translateY(-1px);
+  }
+
+  /* Category chips (breadcrumb) — slightly larger */
+  .post-category-chip {
+    @apply inline-flex items-center gap-1 rounded-md px-2.5 py-0.5 text-xs font-medium;
+    background: color-mix(in oklab, var(--mtj-accent) 8%, transparent);
+    color: var(--mtj-accent);
+    border: 1px solid color-mix(in oklab, var(--mtj-accent) 20%, transparent);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .post-category-chip:hover {
+    background: color-mix(in oklab, var(--mtj-accent) 16%, transparent);
+    border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+  }
+}
+
+/* ── 4. Back-to-top — glass morphism upgrade ────────────────
+   Frosted glass panel, gradient ring, glow on hover.
+   ---------------------------------------------------------- */
+@layer components {
+  .back-to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 30;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    transform: translateY(8px) scale(0.9);
+
+    /* Glass base */
+    background: color-mix(in oklab, var(--mtj-surface) 75%, transparent);
+    backdrop-filter: blur(12px) saturate(1.4);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+
+    /* Gradient border via outline trick */
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 14%, transparent);
+    color: var(--mtj-text);
+    box-shadow: 0 4px 16px oklch(0% 0 0 / 0.12);
+  }
+
+  .back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .back-to-top:hover {
+    border-color: color-mix(in oklab, var(--mtj-accent) 50%, transparent);
+    color: var(--mtj-accent);
+    box-shadow:
+      0 0 0 3px color-mix(in oklab, var(--mtj-accent) 12%, transparent),
+      0 0 18px color-mix(in oklab, var(--mtj-accent) 28%, transparent),
+      0 4px 16px oklch(0% 0 0 / 0.15);
+    transform: translateY(-2px) scale(1.06);
+  }
+
+  .back-to-top {
+    background: oklch(16% 0.010 264 / 0.80);
+    border-color: oklch(28% 0.018 264);
+    box-shadow: 0 4px 20px oklch(0% 0 0 / 0.35);
+  }
+
+  .back-to-top:hover {
+    border-color: oklch(74% 0.17 200 / 0.55);
+    color: oklch(74% 0.17 200);
+    box-shadow:
+      0 0 0 3px oklch(74% 0.17 200 / 0.10),
+      0 0 20px oklch(74% 0.17 200 / 0.30),
+      0 4px 20px oklch(0% 0 0 / 0.35);
+  }
+}
+
+/* ── 5. Language Switcher — 2026 Segmented Control (≈Linear) ──
+   Always-visible [MS | EN] pill — no dropdown, no extra clicks.
+   Monospace labels, hairline border, spring transitions.
+   ---------------------------------------------------------- */
+@layer components {
+  .lang-segment {
+    display: inline-flex;
+    align-items: center;
+    background: var(--mtj-text-5);
+    border: 0.5px solid var(--mtj-text-12);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 1px;
+  }
+
+  .lang-seg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    min-height: 28px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    color: var(--mtj-text-40);
+    text-decoration: none;
+    line-height: 1.5;
+    transition:
+      color 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 180ms ease;
+  }
+
+  /* Active / current locale */
+  .lang-seg-btn[aria-current='true'] {
+    background: var(--mtj-text-10);
+    color: var(--mtj-text-88);
+    box-shadow: 0 1px 3px oklch(0 0 0 / 0.18);
+  }
+
+  /* Inactive hover */
+  .lang-seg-btn:not([aria-current='true']):hover {
+    color: var(--mtj-text-72);
+    background: var(--mtj-text-6);
+  }
+
+  /* Backward compat: keep locale-pill hidden to avoid layout breaks */
+  .locale-pill { display: none; }
+}
+
+/* ── 6. .btn-glow — reusable CTA button ─────────────────────
+   Use on any <a> or <button> that needs a primary CTA look.
+   e.g.: <a class="btn-glow" href="...">Read More</a>
+   ---------------------------------------------------------- */
+@layer components {
+  .btn-glow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+    background: color-mix(in oklab, var(--mtj-accent) 12%, transparent);
+    color: var(--mtj-accent);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shimmer */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 30%,
+        oklch(100% 0 0 / 0.15) 50%,
+        transparent 70%
+      );
+      transform: translateX(-100%);
+      transition: transform 0s;
+    }
+
+    &:hover::before {
+      transform: translateX(100%);
+      transition: transform 0.45s ease;
+    }
+
+    &:hover {
+      background: color-mix(in oklab, var(--mtj-accent) 22%, transparent);
+      border-color: color-mix(in oklab, var(--mtj-accent) 65%, transparent);
+      box-shadow:
+        0 0 0 3px color-mix(in oklab, var(--mtj-accent) 10%, transparent),
+        0 0 18px color-mix(in oklab, var(--mtj-accent) 25%, transparent);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  /* Solid variant */
+  .btn-glow--solid {
+    background: var(--mtj-accent);
+    color: var(--mtj-bg);
+    border-color: var(--mtj-accent);
+
+    &:hover {
+      background: color-mix(in oklab, var(--mtj-accent) 85%, oklch(99% 0 0));
+      box-shadow:
+        0 0 0 3px color-mix(in oklab, var(--mtj-accent) 25%, transparent),
+        0 0 20px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+    }
+  }
+}
+
+/* ── 7. Search pill upgrade — stronger glass look ───────────── */
+@layer components {
+  .search-pill {
+    @apply inline-flex h-9 items-center gap-2 rounded-full pr-1.5 pl-3 text-sm transition-all duration-200;
+    background: color-mix(in oklab, var(--mtj-surface) 80%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: color-mix(in oklab, var(--mtj-text) 65%, transparent);
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 11%, transparent);
+
+    &:hover {
+      color: var(--mtj-text);
+      border-color: color-mix(in oklab, var(--mtj-accent) 45%, transparent);
+      box-shadow:
+        0 0 0 2px color-mix(in oklab, var(--mtj-accent) 8%, transparent),
+        0 0 12px color-mix(in oklab, var(--mtj-accent) 18%, transparent);
+    }
+  }
+
+  .search-pill {
+    background: oklch(18% 0.012 264 / 0.75);
+    border-color: oklch(28% 0.016 264);
+  }
+
+  @media (max-width: 767px) {
+    .search-pill__kbd--slash { display: none; }
+  }
+  @media (max-width: 639px) {
+    .search-pill {
+      @apply h-9 w-9 justify-center gap-0 px-0;
+    }
+    .search-pill__label,
+    .search-pill__kbd { display: none; }
+  }
+}
+
+/* End 2026 UI Upgrades */
+
+/* ── Projects page — Linear-style project card system ───────
+   Used by src/pages/[...locale]/projects.astro
+   ---------------------------------------------------------- */
+@layer components {
+  /* Main project card shell */
+  .project-card {
+    background: var(--mtj-surface);
+    border: 0.5px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
+    border-radius: 12px;
+    padding: 1.75rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  }
+
+  .project-card:hover {
+    border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--mtj-accent) 12%, transparent),
+      0 8px 28px -4px color-mix(in oklab, var(--mtj-text) 8%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .project-card {
+    background: var(--mtj-surface);
+    border-color: oklch(21% 0.013 264);
+  }
+
+  .project-card:hover {
+    border-color: oklch(70% 0.20 264 / 0.35);
+    box-shadow:
+      0 0 0 1px oklch(70% 0.20 264 / 0.12),
+      0 0 20px oklch(70% 0.20 264 / 0.12),
+      0 8px 28px oklch(0% 0 0 / 0.3);
+  }
+
+  /* ACTIVE R&D status badge — green OKLCH glow, mirrors field-note badge */
+  .project-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    font-family: var(--font-mono, ui-monospace, monospace);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: oklch(50% 0.15 145 / 0.12);
+    color: oklch(72% 0.16 145);
+    border: 1px solid oklch(60% 0.15 145 / 0.30);
+  }
+
+  .project-status-badge {
+    background: oklch(50% 0.15 145 / 0.15);
+    box-shadow: 0 0 8px oklch(60% 0.15 145 / 0.18);
+  }
+
+  /* Pillar cards — 3-col grid desktop / 1-col mobile */
+  .project-pillar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 639px) {
+    .project-pillar-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .project-pillar-card {
+    background: var(--mtj-bg);
+    border-radius: 8px;
+    padding: 1rem 1.125rem;
+    border: 0.5px solid color-mix(in oklab, var(--mtj-text) 8%, transparent);
+    font-size: 0.875rem;
+  }
+
+  .project-pillar-card {
+    background: var(--mtj-surface-2);
+    border-color: oklch(21% 0.013 264);
+  }
+
+  .project-pillar-title {
+    font-weight: 600;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    color: var(--mtj-text);
+  }
+
+  .project-pillar-desc {
+    font-size: 0.78rem;
+    color: color-mix(in oklab, var(--mtj-text) 65%, transparent);
+    line-height: 1.5;
+  }
+}
+
+
+/* ============================================================
+   JOURNAL FEED — 2026 redesign (mockup v2)
+   Featured card + article cards, anti-flicker safe
+   ============================================================ */
+@layer components {
+  .journal-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .feed-empty {
+    color: var(--mtj-text-45);
+    font-size: 0.95rem;
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  /* ─────────────────────────────────────────────
+     FEATURED CARD
+     Anti-flicker: box-shadow border (not border property)
+     ───────────────────────────────────────────── */
+  .featured-card {
+    position: relative;
+    display: block;
+    background: var(--mtj-surface);
+    box-shadow: 0 0 0 1px var(--mtj-text-8);
+    border-radius: 12px;
+    padding: 1.5rem 1.5rem 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    /* ANTI-FLICKER: composite layer for box-shadow animation */
+    will-change: box-shadow;
+    transform: translateZ(0);
+    transition: box-shadow 200ms ease;
+  }
+  .featured-card:hover {
+    box-shadow: 0 0 0 1px oklch(0.72 0.19 280 / 0.5),
+                0 8px 32px oklch(0.72 0.19 280 / 0.08);
+  }
+
+  /* Gradient top bar */
+  .featured-card__bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, oklch(0.72 0.18 250), oklch(0.72 0.19 280));
+  }
+
+  .featured-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .featured-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--mtj-text-95);
+    margin: 0 0 0.65rem;
+  }
+
+  .featured-desc {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--mtj-text-55);
+    margin: 0 0 1.1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .featured-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .post-date {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--mtj-text-45);
+  }
+
+  .read-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: oklch(0.72 0.18 250);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    /* ANTI-FLICKER: transform-only transition, zero reflow */
+    will-change: transform;
+  }
+  .read-link__arrow {
+    display: inline-block;
+    transition: transform 150ms ease;
+    will-change: transform;
+  }
+  .featured-card:hover .read-link__arrow {
+    transform: translateX(4px);
+  }
+
+  /* ─────────────────────────────────────────────
+     SERIES PILLS (shared by featured + cards)
+     ───────────────────────────────────────────── */
+  .series-pill {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .pill-ground {
+    background: oklch(0.72 0.18 250 / 0.12);
+    color: oklch(0.72 0.18 250);
+  }
+  .pill-ai {
+    background: oklch(0.72 0.19 280 / 0.12);
+    color: oklch(0.72 0.19 280);
+  }
+  .pill-mil {
+    background: oklch(0.76 0.17 145 / 0.12);
+    color: oklch(0.76 0.17 145);
+  }
+
+  .post-type {
+    font-size: 0.7rem;
+    color: var(--mtj-text-42);
+  }
+
+  /* ─────────────────────────────────────────────
+     MONTH HEADER
+     ───────────────────────────────────────────── */
+  .feed-group { display: contents; }
+
+  .month-header {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    margin: 1rem 0 0.5rem;
+  }
+  .month-label {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mtj-text-40);
+    white-space: nowrap;
+  }
+  .month-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--mtj-text-8);
+  }
+
+  /* ─────────────────────────────────────────────
+     ARTICLE CARDS
+     Anti-flicker:
+     - isolation: isolate stops child z-index repaint cascade
+     - background-color transition (cheaper than border)
+     - box-shadow border on hover (no layout shift)
+     ───────────────────────────────────────────── */
+  .article-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-card {
+    isolation: isolate;
+    position: relative;
+  }
+
+  .article-card__link {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 0 1rem;
+    padding: 0.875rem 0.75rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 150ms ease;
+    /* ANTI-FLICKER: own stacking context prevents repaint cascade */
+  }
+  .article-card__link:hover {
+    background-color: var(--mtj-bg);
+  }
+
+  /* Pseudo-element border using box-shadow (no layout shift) */
+  .article-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    pointer-events: none;
+    transition: box-shadow 150ms ease;
+  }
+  .article-card:hover::after {
+    box-shadow: inset 0 0 0 1px var(--mtj-text-8);
+  }
+
+  .card-date-col {
+    text-align: right;
+    padding-top: 2px;
+  }
+  .card-day {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--mtj-text-40);
+    line-height: 1;
+    display: block;
+  }
+  .card-mon {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--mtj-text-30);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .card-body { min-width: 0; }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--mtj-text-88);
+    line-height: 1.4;
+    margin: 0 0 0.3rem;
+    transition: color 150ms ease;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .article-card__link:hover .card-title {
+    color: var(--mtj-text);
+  }
+
+  .card-desc {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--mtj-text-45);
+    margin: 0 0 0.35rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .read-time {
+    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--mtj-text-32);
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE — ≤640px
+     Drop date column to 36px, hide read-time, smaller title
+     ───────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .featured-card {
+      padding: 1.1rem 1rem 0.95rem;
+      border-radius: 10px;
+    }
+    .featured-title { font-size: 1.1rem; }
+    .featured-desc {
+      font-size: 0.8rem;
+      -webkit-line-clamp: 2;
+    }
+
+    .article-card__link {
+      grid-template-columns: 36px 1fr;
+      gap: 0 0.7rem;
+      padding: 0.7rem 0.25rem;
+    }
+    .card-day { font-size: 0.95rem; }
+    .card-mon { font-size: 0.55rem; }
+    .card-title { font-size: 0.85rem; }
+    .card-desc {
+      font-size: 0.72rem;
+      -webkit-line-clamp: 1;
+    }
+    .read-time { display: none; }
+  }
+
+  /* ─────────────────────────────────────────────
+     VERY SMALL — ≤380px
+     Even tighter
+     ───────────────────────────────────────────── */
+  @media (max-width: 380px) {
+    .featured-card { padding: 0.9rem 0.75rem 0.85rem; }
+    .featured-title { font-size: 1rem; }
+    .featured-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .article-card__link {
+      grid-template-columns: 30px 1fr;
+      gap: 0 0.5rem;
+      padding: 0.6rem 0.1rem;
+    }
+    .card-day { font-size: 0.85rem; }
+    .card-title { font-size: 0.8rem; }
+  }
+}
+
+/* ============================================================
+   MOCKUP DESIGN SYSTEM — 100% spec
+   - Bento grid (4 cards on homepage)
+   - Month header + article cards (1-column under 768px)
+   - Sidebar widgets (Kemaskini Terkini, Tag Popular, Series)
+   - Footer
+   - Command palette (replaces search modal)
+   - Page grid (1fr 280px)
+   - Bug fixes (sticky transforms, view-transitions, CLS, scrollbar)
+   ============================================================ */
+
+/* -- Design tokens (mockup colors) -- */
+:root {
+  --mtj-bg:        #0f1117;
+  --mtj-surface:   #16181f;
+  --mtj-surface-2: #1e2130;
+  --mtj-border:    #2a2d3e;
+  --mtj-text:      #e2e4ef;
+  --mtj-muted:     #6b7194;
+  --mtj-accent:    #5b8fff;
+  --mtj-accent-2:  #a78bfa;
+  --mtj-green:     #34d399;
+  --mtj-tag-bg:    #1a1d2e;
+
+  /* Semi-transparent tokens used by @apply bg/text/border/decoration with opacity */
+  --mtj-accent-10: color-mix(in oklch, var(--mtj-accent) 10%, transparent);
+  --mtj-accent-25: color-mix(in oklch, var(--mtj-accent) 25%, transparent);
+  --mtj-accent-30: color-mix(in oklch, var(--mtj-accent) 30%, transparent);
+  --mtj-accent-40: color-mix(in oklch, var(--mtj-accent) 40%, transparent);
+  --mtj-accent-50: color-mix(in oklch, var(--mtj-accent) 50%, transparent);
+  --mtj-text-30: color-mix(in oklch, var(--mtj-text) 30%, transparent);
+  --mtj-text-45: color-mix(in oklch, var(--mtj-text) 45%, transparent);
+  --mtj-text-55: color-mix(in oklch, var(--mtj-text) 55%, transparent);
+  --mtj-text-65: color-mix(in oklch, var(--mtj-text) 65%, transparent);
+  --mtj-text-70: color-mix(in oklch, var(--mtj-text) 70%, transparent);
+  --mtj-text-75: color-mix(in oklch, var(--mtj-text) 75%, transparent);
+  --mtj-text-80: color-mix(in oklch, var(--mtj-text) 80%, transparent);
+  --mtj-text-90: color-mix(in oklch, var(--mtj-text) 90%, transparent);
+  --mtj-green-10: color-mix(in oklch, var(--mtj-green) 10%, transparent);
+  --mtj-green-15: color-mix(in oklch, var(--mtj-green) 15%, transparent);
+}
+
+/* -- Bug fix #6: stable scrollbar (no page-width shift between routes) -- */
+html { scrollbar-gutter: stable; overflow-y: scroll; }
+
+/* -- Bug fix #3: view transition override (kept from theme toggle block,
+      this is a no-op because ClientRouter is removed) -- */
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease;
+}
+::view-transition-old(root) { animation-name: vtOldFade; }
+::view-transition-new(root) { animation-name: vtNewFade; }
+@keyframes vtOldFade { from { opacity: 1; } to { opacity: 0; } }
+@keyframes vtNewFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Topbar light-mode overrides removed (site is dark-only by design). */
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+/* FIX: reduced max-width from 1100px to 1000px so the footer aligns
+   under the mtj-page grid (also 1000px). Old value was set when the
+   page assumed a 2-column sidebar layout. */
+.mtj-footer {
+  max-width: 1000px;
+  margin: 3rem auto 0;
+  padding: 1.75rem 1.5rem;
+  border-top: 1px solid var(--mtj-border);
+  font-size: 0.78rem;
+  color: var(--mtj-muted);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+/* FIX: inner flex uses a single symmetric gap and lets the explicit
+   `<span class="mtj-footer__sep">` divider handle the visual separator.
+   Old layout used a `::before` pseudo on `.mtj-footer__links` which added
+   asymmetric padding to one side of the container, shifting the visual
+   center so the footer appeared "a little bit to the right". */
+.mtj-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.mtj-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--mtj-muted);
+  min-width: 0;
+}
+.mtj-footer__copy { white-space: nowrap; }
+
+/* FIX: explicit divider element — symmetric on both sides, replaces
+   the old `::before` approach that pushed the links block left of true
+   center. */
+.mtj-footer__sep {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background: var(--mtj-border);
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.mtj-footer__links {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mtj-footer__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--mtj-muted);
+  text-decoration: none;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  /* ANTI-FLICKER: composite-only properties animated */
+  transition: color 150ms ease, transform 150ms ease;
+  will-change: transform;
+}
+.mtj-footer__link:hover {
+  color: var(--mtj-accent);
+  transform: translateY(-1px);
+}
+.mtj-footer__link svg { opacity: 0.85; transition: opacity 150ms ease; }
+.mtj-footer__link:hover svg { opacity: 1; }
+
+/* FIX: hide the divider on mobile — it would look like a stray line
+   in the stacked vertical layout. */
+@media (max-width: 639px) {
+  .mtj-footer__sep { display: none; }
+}
+
+/* Mobile: stack brand above links, keep centered */
+@media (max-width: 639px) {
+  /* FIX: bumped horizontal padding from 1rem to 1.125rem (18px) for
+     slightly more breathing room on phones, per mobile-friendly guideline. */
+  .mtj-footer { padding: 1.25rem 1.125rem; margin-top: 2rem; }
+  .mtj-footer__inner {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .mtj-footer__links {
+    gap: 0.9rem;
+  }
+}
+
+/* ============================================================
+   HOMEPAGE PAGE GRID
+   ============================================================ */
+/* FIX: max-width reduced from 1100px to 1000px so the page grid and
+   footer share the same container width and align perfectly. Old
+   1100px was from a 2-col sidebar layout that no longer exists. */
+/* FIX: single column now that the right sidebar is fully removed
+   (was `1fr 280px`). */
+.mtj-page {
+  display: block;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  /* Subtle gradient mesh background — Vercel/Linear-inspired ambient glow.
+     Two soft radial gradients at the top corners, fading into the page
+     background. Low opacity so it doesn't compete with content. */
+  background-image:
+    radial-gradient(60% 50% at 12% 0%, oklch(0.72 0.18 250 / 0.06) 0%, transparent 60%),
+    radial-gradient(50% 40% at 88% 6%, oklch(0.72 0.18 280 / 0.05) 0%, transparent 55%);
+  background-attachment: scroll, scroll;
+  background-repeat: no-repeat, no-repeat;
+}
+@media (max-width: 1023px) {
+  /* FIX: bumped mobile horizontal padding from 1rem (16px) to 1.125rem
+     (18px) for slightly more breathing room per mobile-friendly guidelines. */
+  .mtj-page { padding: 1.5rem 1.125rem 3rem; }
+}
+
+.mtj-section-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mtj-accent);
+  margin-bottom: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+.mtj-section-label::after {
+  content: '';
+  flex: 1;
+  max-width: 36px;
+  height: 1px;
+  background: var(--mtj-border);
+}
+
+/* ============================================================
+   BENTO GRID (homepage only)
+   - Large: 2×2, Medium: 2×1, Small: 1×1 (×2)
+   - Anti-flicker: box-shadow border, transform-only hover
+   ============================================================ */
+.mtj-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 148px);
+  gap: 0.75rem;
+  margin-bottom: 2.25rem;
+}
+.mtj-bento__card {
+  position: relative;
+  overflow: hidden;
+  background: var(--mtj-surface);
+  box-shadow: 0 0 0 1px var(--mtj-border);
+  border-radius: 12px;
+  padding: 1.125rem;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  /* ANTI-FLICKER: composite-only properties animated */
+  will-change: box-shadow;
+  transform: translateZ(0);
+  transition: box-shadow 200ms ease;
+}
+.mtj-bento__card:hover {
+  box-shadow:
+    0 0 0 1px var(--mtj-accent),
+    0 8px 28px oklch(0.72 0.18 250 / 0.10);
+}
+.mtj-bento__card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--mtj-accent), var(--mtj-accent-2));
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+.mtj-bento__card:hover::before { opacity: 1; }
+
+.mtj-bento--large  { grid-column: span 2; grid-row: span 2; }
+.mtj-bento--medium { grid-column: span 2; grid-row: span 1; }
+.mtj-bento--small  { grid-column: span 1; grid-row: span 1; }
+
+.mtj-bento__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--mtj-text);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+}
+.mtj-bento--large  .mtj-bento__title { font-size: 1.4rem; letter-spacing: -0.035em; }
+.mtj-bento--medium .mtj-bento__title { font-size: 1.0rem;  font-weight: 600; margin-bottom: 0.3rem; }
+.mtj-bento--small  .mtj-bento__title { font-size: 0.9rem;  font-weight: 600; margin-bottom: 0.3rem; }
+
+.mtj-bento__desc {
+  font-size: 0.78rem;
+  color: var(--mtj-muted);
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mtj-bento--medium .mtj-bento__desc {
+  font-size: 0.69rem;
+  line-height: 1.45;
+  -webkit-line-clamp: 2;
+}
+.mtj-bento--small .mtj-bento__desc { display: none; }
+
+.mtj-bento__foot {
+  margin-top: auto;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.65rem;
+  color: var(--mtj-muted);
+  padding-top: 0.5rem;
+}
+.mtj-bento--large  .mtj-bento__foot { font-size: 0.62rem; }
+.mtj-bento--small  .mtj-bento__foot { color: var(--mtj-border); font-size: 0.58rem; }
+
+/* Bento mobile: stacks to single column */
+@media (max-width: 767px) {
+  .mtj-bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 0.625rem;
+  }
+  .mtj-bento--large,
+  .mtj-bento--medium,
+  .mtj-bento--small {
+    grid-column: span 1;
+    grid-row: auto;
+  }
+  .mtj-bento--large { min-height: 200px; }
+  .mtj-bento--medium { min-height: 110px; }
+  .mtj-bento--small  { min-height: 90px; }
+  .mtj-bento__desc { display: block; -webkit-line-clamp: 2; }
+  .mtj-bento--small .mtj-bento__desc { display: none; }
+}
+
+/* -- Pills (bento + cards + command palette share) -- */
+.mtj-pill {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.56rem;
+  font-weight: 500;
+  padding: 0.19rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+.mtj-pill--ground { background: oklch(0.72 0.18 250 / 0.12); color: var(--mtj-accent); }
+.mtj-pill--ai     { background: oklch(0.72 0.19 280 / 0.12); color: var(--mtj-accent-2); }
+.mtj-pill--mil    { background: oklch(0.76 0.17 145 / 0.12); color: var(--mtj-green); }
+
+.mtj-pill__type {
+  font-size: 0.72rem;
+  color: var(--mtj-muted);
+}
+
+/* ============================================================
+   MONTH HEADER + ARTICLE CARDS (homepage list under bento)
+   ============================================================ */
+.mtj-month {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0.75rem;
+}
+.mtj-month__label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.69rem;
+  letter-spacing: 0.1em;
+  color: var(--mtj-muted);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.mtj-month__rule { flex: 1; height: 1px; background: var(--mtj-border); }
+
+.mtj-articles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mtj-card {
+  /* ANTI-FLICKER: isolation + own stacking context */
+  isolation: isolate;
+  position: relative;
+  transition: transform 150ms ease;
+  will-change: transform;
+}
+.mtj-card__link {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 0 1rem;
+  padding: 0.8rem 0.65rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 150ms ease, transform 150ms ease;
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* Hover lift: card raises 2px and casts a soft shadow. The card itself
+   holds the transform (so the lift applies to the entire row including
+   the date column), and the ::after pseudo-element carries the shadow. */
+.mtj-card:hover {
+  transform: translateY(-2px);
+}
+.mtj-card:hover::after {
+  box-shadow: inset 0 0 0 1px var(--mtj-accent),
+              0 6px 20px oklch(0 0 0 / 0.25);
+}
+
+/* COMPACT MODE: sidebar "Recently Updated" (Panel.astro).
+   Drops the 44px day column so the body gets the full ~260px width. */
+.mtj-card--compact > .mtj-card__link {
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: 0.5rem 0.5rem;
+}
+.mtj-card--compact .mtj-card__title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mtj-card--compact .mtj-card__desc {
+  font-size: 0.66rem;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.mtj-card--compact .mtj-card__read { font-size: 0.58rem; }
+.mtj-card--compact .mtj-card__type { font-size: 0.58rem; }
+
+.mtj-card__link:hover { background-color: var(--mtj-surface); }
+.mtj-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  pointer-events: none;
+  box-shadow: 0 0 0 0 transparent;
+  transition: box-shadow 150ms ease;
+}
+
+.mtj-card__date { text-align: right; padding-top: 2px; }
+.mtj-card__day {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mtj-muted);
+  line-height: 1;
+  display: block;
+}
+.mtj-card__mon {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.5rem;
+  color: var(--mtj-border);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-top: 2px;
+}
+
+.mtj-card__body { min-width: 0; }
+.mtj-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+  flex-wrap: wrap;
+}
+.mtj-card__title {
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--mtj-text);
+  line-height: 1.35;
+  margin: 0 0 0.2rem;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1, 'ss01' 1;
+  transition: color 150ms ease;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.mtj-card__link:hover .mtj-card__title { color: #ffffff; }
+.mtj-card__desc {
+  font-size: 0.72rem;
+  line-height: 1.55;
+  letter-spacing: -0.006em;
+  color: var(--mtj-muted);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mtj-card__type {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--mtj-muted);
+  letter-spacing: 0.04em;
+}
+/* Reading time (e.g. "6 min baca") — clearly secondary meta text. */
+.mtj-card__read {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  font-weight: 400;
+  color: var(--mtj-muted);
+  margin-top: 0.15rem;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .mtj-card__link {
+    grid-template-columns: 36px 1fr;
+    gap: 0 0.7rem;
+    padding: 0.7rem 0.25rem;
+    /* FIX: added min-height 56px on mobile to ensure each card row meets
+       the 44px tap-target minimum per mobile usability guidelines. */
+    min-height: 56px;
+  }
+  .mtj-card__day  { font-size: 0.74rem; }
+  .mtj-card__mon  { font-size: 0.5rem; }
+  .mtj-card__title { font-size: 0.8rem; }
+  .mtj-card__desc {
+    font-size: 0.68rem;
+    -webkit-line-clamp: 1;
+  }
+  .mtj-card__read { font-size: 0.6rem; }
+}
+@media (max-width: 380px) {
+  .mtj-card__link {
+    grid-template-columns: 30px 1fr;
+    gap: 0 0.5rem;
+    padding: 0.6rem 0.1rem;
+  }
+  .mtj-card__day  { font-size: 0.85rem; }
+  .mtj-card__title { font-size: 0.78rem; }
+}
+
+/* ============================================================
+   PAGINATION (mockup style)
+   ============================================================ */
+.mtj-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--mtj-border);
+}
+/* On very narrow viewports, hide Prev/Next labels to keep them as
+   icon-only buttons so the paginator row fits in a single line. */
+@media (max-width: 480px) {
+  .mtj-page-btn--nav {
+    padding: 0;
+    width: 32px;
+    justify-content: center;
+  }
+  .mtj-page-btn--nav .mtj-page-btn__label {
+    display: none;
+  }
+}
+.mtj-page-btn {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  border: none;
+  border-radius: 6px;
+  color: var(--mtj-muted);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.75rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  /* ANTI-FLICKER: composite-only properties */
+  transition: box-shadow 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+.mtj-page-btn:hover {
+  box-shadow: inset 0 0 0 1px var(--mtj-accent);
+  color: var(--mtj-accent);
+}
+.mtj-page-btn--active {
+  background-color: var(--mtj-accent);
+  box-shadow: none;
+  color: #ffffff;
+}
+.mtj-page-btn--active:hover {
+  box-shadow: none;
+  color: #ffffff;
+}
+/* Prev/Next buttons: wider than 32px to fit label + arrow */
+.mtj-page-btn--nav {
+  width: auto;
+  height: 32px;
+  padding: 0 12px;
+  gap: 6px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+}
+.mtj-page-btn__label {
+  white-space: nowrap;
+}
+/* Disabled Prev/Next: no hover effect, dimmer color, not interactive */
+.mtj-page-btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.mtj-page-btn--disabled:hover {
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  color: var(--mtj-muted);
+}
+/* Ellipsis: no box, no border, no hover effect */
+.mtj-page-btn--ellipsis {
+  background: none;
+  box-shadow: none;
+  border: none;
+  color: var(--mtj-muted);
+  width: 24px;
+  cursor: default;
+  pointer-events: none;
+}
+.mtj-page-btn--ellipsis:hover {
+  box-shadow: none;
+  color: var(--mtj-muted);
+}
+
+/* ============================================================
+   SIDEBAR (mockup right column)
+   - Section: rounded surface, inset border (box-shadow, not border)
+   - Recent: title + date, hover title turns accent
+   - Tags: monospace pills, hover inset border accent
+   ============================================================ */
+.mtj-sidebar {
+  /* ANTI-FLICKER: own GPU layer for sticky scroll */
+  position: sticky;
+  top: 84px;
+  transform: translateZ(0);
+  will-change: transform;
+}
+@media (max-width: 1023px) {
+  .mtj-sidebar { position: static; }
+}
+
+.mtj-sb-section {
+  background: var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.875rem;
+}
+.mtj-sb-heading {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--mtj-muted);
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+/* Series progress bars */
+.mtj-series { display: flex; flex-direction: column; }
+.mtj-series__row { margin-bottom: 0.65rem; }
+.mtj-series__row:last-child { margin-bottom: 0; }
+.mtj-series__name {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--mtj-text);
+  margin-bottom: 0.28rem;
+}
+.mtj-series__count {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.6rem;
+  color: var(--mtj-muted);
+  flex-shrink: 0;
+}
+.mtj-series__bar {
+  height: 3px;
+  background: var(--mtj-text-10);
+  border-radius: 99px;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+.mtj-series__fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: width;
+}
+.mtj-series__fill--ground { background: var(--mtj-accent); }
+.mtj-series__fill--ai     { background: var(--mtj-accent-2); }
+.mtj-series__fill--mil    { background: var(--mtj-green); }
+
+/* Recent posts */
+
+
+/* Tag cloud */
+.mtj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.mtj-tag {
+  background: var(--mtj-tag-bg);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  border: none;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  color: var(--mtj-muted);
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+.mtj-tag:hover {
+  box-shadow: inset 0 0 0 1px var(--mtj-accent);
+  color: var(--mtj-accent);
+  background-color: oklch(0.72 0.18 250 / 0.07);
+}
+
+/* ============================================================
+   COMMAND PALETTE (replaces old search modal)
+   - Trigger: "/" or Cmd/Ctrl+K
+   - Sections: "Artikel Terkini", "Lompat Ke Siri", "Hasil Carian"
+   - Keyboard: ↑↓ navigate, ↵ open, Esc close
+   ============================================================ */
+.mtj-cmdk {
+  position: fixed;
+  inset: 0;
+  background: oklch(0.04 0.005 250 / 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 90px;
+  z-index: 1000;
+}
+.mtj-cmdk.is-open { display: flex; }
+.mtj-cmdk__modal {
+  background: var(--mtj-surface);
+  box-shadow:
+    0 0 0 1px var(--mtj-border),
+    0 20px 60px oklch(0 0 0 / 0.5);
+  border-radius: 12px;
+  width: 560px;
+  max-width: 90vw;
+  max-height: 70vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.mtj-cmdk__row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--mtj-border);
+}
+.mtj-cmdk__row svg { color: var(--mtj-muted); flex-shrink: 0; }
+.mtj-cmdk__input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--mtj-text);
+  font-size: 0.875rem;
+  font-family: var(--font-sans);
+  width: 100%;
+}
+.mtj-cmdk__input::placeholder { color: var(--mtj-muted); }
+.mtj-cmdk__esc {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.625rem;
+  color: var(--mtj-muted);
+  background: var(--mtj-surface-2);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+.mtj-cmdk__body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.mtj-cmdk__group {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mtj-muted);
+  padding: 0.65rem 1rem 0.25rem;
+}
+.mtj-cmdk__item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  /* ANTI-FLICKER: composite-only */
+  transition: background-color 100ms ease;
+}
+.mtj-cmdk__item:hover,
+.mtj-cmdk__item.is-sel { background-color: var(--mtj-surface-2); }
+.mtj-cmdk__item .icon {
+  width: 15px;
+  height: 15px;
+  color: var(--mtj-accent);
+  flex-shrink: 0;
+}
+.mtj-cmdk__item .label {
+  font-size: 0.81rem;
+  color: var(--mtj-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.mtj-cmdk__item .meta {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.mtj-cmdk__item .pill-mini {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.56rem;
+  padding: 0.13rem 0.4rem;
+  border-radius: 4px;
+}
+.mtj-cmdk__item .pill-mini--ground { background: oklch(0.72 0.18 250 / 0.12); color: var(--mtj-accent); }
+.mtj-cmdk__item .pill-mini--ai     { background: oklch(0.72 0.19 280 / 0.12); color: var(--mtj-accent-2); }
+.mtj-cmdk__item .pill-mini--mil    { background: oklch(0.76 0.17 145 / 0.12); color: var(--mtj-green); }
+
+.mtj-cmdk__hint {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--mtj-border);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.625rem;
+  color: var(--mtj-muted);
+}
+.mtj-cmdk__hint kbd {
+  background: var(--mtj-surface-2);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-right: 3px;
+}
+
+@media (max-width: 640px) {
+  .mtj-cmdk { padding-top: 50px; }
+  .mtj-cmdk__modal { max-width: 95vw; }
+}
+
+/* ============================================================
+   ALERT BOXES — markdown ```alert``` blocks via remark-alert.ts
+   Replaces daisyUI's .alert-* classes with our own .mtj-alert-*
+   classes, all using --mtj-* tokens. No daisyUI dependency.
+   ============================================================ */
+.mtj-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.85rem 1rem;
+  margin: 1.25rem 0;
+  border-radius: 8px;
+  border: 1px solid var(--mtj-border);
+  background: var(--mtj-surface);
+  color: var(--mtj-text);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.mtj-alert > svg { flex-shrink: 0; margin-top: 0.1rem; }
+.mtj-alert h3 { margin: 0 0 0.25rem 0; font-size: 0.95rem; }
+
+/* Type — accent color via left border + tinted background */
+.mtj-alert--info    { border-left: 3px solid var(--mtj-accent);   }
+.mtj-alert--success { border-left: 3px solid var(--mtj-green);    }
+.mtj-alert--warning { border-left: 3px solid #f59e0b;             }  /* amber */
+.mtj-alert--error   { border-left: 3px solid #f87171;             }  /* red 400 */
+
+/* Style modifiers */
+.mtj-alert--soft {
+  background: color-mix(in oklab, var(--mtj-accent) 6%, var(--mtj-surface));
+}
+.mtj-alert--outline {
+  background: transparent;
+  border: 1px solid var(--mtj-border);
+}
+.mtj-alert--dash {
+  border-style: dashed;
+}
+
+/* Direction modifiers */
+.mtj-alert--vertical  { flex-direction: column; }
+.mtj-alert--horizontal { flex-direction: row; align-items: center; }
+@media (min-width: 640px) {
+  .mtj-alert.sm\:mtj-alert--horizontal { flex-direction: row; align-items: center; }
+  .mtj-alert.sm\:mtj-alert--horizontal > svg { margin-top: 0; }
+}
+
+/* =========================================================================
+   Mermaid diagrams (client-side render via mermaid.esm.min.mjs)
+   ========================================================================= */
+.mermaid {
+  background: var(--mtj-surface);
+  border: 1px solid var(--mtj-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  text-align: center;
+  /* Cap height so very tall TB diagrams don't dominate the page.
+     Horizontal scroll for wider-than-column diagrams. */
+  max-height: 700px;
+  overflow: auto;
+}
+/* The SVG renders at its natural intrinsic size based on the viewBox.
+   Mermaid computes the viewBox at render time using its internal
+   font-size + text content. The wrapper above caps the rendered
+   size so any diagram fits comfortably in the article column. */
+.mermaid svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  font-size: 14px !important;
+}
+/* Node label text size — ensures readable text regardless of SVG
+   scaling. 14px matches Mermaid's default node label size, making
+   text legible at the wrapper's max-height: 700px constraint. */
+.mermaid .nodeLabel,
+.mermaid .edgeLabel,
+.mermaid .label {
+  font-family: var(--font-inter, system-ui, sans-serif) !important;
+  font-size: 14px !important;
+  color: var(--mtj-text);
+}
+.mermaid .edgeLabel {
+  background-color: var(--mtj-surface) !important;
+  padding: 0 0.3em;
+  font-size: 12px !important;
+}
+/* Loading skeleton — keeps layout stable while mermaid initializes */
+.mermaid:not([data-processed="true"]) {
+  min-height: 200px;
+  position: relative;
+}
+.mermaid:not([data-processed="true"])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--mtj-surface) 0%,
+    var(--mtj-surface-2) 50%,
+    var(--mtj-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: mtj-shimmer 1.6s ease-in-out infinite;
+  border-radius: 12px;
+  opacity: 0.35;
+}
+@keyframes mtj-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

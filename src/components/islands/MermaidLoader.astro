@@ -1,0 +1,114 @@
+---
+/**
+ * MermaidLoader — minimal client-side Mermaid renderer.
+ *
+ * Strategy: load Mermaid from jsDelivr CDN via async script tag.
+ * Then walk all <pre data-language="mermaid"> blocks and replace
+ * each with the rendered SVG.
+ *
+ * The source extraction walks `.ec-line` divs (Shiki line containers)
+ * and emits a newline for each, plus a newline for each <br> element.
+ */
+---
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" async is:inline></script>
+
+<script is:inline>
+  (function () {
+    'use strict';
+    var tries = 0;
+    function init() {
+      if (!window.mermaid) {
+        if (++tries > 200) { console.error('[mermaid] not loaded'); return; }
+        return setTimeout(init, 50);
+      }
+      var mermaid = window.mermaid;
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'dark',
+          securityLevel: 'loose',
+          themeVariables: {
+            background: '#16181f',
+            primaryColor: '#1e2130',
+            primaryTextColor: '#e2e4ef',
+            primaryBorderColor: '#2a2d3e',
+            lineColor: '#5b8fff',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            fontSize: '13px',
+          },
+          flowchart: {
+            curve: 'basis',
+            padding: 6,
+            nodeSpacing: 25,
+            rankSpacing: 30,
+          },
+          fontSize: 13,
+        });
+      } catch (e) { console.error('[mermaid] init failed', e); return; }
+
+      var pres = document.querySelectorAll('pre[data-language="mermaid"]');
+      console.info('[mermaid] found', pres.length, 'diagrams');
+      if (!pres.length) return;
+
+      function linesOf(pre) {
+        var code = pre.querySelector('code') || pre;
+        var out = [];
+        for (var i = 0; i < code.childNodes.length; i++) {
+          var c = code.childNodes[i];
+          if (c.nodeType === 1 && c.classList && c.classList.contains('ec-line')) {
+            out.push(textOf(c).replace(/\s+$/, ''));
+          }
+        }
+        return out.length ? out.join('\n') : code.textContent.trim();
+      }
+      function textOf(el) {
+        var s = '';
+        for (var i = 0; i < el.childNodes.length; i++) {
+          var c = el.childNodes[i];
+          if (c.nodeType === 3) s += c.nodeValue || '';
+          else if (c.nodeName === 'BR') s += '\n';
+          else s += textOf(c);
+        }
+        return s;
+      }
+
+      for (var j = 0; j < pres.length; j++) {
+        (function (pre) {
+          pre.classList.add('mermaid');
+          var src = linesOf(pre);
+          var id = 'm' + Math.random().toString(36).slice(2, 8);
+          mermaid.render(id, src).then(function (r) {
+            var div = document.createElement('div');
+            div.className = 'mermaid';
+            div.setAttribute('data-processed', 'true');
+            // Inject the rendered SVG. Mermaid computes a viewBox that
+            // matches the natural diagram width; we let the SVG keep
+            // that intrinsic width so narrow diagrams don't stretch
+            // to fill the column. The CSS rule `.mermaid svg` handles
+            // max-width + height: auto for responsive scaling when the
+            // diagram is wider than the container.
+            div.innerHTML = r.svg;
+            // Ensure overflow is visible (in case max-width clips)
+            div.style.overflowX = 'auto';
+            div.style.textAlign = 'center';
+            pre.replaceWith(div);
+          }).catch(function (err) {
+            console.error('[mermaid] render error', err);
+            pre.setAttribute('data-error', 'true');
+            var box = document.createElement('div');
+            box.className = 'mermaid-error';
+            box.style.cssText = 'padding:1rem;background:#fee2e2;color:#7f1d1d;border-radius:8px;font-family:ui-monospace,monospace;font-size:12px;white-space:pre-wrap;margin:1rem 0;';
+            box.textContent = 'Mermaid error: ' + ((err && (err.message || err.str)) || String(err)) + '\n\nSource:\n' + src;
+            pre.replaceWith(box);
+          });
+        })(pres[j]);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

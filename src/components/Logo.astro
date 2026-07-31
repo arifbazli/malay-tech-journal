@@ -1,0 +1,21 @@
+---
+/**
+ * Terminal Prompt Logo — the new MTJ brand mark.
+ * Rounded square container with a ">" prompt + "_" cursor.
+ * Used in: topbar (34px), footer (24px), and inline favicon.
+ */
+interface Props {
+  size?: number;
+  strokeWidth?: number;
+}
+
+const { size = 34, strokeWidth = 2.5 } = Astro.props;
+const iconSize = Math.round(size * 0.56);
+---
+
+<span class="logo-icon" style={`width:${size}px;height:${size}px;`} aria-hidden="true">
+  <svg width={iconSize} height={iconSize} viewBox="0 0 36 36" fill="none">
+    <path d="M10 13 L16 18 L10 23" stroke="#5b8fff" stroke-width={strokeWidth} stroke-linecap="round" stroke-linejoin="round" />
+    <line x1="19" y1="23" x2="26" y2="23" stroke="#a78bfa" stroke-width={strokeWidth} stroke-linecap="round" />
+  </svg>
+</span>

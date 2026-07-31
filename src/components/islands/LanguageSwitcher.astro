@@ -1,0 +1,59 @@
+---
+/**
+ * 2026 Language Switcher — Segmented control pill (Linear-style).
+ * Always visible MS / EN toggle — no dropdown, no extra clicks.
+ * Rewires href on post pages via window.__chirpyTranslations.
+ */
+import { SITE, type Locale } from '../../config';
+import { useTranslations, localizedPath, stripLocale, localeLabel } from '../../i18n/utils';
+
+export interface Props {
+  locale: Locale;
+  availableLocales?: readonly Locale[];
+}
+
+const { locale, availableLocales } = Astro.props;
+const t = useTranslations(locale);
+const allowed = new Set<Locale>([locale, ...((availableLocales ?? SITE.locales) as Locale[])]);
+const otherLocales = SITE.locales.filter((l) => l !== locale && allowed.has(l));
+const fallbackBase = stripLocale(Astro.url.pathname);
+
+// All locales to display (current + others)
+const allLocales = [locale, ...otherLocales];
+---
+
+{
+  allLocales.length > 1 && (
+    <div class="lang-segment" role="group" aria-label={t('lang.switcher')}>
+      {allLocales.map((l) => {
+        const isCurrent = l === locale;
+        const href = localizedPath(fallbackBase, l);
+        return (
+          <a
+            href={href}
+            class="lang-seg-btn"
+            data-lang-target={isCurrent ? undefined : l}
+            aria-current={isCurrent ? 'true' : undefined}
+            title={localeLabel(l)}
+          >
+            {l.toUpperCase()}
+          </a>
+        );
+      })}
+    </div>
+  )
+}
+
+<script>
+  function rewireLanguageLinks() {
+    const map = (window as unknown as { __chirpyTranslations?: Record<string, string> })
+      .__chirpyTranslations;
+    if (!map) return;
+    document.querySelectorAll<HTMLAnchorElement>('[data-lang-target]').forEach((a) => {
+      const target = a.dataset.langTarget;
+      if (target && map[target]) a.href = map[target];
+    });
+  }
+  rewireLanguageLinks();
+  document.addEventListener('DOMContentLoaded', rewireLanguageLinks);
+</script>

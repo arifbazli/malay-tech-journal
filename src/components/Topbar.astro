@@ -1,0 +1,177 @@
+---
+/**
+ * 2026 Topbar — full mockup redesign.
+ *   Left:  [logo-icon] Malay Tech Journal
+ *                   tagline
+ *   Mid:   nav links (Utama / Siri / Projek / Tentang)
+ *   Right: [MS|EN] [Cari /]
+ */
+import { SITE, type Locale, NAV } from '../config';
+import { useTranslations, localizedPath } from '../i18n/utils';
+import Logo from './Logo.astro';
+import SearchButton from './islands/SearchButton.astro';
+import LanguageSwitcher from './islands/LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  /** Path WITHOUT locale prefix, used to highlight active nav link. */
+  currentPath?: string;
+  availableLocales?: readonly Locale[];
+}
+
+const { locale, currentPath = '/', availableLocales } = Astro.props;
+const t = useTranslations(locale);
+const ms = locale === 'ms';
+const home = localizedPath('/', locale);
+const tagline = ms
+  ? 'Merekayasa guardrail cloud security dan AI'
+  : 'Engineering cloud security and AI guardrails';
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/' || currentPath === '';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="chirpy-topbar" aria-label="Top Bar">
+  <a class="nav-brand" href={home} aria-label={SITE.title}>
+    <Logo size={34} strokeWidth={2.5} />
+    <div class="nav-title-block">
+      <span class="nav-title">
+        Malay <span class="accent">Tech Journal</span>
+      </span>
+      <span class="nav-tagline">{tagline}</span>
+    </div>
+  </a>
+
+  <nav class="nav-links" aria-label="Primary">
+    {
+      NAV.map((item) => {
+        const href = localizedPath(item.href, locale);
+        const active = isActive(href);
+        const label = t(`nav.${item.key}` as 'nav.home');
+        return (
+          <a
+            href={href}
+            class:list={[active && 'active']}
+            aria-current={active ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        );
+      })
+    }
+  </nav>
+
+  <div class="nav-right">
+    {SITE.multilingual && (
+      <LanguageSwitcher locale={locale} availableLocales={availableLocales} />
+    )}
+    <SearchButton locale={locale} />
+  </div>
+
+  <button
+    type="button"
+    class="nav-burger"
+    aria-label="Buka menu navigasi"
+    aria-expanded="false"
+    aria-controls="nav-mobile-panel"
+    data-nav-burger
+  >
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+    <span class="nav-burger__line"></span>
+  </button>
+</header>
+
+<nav
+  id="nav-mobile-panel"
+  class="nav-mobile"
+  aria-label="Primary mobile"
+  data-nav-mobile
+  hidden
+>
+  <div class="nav-mobile__inner">
+    {
+      NAV.map((item) => {
+        const href = localizedPath(item.href, locale);
+        const active = isActive(href);
+        const label = t(`nav.${item.key}` as 'nav.home');
+        return (
+          <a
+            href={href}
+            class:list={['nav-mobile__link', active && 'active']}
+            aria-current={active ? 'page' : undefined}
+            data-nav-link
+          >
+            {label}
+          </a>
+        );
+      })
+    }
+  </div>
+</nav>
+
+<script>
+  // Mobile hamburger toggle — anti-flicker safe (no jank on route change).
+  const burger = document.querySelector<HTMLButtonElement>('[data-nav-burger]');
+  const panel = document.querySelector<HTMLElement>('[data-nav-mobile]');
+
+  function closeMenu() {
+    if (!burger || !panel) return;
+    panel.hidden = true;
+    panel.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+  }
+
+  function openMenu() {
+    if (!burger || !panel) return;
+    panel.hidden = false;
+    // Force reflow so the transition runs from `is-open` initial state
+    // (CSS handles opacity/transform; see global.css .nav-mobile).
+    void panel.offsetHeight;
+    panel.classList.add('is-open');
+    burger.classList.add('is-open');
+    burger.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  burger?.addEventListener('click', () => {
+    const isOpen = burger.classList.contains('is-open');
+    if (isOpen) closeMenu();
+    else openMenu();
+  });
+
+  // Close on link click (mobile SPA navigation).
+  panel?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]').forEach((link) => {
+    link.addEventListener('click', () => closeMenu());
+  });
+
+  // Close on outside click.
+  document.addEventListener('click', (e) => {
+    if (!burger?.classList.contains('is-open')) return;
+    const target = e.target as Node;
+    if (burger.contains(target) || panel?.contains(target)) return;
+    closeMenu();
+  });
+
+  // Close on Escape.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && burger?.classList.contains('is-open')) {
+      closeMenu();
+    }
+  });
+
+  // Close on resize past mobile breakpoint.
+  let resizeRaf = 0;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      if (window.innerWidth >= 768 && burger?.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
+  });
+</script>

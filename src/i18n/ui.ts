@@ -1,0 +1,253 @@
+/**
+ * UI dictionaries.
+ * Add new locales by adding a key to `messages` and to `SITE.locales` in
+ * src/config.ts. All keys must exist for every locale (TypeScript enforces it).
+ */
+
+import type { Locale } from '../config';
+
+export const messages = {
+  en: {
+    'site.skipToContent': 'Skip to content',
+    'nav.home': 'Home',
+    'nav.posts': 'Posts',
+    'nav.tags': 'Tags',
+    'nav.categories': 'Writing',
+    'nav.archives': 'Archives',
+    'nav.about': 'About',
+    'nav.search': 'Search',
+    'nav.toggleMenu': 'Toggle menu',
+
+    'theme.toggle': 'Toggle theme',
+    'theme.light': 'Light',
+    'theme.dark': 'Dark',
+    'theme.system': 'System',
+
+    'lang.switcher': 'Language',
+    'lang.en': 'English',
+    'lang.ms': 'Bahasa Melayu',
+
+    'post.publishedOn': 'Published on',
+    'post.updatedOn': 'Updated on',
+    'post.readingTime': 'min read',
+    'post.toc': 'Table of contents',
+    'post.tags': 'Tags',
+    'post.categories': 'Categories',
+    'post.previous': 'Previous',
+    'post.next': 'Next',
+    'post.comments': 'Comments',
+    'post.commentsDisabled': 'Comments are disabled for this post.',
+    'post.commentsSetupTitle': 'Comments need configuration',
+    'post.commentsSetupBody':
+      'Giscus is enabled but not yet configured. Add the repository details below to start collecting comments.',
+    'post.commentsSetupStep1':
+      'Visit `giscus.app` and select your public GitHub repository (Discussions must be enabled).',
+    'post.commentsSetupStep2':
+      'Copy the generated `data-repo-id`, `data-category` and `data-category-id` values.',
+    'post.commentsSetupStep3':
+      'Set the `PUBLIC_GISCUS_ENABLED`, `PUBLIC_GISCUS_REPO`, `PUBLIC_GISCUS_REPO_ID`, `PUBLIC_GISCUS_CATEGORY` and `PUBLIC_GISCUS_CATEGORY_ID` env vars in your `.env` file.',
+    'post.commentsSetupStep4':
+      'Rebuild the site — this notice will be replaced by the live comments thread.',
+    'post.commentsSetupDocs': 'Open giscus.app',
+    'post.share': 'Share',
+    'post.copyLink': 'Copy link',
+    'post.copied': 'Copied!',
+    'post.author': 'Author',
+
+    'list.allPosts': 'All posts',
+    'list.empty': 'No posts found.',
+    'list.tagPosts': 'Posts tagged',
+    'list.categoryPosts': 'Posts in',
+    'list.totalPosts': 'posts',
+    'list.totalPostsOne': 'post',
+
+    'pagination.previous': 'Previous page',
+    'pagination.next': 'Next page',
+    'pagination.page': 'Page',
+    'pagination.of': 'of',
+
+    'archives.title': 'Archives',
+    'archives.empty': 'No posts yet.',
+
+    'tags.title': 'Tags',
+    'tags.empty': 'No tags yet.',
+
+    'categories.title': 'Categories',
+    'categories.empty': 'No categories yet.',
+
+    'search.title': 'Search',
+    'search.placeholder': 'Search the site',
+    'search.openLabel': 'Open search',
+    'search.closeLabel': 'Close search',
+    'search.empty': 'No results.',
+    'search.loading': 'Loading search…',
+    'search.typeToStart': 'Type to search…',
+    'search.hintShortcut': 'Press / anywhere to open search',
+    'search.searching': 'Searching…',
+    'search.noResultsFor': 'No results for',
+    'search.resultsCount': 'results',
+    'search.resultsCountOne': 'result',
+    'search.hintNavigate': 'to navigate',
+    'search.hintSelect': 'to open',
+    'search.clearLabel': 'Clear',
+
+    'code.copy': 'Copy',
+    'code.copied': 'Copied',
+
+    '404.title': 'Page not found',
+    '404.description': 'The page you are looking for has flown away.',
+    '404.cta': 'Back to home',
+
+    'footer.poweredBy': 'Powered by',
+    'footer.theme': 'Theme',
+    'footer.privacy': 'Privacy Policy',
+    'footer.copyright': 'All rights reserved.',
+    'nav.projects': 'Projects',
+    'projects.eyebrow': 'personal r&d',
+    'projects.title': 'Projects',
+    'projects.subtitle': 'Experiments and research in cloud security and AI systems.',
+    'projects.empty': 'No projects yet.',
+    'projects.status.active': 'ACTIVE R&D',
+    'projects.github': 'View on GitHub',
+    'projects.repo.eyebrow': 'live repo',
+    'projects.repo.description': 'Live snapshot of the public GitHub repository. Pulled at build time from the GitHub REST API.',
+    'projects.repo.stars': 'stars',
+    'projects.repo.forks': 'forks',
+    'projects.repo.watchers': 'watchers',
+    'projects.repo.issues': 'open issues',
+    'projects.repo.size': 'size',
+    'projects.repo.branch': 'default branch',
+    'projects.repo.languages': 'Languages',
+    'projects.repo.contributors': 'Top contributors',
+    'projects.repo.latestCommit': 'Latest commit',
+    'projects.repo.viewOnGithub': 'Open on GitHub',
+    'projects.repo.clone': 'Clone',
+    'projects.repo.cloneCopied': 'Copied!',
+    'projects.repo.fetchedAt': 'Synced',
+    'projects.repo.stale': 'Cached data — API call failed at last build',
+    'projects.repo.noCommit': 'No commits found',
+  },
+
+  ms: {
+    'site.skipToContent': 'Terus ke kandungan',
+    'nav.home': 'Utama',
+    'nav.posts': 'Posts',
+    'nav.tags': 'Tag',
+    'nav.categories': 'Siri',
+    'nav.archives': 'Arkib',
+    'nav.about': 'Tentang',
+    'nav.search': 'Cari',
+    'nav.toggleMenu': 'Togol menu',
+
+    'theme.toggle': 'Tukar tema',
+    'theme.light': 'Cerah',
+    'theme.dark': 'Gelap',
+    'theme.system': 'Sistem',
+
+    'lang.switcher': 'Bahasa',
+    'lang.en': 'English',
+    'lang.ms': 'Bahasa Melayu',
+
+    'post.publishedOn': 'Diterbitkan pada',
+    'post.updatedOn': 'Dikemaskini pada',
+    'post.readingTime': 'min baca',
+    'post.toc': 'Isi kandungan',
+    'post.tags': 'Tag',
+    'post.categories': 'Siri',
+    'post.previous': 'Sebelumnya',
+    'post.next': 'Seterusnya',
+    'post.comments': 'Komen',
+    'post.commentsDisabled': 'Komen dilumpuhkan untuk post ini.',
+    'post.commentsSetupTitle': 'Komen perlu konfigurasi',
+    'post.commentsSetupBody':
+      'Giscus diaktifkan tetapi belum dikonfigurasi.',
+    'post.commentsSetupStep1':
+      'Lawati giscus.app dan pilih repositori GitHub awam anda.',
+    'post.commentsSetupStep2':
+      'Salin nilai repo-id, category dan category-id.',
+    'post.commentsSetupStep3':
+      'Tetapkan pemboleh ubah persekitaran PUBLIC_GISCUS_* dalam fail .env anda.',
+    'post.commentsSetupStep4':
+      'Bina semula tapak — notis ini akan diganti dengan ulasan langsung.',
+    'post.commentsSetupDocs': 'Buka giscus.app',
+    'post.share': 'Kongsi',
+    'post.copyLink': 'Salin pautan',
+    'post.copied': 'Disalin!',
+    'post.author': 'Penulis',
+
+    'list.allPosts': 'Semua post',
+    'list.empty': 'Tiada post dijumpai.',
+    'list.tagPosts': 'Post bertag',
+    'list.categoryPosts': 'Post dalam',
+    'list.totalPosts': 'post',
+    'list.totalPostsOne': 'post',
+
+    'pagination.previous': 'Halaman sebelumnya',
+    'pagination.next': 'Halaman seterusnya',
+    'pagination.page': 'Halaman',
+    'pagination.of': 'daripada',
+
+    'archives.title': 'Arkib',
+    'archives.empty': 'Tiada post lagi.',
+
+    'tags.title': 'Tag',
+    'tags.empty': 'Tiada tag lagi.',
+
+    'categories.title': 'Siri',
+    'categories.empty': 'Tiada siri lagi.',
+
+    'search.title': 'Carian',
+    'search.placeholder': 'Cari dalam laman ini',
+    'search.openLabel': 'Buka carian',
+    'search.closeLabel': 'Tutup carian',
+    'search.empty': 'Tiada keputusan.',
+    'search.loading': 'Memuatkan carian…',
+    'search.typeToStart': 'Taip untuk mencari…',
+    'search.hintShortcut': 'Tekan / untuk buka carian',
+    'search.searching': 'Mencari…',
+    'search.noResultsFor': 'Tiada keputusan untuk',
+    'search.resultsCount': 'keputusan',
+    'search.resultsCountOne': 'keputusan',
+    'search.hintNavigate': 'untuk navigasi',
+    'search.hintSelect': 'untuk buka',
+    'search.clearLabel': 'Padam',
+
+    'code.copy': 'Salin',
+    'code.copied': 'Disalin',
+
+    '404.title': 'Halaman tidak dijumpai',
+    '404.description': 'Halaman yang anda cari sudah terbang jauh.',
+    '404.cta': 'Balik ke utama',
+
+    'footer.poweredBy': 'Dikuasai oleh',
+    'footer.theme': 'Tema',
+    'footer.privacy': 'Dasar Privasi',
+    'footer.copyright': 'Hak cipta terpelihara.',
+    'nav.projects': 'Projek',
+    'projects.eyebrow': 'personal r&d',
+    'projects.title': 'Projek',
+    'projects.subtitle': 'Eksperimen dan penyelidikan dalam cloud security dan sistem AI.',
+    'projects.empty': 'Tiada projek lagi.',
+    'projects.status.active': 'ACTIVE R&D',
+    'projects.github': 'Lihat di GitHub',
+    'projects.repo.eyebrow': 'repo langsung',
+    'projects.repo.description': 'Snapshot langsung repositori GitHub awam. Ditarik pada masa-bina dari GitHub REST API.',
+    'projects.repo.stars': 'bintang',
+    'projects.repo.forks': 'fork',
+    'projects.repo.watchers': 'pemerhati',
+    'projects.repo.issues': 'isu terbuka',
+    'projects.repo.size': 'saiz',
+    'projects.repo.branch': 'cawangan lalai',
+    'projects.repo.languages': 'Bahasa',
+    'projects.repo.contributors': 'Penyumbang utama',
+    'projects.repo.latestCommit': 'Komit terkini',
+    'projects.repo.viewOnGithub': 'Buka di GitHub',
+    'projects.repo.clone': 'Klon',
+    'projects.repo.cloneCopied': 'Disalin!',
+    'projects.repo.fetchedAt': 'Disegerakkan',
+    'projects.repo.stale': 'Data cache — panggilan API gagal pada bina terakhir',
+    'projects.repo.noCommit': 'Tiada komit dijumpai',
+  },
+} as const satisfies Record<Locale, Record<string, string>>;
+
+export type UIKey = keyof (typeof messages)['en'];

@@ -1,0 +1,781 @@
+---
+/**
+ * Projects page — BM + EN, handled from a single file.
+ * Route: /projects (MS default) and /en/projects (EN)
+ *
+ * 2026-07-28 update: compact single-card layout with agent-architecture
+ * table + workflow diagram. The four agents (Benchmark, Guardrail
+ * Enforcement, Pi Guardrail, Research) are described in a compact spec
+ * table and visualised in an inline SVG workflow diagram. Live repo
+ * data still fetched at build time from `src/utils/github-repo.ts`.
+ */
+import { SITE, type Locale } from '~/config';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { useTranslations } from '~/i18n/utils';
+import { Icon } from 'astro-icon/components';
+import { loadRepoSnapshot, relativeTime } from '~/utils/github-repo';
+
+export function getStaticPaths() {
+  return SITE.locales.map((l) => ({
+    params: { locale: l === SITE.defaultLocale ? undefined : l },
+    props: { locale: l },
+  }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+
+const isBM = locale === 'ms';
+
+// Live repo data — fetched at build time, never per visitor
+const repo = await loadRepoSnapshot();
+const repoHttps = `https://github.com/${repo.fullName}.git`;
+const repoHtml = `https://github.com/${repo.fullName}`;
+const syncedRel = relativeTime(repo.fetchedAt);
+
+// Agent roster — the single source of truth for the table, the
+// checklist, and the workflow diagram node labels.
+const agents = isBM
+  ? [
+      {
+        name: 'Benchmark Agent',
+        role: 'Hab & orkestrasi',
+        detail: 'Satu-satunya titik masuk untuk interaksi pemaju — semakan kod, soal jawab, triase.',
+        cls: 'agent-bench',
+      },
+      {
+        name: 'Guardrail Enforcement Agent',
+        role: 'Penilaian polisi OPA — 34 peraturan Harness merangkumi saluran paip, penyambung, delegasi, kod',
+        detail: 'Dipanggil oleh Benchmark Agent.',
+        cls: 'agent-harness',
+      },
+      {
+        name: 'Pi Guardrail Agent',
+        role: '10 peraturan aliran kerja Pi — tahap keselamatan bash, piawaian kod, pintu aliran kerja',
+        detail: 'Dipanggil oleh Benchmark Agent.',
+        cls: 'agent-pi',
+      },
+      {
+        name: 'Research Agent',
+        role: 'Imbasan ancaman mingguan — NVD CVE, CISA KEV, OWASP; draf rangka polisi baru',
+        detail: 'Jadual: Isnin 08:00 UTC.',
+        cls: 'agent-research',
+      },
+    ]
+  : [
+      {
+        name: 'Benchmark Agent',
+        role: 'Hub & orchestrator',
+        detail: 'Single entry point for all developer interactions — code review, Q&A, triage.',
+        cls: 'agent-bench',
+      },
+      {
+        name: 'Guardrail Enforcement Agent',
+        role: 'OPA policy evaluation — 34 Harness rules across pipelines, connectors, delegates, code',
+        detail: 'Called by Benchmark Agent.',
+        cls: 'agent-harness',
+      },
+      {
+        name: 'Pi Guardrail Agent',
+        role: '10 Pi workflow rules — bash security levels, code standards, workflow gates',
+        detail: 'Called by Benchmark Agent.',
+        cls: 'agent-pi',
+      },
+      {
+        name: 'Research Agent',
+        role: 'Weekly threat intelligence — NVD CVE, CISA KEV, OWASP; drafts new policy skeletons',
+        detail: 'Schedule: Mondays 08:00 UTC.',
+        cls: 'agent-research',
+      },
+    ];
+
+const project = {
+  slug: 'agent_guardrails',
+  tagline: isBM
+    ? 'Hab pengawal multi-ejen — empat ejen khusus, 44+ polisi OPA, gelung auto-fixa dengan laluan peningkatan'
+    : 'Self-healing multi-agent guardrail hub — four specialised agents, 44+ OPA rules, auto-fix loop with escalation',
+  description: isBM
+    ? 'Berjalan pada repositori GitHub peribadi. Benchmark Agent mengorkestrasi Guardrail Enforcement (34 peraturan Harness), Pi Guardrail (10 peraturan), dan Research Agent mingguan — menutup PR sebelum ia digabungkan, auto-fixa sehingga tiga pusingan, kemudian membuka Isu untuk semakan manusia. 44 peraturan, 7 fail ujian, liputan 100%. Hantar dengan lebih pantas.'
+    : 'Self-healing guardrail hub running on a personal GitHub repo. Benchmark Agent orchestrates Guardrail Enforcement (34 Harness rules), Pi Guardrail (10 Pi workflow rules), and a weekly Research Agent — gating every PR before merge, auto-fixing up to three rounds, then escalating to a tracked GitHub Issue. 44 rules, 7 test files, 100% coverage. Ship faster.',
+  stack: ['Python', 'Bash', 'OPA/Rego', 'GitHub Actions', 'NVD/CISA/OWASP'],
+};
+---
+
+<BaseLayout
+  title={t('projects.title')}
+  description={project.description}
+  pathWithoutLocale="/projects"
+  narrow
+>
+  <article class="proj">
+
+    <!-- ── Header row ── -->
+    <header class="proj__head">
+      <div class="proj__id">
+        <h1 class="proj__name">{project.slug}</h1>
+        <p class="proj__tagline">{project.tagline}</p>
+      </div>
+      <div class="proj__head-actions">
+        <span class="proj__status">
+          <span class="proj__status-dot" aria-hidden="true"></span>
+          {t('projects.status.active')}
+        </span>
+        <a
+          href={repoHtml}
+          class="proj__gh"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={t('projects.github')}
+        >
+          <Icon name="simple-icons:github" width={14} height={14} />
+          <span>GitHub</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── Summary ── -->
+    <p class="proj__summary">{project.description}</p>
+
+    <!-- ── Stack pills ── -->
+    <ul class="proj__stack" aria-label="Stack">
+      {project.stack.map((tag) => <li class="post-tag">{tag}</li>)}
+    </ul>
+
+    <!-- ── Agent architecture table ── -->
+    <section class="proj__agents">
+      <p class="proj__section-label">
+        <Icon name="lucide:users-round" width={12} height={12} />
+        <span>{isBM ? 'Ejen' : 'Agents'}</span>
+      </p>
+      <ul class="proj__agent-list">
+        {agents.map((a) => (
+          <li class={`proj__agent proj__agent--${a.cls}`}>
+            <div class="proj__agent-name">{a.name}</div>
+            <div class="proj__agent-role">{a.role}</div>
+            <div class="proj__agent-detail">{a.detail}</div>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ── Workflow diagram (static inline SVG) ── -->
+    <section class="proj__diagram">
+      <p class="proj__section-label">
+        <Icon name="lucide:workflow" width={12} height={12} />
+        <span>{isBM ? 'Aliran Kerja' : 'Workflow'}</span>
+      </p>
+      {/*
+        Compact inline SVG — single static file, no Mermaid runtime needed.
+        Drawn in the same dark theme as the rest of the site. Color tokens
+        mapped to the same `agent-*` classes as the table above so each
+        agent has a consistent hue across the page.
+      */}
+      <svg
+        class="proj__diagram-svg"
+        viewBox="0 0 540 320"
+        role="img"
+        aria-label={isBM ? 'Carta aliran kerja: PR masuk, ejen mengorkestrasi, gelung auto-fixa, atau peningkatan Isu' : 'Workflow diagram: PR enters, agents orchestrate, loop auto-fixes, or escalates to Issue'}
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b8fff" />
+          </marker>
+          <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399" />
+          </marker>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" />
+          </marker>
+        </defs>
+
+        <!-- 1. Developer PR entry -->
+        <g>
+          <rect x="200" y="6" width="140" height="34" rx="6" fill="#1e2130" stroke="#2a2d3e" />
+          <text x="270" y="22" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">{isBM ? 'PEMBANGUN' : 'DEVELOPER'}</text>
+          <text x="270" y="34" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="11">{isBM ? 'buka PR' : 'opens PR'}</text>
+        </g>
+
+        <!-- Arrow down -->
+        <line x1="270" y1="40" x2="270" y2="62" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+
+        <!-- 2. Benchmark Agent (hub) -->
+        <g>
+          <rect x="170" y="62" width="200" height="46" rx="7" fill="#5b8fff" fill-opacity="0.18" stroke="#5b8fff" stroke-width="1.2" />
+          <text x="270" y="80" text-anchor="middle" fill="#5b8fff" font-family="ui-monospace, monospace" font-size="11" font-weight="700">Benchmark Agent</text>
+          <text x="270" y="95" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="9">{isBM ? 'Hab · orkestrasi' : 'Hub · orchestrator'}</text>
+        </g>
+
+        <!-- Branch arrows to sub-agents -->
+        <line x1="220" y1="108" x2="120" y2="138" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+        <line x1="320" y1="108" x2="420" y2="138" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+
+        <!-- 3a. Guardrail Enforcement -->
+        <g>
+          <rect x="38" y="138" width="170" height="50" rx="6" fill="#a78bfa" fill-opacity="0.16" stroke="#a78bfa" stroke-width="1.1" />
+          <text x="123" y="156" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Guardrail</text>
+          <text x="123" y="169" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Enforcement</text>
+          <text x="123" y="182" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="10">34 {isBM ? 'peraturan' : 'rules'}</text>
+        </g>
+
+        <!-- 3b. Pi Guardrail -->
+        <g>
+          <rect x="332" y="138" width="170" height="50" rx="6" fill="#facc15" fill-opacity="0.14" stroke="#facc15" stroke-width="1.1" />
+          <text x="417" y="156" text-anchor="middle" fill="#facc15" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Pi Guardrail</text>
+          <text x="417" y="169" text-anchor="middle" fill="#facc15" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Agent</text>
+          <text x="417" y="182" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="10">10 {isBM ? 'peraturan' : 'rules'}</text>
+        </g>
+
+        <!-- Lines from sub-agents to Loop Engine -->
+        <line x1="123" y1="188" x2="200" y2="220" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+        <line x1="417" y1="188" x2="340" y2="220" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+
+        <!-- 4. Loop Engine -->
+        <g>
+          <rect x="160" y="220" width="220" height="44" rx="6" fill="#1e2130" stroke="#34d399" stroke-width="1.2" />
+          <text x="270" y="237" text-anchor="middle" fill="#34d399" font-family="ui-monospace, monospace" font-size="11" font-weight="700">Loop Engine</text>
+          <text x="270" y="251" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="9.5">{isBM ? 'GAGAL → auto-fixa → nilai semula' : 'FAIL → AI auto-fix → re-evaluate'}</text>
+          <text x="270" y="262" text-anchor="middle" fill="#6b7194" font-family="ui-monospace, monospace" font-size="9">{isBM ? 'maks 3 pusingan setiap pelanggaran' : 'max 3 attempts per violation'}</text>
+        </g>
+
+        <!-- Two outcomes -->
+        <line x1="220" y1="264" x2="120" y2="288" stroke="#34d399" stroke-width="1.4" marker-end="url(#ag)" />
+        <line x1="320" y1="264" x2="420" y2="288" stroke="#f87171" stroke-width="1.4" marker-end="url(#ar)" />
+
+        <!-- 5a. PASS -->
+        <g>
+          <rect x="38" y="288" width="170" height="26" rx="5" fill="#34d399" fill-opacity="0.10" stroke="#34d399" stroke-width="1" />
+          <text x="123" y="305" text-anchor="middle" fill="#34d399" font-family="ui-monospace, monospace" font-size="10" font-weight="700">✓ {isBM ? 'LULUS' : 'PASS'}</text>
+        </g>
+
+        <!-- 5b. ESCALATE -->
+        <g>
+          <rect x="332" y="288" width="170" height="26" rx="5" fill="#f87171" fill-opacity="0.10" stroke="#f87171" stroke-width="1" />
+          <text x="417" y="305" text-anchor="middle" fill="#f87171" font-family="ui-monospace, monospace" font-size="10" font-weight="700">✗ {isBM ? 'TINGKATKAN' : 'ESCALATE'}</text>
+        </g>
+      </svg>
+
+      <p class="proj__diagram-caption">
+        {isBM
+          ? 'Auto-fixa dikomit ke cawangan dengan komen PR; jika had dilevati, GitHub Issue dibuka dengan sejarah gelung penuh.'
+          : 'Auto-fix committed to branch with PR comment; past limit → GitHub Issue opened with full loop history.'}
+      </p>
+    </section>
+
+    <!-- ── Live repo strip ── -->
+    <div class="proj__repo">
+      <div class="proj__repo-stats">
+        <span class="proj__stat" title={t('projects.repo.stars')}>
+          <Icon name="lucide:star" width={13} height={13} />
+          <b>{repo.stars.toLocaleString()}</b>
+          <span class="proj__stat-l">{t('projects.repo.stars')}</span>
+        </span>
+        <span class="proj__stat" title={t('projects.repo.forks')}>
+          <Icon name="lucide:git-fork" width={13} height={13} />
+          <b>{repo.forks.toLocaleString()}</b>
+          <span class="proj__stat-l">{t('projects.repo.forks')}</span>
+        </span>
+        <span class="proj__stat" title={t('projects.repo.watchers')}>
+          <Icon name="lucide:eye" width={13} height={13} />
+          <b>{repo.watchers.toLocaleString()}</b>
+          <span class="proj__stat-l">{t('projects.repo.watchers')}</span>
+        </span>
+        <span class="proj__stat" title={t('projects.repo.issues')}>
+          <Icon name="lucide:circle-dot" width={13} height={13} />
+          <b>{repo.openIssues.toLocaleString()}</b>
+          <span class="proj__stat-l">{t('projects.repo.issues')}</span>
+        </span>
+      </div>
+
+      <div class="proj__repo-meta">
+        <span class="proj__repo-meta-item">
+          <Icon name="lucide:git-branch" width={12} height={12} />
+          <code>{repo.defaultBranch}</code>
+        </span>
+        <span class="proj__repo-meta-sep">·</span>
+        <span class="proj__repo-meta-item">{(repo.sizeKB / 1024).toFixed(2)} MB</span>
+        {repo.languages.length > 0 && (
+          <>
+            <span class="proj__repo-meta-sep">·</span>
+            <span class="proj__repo-meta-item">
+              <span class="proj__repo-meta-dot" style={`background:${repo.languages[0].color}`}></span>
+              {repo.languages.map((l, i) => (
+                <span>{l.name} {l.percent}%{i < repo.languages.length - 1 ? ' · ' : ''}</span>
+              ))}
+            </span>
+          </>
+        )}
+      </div>
+
+      {repo.latestCommit && (
+        <a
+          href={repo.latestCommit.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="proj__commit"
+        >
+          <code class="proj__commit-sha">{repo.latestCommit.shortSha}</code>
+          <span class="proj__commit-msg">{repo.latestCommit.message}</span>
+          <span class="proj__commit-meta">
+            {repo.latestCommit.author} · {relativeTime(repo.latestCommit.date)}
+          </span>
+        </a>
+      )}
+
+      {repo.languages.length > 1 && (
+        <div class="proj__langbar" role="img" aria-label={t('projects.repo.languages')}>
+          {repo.languages.map((l) => (
+            <span
+              class="proj__langbar-seg"
+              style={`width:${l.percent}%; background:${l.color};`}
+              title={`${l.name} ${l.percent}%`}
+            ></span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer class="proj__foot">
+      <div class="proj__foot-actions">
+        <button
+          type="button"
+          class="proj__clone"
+          data-repo-clone={repoHttps}
+          aria-label={t('projects.repo.clone')}
+        >
+          <Icon name="lucide:clipboard-copy" width={13} height={13} />
+          <code class="proj__clone-text">{repoHttps}</code>
+          <span class="proj__clone-hint">{t('projects.repo.clone')}</span>
+        </button>
+        <a href={repoHtml} target="_blank" rel="noopener noreferrer" class="proj__open">
+          {t('projects.repo.viewOnGithub')}
+          <Icon name="lucide:arrow-up-right" width={13} height={13} />
+        </a>
+      </div>
+      <p class="proj__synced">
+        <Icon name="lucide:refresh-cw" width={11} height={11} />
+        <span>{t('projects.repo.fetchedAt')} {syncedRel}</span>
+        {repo.isStale && (
+          <span class="proj__stale" title={t('projects.repo.stale')}>
+            <Icon name="lucide:alert-triangle" width={11} height={11} />
+          </span>
+        )}
+      </p>
+    </footer>
+
+  </article>
+</BaseLayout>
+
+<script>
+  (function wireCloneButton() {
+    if (typeof window === 'undefined') return;
+    const btn = document.querySelector<HTMLButtonElement>('[data-repo-clone]');
+    if (!btn) return;
+    btn.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-repo-clone') ?? '';
+      if (!url) return;
+      try {
+        await navigator.clipboard.writeText(url);
+        const hint = btn.querySelector('.proj__clone-hint');
+        if (hint) {
+          const original = hint.textContent;
+          hint.textContent = '✓';
+          hint.classList.add('is-copied');
+          setTimeout(() => {
+            hint.textContent = original;
+            hint.classList.remove('is-copied');
+          }, 1200);
+        }
+      } catch (e) {
+        console.warn('[clone] clipboard write failed', e);
+      }
+    });
+  })();
+</script>
+
+<style>
+  /* ── Single card ── */
+  .proj {
+    background: var(--mtj-surface-2);
+    border: 0.5px solid var(--mtj-muted);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  @media (max-width: 640px) {
+    .proj { padding: 1rem 1.05rem; gap: 0.8rem; }
+  }
+
+  /* ── Section labels (compact, mono) ── */
+  .proj__section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0 0 0.4rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mtj-muted);
+    font-weight: 700;
+  }
+  .proj__section-label :global(svg) { color: var(--mtj-accent); }
+
+  /* ── Head row ── */
+  .proj__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .proj__name {
+    font-family: ui-monospace, monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--mtj-text);
+    line-height: 1.2;
+  }
+  .proj__tagline {
+    margin-top: 0.2rem;
+    font-size: 0.82rem;
+    color: var(--mtj-muted);
+    line-height: 1.45;
+    max-width: 56ch;
+  }
+  .proj__head-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  .proj__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    font-family: ui-monospace, monospace;
+    background: oklch(0.76 0.17 145 / 0.12);
+    color: oklch(0.76 0.17 145);
+    border: 0.5px solid oklch(0.76 0.17 145 / 0.30);
+  }
+  .proj__status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: oklch(0.76 0.17 145);
+    box-shadow: 0 0 6px oklch(0.76 0.17 145 / 0.85);
+    animation: proj-pulse 2s ease-in-out infinite;
+  }
+  @keyframes proj-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.78); }
+  }
+  @media (prefers-reduced-motion: reduce) { .proj__status-dot { animation: none; } }
+
+  .proj__gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--mtj-text);
+    background: var(--mtj-surface);
+    border: 0.5px solid var(--mtj-muted);
+    text-decoration: none;
+    transition: color 150ms ease, border-color 150ms ease;
+  }
+  .proj__gh:hover { color: var(--mtj-accent); border-color: var(--mtj-accent); }
+
+  /* ── Summary ── */
+  .proj__summary {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--mtj-muted);
+    max-width: 72ch;
+  }
+
+  /* ── Stack ── */
+  .proj__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Agent architecture table ── */
+  .proj__agents {
+    display: flex;
+    flex-direction: column;
+  }
+  .proj__agent-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+  /* Stack to single column on phones */
+  @media (max-width: 520px) {
+    .proj__agent-list { grid-template-columns: 1fr; }
+  }
+
+  .proj__agent {
+    background: var(--mtj-surface);
+    border: 0.5px solid var(--mtj-muted);
+    border-left-width: 3px;
+    border-radius: 6px;
+    padding: 0.55rem 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  /* Color-coded left border per agent — matches diagram nodes */
+  .proj__agent--agent-bench    { border-left-color: var(--mtj-accent); }   /* blue */
+  .proj__agent--agent-harness  { border-left-color: var(--mtj-accent-2); } /* purple */
+  .proj__agent--agent-pi       { border-left-color: #facc15; }             /* yellow */
+  .proj__agent--agent-research { border-left-color: var(--mtj-green); }    /* green */
+
+  .proj__agent-name {
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--mtj-text);
+    line-height: 1.25;
+  }
+  .proj__agent-role {
+    font-size: 0.74rem;
+    color: var(--mtj-muted);
+    line-height: 1.4;
+  }
+  .proj__agent-detail {
+    font-size: 0.7rem;
+    color: var(--mtj-muted);
+    font-style: italic;
+    line-height: 1.4;
+    opacity: 0.85;
+  }
+
+  /* ── Workflow diagram ── */
+  .proj__diagram {
+    background: var(--mtj-surface);
+    border: 0.5px solid var(--mtj-muted);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem 0.55rem;
+  }
+  .proj__diagram-svg {
+    display: block;
+    width: 100%;
+    max-width: 540px;
+    height: auto;
+    margin: 0 auto;
+  }
+  .proj__diagram-caption {
+    margin: 0.4rem 0 0;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--mtj-muted);
+    line-height: 1.5;
+    max-width: 56ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Live repo strip ── */
+  .proj__repo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.7rem 0.85rem;
+    background: var(--mtj-surface);
+    border: 0.5px solid var(--mtj-muted);
+    border-radius: 8px;
+  }
+  .proj__repo-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+  }
+  .proj__stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--mtj-text);
+  }
+  .proj__stat :global(svg) { color: var(--mtj-muted); }
+  .proj__stat b { font-weight: 700; color: var(--mtj-text); }
+  .proj__stat-l {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mtj-muted);
+    font-weight: 600;
+  }
+  @media (max-width: 540px) {
+    .proj__stat-l { display: none; }
+    .proj__repo-stats { gap: 0.65rem; }
+  }
+  .proj__repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.72rem;
+    color: var(--mtj-muted);
+  }
+  .proj__repo-meta-item { display: inline-flex; align-items: center; gap: 4px; }
+  .proj__repo-meta-item code { color: var(--mtj-accent); }
+  .proj__repo-meta-sep { color: var(--mtj-muted); opacity: 0.55; }
+  .proj__repo-meta-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .proj__commit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem;
+    padding: 0.45rem 0.55rem;
+    background: var(--mtj-surface-2);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 120ms ease;
+    font-family: ui-monospace, monospace;
+  }
+  .proj__commit:hover { background: var(--mtj-accent-10); }
+  .proj__commit-sha {
+    background: var(--mtj-accent-15, var(--mtj-accent-10));
+    color: var(--mtj-accent);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+  .proj__commit-msg {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.76rem;
+    color: var(--mtj-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .proj__commit-meta {
+    font-size: 0.7rem;
+    color: var(--mtj-muted);
+    flex-shrink: 0;
+  }
+  .proj__langbar {
+    height: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    background: var(--mtj-muted);
+  }
+  .proj__langbar-seg { height: 100%; }
+
+  /* ── Footer ── */
+  .proj__foot {
+    border-top: 0.5px solid var(--mtj-muted);
+    padding-top: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .proj__foot-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+  }
+  .proj__clone {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 4px 9px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    color: var(--mtj-text);
+    background: var(--mtj-surface);
+    border: 0.5px solid var(--mtj-muted);
+    cursor: pointer;
+    font-family: ui-monospace, monospace;
+    transition: border-color 120ms ease, color 120ms ease;
+    max-width: 100%;
+  }
+  .proj__clone:hover { border-color: var(--mtj-accent); color: var(--mtj-accent); }
+  .proj__clone-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 220px;
+  }
+  @media (max-width: 640px) { .proj__clone-text { display: none; } }
+  .proj__clone-hint {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mtj-muted);
+    border-left: 1px solid var(--mtj-muted);
+    padding-left: 6px;
+  }
+  .proj__clone-hint.is-copied {
+    color: var(--mtj-green);
+    border-left-color: var(--mtj-green);
+  }
+  @media (max-width: 640px) { .proj__clone-hint { border-left: 0; padding-left: 0; } }
+  .proj__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--mtj-bg);
+    background: var(--mtj-accent);
+    text-decoration: none;
+    transition: filter 120ms ease;
+  }
+  .proj__open:hover { filter: brightness(1.12); }
+  .proj__synced {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    color: var(--mtj-muted);
+    font-family: ui-monospace, monospace;
+    flex-shrink: 0;
+  }
+  .proj__stale {
+    display: inline-flex;
+    align-items: center;
+    color: #facc15;
+    margin-left: 4px;
+  }
+</style>

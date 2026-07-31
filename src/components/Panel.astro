@@ -1,0 +1,59 @@
+---
+/**
+ * Right-hand panel (mockup design).
+ *
+ * FIX (2026-07-20): switched the recent-posts query from `getPosts()`
+ * to `getArticles()` so series-index pages (e.g. /posts/ground-truth/)
+ * no longer leak into the "Kemaskini Terkini" list with their generic
+ * series title (was rendering as e.g. "Ground Truth 10 Jul ·" with
+ * no body text).
+ *
+ * FIX (2026-07-20): per user direction, removed the "Siri Aktif" series
+ * progress bars and "Tag Popular" tag cloud. The command palette already
+ * shows series with article counts in its "Lompat Ke Siri" group, and
+ * tag browsing lives on /tags/ pages + per-post tag links — no need to
+ * duplicate them in a side panel.
+ *
+ * FIX (2026-07-20): the "Kemaskini Terkini" list now uses the same
+ * PostCardItem component as the main feed (PostList.astro), so day/
+ * mon/title/type/desc/read-time typography is identical to `/` and
+ * `/page/2/`. The only difference: the sidebar uses `compact` mode
+ * (no day/month column) so each row fits in a ~240-260px wide rail.
+ */
+import type { Locale } from '../config';
+import { getArticles } from '../utils/posts';
+import PostCardItem from './PostCardItem.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ms = locale === 'ms';
+
+const posts = await getArticles(locale);
+
+const recent = posts
+  .slice()
+  .sort((a, b) => {
+    const at = (a.data.updatedDate ?? a.data.pubDate)?.valueOf?.() ?? 0;
+    const bt = (b.data.updatedDate ?? b.data.pubDate)?.valueOf?.() ?? 0;
+    return bt - at;
+  })
+  .slice(0, 5);
+---
+
+<div class="mtj-sidebar__inner">
+
+  {recent.length > 0 && (
+    <section class="mtj-sb-section">
+      <h2 class="mtj-sb-heading">{ms ? 'Kemaskini Terkini' : 'Recently Updated'}</h2>
+      <ol class="mtj-articles">
+        {recent.map((post) => (
+          <PostCardItem post={post} locale={locale} compact />
+        ))}
+      </ol>
+    </section>
+  )}
+
+</div>
