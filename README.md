@@ -4,6 +4,11 @@ Source for **Malay Tech Journal** — a Bahasa Malaysia technical blog
 covering cloud security, AI guardrail engineering, and military
 AI/defence topics for Malaysian engineers.
 
+This project also serves as a case study in local harness agent
+capability — testing whether a fully static, production-ready web
+project can be scaffolded, built, and deployed end-to-end using 100%
+natural-language prompts, without touching any IDE platform.
+
 🌐 **Live site:** https://malay-tech-journal.pages.dev/
 
 ---
