@@ -83,6 +83,43 @@ bun run dev
 bun run build
 ```
 
+## Internationalisation (i18n)
+
+Malay Tech Journal is bilingual: **Bahasa Melayu (`ms`)** and **English (`en`)**.
+
+### Routing model
+
+| Locale                             | URL pattern          | Example              |
+| ---------------------------------- | -------------------- | -------------------- |
+| Bahasa Melayu (`ms`) — **default** | Root, no prefix      | `/posts/my-post/`    |
+| English (`en`)                     | Prefixed with `/en/` | `/en/posts/my-post/` |
+
+The default locale (`ms`) is served at the URL root with **no path prefix** because
+`routing.prefixDefaultLocale: false` is set in `astro.config.mjs`. English content
+lives under `/en/...`.
+
+Source-of-truth: `src/config.ts` → `SITE.defaultLocale` (`'ms'`) and `SITE.locales`
+(`['ms', 'en']`).
+
+### Adding or switching a locale
+
+1. Add the new locale code to `SITE.locales` in `src/config.ts`.
+2. Create a matching content folder: `src/content/posts/<locale>/` and
+   `src/content/pages/<locale>/`.
+3. Add UI strings for the new locale in `src/i18n/ui.ts`.
+4. If making it the default, update `SITE.defaultLocale` and adjust
+   `routing.prefixDefaultLocale` in `astro.config.mjs` accordingly.
+5. Run `bun run build` and verify all routes resolve correctly.
+
+### Locale helpers
+
+| Helper                        | File                | Purpose                                            |
+| ----------------------------- | ------------------- | -------------------------------------------------- |
+| `localePrefix(locale)`        | `src/i18n/utils.ts` | Returns `''` for default locale, `'/en'` otherwise |
+| `localizedPath(path, locale)` | `src/i18n/utils.ts` | Prepends the correct prefix                        |
+| `formatDate(date, locale)`    | `src/i18n/utils.ts` | Locale-aware date formatting                       |
+| `t(key, locale)`              | `src/i18n/index.ts` | Returns the UI string for `key` in `locale`        |
+
 ## Deployment
 
 Deployed to Cloudflare Pages. Build, deploy, and cleanup are handled
