@@ -5,8 +5,6 @@
 > Agentic development guide for the `arifbazli/malay-tech-journal` repository.
 > This file documents project conventions, architecture, key files, and
 > task-specific guidance for AI agents working on this codebase.
->
-> **⚠️ DRAFT — awaiting owner sign-off before merge (issue #13 / C-4).**
 
 ---
 
