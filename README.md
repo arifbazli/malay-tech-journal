@@ -3,7 +3,7 @@
 **Bilingual (Bahasa Melayu / English) technical blog** covering cloud security,
 AI guardrail engineering, and regional defence tech for Malaysian engineers.
 Built entirely through prompt-driven development on a Debian WSL environment
-running the PI Agent Harness — no manual IDE work.
+running the Local Agent Harness — no manual IDE work.
 
 🌐 **Live site:** https://malay-tech-journal.pages.dev/
 
@@ -35,7 +35,7 @@ bun run lint       # ESLint (zero-warnings policy)
 
 ```mermaid
 flowchart LR
-    A["💻 Debian WSL\nPI Agent Harness"] -->|"prompt-crafted\nbun run build"| B["🚀 Astro v7 + 🎨 Tailwind v4\nBuild & Styling Stack"]
+    A["💻 Debian WSL\nLocal Agent Harness"] -->|"prompt-crafted\nbun run build"| B["🚀 Astro v7 + 🎨 Tailwind v4\nBuild & Styling Stack"]
     B -->|"bun run build → dist/\nWrangler CLI deploy"| C["☁️ Cloudflare Pages\nStatic Web — Prompt-Crafted"]
 ```
 
