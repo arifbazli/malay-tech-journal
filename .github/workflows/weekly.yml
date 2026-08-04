@@ -1,0 +1,103 @@
+name: Weekly Build & Verify
+
+# Weekly scheduled smoke that exercises the project's main entry points
+# (install / lint / typecheck / build / test) on a fresh runner so
+# regressions surface before anyone has to debug them by hand.
+#
+# - schedule: every Monday 06:17 UTC (cron spread avoids the GitHub Actions
+#   top-of-the-hour thundering herd).
+# - workflow_dispatch: lets the repo owner re-run the same gates on demand.
+#
+# Least-privilege: read-only contents. No deploy artifact, no PR/comment
+# side-effects, no write to .github. If this ever needs to publish, add a
+# narrow `pages: write` block in the deploying job only.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+# Cancel only previous *manual* runs of this exact workflow. Never cancel
+# an in-flight scheduled run; a flake is still useful signal.
+concurrency:
+  group: weekly-${{ github.workflow }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'workflow_dispatch' }}
+
+permissions:
+  contents: read
+
+env:
+  # Match the project's bun engine range (>=1.1.0). Pinned to a current LTS
+  # so `bun install --frozen-lockfile` and lockfile SHA both behave.
+  BUN_VERSION: '1.2.21'
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  weekly:
+    name: Lint, typecheck, build, test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Print toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "bun:  $(bun --version)"
+          echo "node: $(node --version)"
+          echo "npm:  $(npm --version)"
+
+      - name: Install dependencies (frozen lockfile)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun install --frozen-lockfile
+
+      - name: Lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun run lint
+
+      - name: Typecheck
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun run typecheck
+
+      - name: Build
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Allow SITE_URL to be empty so the env-driven fallback in
+          # src/config.ts takes effect; build artifacts are not deployed
+          # from this workflow.
+          SITE_URL="${SITE_URL:-}" bun run build
+
+      - name: Test
+        shell: bash
+        run: |
+          set -euo pipefail
+          bun test
+
+      - name: Summarize
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "::group::Weekly summary"
+          echo "Commit: ${{ github.sha }}"
+          echo "Ref:    ${{ github.ref }}"
+          echo "Actor:  ${{ github.actor }}"
+          echo "Trigger:${{ github.event_name }}"
+          echo "::endgroup::"
