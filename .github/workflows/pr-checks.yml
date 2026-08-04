@@ -112,6 +112,21 @@ jobs:
             bun prettier --check "${files[@]}"
           fi
 
+      - name: Run markdownlint
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git diff --name-only --diff-filter=ACMR \
+              "${{ github.event.pull_request.base.sha }}...HEAD" \
+              | grep -E '\.(md|mdx)$' > .ci-markdownlint.txt || true
+          else
+            git ls-files '*.md' '*.mdx' > .ci-markdownlint.txt
+          fi
+          if [ -s .ci-markdownlint.txt ]; then
+            mapfile -t files < .ci-markdownlint.txt
+            bunx --bun markdownlint-cli2 "${files[@]}"
+          fi
+
   typecheck:
     name: Typecheck
     needs: changes
