@@ -1,0 +1,29 @@
+# Dependabot configuration for the Astro v7 / Bun project.
+# https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/configuring-dependabot
+version: 2
+
+updates:
+  # Runtime + dev dependencies tracked here so `auto-merge-dependabot.yml`
+  # has something to merge. Weekly cadence to keep PR noise low.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "07:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+    ignore:
+      # Major Astro versions are usually breaking; let a human drive those.
+      - dependency-name: "astro"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@astrojs/*"
+        update-types: ["version-update:semver-major"]
