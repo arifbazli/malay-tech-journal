@@ -20,9 +20,9 @@
  * `/page/2/`. The only difference: the sidebar uses `compact` mode
  * (no day/month column) so each row fits in a ~240-260px wide rail.
  */
-import type { Locale } from '../config';
-import { getArticles } from '../utils/posts';
-import PostCardItem from './PostCardItem.astro';
+import type { Locale } from '../../config';
+import { getArticles } from '../../utils/posts';
+import PostCardItem from '../post/post-card/PostCardItem.astro';
 
 interface Props {
   locale: Locale;

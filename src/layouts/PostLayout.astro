@@ -1,7 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import PostNav from '../components/PostNav.astro';
-import SmartImage from '../components/SmartImage.astro';
+import PostNav from '../components/post/PostNav.astro';
+import SmartImage from '../components/ui/SmartImage.astro';
 import TableOfContents from '../components/islands/TableOfContents.astro';
 import Giscus from '../components/islands/Giscus.astro';
 import MermaidLoader from '../components/islands/MermaidLoader.astro';
@@ -134,7 +134,7 @@ const crumbs = [
 
 let MathStylesComponent;
 if (post.data.math) {
-  MathStylesComponent = (await import('../components/MathStyles.astro')).default;
+  MathStylesComponent = (await import('../components/seo/MathStyles.astro')).default;
 }
 // Only mount MermaidLoader on posts that contain ```mermaid fenced blocks.
 // Auto-detection keeps authors from having to set a flag and ensures zero
