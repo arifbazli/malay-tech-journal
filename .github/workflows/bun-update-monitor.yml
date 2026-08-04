@@ -59,8 +59,19 @@ jobs:
 
       - name: Fail when pinned Bun is behind
         if: steps.compare.outputs.behind == 'true'
+        continue-on-error: true
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Pinned Bun ${PINNED_BUN_VERSION} is behind latest Bun ${{ steps.compare.outputs.latest }}."
+          echo "::warning title=Bun update available::Pinned Bun ${PINNED_BUN_VERSION} is behind latest Bun ${{ steps.compare.outputs.latest }}."
           echo "Update .github/workflows/deploy.yml and .github/workflows/pr-checks.yml, then regenerate bun.lock and open a PR."
-          exit 1
+          # Best-effort: open an issue. Skip silently if no token / API error.
+          if [ -n "${GH_TOKEN:-}" ]; then
+            gh issue create \
+              --title "Bun update available: ${PINNED_BUN_VERSION} → ${{ steps.compare.outputs.latest }}" \
+              --body "Pinned Bun \`${PINNED_BUN_VERSION}\` is behind latest \`${{ steps.compare.outputs.latest }}\`. Update \`.github/workflows/deploy.yml\` and \`.github/workflows/pr-checks.yml\`, then regenerate \`bun.lock\` and open a PR." \
+              --label "dependencies,bun,monitor" \
+              --assignee "${{ github.actor }}" \
+              || echo "gh issue create failed (non-fatal)"
+          fi

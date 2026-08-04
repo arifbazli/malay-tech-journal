@@ -56,8 +56,8 @@ export const SITE: SiteConfig = {
     'Field notes on cloud security and AI guardrails. Written for engineers who build and defend modern systems.',
   /** Author/handle shown in footer + meta. */
   author: {
-    name: 'Arif Bazli',
-    url: 'https://www.linkedin.com/in/arif-onsite',
+    name: import.meta.env.PUBLIC_AUTHOR_NAME ?? 'Arif Bazli',
+    url: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
     avatar: avatarImg,
     bio: {
       en: 'Engineering cloud security and AI guardrails.',
@@ -109,7 +109,11 @@ export const SITE: SiteConfig = {
   /** Public URL of the deployed site, no trailing slash. Breaks SEO/RSS if incorrect. */
   // `||` (not `??`) so an explicitly empty `SITE_URL=` in `.env` also
   // falls back to the default. Astro requires `site` to be a valid URL.
-  url: process.env.SITE_URL || 'https://chirping-astro.example.com',
+  url:
+    process.env.SITE_URL ||
+    (import.meta.env.PUBLIC_GITHUB_HANDLE && import.meta.env.PUBLIC_GITHUB_REPO
+      ? `https://${import.meta.env.PUBLIC_GITHUB_HANDLE}.github.io/${import.meta.env.PUBLIC_GITHUB_REPO}`
+      : 'https://arifbazli.github.io/malay-tech-journal'),
   /** Supported locales. Changing this requires adding/removing locale folders, content, and i18n entries. */
   locales: locales,
   /** Default locale. Changing this is a breaking, atomic, multi-file operation. */
@@ -137,12 +141,15 @@ export const NAV: readonly NavItem[] = [
 export const SOCIALS: readonly SocialLink[] = [
   {
     label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/arif-onsite',
+    href:
+      import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
     icon: 'simple-icons:linkedin',
   },
   {
     label: 'Email',
-    href: 'mailto:desktop_onsite@aol.com',
+    href: import.meta.env.PUBLIC_CONTACT_EMAIL
+      ? `mailto:${import.meta.env.PUBLIC_CONTACT_EMAIL}`
+      : 'mailto:desktop_onsite@aol.com',
     icon: 'lucide:mail',
   },
 ] as const satisfies SocialLink[];

@@ -21,12 +21,11 @@ globalThis.DOMParser = window.DOMParser;
 globalThis.DocumentFragment = window.DocumentFragment;
 globalThis.CSSStyleSheet = window.CSSStyleSheet || class {};
 
-// MOCK DOMPurify: just return the input string unchanged
-// This is safe because we're processing our own static content
-globalThis.DOMPurify = {
-  sanitize: (html) => html,
-  removeAttribute: () => {},
-};
+// Use real DOMPurify on the JSDOM window so any contributor paste of HTML
+// inside a ```mermaid block is sanitized before being rendered.
+// `dompurify` is already in devDependencies.
+const { default: DOMPurify } = await import('dompurify');
+globalThis.DOMPurify = DOMPurify(window);
 
 // Now import Mermaid
 const mermaidLib = await import('mermaid');

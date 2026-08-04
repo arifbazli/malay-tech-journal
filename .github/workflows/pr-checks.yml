@@ -23,6 +23,7 @@ jobs:
       run_lint_format: ${{ steps.detect.outputs.run_lint_format }}
       run_typecheck: ${{ steps.detect.outputs.run_typecheck }}
       run_build: ${{ steps.detect.outputs.run_build }}
+      run_test: ${{ steps.detect.outputs.run_test }}
 
     steps:
       - name: Checkout
@@ -42,6 +43,7 @@ jobs:
             echo "run_lint_format=true" >> "$GITHUB_OUTPUT"
             echo "run_typecheck=true" >> "$GITHUB_OUTPUT"
             echo "run_build=true" >> "$GITHUB_OUTPUT"
+            echo "run_test=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -51,6 +53,7 @@ jobs:
           run_lint_format=false
           run_typecheck=false
           run_build=false
+          run_test=false
 
           if grep -qE '\.(astro|ts|tsx|js|jsx|md|mdx|css|json)$' .ci-changed.txt; then
             run_lint_format=true
@@ -59,10 +62,14 @@ jobs:
             run_typecheck=true
             run_build=true
           fi
+          if grep -qE '(^src/.*\.test\.ts$|^src/utils/posts\.test\.ts$)' .ci-changed.txt; then
+            run_test=true
+          fi
 
           echo "run_lint_format=${run_lint_format}" >> "$GITHUB_OUTPUT"
           echo "run_typecheck=${run_typecheck}" >> "$GITHUB_OUTPUT"
           echo "run_build=${run_build}" >> "$GITHUB_OUTPUT"
+          echo "run_test=${run_test}" >> "$GITHUB_OUTPUT"
 
   lint-format:
     name: Lint & Format
@@ -112,6 +119,21 @@ jobs:
             bun prettier --check "${files[@]}"
           fi
 
+      - name: Run markdownlint
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git diff --name-only --diff-filter=ACMR \
+              "${{ github.event.pull_request.base.sha }}...HEAD" \
+              | grep -E '\.(md|mdx)$' > .ci-markdownlint.txt || true
+          else
+            git ls-files '*.md' '*.mdx' > .ci-markdownlint.txt
+          fi
+          if [ -s .ci-markdownlint.txt ]; then
+            mapfile -t files < .ci-markdownlint.txt
+            bunx --bun markdownlint-cli2 "${files[@]}"
+          fi
+
   typecheck:
     name: Typecheck
     needs: changes
@@ -130,6 +152,25 @@ jobs:
 
       - name: Run typecheck
         run: bun run typecheck
+
+  test:
+    name: Tests
+    needs: changes
+    if: needs.changes.outputs.run_test == 'true' || github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run tests
+        run: bun test
 
   build:
     name: Build
@@ -156,7 +197,7 @@ jobs:
 
   status:
     name: PR Checks Status
-    needs: [changes, lint-format, typecheck, build]
+    needs: [changes, lint-format, typecheck, build, test]
     if: always()
     runs-on: ubuntu-latest
 
@@ -171,6 +212,7 @@ jobs:
             "${{ needs.lint-format.result }}"
             "${{ needs.typecheck.result }}"
             "${{ needs.build.result }}"
+            "${{ needs.test.result }}"
           )
 
           for r in "${results[@]}"; do
