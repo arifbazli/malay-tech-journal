@@ -1,19 +1,28 @@
 <!-- markdownlint-disable-file -->
 
-# Agents.md — Chirping Astro
+# Agents.md — Malay Tech Journal
 
-> Agentic development guide for the `kannansuresh/chirping-astro` repository.
+> Agentic development guide for the `arifbazli/malay-tech-journal` repository.
 > This file documents project conventions, architecture, key files, and
 > task-specific guidance for AI agents working on this codebase.
+>
+> **⚠️ DRAFT — awaiting owner sign-off before merge (issue #13 / C-4).**
 
 ---
 
 ## Project Overview
 
-**Chirping Astro** is a Chirpy-inspired, multilingual, statically generated blog
-theme built on **Astro 7.x**. It targets technical writers who need a fast,
-accessible blog with first-class i18n, dark mode, MDX authoring, and zero
-server-side runtime.
+**Malay Tech Journal** (`arifbazli/malay-tech-journal`) is a bilingual (Malay + English)
+technical blog covering cloud security, AI safety guardrails, and cyber-defence.
+Built on **Astro 7.x**, deployed to **Cloudflare Pages**, and authored in MDX.
+Content themes include CSPM/CNAPP commentary, practical offensive-defensive write-ups,
+and AI/LLM guardrail research — written for a Malay-language technical audience
+with English cross-posts.
+
+> **Stack note for agents:** this is _not_ the upstream `kannansuresh/chirping-astro`
+> theme repository. Do not apply upstream theming or starter-sync changes without
+> owner sign-off. The upstream starter sync workflow (`.github/workflows/sync-starter.yml`)
+> was rewritten in this repo to use branch+PR instead of direct push — see issues #11/#12.
 
 Markdown authoring also includes two custom remark code-block transforms:
 
@@ -105,7 +114,7 @@ The file `.env.example` is the canonical reference — never commit `.env`.
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `SITE_URL` | ✅ | Canonical origin (no trailing slash). Auto-detected in GitHub Actions. |
-| `BASE_PATH` | GitHub Pages only | Sub-path prefix (e.g. `/chirping-astro`). Auto-detected in GitHub Actions. |
+| `BASE_PATH` | Cloudflare/GitHub Pages only | Sub-path prefix (e.g. `/malay-tech-journal`). Auto-detected in GitHub Actions. |
 | `PUBLIC_GITHUB_HANDLE` | Optional | Sidebar GitHub icon + `SITE.author.url` |
 | `PUBLIC_GITHUB_REPO` | Optional | Repo slug for custom integrations |
 | `PUBLIC_TWITTER_HANDLE` | Optional | Sidebar Twitter icon |
@@ -464,7 +473,7 @@ bun run pagefind       # Re-run Pagefind only (after astro build)
 | Deploy | `.github/workflows/deploy.yml` | Push to `main` | Full build + deploy to GitHub Pages |
 | PR Checks | `.github/workflows/pr-checks.yml` | PR + push to `main` | PRs use fast mode (skip OG/RSS/collections) |
 | Sync Labels | `.github/workflows/labels.yml` | Manual dispatch | Applies `.github/labels.yml` to the repo |
-| Sync Starter | `.github/workflows/sync-starter.yml` | Push to `main` (after PR Checks succeed) or manual | Syncs files configured in `.starter-include` to `chirping-astro-starter`. Strips Husky and lint-staged from its `package.json`. |
+| Sync Starter | `.github/workflows/sync-starter.yml` | Push to `main` (after PR Checks succeed) or manual | Syncs files configured in `.starter-include` to `chirping-astro-starter` **via a branch + PR** (never a direct push to upstream main — see issues #11/#12). Strips Husky and lint-staged from its `package.json`. |
 
 ### PR fast mode env vars (set automatically by `pr-checks.yml`)
 
@@ -646,7 +655,7 @@ must be reflected across all four artefacts below.
 |----------|----------|-------------|
 | **`Agents.md`** | `/Agents.md` (this file) | Any architectural change |
 | **Main README** | `/README.md` | Any user-facing feature, config option, frontmatter field, script, or deployment instruction changes |
-| **Starter README** | `https://github.com/kannansuresh/chirping-astro-starter` — update via a separate PR/commit to that repository | Any change that affects how a new user sets up or configures the theme from scratch |
+| **Starter README** | `https://github.com/kannansuresh/chirping-astro-starter` — update via a branch+PR to that repository (never direct push — see issues #11/#12) | Any change that affects how a new user sets up or configures the theme from scratch |
 | **Demo posts** | `src/content/posts/<locale>/` | Any change to an existing feature that is demonstrated in a post; or any new feature that needs a post written |
 
 **Rule: never ship a feature without updating all four artefacts that are relevant to it.** The test: could a user who only reads the README and demo posts understand and use the new or changed feature correctly? If not, the docs are not done.
@@ -698,6 +707,9 @@ The starter is what new users clone. Its README should always reflect the
 minimal, "fresh install" experience. Update it when:
 
 - The quickstart steps change (install command, env setup, first-run flow).
+
+> **Reminder:** the sync workflow now pushes to a `sync/*` branch and opens a PR
+> on the upstream starter repo. Never manually `git push` to upstream main directly.
 - A config field that a new user must set on day one changes name, type, or
   default.
 - A new env variable becomes required or commonly needed at setup time.
