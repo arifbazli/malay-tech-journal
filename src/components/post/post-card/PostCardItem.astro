@@ -13,10 +13,10 @@
  * the 44px column (otherwise it would render as a 44px empty cell and
  * squeeze the body to ~215px in a 260px sidebar).
  */
-import type { Locale } from '../config';
-import { useTranslations, localizedPath } from '../i18n/utils';
-import { readingTime } from '../utils/reading-time';
-import type { Post } from '../utils/posts';
+import type { Locale } from '../../../config';
+import { useTranslations, localizedPath } from '../../../i18n/utils';
+import { readingTime } from '../../../utils/reading-time';
+import type { Post } from '../../../utils/posts';
 
 interface Props {
   post: Post;

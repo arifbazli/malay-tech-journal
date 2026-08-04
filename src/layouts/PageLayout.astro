@@ -15,7 +15,7 @@ const { title, description, crumbs, math = false } = Astro.props;
 
 let MathStylesComponent;
 if (math) {
-  MathStylesComponent = (await import('../components/MathStyles.astro')).default;
+  MathStylesComponent = (await import('../components/seo/MathStyles.astro')).default;
 }
 
 const articleClass = SITE.boxedArticles

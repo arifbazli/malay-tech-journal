@@ -6,11 +6,11 @@
  *   Mid:   nav links (Utama / Siri / Projek / Tentang)
  *   Right: [MS|EN] [Cari /]
  */
-import { SITE, type Locale, NAV } from '../config';
-import { useTranslations, localizedPath } from '../i18n/utils';
+import { SITE, type Locale, NAV } from '../../config';
+import { useTranslations, localizedPath } from '../../i18n/utils';
 import Logo from './Logo.astro';
-import SearchButton from './islands/SearchButton.astro';
-import LanguageSwitcher from './islands/LanguageSwitcher.astro';
+import SearchButton from '../islands/SearchButton.astro';
+import LanguageSwitcher from '../islands/LanguageSwitcher.astro';
 
 interface Props {
   locale: Locale;
