@@ -24,24 +24,24 @@ a03527e docs(audit): add technical debt audit
 
 ## Resolved in PR
 
-| ID | Severity | Resolution |
-|---|---|---|
-| M-2 | Medium | markdownlint-cli2 step added to `pr-checks.yml` |
-| M-3 | Medium | `bun test` job added to `pr-checks.yml` |
-| docs | — | `AUDIT.md` committed so reviewers have the audit baseline in-tree |
+| ID   | Severity | Resolution                                                             |
+| ---- | -------- | ---------------------------------------------------------------------- |
+| M-2  | Medium   | markdownlint-cli2 step added to `pr-checks.yml`                        |
+| M-3  | Medium   | `bun test` job added to `pr-checks.yml`                                |
+| docs | —        | `docs/AUDIT.md` committed so reviewers have the audit baseline in-tree |
 
 ## Surfaced as tracking issues
 
-| Issue | ID | Severity | Title |
-|---|---|---|---|
-| #11 | C-2 | Critical | `sync-starter.yml` destructive `clone || init` fallback |
-| #12 | C-3 | Critical | `sync-starter.yml` `git add -A` to a different remote |
-| #13 | C-4 | Critical | `AGENTS.md` is upstream boilerplate |
-| #14 | M-1 | Medium | `.cache/` write in `github-repo.ts` not gitignored |
-| #15 | M-4 | Medium | `PostCard.astro` (275 lines) likely multiple concerns |
-| #16 | M-5 | Medium | `sync-starter.yml` references repo by literal string |
-| #17 | M-6 | Medium | `deploy.yml` cancel-in-progress `false` for pages group |
-| #18 | M-7 | Medium | i18n model needs README documentation |
+| Issue | ID  | Severity | Title                                                   |
+| ----- | --- | -------- | ------------------------------------------------------- |
+| #11   | C-2 | Critical | `sync-starter.yml` destructive `clone                   |     | init` fallback |
+| #12   | C-3 | Critical | `sync-starter.yml` `git add -A` to a different remote   |
+| #13   | C-4 | Critical | `AGENTS.md` is upstream boilerplate                     |
+| #14   | M-1 | Medium   | `.cache/` write in `github-repo.ts` not gitignored      |
+| #15   | M-4 | Medium   | `PostCard.astro` (275 lines) likely multiple concerns   |
+| #16   | M-5 | Medium   | `sync-starter.yml` references repo by literal string    |
+| #17   | M-6 | Medium   | `deploy.yml` cancel-in-progress `false` for pages group |
+| #18   | M-7 | Medium   | i18n model needs README documentation                   |
 
 All issues labeled `tech-debt` (label created on the remote).
 

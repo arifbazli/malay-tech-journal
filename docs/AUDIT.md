@@ -8,6 +8,7 @@
 > Bun/npm equivalents. See [Files of Interest](#files-of-interest).
 
 ## Repo overview
+
 Astro v7 + Tailwind v4 multilingual blog, forked from
 `kannansuresh/chirping-astro` and rebranded in place. Build and deploy run
 through Bun → GitHub Pages. Content lives under
@@ -20,16 +21,18 @@ main entry points was missing and is now added.
 ## Critical Bugs
 
 ### C-1 — Hardcoded foreign repo in `/projects` data fetcher
+
 - **File:** `src/utils/github-repo.ts:13`
 - **Issue:** `const REPO = 'arifbazli/cyberpujangga';` — the `/projects`
-  page fetches live GitHub data for a *different* repository. On a
+  page fetches live GitHub data for a _different_ repository. On a
   `malay-tech-journal` deployment this shows cyberpujangga's stars,
   forks, languages, contributors, etc.
 - **Fix:** read from `process.env.PROJECTS_REPO`, falling back to
   `PUBLIC_GITHUB_HANDLE/PUBLIC_GITHUB_REPO`, then `arifbazli/malay-tech-journal`.
-  *(Applied in commit `fix(repo): source GitHub repo from env with safe fallback`.)*
+  _(Applied in commit `fix(repo): source GitHub repo from env with safe fallback`.)_
 
 ### C-2 — `sync-starter.yml` destructive `clone || init` pattern
+
 - **File:** `.github/workflows/sync-starter.yml:75-79, 96`
 - **Issue:** If `git clone https://...starter.git starter` fails (timeout,
   transient auth, network), the fallback runs
@@ -38,11 +41,12 @@ main entry points was missing and is now added.
   `starter/` directory, after which `git add -A` and `git push` overwrite
   the **real public** `kannansuresh/chirping-astro-starter` repository with
   a near-empty tree. Real blast radius = a public-repo destruction event.
-- **Fix:** *Not applied.* Listed under [Needs human decision](#needs-human-decision).
+- **Fix:** _Not applied._ Listed under [Needs human decision](#needs-human-decision).
   Owner must decide whether to (a) keep the workflow, (b) neutralize the
   fallback, or (c) delete the workflow entirely.
 
 ### C-3 — `sync-starter.yml` `git add -A` to a different remote
+
 - **File:** `.github/workflows/sync-starter.yml:96`
 - **Issue:** After wiping `starter/`, `git add -A` then `git push` ship
   every surviving file (including any untracked binary, secret, or
@@ -51,16 +55,17 @@ main entry points was missing and is now added.
   subshell, so the subsequent `working-directory: starter` step acts
   on a freshly-init'd repo with no commits. Workflow is functional only
   because the normal `git clone` path succeeds.
-- **Fix:** *Not applied.* Same escalation rationale as C-2.
+- **Fix:** _Not applied._ Same escalation rationale as C-2.
 
 ### C-4 — `AGENTS.md` is upstream boilerplate, not project guidance
+
 - **File:** `AGENTS.md` (entire file, ~780 lines)
 - **Issue:** The header references "Cloud Security Engineer … Salus …
   CNAPP … Prisma Cloud / Cortex Cloud" — content belonging to a
   different organization's agent brief that was copied during a fork /
   sync from `chirping-astro-starter`. Anyone running these instructions
   against this Astro blog will get nonsensical behavior.
-- **Fix:** *Not applied.* Listed under [Needs human decision](#needs-human-decision).
+- **Fix:** _Not applied._ Listed under [Needs human decision](#needs-human-decision).
   Owner must decide whether to (a) overwrite with project-specific
   guidance, (b) trim to a one-line pointer, or (c) delete.
 
@@ -69,12 +74,14 @@ main entry points was missing and is now added.
 ## High-Priority Debt
 
 ### H-1 — `package.json:2` `name` not rebranded
+
 - **Issue:** `"name": "chirping-astro"`. Affects npm lookups, lockfile
   metadata, build cache keys, IDE displays.
-- **Fix:** set to `"malay-tech-journal"`. *(Applied in commit
-  `fix(meta): rename package to malay-tech-journal`.)*
+- **Fix:** set to `"malay-tech-journal"`. _(Applied in commit
+  `fix(meta): rename package to malay-tech-journal`.)_
 
 ### H-2 — `SITE.url` defaults to upstream placeholder
+
 - **File:** `src/config.ts:142`, plus `astro.config.mjs:115` (`site: SITE.url`).
 - **Issue:** Default is `https://chirping-astro.example.com`. Without
   `SITE_URL` env, sitemap, RSS, OG, hreflang all emit broken absolute
@@ -83,39 +90,43 @@ main entry points was missing and is now added.
 - **Fix:** default to a Pages-style URL
   (`https://<handle>.github.io/<repo>`) when `PUBLIC_GITHUB_HANDLE` and
   `PUBLIC_GITHUB_REPO` are set, else
-  `https://arifbazli.github.io/malay-tech-journal`. *(Applied in commit
-  `fix(config): source author identity and SITE_URL defaults from env`.)*
+  `https://arifbazli.github.io/malay-tech-journal`. _(Applied in commit
+  `fix(config): source author identity and SITE_URL defaults from env`.)_
 
 ### H-3 — Hardcoded author identity in `src/config.ts`
+
 - **File:** `src/config.ts:78,104-105` (original numbering)
 - **Issue:** `name`, `LinkedIn URL`, and `mailto:` address hardcoded in
   source. Other identities are env-driven (`PUBLIC_GITHUB_HANDLE`, etc.)
   — author is the odd one out.
 - **Fix:** introduce `PUBLIC_AUTHOR_NAME`, `PUBLIC_AUTHOR_URL`, and use
   `PUBLIC_CONTACT_EMAIL` for the mailto. Fall back to the existing values
-  so existing deployments are unchanged. *(Applied in the same commit
-  as H-2.)*
+  so existing deployments are unchanged. _(Applied in the same commit
+  as H-2.)_
 
 ### H-4 — `bun-update-monitor.yml` fails the workflow on Bun drift
+
 - **File:** `.github/workflows/bun-update-monitor.yml:60-69` (original)
 - **Issue:** Hard-`exit 1` when the pinned Bun version trails latest. A
   release-day Actions-tab-red event every Monday at 08:00 UTC. A monitor
   should advise, not fail.
-- **Fix:** keep the smoke build on the *latest* Bun (already does); when
+- **Fix:** keep the smoke build on the _latest_ Bun (already does); when
   drift is detected, emit a `::warning`, and best-effort open an issue
   via `gh issue create`. Mark the step `continue-on-error: true` so the
-  workflow surfaces as a yellow badge with a linked issue. *(Applied in
-  commit `fix(ci): make bun-update-monitor advisory instead of failing`.)*
+  workflow surfaces as a yellow badge with a linked issue. _(Applied in
+  commit `fix(ci): make bun-update-monitor advisory instead of failing`.)_
 
 ### H-5 — Missing `weekly.yml` (the deliverable)
+
 - **Issue:** The task asked for a generic weekly workflow covering
   install/lint/typecheck/build/test. None existed.
 - **Fix:** added `.github/workflows/weekly.yml` with schedule
   `cron: "17 6 * * 1"` + `workflow_dispatch`, least-privilege
-  `contents: read`, and a 9-step job. *(Applied in commit
-  `ci(weekly): add weekly build/lint/typecheck/test workflow`.)*
+  `contents: read`, and a 9-step job. _(Applied in commit
+  `ci(weekly): add weekly build/lint/typecheck/test workflow`.)_
 
 ### H-6 — DOMPurify stubbed to identity in `render-diagrams.mjs`
+
 - **File:** `render-diagrams.mjs:36-38`
 - **Issue:** `globalThis.DOMPurify = { sanitize: html => html, ... }`.
   Acceptable only when all ` ```mermaid` blocks are 100% repo-owner
@@ -124,23 +135,25 @@ main entry points was missing and is now added.
   but it is non-zero.
 - **Fix:** `await import('dompurify')` and bind to the JSDOM window
   (`DOMPurify(window)`). `dompurify` is already in `devDependencies`.
-  *(Applied in commit
-  `fix(scripts): use real DOMPurify on the JSDOM window in render-diagrams`.)*
+  _(Applied in commit
+  `fix(scripts): use real DOMPurify on the JSDOM window in render-diagrams`.)_
 
 ### H-7 — `auto-merge-dependabot.yml` exists without a `dependabot.yml`
+
 - **Issue:** `auto-merge-dependabot.yml` triggers on Dependabot PRs but
   no `dependabot.yml` ships with the repo, so the auto-merge workflow
   will never fire.
 - **Fix:** added `.github/dependabot.yml` with weekly npm cadence, label
   set, and major-version ignores for `astro` and `@astrojs/*`.
-  *(Applied in commit
-  `chore(deps): enable weekly npm Dependabot for auto-merge workflow`.)*
+  _(Applied in commit
+  `chore(deps): enable weekly npm Dependabot for auto-merge workflow`.)_
 
 ---
 
 ## Medium
 
 ### M-1 — `.cache/` write in `github-repo.ts` (now gitignored)
+
 - **File:** `src/utils/github-repo.ts:151` (`writeDiskCache` → `.cache/github-repo.json`)
 - **Issue:** Writes a JSON snapshot containing whatever the GitHub API
   returned (description, etc.).
@@ -148,40 +161,46 @@ main entry points was missing and is now added.
   code change needed; verified.
 
 ### M-2 — `.markdownlint.json` present but not enforced in CI
+
 - **Issue:** `pr-checks.yml` runs `prettier --check` on `.md` files but
   no `markdownlint`. Tool config drift.
-- **Fix:** *Not applied.* Listed under [Follow-ups](#follow-ups).
+- **Fix:** _Not applied._ Listed under [Follow-ups](#follow-ups).
 
 ### M-3 — `pr-checks.yml` runs no test job
+
 - **Issue:** `package.json` has a `test` script (`bun test` →
   `src/utils/posts.test.ts` and any other `*.test.ts`), but no CI job
   runs it. The new weekly workflow runs tests; PR-time coverage remains
   absent.
-- **Fix:** *Not applied.* Listed under [Follow-ups](#follow-ups).
+- **Fix:** _Not applied._ Listed under [Follow-ups](#follow-ups).
 
 ### M-4 — `PostCard.astro` (275 lines) likely multiple concerns
+
 - **File:** `src/components/PostCard.astro`
 - **Issue:** Large single file; audit pass did not enumerate internal
   concerns.
-- **Fix:** *Not applied.* Listed under [Follow-ups](#follow-ups).
+- **Fix:** _Not applied._ Listed under [Follow-ups](#follow-ups).
 
 ### M-5 — `sync-starter.yml` references repo by literal string
+
 - **File:** `.github/workflows/sync-starter.yml`
 - **Issue:** Hardcoded `kannansuresh/chirping-astro-starter`. No rename
   detection.
-- **Fix:** *Not applied.* Covered by C-2/C-3.
+- **Fix:** _Not applied._ Covered by C-2/C-3.
 
 ### M-6 — `deploy.yml:23` `cancel-in-progress: false` for pages group
+
 - **Issue:** Intentional (never cancel a deploy), but combined with the
   absence of a cancel-on-PR group, two near-simultaneous pushes can
   queue deploys.
-- **Fix:** *Not applied.* Listed under [Follow-ups](#follow-ups).
+- **Fix:** _Not applied._ Listed under [Follow-ups](#follow-ups).
 
 ### M-7 — `src/pages/[...locale]/` plus i18n with `routing.prefixDefaultLocale: false`
+
 - **File:** `astro.config.mjs:124-148`
 - **Issue:** Default locale (`ms`) has no `/ms` prefix; the i18n block is
   mostly cosmetic for sitemap hreflang.
-- **Fix:** *Not applied.* Listed under [Follow-ups](#follow-ups) —
+- **Fix:** _Not applied._ Listed under [Follow-ups](#follow-ups) —
   documentation-only clarification, not a code change.
 
 ---
@@ -189,36 +208,40 @@ main entry points was missing and is now added.
 ## Low
 
 ### L-1 — `Object.defineProperty(globalThis, 'navigator', ...)` in `render-diagrams.mjs:18`
+
 - **Issue:** Correct usage (`navigator` on jsdom is a getter; using
   `defineProperty` avoids the trap). No change needed.
 
 ### L-2 — `.gitattributes` (573 bytes) not deep-audited
+
 - **Issue:** Verify LFS / eol config on first post-merge.
-- **Fix:** *Not applied.*
+- **Fix:** _Not applied._
 
 ### L-3 — `bunfig.toml` and `eslint.config.js` not deep-audited
+
 - **Issue:** Files exist and appear reasonable but were not enumerated.
-- **Fix:** *Not applied.*
+- **Fix:** _Not applied._
 
 ### L-4 — Community files (`SECURITY.md`, `CONTRIBUTING.md`, …)
+
 - **Issue:** Standard fork content. `SECURITY.md` should be reviewed by
   the human owner for relevance.
-- **Fix:** *Not applied.* Listed under [Needs human decision](#needs-human-decision).
+- **Fix:** _Not applied._ Listed under [Needs human decision](#needs-human-decision).
 
 ---
 
 ## CI/CD Workflow Summary
 
-| File | Triggers | Permissions | Verdict |
-|---|---|---|---|
-| `deploy.yml` | push to `main` (path-filtered) + manual | `contents:read`, `pages:write`, `id-token:*` | OK; Node-24-pinned actions v7 |
-| `pr-checks.yml` | PR / push to `main` + manual | `contents:read` | OK; no `test` job (see M-3) |
-| `bun-update-monitor.yml` | weekly `0 8 * * 1` + manual | `contents:read` | **Fixed** — now advisory |
-| `auto-merge-dependabot.yml` | Dependabot PR | `contents:write`, `pull-requests:write` | OK; only meaningful now that `dependabot.yml` exists (H-7) |
-| `auto-merge-imgbot.yml` | imgbot PR | `contents:write`, `pull-requests:write` | OK |
-| `labels.yml` | push to `.github/labels.yml` + manual | `contents:read`, `issues:write` | OK |
-| `sync-starter.yml` | `workflow_run` of PR Checks + manual | `contents:read` | **Critical risk** (C-2, C-3) — not modified |
-| `weekly.yml` *(new)* | weekly `17 6 * * 1` + manual | `contents:read` | OK; cron spreads away from the on-hour herd |
+| File                        | Triggers                                | Permissions                                  | Verdict                                                    |
+| --------------------------- | --------------------------------------- | -------------------------------------------- | ---------------------------------------------------------- |
+| `deploy.yml`                | push to `main` (path-filtered) + manual | `contents:read`, `pages:write`, `id-token:*` | OK; Node-24-pinned actions v7                              |
+| `pr-checks.yml`             | PR / push to `main` + manual            | `contents:read`                              | OK; no `test` job (see M-3)                                |
+| `bun-update-monitor.yml`    | weekly `0 8 * * 1` + manual             | `contents:read`                              | **Fixed** — now advisory                                   |
+| `auto-merge-dependabot.yml` | Dependabot PR                           | `contents:write`, `pull-requests:write`      | OK; only meaningful now that `dependabot.yml` exists (H-7) |
+| `auto-merge-imgbot.yml`     | imgbot PR                               | `contents:write`, `pull-requests:write`      | OK                                                         |
+| `labels.yml`                | push to `.github/labels.yml` + manual   | `contents:read`, `issues:write`              | OK                                                         |
+| `sync-starter.yml`          | `workflow_run` of PR Checks + manual    | `contents:read`                              | **Critical risk** (C-2, C-3) — not modified                |
+| `weekly.yml` _(new)_        | weekly `17 6 * * 1` + manual            | `contents:read`                              | OK; cron spreads away from the on-hour herd                |
 
 `actions/setup-python` does not apply — this is not a Python project.
 
@@ -227,20 +250,23 @@ main entry points was missing and is now added.
 ## Files of Interest
 
 **Edited (FIX phase):**
+
 - `src/utils/github-repo.ts` — REPO now env-driven with sane default
 - `src/config.ts` — SITE.url + author identity env-driven
 - `.env.example` — declared `PUBLIC_AUTHOR_*` and `PROJECTS_REPO`
 - `package.json` — renamed package
 - `.github/workflows/bun-update-monitor.yml` — advisory + issue open
 - `render-diagrams.mjs` — real DOMPurify via JSDOM window
-- `.github/dependabot.yml` *(new)* — weekly npm Dependabot
-- `.github/workflows/weekly.yml` *(new)* — the deliverable
+- `.github/dependabot.yml` _(new)_ — weekly npm Dependabot
+- `.github/workflows/weekly.yml` _(new)_ — the deliverable
 
 **Created (audit + report docs):**
-- `AUDIT.md` *(this file)*
+
+- `AUDIT.md` _(this file)_
 - `REPORT.md` — final summary
 
 **Held back (human decision required):**
+
 - `AGENTS.md` — upstream boilerplate, do not auto-edit
 - `.github/workflows/sync-starter.yml` — destructive fallback, do not auto-edit
 - `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE`, `CHANGELOG.md`
