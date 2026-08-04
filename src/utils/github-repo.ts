@@ -26,7 +26,13 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-const REPO = 'arifbazli/cyberpujangga';
+// Repo handle/name sourced from env so the same build works for any
+// deployment. Fallbacks mirror the upstream theme's defaults.
+const REPO =
+  process.env.PROJECTS_REPO ||
+  (import.meta.env.PUBLIC_GITHUB_HANDLE && import.meta.env.PUBLIC_GITHUB_REPO
+    ? `${import.meta.env.PUBLIC_GITHUB_HANDLE}/${import.meta.env.PUBLIC_GITHUB_REPO}`
+    : 'arifbazli/malay-tech-journal');
 const API = 'https://api.github.com';
 const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
 
