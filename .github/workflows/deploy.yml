@@ -20,6 +20,13 @@ permissions:
 
 concurrency:
   group: pages
+  # cancel-in-progress is intentionally false (resolves M-6 / issue #17).
+  # Rationale: GitHub Pages deployments are sequential on the CDN side.
+  # Cancelling a mid-flight deploy can leave the live site in a
+  # partially-propagated state until the next successful run completes.
+  # Keeping false ensures the prior deploy always finishes cleanly before
+  # the next one starts. Accepted trade-off: a newer push waits slightly
+  # longer if a deploy is in-flight, which is acceptable for a blog.
   cancel-in-progress: false
 
 env:
