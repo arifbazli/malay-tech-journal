@@ -67,11 +67,16 @@ jobs:
         run: bun run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        # Runs Wrangler directly via bunx (it's a devDependency — see
+        # package.json) instead of cloudflare/wrangler-action, whose
+        # own installer shells out to `npm install` and fails on this
+        # repo's peer-dependency graph (eslint@10 vs eslint-plugin-jsx-a11y's
+        # peer range). bunx resolves the pinned version from bun.lock,
+        # so there's no separate install step to go wrong.
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           # Account IDs aren't secret (Cloudflare dashboard shows them
           # openly), so this is hardcoded rather than requiring a second
           # manual variable setup step.
-          accountId: 1c5731ce0fd505c95adb0069d6aa4dd2
-          command: pages deploy ./dist --project-name=malay-tech-journal
+          CLOUDFLARE_ACCOUNT_ID: 1c5731ce0fd505c95adb0069d6aa4dd2
+        run: bunx wrangler pages deploy ./dist --project-name=malay-tech-journal
