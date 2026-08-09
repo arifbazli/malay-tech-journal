@@ -1,10 +1,5 @@
 # Malay Tech Journal
 
-[![Deploy to Cloudflare Pages](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy-cloudflare.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy-cloudflare.yml)
-[![Deploy to GitHub Pages](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml)
-[![PR Checks](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-
 **Bilingual (Bahasa Melayu / English) technical blog** covering cloud security,
 AI guardrail engineering, and regional defence tech for Malaysian engineers.
 Built entirely through prompt-driven development on a Debian WSL environment
