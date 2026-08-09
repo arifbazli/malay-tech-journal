@@ -1,8 +1,7 @@
 ---
 /**
  * 2026 Topbar — full mockup redesign.
- *   Left:  [logo-icon] Malay Tech Journal
- *                   tagline
+ *   Left:  [logo-icon]
  *   Mid:   nav links (Utama / Siri / Projek / Tentang)
  *   Right: [MS|EN] [Cari /]
  */
@@ -21,11 +20,7 @@ interface Props {
 
 const { locale, currentPath = '/', availableLocales } = Astro.props;
 const t = useTranslations(locale);
-const ms = locale === 'ms';
 const home = localizedPath('/', locale);
-const tagline = ms
-  ? 'Merekayasa guardrail cloud security dan AI'
-  : 'Engineering cloud security and AI guardrails';
 
 function isActive(href: string): boolean {
   if (href === '/') return currentPath === '/' || currentPath === '';
@@ -36,12 +31,6 @@ function isActive(href: string): boolean {
 <header class="chirpy-topbar" aria-label="Top Bar">
   <a class="nav-brand" href={home} aria-label={SITE.title}>
     <Logo size={34} strokeWidth={2.5} />
-    <div class="nav-title-block">
-      <span class="nav-title">
-        Malay <span class="accent">Tech Journal</span>
-      </span>
-      <span class="nav-tagline">{tagline}</span>
-    </div>
   </a>
 
   <nav class="nav-links" aria-label="Primary">
@@ -64,9 +53,7 @@ function isActive(href: string): boolean {
   </nav>
 
   <div class="nav-right">
-    {SITE.multilingual && (
-      <LanguageSwitcher locale={locale} availableLocales={availableLocales} />
-    )}
+    {SITE.multilingual && <LanguageSwitcher locale={locale} availableLocales={availableLocales} />}
     <SearchButton locale={locale} />
   </div>
 
@@ -84,13 +71,7 @@ function isActive(href: string): boolean {
   </button>
 </header>
 
-<nav
-  id="nav-mobile-panel"
-  class="nav-mobile"
-  aria-label="Primary mobile"
-  data-nav-mobile
-  hidden
->
+<nav id="nav-mobile-panel" class="nav-mobile" aria-label="Primary mobile" data-nav-mobile hidden>
   <div class="nav-mobile__inner">
     {
       NAV.map((item) => {

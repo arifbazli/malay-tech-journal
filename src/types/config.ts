@@ -8,7 +8,6 @@ export interface SiteConfig {
     name: string;
     url?: string;
     avatar?: string | ImageMetadata;
-    bio?: string;
   };
   defaultOgImage: string;
   postsPerPage: number;

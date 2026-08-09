@@ -28,8 +28,6 @@ export type Locale = (typeof locales)[number];
  */
 const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE ?? '';
 const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO ?? 'chirping-astro';
-const TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE ?? '';
-const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL ?? '';
 const THEME_REPO_URL = 'https://github.com/kannansuresh/chirping-astro';
 
 /**
@@ -59,10 +57,6 @@ export const SITE: SiteConfig = {
     name: import.meta.env.PUBLIC_AUTHOR_NAME ?? 'Arif Bazli',
     url: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
     avatar: avatarImg,
-    bio: {
-      en: 'Engineering cloud security and AI guardrails.',
-      ms: 'Merekayasa guardrail cloud security dan AI.',
-    },
   },
   /** Default OG image. */
   defaultOgImage: ogDefaultImg.src,
@@ -141,8 +135,7 @@ export const NAV: readonly NavItem[] = [
 export const SOCIALS: readonly SocialLink[] = [
   {
     label: 'LinkedIn',
-    href:
-      import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
+    href: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
     icon: 'simple-icons:linkedin',
   },
   {
