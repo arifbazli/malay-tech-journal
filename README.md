@@ -56,12 +56,22 @@ bun run format     # Prettier — auto-fix formatting
 
 ```mermaid
 flowchart LR
-    A[Local Dev\nBun + Astro] -->|git push / PR| B[PR Checks\nGitHub Actions]
-    B -->|lint · typecheck · build · test| C{main?}
-    C -->|yes| D[Deploy\nCloudflare Pages]
-    C -->|no| E[Review & iterate]
-    D --> F[Live Site\nmalay-tech-journal.pages.dev]
+    A[Local Dev\nBun + Astro] -->|git push| B[Pull Request]
+    B --> C[PR Checks\nlint · typecheck · build · test]
+    C -->|fail| D[Review & iterate]
+    C -->|pass| E[Merge to main]
+    E --> F[Cloudflare Pages\ngit-integration build]
+    F --> G[Live Site\nmalay-tech-journal.pages.dev]
 ```
+
+`PR Checks` (`pr-checks.yml`) runs on every PR and push to `main`, and gates
+merges via required status checks. The live site is built and published by
+**Cloudflare Pages' own git integration** — it watches `main` directly and is
+not triggered by, or dependent on, GitHub Actions. A separate `deploy.yml`
+workflow builds the same site for GitHub Pages on every push to `main`, but
+its publish step only fires if GitHub Pages is enabled on this repo (it
+currently is not) — so today it validates the build without publishing
+anywhere.
 
 ## Internationalisation (i18n)
 
@@ -112,10 +122,17 @@ categories, hero images, `math`, `pinned`, `unlisted`, and more).
 
 ## Deployment
 
-The canonical build is **Cloudflare Pages**, tracking `main`. A GitHub Actions
-workflow (`deploy.yml`) also builds and publishes to GitHub Pages on every
-push to `main`. Both consume the same `bun run build` → `dist/` output — no
-separate build config to maintain.
+**Cloudflare Pages** is the canonical, live deployment — it's connected
+directly to this repo's `main` branch via Cloudflare's own git integration
+and builds independently of GitHub Actions.
+
+A separate GitHub Actions workflow (`.github/workflows/deploy.yml`) builds
+the same site for GitHub Pages on every push to `main`, as a build-health
+check and optional secondary target. Its publish step only runs if GitHub
+Pages is enabled on the repo (**Settings → Pages**); until then it verifies
+the build succeeds without publishing anywhere. Both targets consume the
+same `bun run build` → `dist/` output — no separate build config to
+maintain.
 
 ## Contributing
 
