@@ -75,8 +75,5 @@ jobs:
         # so there's no separate install step to go wrong.
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          # Account IDs aren't secret (Cloudflare dashboard shows them
-          # openly), so this is hardcoded rather than requiring a second
-          # manual variable setup step.
-          CLOUDFLARE_ACCOUNT_ID: 1c5731ce0fd505c95adb0069d6aa4dd2
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: bunx wrangler pages deploy ./dist --project-name=malay-tech-journal
