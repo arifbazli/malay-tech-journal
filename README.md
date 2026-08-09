@@ -1,5 +1,6 @@
 # Malay Tech Journal
 
+[![Deploy to Cloudflare Pages](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy-cloudflare.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy-cloudflare.yml)
 [![Deploy to GitHub Pages](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml)
 [![PR Checks](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -60,18 +61,23 @@ flowchart LR
     B --> C[PR Checks\nlint · typecheck · build · test]
     C -->|fail| D[Review & iterate]
     C -->|pass| E[Merge to main]
-    E --> F[Cloudflare Pages\ngit-integration build]
+    E --> F[deploy-cloudflare.yml\nbun run build + Wrangler]
     F --> G[Live Site\nmalay-tech-journal.pages.dev]
 ```
 
 `PR Checks` (`pr-checks.yml`) runs on every PR and push to `main`, and gates
-merges via required status checks. The live site is built and published by
-**Cloudflare Pages' own git integration** — it watches `main` directly and is
-not triggered by, or dependent on, GitHub Actions. A separate `deploy.yml`
-workflow builds the same site for GitHub Pages on every push to `main`, but
-its publish step only fires if GitHub Pages is enabled on this repo (it
-currently is not) — so today it validates the build without publishing
-anywhere.
+merges via required status checks. On merge, `deploy-cloudflare.yml` builds
+the site and publishes it with `wrangler pages deploy`, authenticated via
+the `CLOUDFLARE_API_TOKEN` repository secret. Cloudflare Pages' own Git
+integration is intentionally **not** used for this project — auto-deploy
+must stay off in the Cloudflare dashboard (**Pages → malay-tech-journal →
+Settings → Builds & deployments**), or every merge would trigger two
+competing deploys of the same project.
+
+A separate `deploy.yml` workflow builds the same site for GitHub Pages on
+every push to `main`, but its publish step only fires if GitHub Pages is
+enabled on this repo (it currently is not) — so today it validates the
+build without publishing anywhere.
 
 ## Internationalisation (i18n)
 
@@ -122,15 +128,19 @@ categories, hero images, `math`, `pinned`, `unlisted`, and more).
 
 ## Deployment
 
-**Cloudflare Pages** is the canonical, live deployment — it's connected
-directly to this repo's `main` branch via Cloudflare's own git integration
-and builds independently of GitHub Actions.
+**Cloudflare Pages** is the canonical, live deployment. Publishing runs
+through `.github/workflows/deploy-cloudflare.yml`: on every push to `main`,
+it builds with `bun run build` and deploys the `dist/` output using
+[Wrangler](https://developers.cloudflare.com/workers/wrangler/), Cloudflare's
+own CLI, authenticated via a repository secret
+(`CLOUDFLARE_API_TOKEN`) — never Cloudflare's Git integration, which is
+intentionally disabled to avoid a double-deploy race.
 
 A separate GitHub Actions workflow (`.github/workflows/deploy.yml`) builds
 the same site for GitHub Pages on every push to `main`, as a build-health
 check and optional secondary target. Its publish step only runs if GitHub
 Pages is enabled on the repo (**Settings → Pages**); until then it verifies
-the build succeeds without publishing anywhere. Both targets consume the
+the build succeeds without publishing anywhere. All targets consume the
 same `bun run build` → `dist/` output — no separate build config to
 maintain.
 

@@ -38,7 +38,7 @@ Markdown authoring also includes two custom remark code-block transforms:
 | Search | Pagefind (static index, built post `astro build`) |
 | Comments | Giscus (optional, GitHub Discussions backed) |
 | Math | KaTeX (opt-in per post via `math: true` frontmatter) |
-| CI | GitHub Actions — `deploy.yml` (Pages) + `pr-checks.yml` |
+| CI | GitHub Actions — `deploy-cloudflare.yml` (canonical deploy) + `deploy.yml` (Pages, currently non-publishing) + `pr-checks.yml` |
 | Syncing | Starter template is synced using `.github/workflows/sync-starter.yml`, driven by `.starter-include` |
 
 ---
@@ -111,8 +111,8 @@ The file `.env.example` is the canonical reference — never commit `.env`.
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
-| `SITE_URL` | ✅ | Canonical origin (no trailing slash). Auto-detected in GitHub Actions. |
-| `BASE_PATH` | Cloudflare/GitHub Pages only | Sub-path prefix (e.g. `/malay-tech-journal`). Auto-detected in GitHub Actions. |
+| `SITE_URL` | ✅ | Canonical origin (no trailing slash). Auto-detected via `actions/configure-pages` in `deploy.yml`; `deploy-cloudflare.yml` falls back to `https://malay-tech-journal.pages.dev` if unset as a repo Variable. |
+| `BASE_PATH` | GitHub Pages only | Sub-path prefix (e.g. `/malay-tech-journal`). Auto-detected in `deploy.yml`. Cloudflare Pages serves from the domain root, so `deploy-cloudflare.yml` never sets this. |
 | `PUBLIC_GITHUB_HANDLE` | Optional | Sidebar GitHub icon + `SITE.author.url` |
 | `PUBLIC_GITHUB_REPO` | Optional | Repo slug for custom integrations |
 | `PUBLIC_TWITTER_HANDLE` | Optional | Sidebar Twitter icon |
@@ -468,10 +468,26 @@ bun run pagefind       # Re-run Pagefind only (after astro build)
 
 | Workflow | File | Trigger | Notes |
 |----------|------|---------|-------|
-| Deploy | `.github/workflows/deploy.yml` | Push to `main` | Full build + deploy to GitHub Pages |
+| Deploy (Cloudflare) | `.github/workflows/deploy-cloudflare.yml` | Push to `main` | **Canonical live deploy.** Builds, then `wrangler pages deploy`s to Cloudflare Pages using the `CLOUDFLARE_API_TOKEN` repo secret. Cloudflare's own Git integration is intentionally disabled — re-enabling it would double-deploy on every push. |
+| Deploy (GitHub Pages) | `.github/workflows/deploy.yml` | Push to `main` | Build-health check / optional secondary target. Its publish step only runs if GitHub Pages is enabled on the repo — currently is not, so it validates the build without publishing. |
 | PR Checks | `.github/workflows/pr-checks.yml` | PR + push to `main` | PRs use fast mode (skip OG/RSS/collections) |
 | Sync Labels | `.github/workflows/labels.yml` | Manual dispatch | Applies `.github/labels.yml` to the repo |
 | Sync Starter | `.github/workflows/sync-starter.yml` | Push to `main` (after PR Checks succeed) or manual | Syncs files configured in `.starter-include` to `chirping-astro-starter` **via a branch + PR** (never a direct push to upstream main — see issues #11/#12). Strips Husky and lint-staged from its `package.json`. |
+
+### Cloudflare Pages deploy secrets/vars
+
+`deploy-cloudflare.yml` reads:
+
+- `secrets.CLOUDFLARE_API_TOKEN` — **required**. Set via `gh secret set
+  CLOUDFLARE_API_TOKEN` or the GitHub UI (**Settings → Secrets and
+  variables → Actions**). Never paste this token into an issue, PR, chat,
+  or commit — treat any pasted/logged token as compromised and roll it
+  immediately in the Cloudflare dashboard.
+- `vars.SITE_URL`, `vars.PUBLIC_*` — optional, same variables `deploy.yml`
+  reads; falls back to `https://malay-tech-journal.pages.dev` if unset.
+- The Cloudflare **Account ID** is hardcoded in the workflow file — it is
+  not a secret (visible in the Cloudflare dashboard for any user on the
+  account).
 
 ### PR fast mode env vars (set automatically by `pr-checks.yml`)
 
