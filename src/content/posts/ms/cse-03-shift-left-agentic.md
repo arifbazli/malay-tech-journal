@@ -1,6 +1,6 @@
 ---
-title: "Shift-Left → Auto-Remediation → Agentic Remediation: Landskap Vendor 2026 dan Palo Alto Cortex Cloud Deep Dive"
-description: "Dari Checkov block PR dalam CI ke AI agent execute one-click fix merentasi code, cloud, dan SOC — peta vendor-by-vendor bagaimana cloud security bergerak dari cari isu ke baiki isu, dan di mana Palo Alto Cortex Cloud platform berada dalam perlumbaan ni."
+title: 'Shift-Left → Auto-Remediation → Agentic Remediation: Landskap Vendor 2026 dan Palo Alto Cortex Cloud Deep Dive'
+description: 'Dari Checkov block PR dalam CI ke AI agent execute one-click fix merentasi code, cloud, dan SOC — peta vendor-by-vendor bagaimana cloud security bergerak dari cari isu ke baiki isu, dan di mana Palo Alto Cortex Cloud platform berada dalam perlumbaan ni.'
 pubDate: 2026-07-15
 tags:
   - cloud
@@ -13,15 +13,14 @@ postType: field-note
 toc: true
 translationKey: cse-03-shift-left-agentic
 heroImage: /images/covers/webp/cover-cloud-ai.webp
-heroImageAlt: "Cloud + AI shift-left, auto-remediation, and agentic remediation cover"
-
+heroImageAlt: 'Cloud + AI shift-left, auto-remediation, and agentic remediation cover'
 ---
 
 > Nota lapangan analyst industri. Positioning vendor setakat Julai 2026 — setiap claim ada source inline.
 
 ## TL;DR
 
-Cloud security 2026 ada tiga operating model — shift-left (prevent), auto-remediation (react), dan agentic remediation (unify). Setiap vendor berada di titik berlainan dalam line ni, dan setiap satu jawab soalan "should the AI be allowed to touch production?" dengan jawapan yang berbeza. **Palo Alto Cortex Cloud 2.0** adalah platform pertama yang claim *end-to-end* agentic remediation merentasi code-to-cloud-to-SOC, dengan published metric **90% MTTR reduction** dan FedRAMP High+Moderate authorization. **Wiz** (sekarang Google Cloud) paling hampir dari segi scope tapi condong ke *recommend-with-deep-context* melalui Green Agent. **Orca** sengaja letak human dalam loop dan tolak full autonomy. Peralihan dari CSPM-as-ticket-queue ke CNAPP-as-agent-workforce adalah defining industry move 2026.
+Cloud security 2026 ada tiga operating model — shift-left (prevent), auto-remediation (react), dan agentic remediation (unify). Setiap vendor berada di titik berlainan dalam line ni, dan setiap satu jawab soalan "should the AI be allowed to touch production?" dengan jawapan yang berbeza. **Palo Alto Cortex Cloud 2.0** adalah platform pertama yang claim _end-to-end_ agentic remediation merentasi code-to-cloud-to-SOC, dengan published metric **90% MTTR reduction** dan FedRAMP High+Moderate authorization. **Wiz** (sekarang Google Cloud) paling hampir dari segi scope tapi condong ke _recommend-with-deep-context_ melalui Green Agent. **Orca** sengaja letak human dalam loop dan tolak full autonomy. Peralihan dari CSPM-as-ticket-queue ke CNAPP-as-agent-workforce adalah defining industry move 2026.
 
 ---
 
@@ -70,17 +69,17 @@ Prisma Cloud + Cortex CDR merged Feb 13 2025 ([PR](https://investors.paloaltonet
 
 ### Comparison Table
 
-| Vendor | Shift-Left Maturity (1-5) | Auto-Remediation (1-5) | Agentic Capability (1-5) | Human-in-Loop Model | 2026 Position |
-|---|---|---|---|---|---|
-| **Palo Alto Cortex Cloud 2.0** | 5 (Bridgecrew lineage, ASPM, Cortex CLI) | 5 (one-click + AI-generated playbooks) | 5 (Cortex AgentiX, trained on 1B+ responses) | Tiered: SAFE/RISKY/UNSAFE scoring, full audit trail | **Leader** — satu-satunya unified code-cloud-SOC stack dengan FedRAMP High+Mod |
-| **Wiz** (Google Cloud) | 5 (IDE-to-prod, AI-BOM) | 4 (Green Agent one-click + MCP) | 4 (Green/Red/MCP agents) | Recommend-with-deep-context, human execute | **Leader** — context model terkuat, agent ecosystem paling luas |
-| **Orca** | 4 (Unified Data Model, code repo scans) | 3 (auto-remediation rules + PR-gen) | 4 (Threat Investigation, AppSec Triage agents) | Recommend-first, human validate (deliberate) | **Leader** — stance yang opinionated; Unified Data Model terkuat |
-| **Tenable Hexa AI** | 4 (Tenable Cloud Security, IaC scans) | 4 (orchestrated workflows, MCP) | 4 (mission-ready + custom agents) | **Dial-it-yourself** — per-workflow toggle | **Strong Challenger** — exposure dataset paling luas, opt-in autonomy |
-| **Aqua Compass** | 3 (Secure AI, image scanning) | 4 (runtime containment policies) | 4 (MCP server, agentic runtime response) | Agent investigate, human approve enforcement | **Niche Leader** — runtime-first, angle containment yang unik |
-| **Sysdig Sage** | 3 (Falco, image scanning) | 3 (multi-step reasoning on threats) | 3 (collaborative agent workflows) | Conversational, human-driven | **Challenger** — runtime-focused, agent UX differentiator |
-| **Upwind Agentic Pack** | 3 (runtime context layer) | 3 (Green agent for remediation guidance) | 4 (Blue/Green/Red/Choppy named agents) | Runtime-context-first, human execute | **Niche Challenger** — runtime-first data layer |
-| **BigID** | 2 (DSPM focus) | 4 (agentic remediation routing) | 3 (Agentic Risk Remediation) | Recommendation-first | **DSPM Leader** — specialization data-layer |
-| **Check Point CloudGuard** | 4 (IaC, CI/CD hooks) | 4 (rule-based auto-remediation) | 2 (AI-native exposure, bukan agentic) | Rule-based, skop sempit | **Legacy Leader** — install base paling luas, autonomy konservatif |
+| Vendor                         | Shift-Left Maturity (1-5)                | Auto-Remediation (1-5)                   | Agentic Capability (1-5)                       | Human-in-Loop Model                                 | 2026 Position                                                                  |
+| ------------------------------ | ---------------------------------------- | ---------------------------------------- | ---------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------ |
+| **Palo Alto Cortex Cloud 2.0** | 5 (Bridgecrew lineage, ASPM, Cortex CLI) | 5 (one-click + AI-generated playbooks)   | 5 (Cortex AgentiX, trained on 1B+ responses)   | Tiered: SAFE/RISKY/UNSAFE scoring, full audit trail | **Leader** — satu-satunya unified code-cloud-SOC stack dengan FedRAMP High+Mod |
+| **Wiz** (Google Cloud)         | 5 (IDE-to-prod, AI-BOM)                  | 4 (Green Agent one-click + MCP)          | 4 (Green/Red/MCP agents)                       | Recommend-with-deep-context, human execute          | **Leader** — context model terkuat, agent ecosystem paling luas                |
+| **Orca**                       | 4 (Unified Data Model, code repo scans)  | 3 (auto-remediation rules + PR-gen)      | 4 (Threat Investigation, AppSec Triage agents) | Recommend-first, human validate (deliberate)        | **Leader** — stance yang opinionated; Unified Data Model terkuat               |
+| **Tenable Hexa AI**            | 4 (Tenable Cloud Security, IaC scans)    | 4 (orchestrated workflows, MCP)          | 4 (mission-ready + custom agents)              | **Dial-it-yourself** — per-workflow toggle          | **Strong Challenger** — exposure dataset paling luas, opt-in autonomy          |
+| **Aqua Compass**               | 3 (Secure AI, image scanning)            | 4 (runtime containment policies)         | 4 (MCP server, agentic runtime response)       | Agent investigate, human approve enforcement        | **Niche Leader** — runtime-first, angle containment yang unik                  |
+| **Sysdig Sage**                | 3 (Falco, image scanning)                | 3 (multi-step reasoning on threats)      | 3 (collaborative agent workflows)              | Conversational, human-driven                        | **Challenger** — runtime-focused, agent UX differentiator                      |
+| **Upwind Agentic Pack**        | 3 (runtime context layer)                | 3 (Green agent for remediation guidance) | 4 (Blue/Green/Red/Choppy named agents)         | Runtime-context-first, human execute                | **Niche Challenger** — runtime-first data layer                                |
+| **BigID**                      | 2 (DSPM focus)                           | 4 (agentic remediation routing)          | 3 (Agentic Risk Remediation)                   | Recommendation-first                                | **DSPM Leader** — specialization data-layer                                    |
+| **Check Point CloudGuard**     | 4 (IaC, CI/CD hooks)                     | 4 (rule-based auto-remediation)          | 2 (AI-native exposure, bukan agentic)          | Rule-based, skop sempit                             | **Legacy Leader** — install base paling luas, autonomy konservatif             |
 
 ---
 
@@ -99,23 +98,23 @@ flowchart LR
   S2 -->|"alert fatigue"| S3
   S3 -->|"agentic fix"| cloud
   classDef input fill:#1e2130,stroke:#5b8fff,stroke-width:2px,color:#e2e4ef
-  classDef prevent fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f
-  classDef react fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d
-  classDef unify fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+  classDef prevent fill:#2e2410,stroke:#fbbf24,stroke-width:2px,color:#fde68a
+  classDef react fill:#2d1518,stroke:#f87171,stroke-width:2px,color:#fecaca
+  classDef unify fill:#0f2a1c,stroke:#4ade80,stroke-width:2px,color:#bbf7d0
 ```
 
 ### Stage 1 — Prevent (shift-left)
 
 Surface area **Bridgecrew / Prisma Cloud / Cortex CLI**. Goal: tangkap misconfig sebelum PR merge.
 
-| Produk | Fungsi | Data Feeds Forward |
-|---|---|---|
-| **Cortex CLI for Code Security** | Scan IaC, SCA, secrets, OSS license compliance locally | Finding tagged by policy → API server |
-| **IaC misconfiguration scanner** | Terraform, CloudFormation, ARM, Kubernetes, Dockerfile | Finding flow ke ASPM Command Center |
-| **ASPM (Application Security Posture Mgmt)** | Cross-repo PR/CI posture, policy-as-code | Pre-deployment gate + post-deployment verification |
-| **Cortex CLI** + IDE plugin | VS Code, JetBrains inline remediation hint | Developer-accepted fix auto-commit |
-| **CI/CD hook** (GitHub Actions, GitLab, Jenkins, HCP Terraform) | Block merge atas critical finding | "Fix PR" auto-generated untuk human review |
-| **SCA scanner** | Open-source dependency CVE check, license risk | Vulnerability signal ke runtime engine |
+| Produk                                                          | Fungsi                                                 | Data Feeds Forward                                 |
+| --------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------------- |
+| **Cortex CLI for Code Security**                                | Scan IaC, SCA, secrets, OSS license compliance locally | Finding tagged by policy → API server              |
+| **IaC misconfiguration scanner**                                | Terraform, CloudFormation, ARM, Kubernetes, Dockerfile | Finding flow ke ASPM Command Center                |
+| **ASPM (Application Security Posture Mgmt)**                    | Cross-repo PR/CI posture, policy-as-code               | Pre-deployment gate + post-deployment verification |
+| **Cortex CLI** + IDE plugin                                     | VS Code, JetBrains inline remediation hint             | Developer-accepted fix auto-commit                 |
+| **CI/CD hook** (GitHub Actions, GitLab, Jenkins, HCP Terraform) | Block merge atas critical finding                      | "Fix PR" auto-generated untuk human review         |
+| **SCA scanner**                                                 | Open-source dependency CVE check, license risk         | Vulnerability signal ke runtime engine             |
 
 ### Stage 2 — React (legacy rule-based)
 
@@ -130,17 +129,17 @@ Tempat **Prisma Cloud CSPM** + **Cortex CDR** duduk sebelum merger. Limit yang S
 
 **Pembeza 2026**. Single data plane merentasi code, supply chain, cloud, dan SOC.
 
-| Capability | Fungsi | Data Source |
-|---|---|---|
-| **Cortex Agentic Assistant** | LLM-powered investigation, threat hunting, playbook generation | Native MCP integration, XQL queries |
-| **Cortex AgentiX** | Agent runtime — trained on **1B+ real-world security responses** | All Cortex Cloud signals |
-| **AI-Powered Prioritization (Urgency)** | Ganti CVSS dengan exploitability + reachability + KEV + EPSS + business context | Vulnerability Risk Score (CVRS, 0-100) |
-| **Attack-path analysis** | Correlate identities + network + vulns → crown-jewel reachability | Graph model merentasi semua layer |
-| **One-click remediation + auto-fix** | `POST /public_api/appsec/v1/issues/fix/trigger_fix_pull_request` ([API docs](https://docs-cortex.paloaltonetworks.com/r/Cortex-Cloud-Platform-APIs/Trigger-Fix-Pull-Request)) | Bulk PR creation dari mana-mana issue set |
-| **Cortex XSIAM (SOC integration)** | Cloud alert → XSIAM case; SOC analyst nampak finding yang sama dengan cloud engineer | Unified XDR/XSIAM data plane |
-| **NHI / machine-identity context** | IAM analysis at workload level (service account, role, permission) | Cloud IAM APIs + audit log |
-| **AI-coding-assistant integration** | Code fix via Cody/Sourcegraph + Claude (per [AWS case study](https://aws.amazon.com/partners/success/palo-alto-networks-anthropic-sourcegraph/)) | IDE + repo |
-| **OSS / build coverage** | SCA, license compliance, supply-chain SBOM | npm, PyPI, Maven, Go registries |
+| Capability                              | Fungsi                                                                                                                                                                        | Data Source                               |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| **Cortex Agentic Assistant**            | LLM-powered investigation, threat hunting, playbook generation                                                                                                                | Native MCP integration, XQL queries       |
+| **Cortex AgentiX**                      | Agent runtime — trained on **1B+ real-world security responses**                                                                                                              | All Cortex Cloud signals                  |
+| **AI-Powered Prioritization (Urgency)** | Ganti CVSS dengan exploitability + reachability + KEV + EPSS + business context                                                                                               | Vulnerability Risk Score (CVRS, 0-100)    |
+| **Attack-path analysis**                | Correlate identities + network + vulns → crown-jewel reachability                                                                                                             | Graph model merentasi semua layer         |
+| **One-click remediation + auto-fix**    | `POST /public_api/appsec/v1/issues/fix/trigger_fix_pull_request` ([API docs](https://docs-cortex.paloaltonetworks.com/r/Cortex-Cloud-Platform-APIs/Trigger-Fix-Pull-Request)) | Bulk PR creation dari mana-mana issue set |
+| **Cortex XSIAM (SOC integration)**      | Cloud alert → XSIAM case; SOC analyst nampak finding yang sama dengan cloud engineer                                                                                          | Unified XDR/XSIAM data plane              |
+| **NHI / machine-identity context**      | IAM analysis at workload level (service account, role, permission)                                                                                                            | Cloud IAM APIs + audit log                |
+| **AI-coding-assistant integration**     | Code fix via Cody/Sourcegraph + Claude (per [AWS case study](https://aws.amazon.com/partners/success/palo-alto-networks-anthropic-sourcegraph/))                              | IDE + repo                                |
+| **OSS / build coverage**                | SCA, license compliance, supply-chain SBOM                                                                                                                                    | npm, PyPI, Maven, Go registries           |
 
 ### Data-Flow Narrative (S1 → S2 → S3)
 
@@ -178,7 +177,7 @@ Tiga falsafah trust dalam 2026:
 2. **Deep context, human-led** — Wiz Green Agent. Every signal to the right person; the click is safe.
 3. **Recommend-first, deliberate** — Orca, Aqua Compass. AI propose; human approve; tiada production touch tanpa permission.
 
-Pilihan yang betul bergantung pada **risk tolerance** (regulated industry condong #3), **headcount pressure** (understaffed team condong #1), dan **audit requirement**. Apa yang dah tak boleh diterima dalam 2026 ialah posture Stage-2 yang lama: CSPM yang generate 10,000 alert, hantar ke SOC analyst, dan panggil ia "security operations". Agentic shift adalah real, vendor consensus adalah jelas — soalnya bukan lagi *sama ada* nak delegate remediation pada AI, tapi *falsafah autonomy yang mana* organisasi kau boleh defend dalam post-mortem.
+Pilihan yang betul bergantung pada **risk tolerance** (regulated industry condong #3), **headcount pressure** (understaffed team condong #1), dan **audit requirement**. Apa yang dah tak boleh diterima dalam 2026 ialah posture Stage-2 yang lama: CSPM yang generate 10,000 alert, hantar ke SOC analyst, dan panggil ia "security operations". Agentic shift adalah real, vendor consensus adalah jelas — soalnya bukan lagi _sama ada_ nak delegate remediation pada AI, tapi _falsafah autonomy yang mana_ organisasi kau boleh defend dalam post-mortem.
 
 ---
 

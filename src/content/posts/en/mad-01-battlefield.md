@@ -1,5 +1,5 @@
 ---
-title: "AI on the Battlefield: Project Maven, Drone Swarms & JADC2"
+title: 'AI on the Battlefield: Project Maven, Drone Swarms & JADC2'
 description: "From thousand-unit drone swarms to AI targeting systems making decisions in milliseconds — AI has transformed warfare. This isn't science fiction. It's happening now."
 pubDate: 2026-07-07
 tags:
@@ -9,10 +9,9 @@ tags:
 categories: ['Military AI & Defence']
 postType: field-note
 toc: true
-translationKey: "mad-01-battlefield"
+translationKey: 'mad-01-battlefield'
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Military AI and defence — battlefield AI cover"
-
+heroImageAlt: 'Military AI and defence — battlefield AI cover'
 ---
 
 > Field notes. For engineers who want to understand why AI is more than a chatbot — it's already a weapon, a sentinel, and the nervous system of modern warfare.
@@ -21,7 +20,7 @@ heroImageAlt: "Military AI and defence — battlefield AI cover"
 
 In 2018, more than 3,000 Google engineers signed a protest letter and resigned. The reason: their company was building AI for military drone image analysis — **Project Maven**.
 
-The letter read: *"We believe Google should not be in the business of war."*
+The letter read: _"We believe Google should not be in the business of war."_
 
 Three years later, the contract moved to Palantir. Project Maven continued — larger, more capable.
 
@@ -31,7 +30,7 @@ This isn't a story about Silicon Valley vs the Pentagon. It's a story about the 
 
 ## Project Maven — AI Eyes for Drones
 
-**Project Maven** (formally the *Algorithmic Warfare Cross-Functional Team*) was launched by the US Department of Defense in 2017. Original objective: use AI to process thousands of hours of drone video from Middle Eastern operations.
+**Project Maven** (formally the _Algorithmic Warfare Cross-Functional Team_) was launched by the US Department of Defense in 2017. Original objective: use AI to process thousands of hours of drone video from Middle Eastern operations.
 
 Before Maven, video analysis required human analysts — slow, fatiguing, and unscalable as drone fleets grew. Maven brought **computer vision** to:
 
@@ -46,10 +45,10 @@ flowchart LR
   O["Output<br/>Tagged clips<br/>geolocation metadata"]:::output
   A["Analyst<br/>Reviews high-priority targets"]:::human
   I --> M --> O --> A
-  classDef input fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef process fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef output fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
-  classDef human fill:#fef3c7,stroke:#d97706,color:#78350f
+  classDef input fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef process fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef output fill:#0f2436,stroke:#38bdf8,color:#bae6fd
+  classDef human fill:#2e2410,stroke:#fbbf24,color:#fde68a
 ```
 
 After the Google controversy, **Palantir** took over in 2019 via the **Palantir Gotham** platform — now widely used by the US Army for intelligence and logistics.
@@ -79,9 +78,9 @@ flowchart LR
   CYB --> JADC
   SPC --> JADC
   JADC --> CMD
-  classDef asset fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef brain fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef cmd fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef asset fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef brain fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef cmd fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 The old problem: each military branch ran its own communication systems. In warfare, slow information = lives lost.
@@ -104,7 +103,7 @@ In August 2020, in a quietly held test in Nevada, something remarkable happened.
 
 The pilot described the AI as "aggressive" and "inhuman" — it had no fear instinct, no fatigue, and could execute maneuvers that would render a human pilot unconscious from G-force.
 
-> *"It flies nothing like a human… it does things that, if I were to do them, I would have been unconscious."*
+> _"It flies nothing like a human… it does things that, if I were to do them, I would have been unconscious."_
 > — US Air Force pilot post-ACE test
 
 In 2023, DARPA continued with the **X-62A VISTA** — a modified F-16 that flew autonomously in actual combat scenarios (without weapon systems, but in real airspace).
@@ -138,10 +137,10 @@ flowchart TB
   BG --> MESH
   DO --> MESH
   MESH --> REDIST
-  classDef ctrl fill:#1e1b4b,stroke:#4f46e5,color:#e0e7ff
-  classDef note fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef drone1 fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef drone2 fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  classDef ctrl fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef note fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef drone1 fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef drone2 fill:#2d1518,stroke:#f87171,color:#fecaca
 ```
 
 This renders legacy air defense systems irrelevant — you cannot shoot down 1,000 units simultaneously.
@@ -156,12 +155,12 @@ Focus: **attritable drones** — cheap, expendable assets, not high-value platfo
 
 The Ukraine conflict since 2022 became the **first real-world test** of AI-assisted drone warfare at scale:
 
-| System | Type | AI Role |
-|---|---|---|
-| FPV drones | Reconnaissance + strike | AI flight stabilisation; pilot focuses on targeting |
-| Switchblade 300/600 | Loitering munition (US-supplied) | Autonomous target acquisition and terminal guidance |
-| Shahed-136 | Loitering munition (Iran/Russia) | Autonomous navigation to GPS waypoint, pattern matching |
-| Modified DJI drones | Improvised strike | Commercial autopilot repurposed for grenade drops |
+| System              | Type                             | AI Role                                                 |
+| ------------------- | -------------------------------- | ------------------------------------------------------- |
+| FPV drones          | Reconnaissance + strike          | AI flight stabilisation; pilot focuses on targeting     |
+| Switchblade 300/600 | Loitering munition (US-supplied) | Autonomous target acquisition and terminal guidance     |
+| Shahed-136          | Loitering munition (Iran/Russia) | Autonomous navigation to GPS waypoint, pattern matching |
+| Modified DJI drones | Improvised strike                | Commercial autopilot repurposed for grenade drops       |
 
 The DJI case is a supply chain security wake-up call: consumer drones designed for aerial photography were modified into weapons. This has direct implications for every hardware vendor in the AI stack.
 
@@ -182,7 +181,7 @@ The battlefield isn't only physical. AI has penetrated **cyber warfare** deeply:
 - Generate more convincing phishing emails
 - Translate technical documents for intelligence operations
 
-> *"These actors were not using these tools to develop novel attack capabilities, but rather to improve their productivity and efficiency in existing operations."*
+> _"These actors were not using these tools to develop novel attack capabilities, but rather to improve their productivity and efficiency in existing operations."_
 > — Microsoft Threat Intelligence, February 2024
 
 ---
@@ -199,7 +198,7 @@ The battlefield isn't only physical. AI has penetrated **cyber warfare** deeply:
 3. **AI safety scales with stakes** — when AI is wrong in a chatbot, you get a weird answer. When AI is wrong in a targeting system, people die. Reliability, explainability, and human oversight are non-negotiable at this level.
 
 4. **Know what your work builds toward** — Google engineers found out about Maven after it was running. Ask the question early.
-:::
+   :::
 
 ---
 

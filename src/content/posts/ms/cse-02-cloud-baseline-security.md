@@ -1,6 +1,6 @@
 ---
-title: "cloud security baseline — asas posture yang kena betul dari hari pertama"
-description: "Cloud Security Baseline (CSB) adalah set kontrol minimum yang kena ada sebelum workload pertama deploy. Ini breakdown praktis — dari CIS Benchmark, drift detection, hingga enforce baseline secara automatik."
+title: 'cloud security baseline — asas posture yang kena betul dari hari pertama'
+description: 'Cloud Security Baseline (CSB) adalah set kontrol minimum yang kena ada sebelum workload pertama deploy. Ini breakdown praktis — dari CIS Benchmark, drift detection, hingga enforce baseline secara automatik.'
 pubDate: 2026-07-02
 tags:
   - cloud
@@ -12,8 +12,7 @@ postType: field-note
 translationKey: cse-02-cloud-baseline-security
 toc: true
 heroImage: /images/covers/webp/cover-csb.webp
-heroImageAlt: "Cloud security baseline — CIS Foundations Benchmark cover"
-
+heroImageAlt: 'Cloud security baseline — CIS Foundations Benchmark cover'
 ---
 
 > Nota lapangan dalam Bahasa Melayu. Untuk Cloud Security Engineer yang nak faham hubungan antara Cloud Security Baseline, CSPM, dan cara enforce posture secara automated.
@@ -65,8 +64,8 @@ flowchart LR
     M4["Ongoing<br/>visibility"]:::cspm
     M5["Tools<br/>Wiz · Defender · Orca"]:::cspm
   end
-  classDef csb fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef cspm fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef csb fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef cspm fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 CSB adalah **apa yang kau define**. CSPM adalah **tool yang pastikan CSB tu masih dalam keadaan baik**.
@@ -79,12 +78,12 @@ Kau tak perlu cipta CSB dari kosong. Ada benchmark established yang boleh jadi s
 
 ### CIS Benchmarks (paling widely-used)
 
-| Benchmark | Versi terkini | Platform |
-|---|---|---|
-| CIS AWS Foundations | v7.0.0 (Apr 2026) | AWS |
-| CIS Azure Foundations | v6.0.0 (Apr 2026) | Azure |
-| CIS GCP Foundations | v3.0.0 | GCP |
-| CIS Kubernetes | v1.9.0 | K8s |
+| Benchmark             | Versi terkini     | Platform |
+| --------------------- | ----------------- | -------- |
+| CIS AWS Foundations   | v7.0.0 (Apr 2026) | AWS      |
+| CIS Azure Foundations | v6.0.0 (Apr 2026) | Azure    |
+| CIS GCP Foundations   | v3.0.0            | GCP      |
+| CIS Kubernetes        | v1.9.0            | K8s      |
 
 AWS Security Hub sekarang support **CIS AWS Foundations Benchmark v5.0** (announced Oct 2025) — boleh enable terus dari console, auto-scan setiap resource.
 
@@ -92,7 +91,7 @@ AWS Security Hub sekarang support **CIS AWS Foundations Benchmark v5.0** (announ
 
 Microsoft publish MCSB yang cover multi-cloud (AWS + Azure dalam satu framework). Bahagian "Posture and Vulnerability Management" dalam MCSB secara explicit define:
 
-> *"Define the security configuration baselines for different resource types in the cloud. Use configuration management tools to establish the configuration baseline automatically before or during resource provisioning."*
+> _"Define the security configuration baselines for different resource types in the cloud. Use configuration management tools to establish the configuration baseline automatically before or during resource provisioning."_
 
 ### NIST SP 800-53 Rev 5
 
@@ -245,11 +244,11 @@ repos:
           - --framework
           - terraform
           - --check
-          - CKV_AWS_1    # S3 bucket access logging
-          - CKV_AWS_8    # EC2 no public IP
-          - CKV_AWS_18   # S3 no public access
-          - CKV_AWS_41   # CloudTrail enabled
-          - --soft-fail  # warn dulu, tukar ke hard-fail bila ready
+          - CKV_AWS_1 # S3 bucket access logging
+          - CKV_AWS_8 # EC2 no public IP
+          - CKV_AWS_18 # S3 no public access
+          - CKV_AWS_41 # CloudTrail enabled
+          - --soft-fail # warn dulu, tukar ke hard-fail bila ready
 ```
 
 ---
@@ -268,25 +267,25 @@ flowchart LR
   T3["Masa 3<br/>Auto-remediation<br/>atau manual fix"]:::fix
   T4["Masa 4<br/>S3 bucket private<br/>compliant semula"]:::ok
   T0 --> T1 --> T2 --> T3 --> T4
-  classDef ok fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef drift fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef alert fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef fix fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
+  classDef ok fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef drift fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef alert fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef fix fill:#0f2436,stroke:#38bdf8,color:#bae6fd
 ```
 
 Tanpa CSPM, drift mungkin tak dikesan selama berhari-hari atau berminggu-minggu.
 
 ### Tool untuk drift detection 2026
 
-| Tool | Kekuatan | Free tier? |
-|---|---|---|
-| **AWS Config** | Native AWS, CIS benchmark built-in | Ya (limited rules) |
-| **AWS Security Hub** | Aggregate findings, CIS v5.0 support | Ya (30 hari trial) |
-| **Checkov + CI/CD** | Pre-deploy scan, policy-as-code | ✅ Open source |
-| **tfdrift-falco** | Real-time Terraform drift detection via Falco + CloudTrail | ✅ Open source (2026) |
-| **Wiz** | Deep posture + graph-based risk | Enterprise (berbayar) |
-| **Orca Security** | Agentless, full stack visibility | Enterprise (berbayar) |
-| **Defender for Cloud** | Azure-native + multi-cloud | Sebahagian free |
+| Tool                   | Kekuatan                                                   | Free tier?            |
+| ---------------------- | ---------------------------------------------------------- | --------------------- |
+| **AWS Config**         | Native AWS, CIS benchmark built-in                         | Ya (limited rules)    |
+| **AWS Security Hub**   | Aggregate findings, CIS v5.0 support                       | Ya (30 hari trial)    |
+| **Checkov + CI/CD**    | Pre-deploy scan, policy-as-code                            | ✅ Open source        |
+| **tfdrift-falco**      | Real-time Terraform drift detection via Falco + CloudTrail | ✅ Open source (2026) |
+| **Wiz**                | Deep posture + graph-based risk                            | Enterprise (berbayar) |
+| **Orca Security**      | Agentless, full stack visibility                           | Enterprise (berbayar) |
+| **Defender for Cloud** | Azure-native + multi-cloud                                 | Sebahagian free       |
 
 **Untuk small team / startup:** AWS Config + Checkov dalam CI/CD sudah cukup untuk CSB enforcement. Free, automated, dan coverage untuk 80% common misconfigs.
 
@@ -298,12 +297,12 @@ Tanpa CSPM, drift mungkin tak dikesan selama berhari-hari atau berminggu-minggu.
 
 CSB tradisional (CIS, NIST) tak cover AI/agent workloads. Ini **gap yang semakin kritikal**:
 
-| Control tradisional | Gap untuk AI workload |
-|---|---|
-| IAM least privilege | Agent ada identity — perlu scoped, time-bound capability |
-| S3 access control | Agent boleh read/write S3 — perlu audit trail per-task, bukan per-user |
-| CloudTrail logging | Log "service_account_X accessed S3" — tapi kenapa? untuk task apa? |
-| Network restriction | Agent boleh call external APIs — perlu per-intent network policy |
+| Control tradisional | Gap untuk AI workload                                                  |
+| ------------------- | ---------------------------------------------------------------------- |
+| IAM least privilege | Agent ada identity — perlu scoped, time-bound capability               |
+| S3 access control   | Agent boleh read/write S3 — perlu audit trail per-task, bukan per-user |
+| CloudTrail logging  | Log "service_account_X accessed S3" — tapi kenapa? untuk task apa?     |
+| Network restriction | Agent boleh call external APIs — perlu per-intent network policy       |
 
 **CSB extension untuk AI workloads (praktik terbaik sekarang):**
 
@@ -340,10 +339,10 @@ flowchart TB
   W3["Minggu 3 · Automate<br/>Terraform Config Rules<br/>OPA / Rego dalam CI/CD<br/>Pre-commit Checkov hooks"]:::w3
   W4["Minggu 4+ · Continuous<br/>AWS Config + Security Hub<br/>Alert ke Slack / PagerDuty<br/>Monthly CSB review"]:::w4
   W1 --> W2 --> W3 --> W4
-  classDef w1 fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef w2 fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef w3 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef w4 fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef w1 fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef w2 fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef w3 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef w4 fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 ---
@@ -358,12 +357,13 @@ Dalam dunia cloud yang besar dan cepat berubah, CSB yang automated dan CSPM yang
 
 ---
 
-*Rujukan:*
-- *CIS AWS Foundations Benchmark v7.0.0 — Tenable Audits (Apr 2026)*
-- *CIS Azure Foundations Benchmark v6.0.0 — NIST NCP (Apr 2026)*
-- *AWS Security Hub — CIS AWS Foundations Benchmark v5.0 support (Oct 2025)*
-- *Microsoft Cloud Security Benchmark — Posture and Vulnerability Management*
-- *ISACA — Cloud Security Posture Management: Control Plane for Modern Cloud Risk (2026)*
-- *CloudToolStack — Cloud Security Baseline 2026: What Every Account Should Have*
-- *higakikeita/tfdrift-falco — Real-time Terraform Drift Detection via Falco (2026)*
-- *OpenMalo — CSPM Practical Guide 2026*
+_Rujukan:_
+
+- _CIS AWS Foundations Benchmark v7.0.0 — Tenable Audits (Apr 2026)_
+- _CIS Azure Foundations Benchmark v6.0.0 — NIST NCP (Apr 2026)_
+- _AWS Security Hub — CIS AWS Foundations Benchmark v5.0 support (Oct 2025)_
+- _Microsoft Cloud Security Benchmark — Posture and Vulnerability Management_
+- _ISACA — Cloud Security Posture Management: Control Plane for Modern Cloud Risk (2026)_
+- _CloudToolStack — Cloud Security Baseline 2026: What Every Account Should Have_
+- _higakikeita/tfdrift-falco — Real-time Terraform Drift Detection via Falco (2026)_
+- _OpenMalo — CSPM Practical Guide 2026_

@@ -19,7 +19,10 @@
     var tries = 0;
     function init() {
       if (!window.mermaid) {
-        if (++tries > 200) { console.error('[mermaid] not loaded'); return; }
+        if (++tries > 200) {
+          console.error('[mermaid] not loaded');
+          return;
+        }
         return setTimeout(init, 50);
       }
       var mermaid = window.mermaid;
@@ -34,6 +37,15 @@
             primaryTextColor: '#e2e4ef',
             primaryBorderColor: '#2a2d3e',
             lineColor: '#5b8fff',
+            // Subgraph containers and edge-label backgrounds otherwise
+            // default to Mermaid's light-theme cream/gray, clashing badly
+            // against the dark page (confirmed by rendering every diagram
+            // in the site through mermaid-cli before this fix).
+            clusterBkg: '#16181f',
+            clusterBorder: '#2a2d3e',
+            edgeLabelBackground: '#16181f',
+            secondaryColor: '#1e2130',
+            tertiaryColor: '#1e2130',
             fontFamily: 'system-ui, -apple-system, sans-serif',
             fontSize: '13px',
           },
@@ -45,7 +57,10 @@
           },
           fontSize: 13,
         });
-      } catch (e) { console.error('[mermaid] init failed', e); return; }
+      } catch (e) {
+        console.error('[mermaid] init failed', e);
+        return;
+      }
 
       var pres = document.querySelectorAll('pre[data-language="mermaid"]');
       console.info('[mermaid] found', pres.length, 'diagrams');
@@ -78,30 +93,38 @@
           pre.classList.add('mermaid');
           var src = linesOf(pre);
           var id = 'm' + Math.random().toString(36).slice(2, 8);
-          mermaid.render(id, src).then(function (r) {
-            var div = document.createElement('div');
-            div.className = 'mermaid';
-            div.setAttribute('data-processed', 'true');
-            // Inject the rendered SVG. Mermaid computes a viewBox that
-            // matches the natural diagram width; we let the SVG keep
-            // that intrinsic width so narrow diagrams don't stretch
-            // to fill the column. The CSS rule `.mermaid svg` handles
-            // max-width + height: auto for responsive scaling when the
-            // diagram is wider than the container.
-            div.innerHTML = r.svg;
-            // Ensure overflow is visible (in case max-width clips)
-            div.style.overflowX = 'auto';
-            div.style.textAlign = 'center';
-            pre.replaceWith(div);
-          }).catch(function (err) {
-            console.error('[mermaid] render error', err);
-            pre.setAttribute('data-error', 'true');
-            var box = document.createElement('div');
-            box.className = 'mermaid-error';
-            box.style.cssText = 'padding:1rem;background:#fee2e2;color:#7f1d1d;border-radius:8px;font-family:ui-monospace,monospace;font-size:12px;white-space:pre-wrap;margin:1rem 0;';
-            box.textContent = 'Mermaid error: ' + ((err && (err.message || err.str)) || String(err)) + '\n\nSource:\n' + src;
-            pre.replaceWith(box);
-          });
+          mermaid
+            .render(id, src)
+            .then(function (r) {
+              var div = document.createElement('div');
+              div.className = 'mermaid';
+              div.setAttribute('data-processed', 'true');
+              // Inject the rendered SVG. Mermaid computes a viewBox that
+              // matches the natural diagram width; we let the SVG keep
+              // that intrinsic width so narrow diagrams don't stretch
+              // to fill the column. The CSS rule `.mermaid svg` handles
+              // max-width + height: auto for responsive scaling when the
+              // diagram is wider than the container.
+              div.innerHTML = r.svg;
+              // Ensure overflow is visible (in case max-width clips)
+              div.style.overflowX = 'auto';
+              div.style.textAlign = 'center';
+              pre.replaceWith(div);
+            })
+            .catch(function (err) {
+              console.error('[mermaid] render error', err);
+              pre.setAttribute('data-error', 'true');
+              var box = document.createElement('div');
+              box.className = 'mermaid-error';
+              box.style.cssText =
+                'padding:1rem;background:#2d1518;color:#fecaca;border:1px solid #f87171;border-radius:8px;font-family:ui-monospace,monospace;font-size:12px;white-space:pre-wrap;margin:1rem 0;';
+              box.textContent =
+                'Mermaid error: ' +
+                ((err && (err.message || err.str)) || String(err)) +
+                '\n\nSource:\n' +
+                src;
+              pre.replaceWith(box);
+            });
         })(pres[j]);
       }
     }

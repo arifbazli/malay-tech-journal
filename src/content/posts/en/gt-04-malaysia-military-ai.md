@@ -12,8 +12,7 @@ translationKey: gt-04-malaysia-military-ai
 toc: true
 postType: case-study
 heroImage: /images/covers/webp/cover-military-ai.webp
-heroImageAlt: "Ground truth essay — Malaysia military AI context"
-
+heroImageAlt: 'Ground truth essay — Malaysia military AI context'
 ---
 
 ## Context: Malaysia's Biggest Defence Transition in a Decade
@@ -33,6 +32,7 @@ PSPN outlines three AI pillars in the defence context:
 **Pillar 1 — Situational Awareness (SA) Enhancement**
 
 AI integration for real-time intelligence fusion from multiple sources:
+
 - SIGINT (Signals Intelligence) from coastal surveillance radar
 - IMINT (Imagery Intelligence) from Razak-1 satellite and MEASAT partnership
 - HUMINT feeds from CGSS (Central Government Security Service)
@@ -43,6 +43,7 @@ System under development: **TINDAK (Tactical Intelligence Network for Defence an
 **Pillar 2 — Unmanned Systems Integration**
 
 Malaysia adopted the **STRIDE** framework for drone control:
+
 - **S**urveillance — ISR drones for maritime patrol
 - **T**ransport — logistic UAVs for forward operating bases
 - **R**esponse — rapid deployment drones for SAR
@@ -55,6 +56,7 @@ Key contracts: BAE Systems Malaysia for C2 (Command and Control) infrastructure,
 **Pillar 3 — Cyber Defence AI**
 
 **PSEP (Defence Executive Strategic Plan) Cyber Command** — formally established August 2025 with mandate to:
+
 - Protect the Classified Defence Network (RSP / Rangkaian Sulit Pertahanan)
 - Monitor and respond to cyber threats against defence assets
 - Develop offensive cyber capability (limited and highly classified)
@@ -79,6 +81,7 @@ The Cryptology Centre also serves as a hub for collaboration with the **GCSC (Gl
 Tenaga Nasional Berhad (TNB) is a defence component that rarely appears in defence documents — but it is a critical dependency.
 
 **TNB Grid AI System (2025):**
+
 - Predictive maintenance for 33kV transmission lines
 - Anomaly detection for substation operations
 - Load balancing AI for peak demand management
@@ -120,12 +123,12 @@ flowchart TB
   OBJ -.targets.-> T3
   OBJ -.targets.-> T4
 
-  classDef recon    fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef ia       fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef persist  fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef lm       fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
-  classDef obj      fill:#1e1b4b,stroke:#4338ca,color:#e0e7ff
-  classDef targets  fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+  classDef recon    fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef ia       fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef persist  fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef lm       fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef obj      fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef targets  fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
 ```
 
 **Documented TTPs (Tactics, Techniques, Procedures):**
@@ -155,6 +158,7 @@ Objectives:
 **Malaysia Exposure:**
 
 Infrastructure identified as high-risk based on public threat intelligence:
+
 - Port Klang Authority systems (maritime logistics)
 - PETRONAS upstream operations
 - TNB grid management systems
@@ -169,6 +173,7 @@ In defence context: **pre-positioning for wartime disruption** is the primary co
 ASEAN is experiencing a dramatic increase in drone incidents:
 
 **2025 Incidents (Public Record):**
+
 - Myanmar: Multiple documented drone strikes by non-state actors
 - Philippines: Commercial drone surveillance near military installations (suspected)
 - Malaysia: 3 reported incidents of unregistered drones near Labuan air base (RMAF confirmed)
@@ -197,6 +202,7 @@ This is not hypothetical — it is a **documented attack pattern** in the Ukrain
 **Malaysia-specific concern:**
 
 Defence procurement for AI systems often involves:
+
 - Hardware from multiple origins (including jurisdictions with potentially differing interests)
 - Software from international vendors with global supply chains
 - Integration by local system integrators with varying security maturity
@@ -228,6 +234,7 @@ NACSA has supply chain security guidelines. But enforcement and verification in 
 ### Gap 3: AI Model Integrity
 
 **Problem:** AI models used in defence applications (threat classification, image recognition, anomaly detection) can be attacked via:
+
 - **Model poisoning** — corrupting training data
 - **Adversarial examples** — inputs that fool classifiers
 - **Model extraction** — stealing model capabilities
@@ -251,6 +258,7 @@ If you're building critical infrastructure AI — cloud security platforms, fina
 ### 2. AI Systems Are Soft Targets in the Supply Chain
 
 Defence procurement learned this the hard way. For enterprise AI:
+
 - Audit all third-party components in your AI stack
 - Verify integrity of model artifacts (hash checking)
 - Monitor unusual behaviour from AI systems that might suggest model compromise
@@ -258,6 +266,7 @@ Defence procurement learned this the hard way. For enterprise AI:
 ### 3. Power and Connectivity Assumptions
 
 Defence planning highlights that AI depends on power and connectivity that can fail. Enterprise AI resilience planning needs to include:
+
 - Degraded mode operations (when AI is unavailable)
 - Offline fallback procedures
 - Human override protocols that are practised, not just documented
@@ -272,17 +281,17 @@ Explainable AI is a regulatory requirement. But in defence, explainability can l
 
 ## Status Summary
 
-| Component | Status | Maturity |
-|---|---|---|
-| PSPN AI Pillar 1 (SA) | Piloting | Medium |
-| STRIDE Drone Framework | Deployed (partial) | Low-Medium |
-| PSEP Cyber Command | Operational | Medium |
-| NACSA Cryptology Centre | Operational | High |
-| TNB Grid AI | Production | Medium |
-| Counter-CL-STA-1062 measures | In progress | Low-Medium |
-| Counter-UAS coverage | Partial | Low |
-| AI Model Security | Nascent | Low |
-| Talent Pipeline | Development | Low |
+| Component                    | Status             | Maturity   |
+| ---------------------------- | ------------------ | ---------- |
+| PSPN AI Pillar 1 (SA)        | Piloting           | Medium     |
+| STRIDE Drone Framework       | Deployed (partial) | Low-Medium |
+| PSEP Cyber Command           | Operational        | Medium     |
+| NACSA Cryptology Centre      | Operational        | High       |
+| TNB Grid AI                  | Production         | Medium     |
+| Counter-CL-STA-1062 measures | In progress        | Low-Medium |
+| Counter-UAS coverage         | Partial            | Low        |
+| AI Model Security            | Nascent            | Low        |
+| Talent Pipeline              | Development        | Low        |
 
 ---
 
@@ -291,6 +300,7 @@ Explainable AI is a regulatory requirement. But in defence, explainability can l
 Malaysia is making serious investments in defence AI. PSPN 2026-2030 provides the framework, PSEP Cyber Command provides the institutional home, and NACSA provides the technical backbone.
 
 But the gaps that exist are real:
+
 - Talent pipeline is insufficient for the 5-year horizon
 - Supply chain security for defence AI needs more rigour
 - Counter-UAS is genuinely behind the threat curve
@@ -302,4 +312,4 @@ Defence is not only about military. It is also about infrastructure, grid system
 
 ---
 
-*Sources: MINDEF Malaysia PSPN 2026-2030 (public summary), NACSA Annual Report 2025, CrowdStrike Adversary Intelligence (CL-STA-1062 TTP documentation), Mandiant APT40 and Related Groups Analysis, Jane's Defence Weekly Malaysia reporting, TNB Annual Report 2025, ASEAN Counter-UAS Working Group documentation*
+_Sources: MINDEF Malaysia PSPN 2026-2030 (public summary), NACSA Annual Report 2025, CrowdStrike Adversary Intelligence (CL-STA-1062 TTP documentation), Mandiant APT40 and Related Groups Analysis, Jane's Defence Weekly Malaysia reporting, TNB Annual Report 2025, ASEAN Counter-UAS Working Group documentation_

@@ -1,5 +1,5 @@
 ---
-title: "AI guardrails — 6 layers you must have in production"
+title: 'AI guardrails — 6 layers you must have in production'
 description: "Most teams install one or two guardrails and call it 'secured'. This is the complete 6-layer reference for LLM production — with tools, frameworks, and the false positive costs vendors never tell you about."
 pubDate: 2026-07-04
 tags:
@@ -10,10 +10,9 @@ tags:
 categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
-translationKey: "age-02-6-lapisan"
+translationKey: 'age-02-6-lapisan'
 heroImage: /images/covers/webp/cover-guardrail.webp
-heroImageAlt: "AI guardrail engineering — 6 layers of defense-in-depth"
-
+heroImageAlt: 'AI guardrail engineering — 6 layers of defense-in-depth'
 ---
 
 > Technical notes. A practical reference for engineers deploying LLMs or agents to production safely.
@@ -67,14 +66,14 @@ flowchart TB
   L5 --> L6
   L6 -->|"logged output"| app
 
-  classDef input fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef output fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef l1 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef l2 fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef l3 fill:#fde68a,stroke:#ca8a04,color:#713f12
-  classDef l4 fill:#d9f99d,stroke:#65a30d,color:#365314
-  classDef l5 fill:#a7f3d0,stroke:#059669,color:#064e3b
-  classDef l6 fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
+  classDef input fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef output fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef l1 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef l2 fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef l3 fill:#2e2b10,stroke:#eab308,color:#fef08a
+  classDef l4 fill:#1c2b10,stroke:#a3e635,color:#e2f7c2
+  classDef l5 fill:#0f2a20,stroke:#34d399,color:#a7f3d0
+  classDef l6 fill:#0f2436,stroke:#38bdf8,color:#bae6fd
 ```
 
 ### Layer 1: Input Validation
@@ -82,6 +81,7 @@ flowchart TB
 **Catches:** Malicious input, injection attempts, jailbreak patterns, PII in input.
 
 **Tools:**
+
 - `Guardrails AI` — Python library, validator chains for input schemas
 - `LlamaGuard 3` (Meta) — 8B classifier, detects unsafe content by category
 - `PromptGuard` — cuts injection success rate by 67% (Scientific Reports 2025)
@@ -108,6 +108,7 @@ validated = guard.validate(user_input)
 **Catches:** Indirect prompt injection (via tool output, retrieved docs), topic drift, policy violations that aren't visible from pattern matching.
 
 **Tools:**
+
 - **NVIDIA NeMo Guardrails** (`llama-3.1-nemoguard-8b-content-safety`) — model-based semantic check, not regex. Designed specifically for agentic flows.
 - **Colang flows** (in NeMo) — define conversation rails declaratively
 
@@ -139,6 +140,7 @@ rails:
 **Catches:** System prompt leakage, data/instruction boundary confusion, cross-session contamination.
 
 **Core principles (OWASP cheat sheet):**
+
 - Separate the system prompt from user input structurally — not just a `---` in one string
 - Label each context section: `[SYSTEM]`, `[USER]`, `[TOOL_OUTPUT]`
 - Never inject user-controlled content directly into the system prompt
@@ -154,6 +156,7 @@ messages = [
 ```
 
 **Don't do this:**
+
 ```python
 # WRONG — user can escape from context
 prompt = f"System: {system_prompt}\nUser said: {user_input}\nNow answer:"
@@ -166,6 +169,7 @@ prompt = f"System: {system_prompt}\nUser said: {user_input}\nNow answer:"
 **Catches:** PII in output, toxic content, hallucinations (for high-stakes use cases), sensitive internal data leakage.
 
 **Tools:**
+
 - `Guardrails AI` validators — `DetectPII`, `ToxicLanguage`, `ValidURL`
 - `Microsoft Presidio` — PII detection + anonymization, enterprise-grade
 - `LlamaGuard 3` — can also be used for output screening, not just input
@@ -190,6 +194,7 @@ This is the **most commonly skipped layer** — even though an agent with 47 too
 **New framework (Apr 2026):**
 
 **Microsoft Agent Governance Toolkit** (open source) — covers 10/10 OWASP Agentic Top 10:
+
 ```bash
 pip install agent-governance
 ```
@@ -207,6 +212,7 @@ async def call_tool(tool_name: str, args: dict):
 ```
 
 **Manifest-based capability declaration:**
+
 ```yaml
 # agent-manifest.yaml
 agent: security-auditor-v1
@@ -214,7 +220,7 @@ capabilities:
   read:
     - s3://my-bucket/reports/**
     - github://org/repo/**.tf
-  write: []          # read-only agent
+  write: [] # read-only agent
   network:
     - api.github.com
     - api.aws.amazon.com
@@ -226,18 +232,18 @@ human_confirmation_required:
 
 **OWASP Agentic Top 10 (Dec 2025) — the 10 risks this layer addresses:**
 
-| # | Risk | Mitigation |
-|---|---|---|
-| 1 | Goal hijacking | Manifest validation at every step |
-| 2 | Tool misuse | Allowlist tool calls in Manifest |
-| 3 | Identity abuse | SPIFFE/SPIRE workload identity |
-| 4 | Memory poisoning | Validate memory store input/output |
-| 5 | Cascading failures | Circuit breaker + timeout |
-| 6 | Rogue agents | Agent creation requires explicit capability |
-| 7 | Data exfiltration via reasoning | Output + information-flow labeling |
-| 8 | Privilege escalation | Least-privilege Manifest, no runtime escalation |
-| 9 | Insecure tool chaining | Composition analysis before execution |
-| 10 | Audit evasion | Mandatory structured logging per call |
+| #   | Risk                            | Mitigation                                      |
+| --- | ------------------------------- | ----------------------------------------------- |
+| 1   | Goal hijacking                  | Manifest validation at every step               |
+| 2   | Tool misuse                     | Allowlist tool calls in Manifest                |
+| 3   | Identity abuse                  | SPIFFE/SPIRE workload identity                  |
+| 4   | Memory poisoning                | Validate memory store input/output              |
+| 5   | Cascading failures              | Circuit breaker + timeout                       |
+| 6   | Rogue agents                    | Agent creation requires explicit capability     |
+| 7   | Data exfiltration via reasoning | Output + information-flow labeling              |
+| 8   | Privilege escalation            | Least-privilege Manifest, no runtime escalation |
+| 9   | Insecure tool chaining          | Composition analysis before execution           |
+| 10  | Audit evasion                   | Mandatory structured logging per call           |
 
 ---
 
@@ -246,11 +252,13 @@ human_confirmation_required:
 **Catches:** Anomalies in agent behavior, drift from normal usage patterns, retroactive forensics after incidents.
 
 **Tools:**
+
 - `Langfuse` — open source LLM observability, traces every call + token usage
 - `OpenTelemetry` + custom spans — for enterprises already on OTel
 - `Helicone` — proxy-based logging, zero code change required
 
 **Minimum you must log:**
+
 ```python
 {
   "timestamp": "2026-07-06T01:40:00Z",
@@ -267,6 +275,7 @@ human_confirmation_required:
 ```
 
 **Red flags in logs:**
+
 - Agent calls a tool not in its manifest → immediate alert
 - Output size suddenly 10x normal → possible exfiltration
 - Unusual tool call sequence → possible capability composition attack
@@ -288,18 +297,19 @@ flowchart TB
   L6["L6 · Langfuse / OpenTelemetry<br/>full audit trail"]:::l6
   OUT["Response out"]:::output
   IN --> L1 --> L2 --> L3 --> RUNTIME --> L4 --> L5 --> L6 --> OUT
-  classDef input fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef l1 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef l2 fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef l3 fill:#fde68a,stroke:#ca8a04,color:#713f12
-  classDef runtime fill:#1e1b4b,stroke:#4338ca,color:#e0e7ff
-  classDef l4 fill:#d9f99d,stroke:#65a30d,color:#365314
-  classDef l5 fill:#a7f3d0,stroke:#059669,color:#064e3b
-  classDef l6 fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
-  classDef output fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef input fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef l1 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef l2 fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef l3 fill:#2e2b10,stroke:#eab308,color:#fef08a
+  classDef runtime fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef l4 fill:#1c2b10,stroke:#a3e635,color:#e2f7c2
+  classDef l5 fill:#0f2a20,stroke:#34d399,color:#a7f3d0
+  classDef l6 fill:#0f2436,stroke:#38bdf8,color:#bae6fd
+  classDef output fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 **Real-world latency:**
+
 - L1 + L4: ~2-5ms added
 - L2 (NeMo 8B model): ~50-100ms — worth it for high-risk flows
 - L5: ~1-3ms per tool call
@@ -310,6 +320,7 @@ flowchart TB
 ## Additional frameworks worth knowing
 
 **AEGIS Framework (Forrester 2026)** — enterprise-level, integrates:
+
 - Governance + Identity (SPIFFE/SPIRE)
 - Data classification + information flow
 - Zero Trust principles for agent runtime
@@ -328,15 +339,16 @@ Start small. L1 + L3 + L6 as minimum viable. Add L2, L4, L5 based on your use ca
 
 And remember: **the audit trail (L6) must be there from day one** — not an afterthought. When an incident happens, you want to trace what the agent did, not guess.
 
-**Where this goes next:** once you have the audit trail feeding into your SIEM, the question becomes who closes the loop — who actually fixes the misconfig the guardrails flagged? In 2026, the answer is increasingly *an AI agent*, not a human. The full vendor landscape (Palo Alto Cortex Cloud 2.0, Wiz, Orca, Tenable, Aqua, Sysdig, Upwind, BigID, Check Point) and the Cortex Cloud 3-stage model (prevent → react → unify) is mapped in [**Shift-Left → Auto-Remediation → Agentic Remediation**](/en/posts/cse-03-shift-left-agentic/).
+**Where this goes next:** once you have the audit trail feeding into your SIEM, the question becomes who closes the loop — who actually fixes the misconfig the guardrails flagged? In 2026, the answer is increasingly _an AI agent_, not a human. The full vendor landscape (Palo Alto Cortex Cloud 2.0, Wiz, Orca, Tenable, Aqua, Sysdig, Upwind, BigID, Check Point) and the Cortex Cloud 3-stage model (prevent → react → unify) is mapped in [**Shift-Left → Auto-Remediation → Agentic Remediation**](/en/posts/cse-03-shift-left-agentic/).
 
 ---
 
-*References:*
-- *OWASP Top 10 for LLM Applications 2025 + Agentic Applications Dec 2025*
-- *NVIDIA NeMo Guardrails — Agentic Security module (2026)*
-- *Microsoft Agent Governance Toolkit (Apr 2026, open source)*
-- *Forrester AEGIS Framework for Agentic AI (2026)*
-- *PromptArmor — ICLR 2026 (arxiv 2507.15219)*
-- *LLM Guardrails: Production Safety Layers Reference 2026 — Digital Applied*
-- *OWASP LLM Prompt Injection Prevention Cheat Sheet*
+_References:_
+
+- _OWASP Top 10 for LLM Applications 2025 + Agentic Applications Dec 2025_
+- _NVIDIA NeMo Guardrails — Agentic Security module (2026)_
+- _Microsoft Agent Governance Toolkit (Apr 2026, open source)_
+- _Forrester AEGIS Framework for Agentic AI (2026)_
+- _PromptArmor — ICLR 2026 (arxiv 2507.15219)_
+- _LLM Guardrails: Production Safety Layers Reference 2026 — Digital Applied_
+- _OWASP LLM Prompt Injection Prevention Cheat Sheet_

@@ -1,5 +1,5 @@
 ---
-title: "open source AI agent OS — Goose and the 2026 agentic ecosystem"
+title: 'open source AI agent OS — Goose and the 2026 agentic ecosystem'
 description: "Goose by Block (now under Linux Foundation), Alibaba's Anolis AgenticOS, and the open source agentic AI stack shaping how agents run, deploy, and get secured."
 pubDate: 2026-07-06
 tags:
@@ -11,10 +11,9 @@ tags:
 categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
-translationKey: "age-04-agent-os-goose"
+translationKey: 'age-04-agent-os-goose'
 heroImage: /images/covers/webp/cover-goose.webp
-heroImageAlt: "Open-source AI agent OS — Goose security and architecture cover"
-
+heroImageAlt: 'Open-source AI agent OS — Goose security and architecture cover'
 ---
 
 > Technical notes. On the open source ecosystem building infrastructure for AI agents — and what we need to understand from a security perspective.
@@ -55,9 +54,9 @@ flowchart LR
     SB --> OS
     SB --> CR
   end
-  classDef foundation fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef project fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
-  classDef standalone fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef foundation fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef project fill:#0f2436,stroke:#38bdf8,color:#bae6fd
+  classDef standalone fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 ---
@@ -109,12 +108,12 @@ flowchart LR
   CLI --> AGENT
   AGENT --> EXT
   AGENT <--> LLM
-  classDef ui fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef agent fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef ext fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef tool fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef llm fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
-  classDef llm fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
+  classDef ui fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef agent fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef ext fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef tool fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
+  classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
 ```
 
 ### Security guardrails in Goose — what's included
@@ -122,6 +121,7 @@ flowchart LR
 For the full 6-layer reference architecture (and why one layer is never enough), see [**AI guardrails — 6 layers you must have in production**](/en/posts/age-02-6-lapisan/).
 
 **Built-in:**
+
 - Permission checks before every tool call
 - Confirmation prompts for destructive actions (delete, deploy)
 - Session isolation — each session has its own context
@@ -150,13 +150,14 @@ flowchart LR
   W3 -.->|maps to| A3
   W4 -.->|maps to| A4
   W5 -.->|maps to| A5
-  classDef web fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef agent fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef web fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef agent fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
   class web web
   class agents agent
 ```
 
 **What's still missing (needs to be added manually):**
+
 - Comprehensive audit logging
 - Intent-based access control (AgenticOS style)
 - Cross-agent communication security (when agents call agents)
@@ -194,8 +195,8 @@ flowchart LR
   T2 -.->|maps to| A2
   T3 -.->|maps to| A3
   T4 -.->|maps to| A4
-  classDef trad fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef anolis fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef trad fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef anolis fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
   class trad trad
   class anolis anolis
 ```
@@ -203,16 +204,17 @@ flowchart LR
 ### Built-in security features
 
 **Intent Declaration (Manifest):**
+
 ```yaml
 # agent-manifest.yaml in Anolis AgenticOS
 agent: data-analyzer-v1
-intent: "analyze sales report Q2 2026 and generate summary"
+intent: 'analyze sales report Q2 2026 and generate summary'
 capabilities:
   read:
     - /data/reports/q2-2026/**
   write:
     - /output/summaries/**
-  network: []  # no network access needed for this task
+  network: [] # no network access needed for this task
 human_confirmation:
   - any_delete_operation
   - any_external_write
@@ -221,6 +223,7 @@ human_confirmation:
 **Ghost Kernel isolation:** The Agent Capsule has no access to raw syscalls. Everything goes through Logic Shutter → Semantic Boundary Gateway.
 
 **Audit trail:**
+
 ```json
 {
   "agent_id": "data-analyzer-v1",
@@ -239,14 +242,15 @@ human_confirmation:
 
 AAIF (Agentic AI Foundation) now has several projects:
 
-| Project | From | Function |
-|---|---|---|
-| **Goose** | Block | On-machine general agent |
-| **AG2** | Microsoft | AutoGen 2.0 — multi-agent framework |
-| **ACP** | Community | Agent Communication Protocol standard |
-| **MCP** | Anthropic | Model Context Protocol (tool interface) |
+| Project   | From      | Function                                |
+| --------- | --------- | --------------------------------------- |
+| **Goose** | Block     | On-machine general agent                |
+| **AG2**   | Microsoft | AutoGen 2.0 — multi-agent framework     |
+| **ACP**   | Community | Agent Communication Protocol standard   |
+| **MCP**   | Anthropic | Model Context Protocol (tool interface) |
 
 **Open SWE** (LangChain, 2026) — for internal coding agents:
+
 - Built on Deep Agents + LangGraph
 - Focus on software engineering tasks
 - Security: built-in code review before execution
@@ -259,13 +263,13 @@ This is the most important section for Cloud Security Engineers.
 
 ### Current gaps in open source agent OSes
 
-| Feature | Goose | Anolis AgenticOS |
-|---|---|---|
-| Intent declaration | ❌ Manual | ✅ Built-in Manifest |
-| Audit logging | ⚠️ Basic | ✅ Structured, cryptographic |
-| Capability isolation | ⚠️ Extension-level | ✅ OS-level (Ghost Kernel) |
-| Cross-agent security | ❌ In progress | ⚠️ Partial |
-| Guardrail integration | ❌ DIY | ⚠️ Partial |
+| Feature               | Goose              | Anolis AgenticOS             |
+| --------------------- | ------------------ | ---------------------------- |
+| Intent declaration    | ❌ Manual          | ✅ Built-in Manifest         |
+| Audit logging         | ⚠️ Basic           | ✅ Structured, cryptographic |
+| Capability isolation  | ⚠️ Extension-level | ✅ OS-level (Ghost Kernel)   |
+| Cross-agent security  | ❌ In progress     | ⚠️ Partial                   |
+| Guardrail integration | ❌ DIY             | ⚠️ Partial                   |
 
 ### Stack to add for Goose (or any open source agent)
 
@@ -322,14 +326,14 @@ with langfuse.trace(name="goose-session") as trace:
 ```yaml
 # goose-cors-policy.yaml
 agent_scopes:
-  - agent: "goose-dev"
+  - agent: 'goose-dev'
     allowed_origins:
-      - local_filesystem: "/home/user/projects/**"
-      - shell: ["npm", "git", "pytest"]  # allowlist commands
-      - network: ["api.github.com", "registry.npmjs.org"]
+      - local_filesystem: '/home/user/projects/**'
+      - shell: ['npm', 'git', 'pytest'] # allowlist commands
+      - network: ['api.github.com', 'registry.npmjs.org']
     denied:
-      - shell: ["rm -rf", "sudo", "curl | bash"]
-      - network: ["*"]  # deny all network except allowlist
+      - shell: ['rm -rf', 'sudo', 'curl | bash']
+      - network: ['*'] # deny all network except allowlist
     require_confirmation:
       - any_git_push
       - any_package_install
@@ -340,16 +344,16 @@ agent_scopes:
 
 ## 5. Comparison: Goose vs Anolis AgenticOS from a security perspective
 
-| Aspect | Goose (AAIF) | Anolis AgenticOS |
-|---|---|---|
-| **Maturity** | Production (general agent) | Production preview (OS-level) |
-| **Security model** | CORS-inspired, DIY guardrail | Intent-based, OS-enforced |
-| **Use case** | Developer on-machine tasks | Cloud workload, multi-agent |
-| **Guardrail** | External (must set up yourself) | Built-in (Manifest + Ghost Kernel) |
-| **Audit** | Langfuse (external) | Native structured logging |
-| **Community** | 50,000+ stars, active | Smaller, newer |
-| **License** | Apache 2.0 | TBD |
-| **Best for** | Dev productivity, automation | Enterprise agent runtime |
+| Aspect             | Goose (AAIF)                    | Anolis AgenticOS                   |
+| ------------------ | ------------------------------- | ---------------------------------- |
+| **Maturity**       | Production (general agent)      | Production preview (OS-level)      |
+| **Security model** | CORS-inspired, DIY guardrail    | Intent-based, OS-enforced          |
+| **Use case**       | Developer on-machine tasks      | Cloud workload, multi-agent        |
+| **Guardrail**      | External (must set up yourself) | Built-in (Manifest + Ghost Kernel) |
+| **Audit**          | Langfuse (external)             | Native structured logging          |
+| **Community**      | 50,000+ stars, active           | Smaller, newer                     |
+| **License**        | Apache 2.0                      | TBD                                |
+| **Best for**       | Dev productivity, automation    | Enterprise agent runtime           |
 
 ---
 
@@ -374,6 +378,7 @@ agent_scopes:
 ## Closing
 
 The open source agentic AI ecosystem is maturing quickly:
+
 - **Goose** is production-ready for developer tasks, needs external guardrails
 - **Anolis AgenticOS** brings security to the OS level, with built-in Manifest and isolation
 - **AAIF** under the Linux Foundation provides serious governance structure
@@ -384,13 +389,14 @@ Start with Goose. Understand its architecture. Test the guardrails. Then see how
 
 ---
 
-*References:*
-- *GitHub: aaif-goose/goose — 50,000+ stars, Apache 2.0*
-- *GitHub Discussion #6328 — Agent Guardrails and Controls: Applying the CORS Model to Agents*
-- *The New Stack — Why Block handed Goose to the Linux Foundation*
-- *Block Engineering Blog — Agent Guardrails (Jan 2026)*
-- *Alibaba Cloud — Anolis AgenticOS release (Jun 2026)*
-- *DEV Community — The Open Source Agentic AI Stack: What AAIF Projects Do*
-- *LangChain — Open SWE: Open-Source Framework for Internal Coding Agents*
-- *Microsoft Agent Governance Toolkit (Apr 2026)*
-- *Tencent Research — AgenticOS paper (arxiv 2606.21129)*
+_References:_
+
+- _GitHub: aaif-goose/goose — 50,000+ stars, Apache 2.0_
+- _GitHub Discussion #6328 — Agent Guardrails and Controls: Applying the CORS Model to Agents_
+- _The New Stack — Why Block handed Goose to the Linux Foundation_
+- _Block Engineering Blog — Agent Guardrails (Jan 2026)_
+- _Alibaba Cloud — Anolis AgenticOS release (Jun 2026)_
+- _DEV Community — The Open Source Agentic AI Stack: What AAIF Projects Do_
+- _LangChain — Open SWE: Open-Source Framework for Internal Coding Agents_
+- _Microsoft Agent Governance Toolkit (Apr 2026)_
+- _Tencent Research — AgenticOS paper (arxiv 2606.21129)_

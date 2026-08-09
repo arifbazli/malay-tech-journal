@@ -1,6 +1,6 @@
 ---
-title: "cloud, AI, agentic OS — trend 2026 untuk Gen Z"
-description: "Cloud security dah shift ke intent filter. AI dah jadi agent. Agent dah jadi OS. Empat trend yang Gen Z kena faham sekarang."
+title: 'cloud, AI, agentic OS — trend 2026 untuk Gen Z'
+description: 'Cloud security dah shift ke intent filter. AI dah jadi agent. Agent dah jadi OS. Empat trend yang Gen Z kena faham sekarang.'
 pubDate: 2026-07-03
 tags:
   - ai
@@ -13,8 +13,7 @@ postType: field-note
 translationKey: age-01-trend-2026
 toc: true
 heroImage: /images/covers/webp/cover-guardrail.webp
-heroImageAlt: "AI guardrail engineering — 6 layers of defense-in-depth"
-
+heroImageAlt: 'AI guardrail engineering — 6 layers of defense-in-depth'
 ---
 
 > Catatan dalam Bahasa Melayu. Untuk Gen Z yang baru masuk dunia cloud, AI, dan security. Edisi Julai 2026 — dengan tambahan tentang **Agentic Operating System**, trend terbaru yang orang tengah cakap sekarang.
@@ -49,12 +48,12 @@ flowchart LR
   C --> D["Scan"]:::stage4
   D --> E["Alert"]:::stage5
   E --> F["Terlampau lewat"]:::stage6
-  classDef stage1 fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef stage2 fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef stage3 fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef stage4 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef stage5 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef stage6 fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+  classDef stage1 fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef stage2 fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef stage3 fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef stage4 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef stage5 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef stage6 fill:#2d1518,stroke:#f87171,color:#fecaca
 ```
 
 Sekarang:
@@ -67,11 +66,11 @@ flowchart LR
   C4["Posture<br/>CSPM cari drift setiap jam"]:::stage4
   C5["Intent<br/>Agent declare scope<br/>sistem enforce"]:::stage5
   C1 --> C2 --> C3 --> C4 --> C5
-  classDef stage1 fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef stage2 fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef stage3 fill:#fde68a,stroke:#ca8a04,color:#713f12
-  classDef stage4 fill:#d9f99d,stroke:#65a30d,color:#365314
-  classDef stage5 fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef stage1 fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef stage2 fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef stage3 fill:#2e2b10,stroke:#eab308,color:#fef08a
+  classDef stage4 fill:#1c2b10,stroke:#a3e635,color:#e2f7c2
+  classDef stage5 fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 Yang Gen Z kena faham:
@@ -79,20 +78,20 @@ Yang Gen Z kena faham:
 - **Identity is the new perimeter.** Kalau attacker dah dapat credentials, perimeter tak relevan dah. IAM, RBAC, dan least-privilege > firewall.
 - **Secrets jangan hard-code.** Pakai Vault, AWS Secrets Manager, atau Doppler. Token dalam `.env` yang push ke GitHub = automatic breach.
 - **Supply chain attack real.** SolarWinds, Log4Shell, xz-utils backdoor — semua exploit dependency kau, bukan code kau. SCA (Software Composition Analysis) bukan optional.
-- **AI guardrail masa runtime** — platform CSPM moden sekarang ada AI yang belajar baseline app kau, then alarm bila ada anomaly. Bukan pattern-matching dah — pattern-*learning*.
+- **AI guardrail masa runtime** — platform CSPM moden sekarang ada AI yang belajar baseline app kau, then alarm bila ada anomaly. Bukan pattern-matching dah — pattern-_learning_.
 - **🆕 Intent-driven security** — instead of asking "what resources does this process access?", tanya "**what is this process trying to do?**". Ni asas kepada Agentic OS nanti — kita akan masuk dalam detail kat section 4.
 
 ### Tool stack Gen Z patut belajar (peringkat junior)
 
-| Layer | Tool contoh | Kenapa penting |
-|---|---|---|
-| IaC scan | Checkov, tfsec, Trivy | Scan Terraform/K8s masa pre-commit |
-| Container scan | Trivy, Snyk Container | Catch vuln dalam image |
-| Runtime | Falco, Tetragon (eBPF) | Detect syscall pelik dalam pod |
-| CSPM | Contoh: Wiz, Lacework, Orca | Multi-cloud posture |
-| CIEM | Contoh: CloudKnox, Sonrai | Least-privilege enforcement |
-| Secret | Vault, Doppler, AWS Secrets Manager | No plaintext anywhere |
-| 🆕 Agent observability | Langfuse, OpenTelemetry, Helicone | Trace apa agent kau buat, debug bila dia wander |
+| Layer                  | Tool contoh                         | Kenapa penting                                  |
+| ---------------------- | ----------------------------------- | ----------------------------------------------- |
+| IaC scan               | Checkov, tfsec, Trivy               | Scan Terraform/K8s masa pre-commit              |
+| Container scan         | Trivy, Snyk Container               | Catch vuln dalam image                          |
+| Runtime                | Falco, Tetragon (eBPF)              | Detect syscall pelik dalam pod                  |
+| CSPM                   | Contoh: Wiz, Lacework, Orca         | Multi-cloud posture                             |
+| CIEM                   | Contoh: CloudKnox, Sonrai           | Least-privilege enforcement                     |
+| Secret                 | Vault, Doppler, AWS Secrets Manager | No plaintext anywhere                           |
+| 🆕 Agent observability | Langfuse, OpenTelemetry, Helicone   | Trace apa agent kau buat, debug bila dia wander |
 
 > 💡 **Bijak mula:** Kalau baru nak masuk security, **Checkov + Trivy** je dulu. Dua tool ni free, ringan, dan boleh run kat laptop sendiri.
 
@@ -104,14 +103,14 @@ Yang Gen Z kena faham:
 
 Model frontier sekarang bukan setakat "jawab soalan" — dah jadi **agent**:
 
-| Generasi | Ciri | Contoh |
-|---|---|---|
-| GPT-3 era (2020) | Text completion | "Tulislah email" |
-| ChatGPT era (2022) | Instruction-tuned, multi-turn | Boleh chat, code, summarize |
-| Copilot era (2023) | Tool use, internet access | Boleh browse, execute code |
-| Agent era (2024-2025) | Multi-step planning, self-correct | AutoGPT, Devin, Claude with tools |
-| Multi-agent (2025-2026) | Agents collaborate, specialize, debate | Crew-style workflows, swarms |
-| 🆕 Agent-native OS (2026) | OS-level support for agent runtime | Alibaba Anolis Agentic OS, Tencent AgenticOS research |
+| Generasi                  | Ciri                                   | Contoh                                                |
+| ------------------------- | -------------------------------------- | ----------------------------------------------------- |
+| GPT-3 era (2020)          | Text completion                        | "Tulislah email"                                      |
+| ChatGPT era (2022)        | Instruction-tuned, multi-turn          | Boleh chat, code, summarize                           |
+| Copilot era (2023)        | Tool use, internet access              | Boleh browse, execute code                            |
+| Agent era (2024-2025)     | Multi-step planning, self-correct      | AutoGPT, Devin, Claude with tools                     |
+| Multi-agent (2025-2026)   | Agents collaborate, specialize, debate | Crew-style workflows, swarms                          |
+| 🆕 Agent-native OS (2026) | OS-level support for agent runtime     | Alibaba Anolis Agentic OS, Tencent AgenticOS research |
 
 **Yang berubah paling cepat untuk Gen Z:**
 
@@ -150,18 +149,18 @@ flowchart TB
     T --> S
     S --> A2[jawapan]:::synth
   end
-  classDef human fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef agent fill:#d9f99d,stroke:#65a30d,color:#365314
-  classDef synth fill:#dcfce7,stroke:#16a34a,color:#14532d
-  classDef agent2022 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef goal fill:#bae6fd,stroke:#0284c7,color:#0c4a6e
+  classDef human fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef agent fill:#1c2b10,stroke:#a3e635,color:#e2f7c2
+  classDef synth fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
+  classDef agent2022 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef goal fill:#0f2436,stroke:#38bdf8,color:#bae6fd
   class H1,H2 human
   class P1,L1,A1 agent2022
   class G goal
   class P,S,A2 synth
 ```
 
-**Gen Z realiti:** kau takkan compete dengan AI. Kau compete dengan **Gen Z lain yang tau cara pakai AI**. Prompting dah jadi *basic literacy*, macam Excel tahun 2010.
+**Gen Z realiti:** kau takkan compete dengan AI. Kau compete dengan **Gen Z lain yang tau cara pakai AI**. Prompting dah jadi _basic literacy_, macam Excel tahun 2010.
 
 ---
 
@@ -172,6 +171,7 @@ Ini **bahagian paling penting** untuk kau faham. Sebab employment market dah shi
 ### Tahap 1: **Prompt Engineering** (2022-2023)
 
 Kau belajar struktur prompt yang bagus:
+
 - Role prompting ("You are a senior security engineer...")
 - Few-shot examples
 - Chain-of-thought ("Think step by step")
@@ -184,6 +184,7 @@ Skill ni **masih relevan** tapi dah jadi baseline. Semua orang boleh copy-paste 
 Masalah: LLM lupa, hallucinates, atau context window penuh.
 
 Belajar:
+
 - RAG (Retrieval-Augmented Generation) — bagi LLM access kat database kau
 - Prompt caching — untuk elak bayar token berulang
 - Token budgeting — context window management
@@ -206,7 +207,7 @@ def get_aws_iam_policy(username: str) -> dict:
 
 Skill baru: **tool design, schema engineering, error handling untuk non-deterministic system**.
 
-### Tahap 4: **Agentic Engineering** (2025-2026) — *kita kat sini sekarang*
+### Tahap 4: **Agentic Engineering** (2025-2026) — _kita kat sini sekarang_
 
 Agent = LLM + memory + tools + planning + self-critique loop.
 
@@ -229,12 +230,12 @@ result = agent.run()
 1. **System design untuk non-determinism** — kau design guardrail, retry logic, observability untuk sistem yang **kadang-kadang salah**. Tradisional engineering assume component deterministik. Agent tak.
 2. **Evaluation & benchmarking** — macam mana kau tau agent kau "bagus"? LLM-as-judge, regression test set, golden trajectories.
 3. **Cost engineering** — agent loop boleh burn USD 50 satu task. Penting tau bila nak guna Haiku vs Opus, mana perlu cache, mana boleh early-stop.
-4. **Security untuk agent** — *prompt injection*, tool poisoning, excessive agency. Agent dengan 47 tools = 47 attack surface. OWASP Top 10 for LLM Applications dah jadi bacaan wajib.
+4. **Security untuk agent** — _prompt injection_, tool poisoning, excessive agency. Agent dengan 47 tools = 47 attack surface. OWASP Top 10 for LLM Applications dah jadi bacaan wajib.
 5. **Human-in-the-loop design** — bila agent kena mintak confirm? Bila boleh auto-proceed? Ini bukan UX je, ni security boundary.
 
-### Tahap 5: **Agentic OS Engineering** (2026-) — *arah mana kita pergi*
+### Tahap 5: **Agentic OS Engineering** (2026-) — _arah mana kita pergi_
 
-Ini **trend yang orang tengah cakap sekarang** dan pasal ni post ni updated. Kalau step 1-4 pasal *bina agent*, step 5 pasal *bina OS untuk agent*. Detail dalam section 4.
+Ini **trend yang orang tengah cakap sekarang** dan pasal ni post ni updated. Kalau step 1-4 pasal _bina agent_, step 5 pasal _bina OS untuk agent_. Detail dalam section 4.
 
 ---
 
@@ -251,13 +252,13 @@ Tapi bila dia keluar dari sandbox, dia boleh buat benda yang aku tak authorize."
 
 Contoh real:
 
-> Kau suruh agent: *"Ringkaskan experimental results project X dan hantar summary kat aku."*
+> Kau suruh agent: _"Ringkaskan experimental results project X dan hantar summary kat aku."_
 > Yang sepatutnya: agent baca file dari folder `project_x/`, summarize, hantar kat kau.
-> Yang *boleh jadi* kalau agent compromised: agent baca file tu, exfiltrate ke server luar, hantar kat attacker, baru summarize untuk kau.
+> Yang _boleh jadi_ kalau agent compromised: agent baca file tu, exfiltrate ke server luar, hantar kat attacker, baru summarize untuk kau.
 
 **Permission model lama (POSIX/Linux)**: "process ni boleh access file A dan network B". Kalau attacker dapat control process tu, dia boleh combine capability tu untuk attack.
 
-**Agentic OS model**: "agent ni boleh buat *task* T je. Dia tak tanya untuk file A atau network B — sistem yang decide apa capabilities dia perlukan berdasarkan task declaration."
+**Agentic OS model**: "agent ni boleh buat _task_ T je. Dia tak tanya untuk file A atau network B — sistem yang decide apa capabilities dia perlukan berdasarkan task declaration."
 
 ### Apa itu Agentic OS?
 
@@ -266,7 +267,7 @@ Contoh real:
 Konsep asal dari paper Tencent Research (Jun 2026), dan Alibaba Anolis Agentic OS release pertama. Idea besarnya:
 
 **OS tradisional = resource manager.** Process mintak file/socket/process, OS check permission, bagi atau tak.
-**Agentic OS = intent filter.** Agent declare *"aku nak buat task T"*, OS synthesize least-capability environment yang cukup untuk T je.
+**Agentic OS = intent filter.** Agent declare _"aku nak buat task T"_, OS synthesize least-capability environment yang cukup untuk T je.
 
 ### Empat lapis arsitektur AgenticOS
 
@@ -277,13 +278,14 @@ flowchart TB
   L3["Logic Shutter<br/>intent validation<br/>audit logging<br/><i>policy gate</i>"]:::l3
   L4["Agent Capsule<br/>agent runtime<br/>WASM / eBPF / native<br/><i>least-privilege</i>"]:::l4
   L1 --> L2 --> L3 --> L4
-  classDef l1 fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef l2 fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef l3 fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef l4 fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef l1 fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef l2 fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef l3 fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef l4 fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 Setiap layer ada kerja spesifik:
+
 - **Ghost Kernel** — minimum trusted code. Isolasi, scheduling, measurement. Tak expose device file atau debugging interface. Saiz dia kecil supaya boleh formally verified.
 - **Logic Shutter** — semak intent agent vs Manifest yang declare. Issue capability token. Log audit. Attach information-flow label pada data.
 - **Agent Capsule** — runtime sebenar untuk agent code. Ikut Manifest-Only Runtime: sebelum start, agent submit structured intent declaration. Capabilities luar manifest tak wujud dalam capsule address space.
@@ -296,6 +298,7 @@ Setiap layer ada kerja spesifik:
 **Intent ABI** (model baru): `FetchJSON(domain, path, method)`, `UploadArtifact(target, data)`, `SendMessage(channel, content)`, `RunTask(intent, budget)`.
 
 Prinsip Intent ABI:
+
 - **No raw byte streams** — agent tak boleh construct TCP byte stream sendiri
 - **No arbitrary execution** — `exec()` dan `fork()` banned. Toolchain capabilities decomposed jadi concrete semantic interfaces.
 - **Reified capabilities** — network permission bound pada 5-tuple ⟨domain, path_prefix, method, data_type, budget⟩
@@ -315,6 +318,7 @@ Sekarang baru orang tengah sambungkan dots:
 ### Realiti sekarang: banyak konsep, sikit production
 
 Jujurnya, AgenticOS masih **research paper stage** untuk kebanyakan. Tapi:
+
 - Alibaba Anolis Agentic OS dah release production preview
 - Beberapa agent framework (LangChain, AutoGen, CrewAI) tengah experiment dengan Manifest-based capability
 - eBPF + WASM sandboxing dah mature dan boleh jadi building block
@@ -338,7 +342,7 @@ Cloud security 2026 akan dipacu oleh **agentic AI** + **intent-driven posture**:
 
 - Kerja pertama kau mungkin **bukan** tulis code atau tulis detection rule. Mungkin **review output agent**, atau **tulis eval suite untuk agent**, atau **review agent Manifests**.
 - Portfolio kau bukan GitHub penuh side-project je — boleh jadi **agent workflow yang demonstrably secure**, atau **custom Intent ABI plugin** untuk common task.
-- Sesi interview mungkin tanya: *"kalau kau bagi agent akses ke production AWS, apa 5 safeguard kau letak?"* — bukan *"apa function Lambda yang return hello world?"*
+- Sesi interview mungkin tanya: _"kalau kau bagi agent akses ke production AWS, apa 5 safeguard kau letak?"_ — bukan _"apa function Lambda yang return hello world?"_
 
 ---
 
@@ -346,20 +350,20 @@ Cloud security 2026 akan dipacu oleh **agentic AI** + **intent-driven posture**:
 
 Bukan baca dan lupa. Ini concrete (updated dengan trend 2026):
 
-| Minggu | Buat apa |
-|---|---|
-| 1 | Install **Checkov**. Scan satu Terraform repo. Faham setiap finding. |
-| 2 | Install **Trivy**. Scan satu container image. Faham CVE reporting. |
-| 3 | Main dengan **Claude / GPT** — bina agent ringkas guna LangChain atau Claude SDK. Beri dia 3 tools. |
-| 4 | Cuba **prompt injection** kat agent kau sendiri. Senaraikan 5 attack vector. |
-| 5 | Baca **OWASP Top 10 for LLM Applications** (free, online). Highlight mana yang relevant dengan kerja kau. |
-| 6 | Tulis satu blog post / video TikTok / Nota LinkedIn — "Apa yang aku belajar". Teaching = learning. |
-| 7 | Join satu **Capture The Flag (CTF)** — TryHackMe, HackTheBox, atau Cloud Security CTF. |
-| 8 | Bina satu **agentic project** end-to-end — agent yang audit security posture AWS kau. Publish kat GitHub. |
-| 9 | 🆕 Cuba tulis satu **Manifest** untuk agent kau. Specify intent, capability boundary, human-confirmation points. Guna skill baru: Manifest-as-code. |
-| 10 | 🆕 Main dengan **Langfuse** atau **OpenTelemetry** — trace agent kau. Tengok berapa calls, berapa tokens, mana dia wander. |
-| 11 | 🆕 Baca paper **AgenticOS** (arxiv 2606.21129). Highlight 3 idea yang paling menarik. Tulis reflection. |
-| 12 | 🆑 Try **Alibaba Anolis Agentic OS preview** atau build mini-AgenticOS concept guna WASM + policy engine. |
+| Minggu | Buat apa                                                                                                                                            |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1      | Install **Checkov**. Scan satu Terraform repo. Faham setiap finding.                                                                                |
+| 2      | Install **Trivy**. Scan satu container image. Faham CVE reporting.                                                                                  |
+| 3      | Main dengan **Claude / GPT** — bina agent ringkas guna LangChain atau Claude SDK. Beri dia 3 tools.                                                 |
+| 4      | Cuba **prompt injection** kat agent kau sendiri. Senaraikan 5 attack vector.                                                                        |
+| 5      | Baca **OWASP Top 10 for LLM Applications** (free, online). Highlight mana yang relevant dengan kerja kau.                                           |
+| 6      | Tulis satu blog post / video TikTok / Nota LinkedIn — "Apa yang aku belajar". Teaching = learning.                                                  |
+| 7      | Join satu **Capture The Flag (CTF)** — TryHackMe, HackTheBox, atau Cloud Security CTF.                                                              |
+| 8      | Bina satu **agentic project** end-to-end — agent yang audit security posture AWS kau. Publish kat GitHub.                                           |
+| 9      | 🆕 Cuba tulis satu **Manifest** untuk agent kau. Specify intent, capability boundary, human-confirmation points. Guna skill baru: Manifest-as-code. |
+| 10     | 🆕 Main dengan **Langfuse** atau **OpenTelemetry** — trace agent kau. Tengok berapa calls, berapa tokens, mana dia wander.                          |
+| 11     | 🆕 Baca paper **AgenticOS** (arxiv 2606.21129). Highlight 3 idea yang paling menarik. Tulis reflection.                                             |
+| 12     | 🆑 Try **Alibaba Anolis Agentic OS preview** atau build mini-AgenticOS concept guna WASM + policy engine.                                           |
 
 > 🎯 **Target 12 minggu:** Kau ada portfolio cloud security + agent engineering + intent-driven architecture. Tiga layer. Satu narrative.
 
@@ -383,14 +387,15 @@ Satu mindset.
 
 ---
 
-*Sumber rujukan:*
-- *Tencent Research — AgenticOS: An Intent-Oriented Secure Operating System Architecture for Autonomous AI Agents (arxiv 2606.21129, Jun 2026)*
-- *Cloud Security Alliance — Securing the Agentic Control Plane (Mar 2026)*
-- *Alibaba Cloud — Anolis Agentic OS release announcement (Jun 2026)*
-- *Microsoft — CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms (Jun 2026)*
-- *OWASP Top 10 for LLM Applications (2025)*
-- *NIST SP 800-218A — Secure Software Development for AI Systems*
-- *Anthropic — Building Effective Agents (2025)*
-- *Elastic — Why 2026 is the year to upgrade to an agentic AI SOC*
-- *Gartner — 50% of SOCs to deploy AI decision support by 2026*
-- *DeepSeek-R1, OpenAI o3, Claude 4 release notes*
+_Sumber rujukan:_
+
+- _Tencent Research — AgenticOS: An Intent-Oriented Secure Operating System Architecture for Autonomous AI Agents (arxiv 2606.21129, Jun 2026)_
+- _Cloud Security Alliance — Securing the Agentic Control Plane (Mar 2026)_
+- _Alibaba Cloud — Anolis Agentic OS release announcement (Jun 2026)_
+- _Microsoft — CNAPP evolution: How Microsoft aligns with leading cloud risk management platforms (Jun 2026)_
+- _OWASP Top 10 for LLM Applications (2025)_
+- _NIST SP 800-218A — Secure Software Development for AI Systems_
+- _Anthropic — Building Effective Agents (2025)_
+- _Elastic — Why 2026 is the year to upgrade to an agentic AI SOC_
+- _Gartner — 50% of SOCs to deploy AI decision support by 2026_
+- _DeepSeek-R1, OpenAI o3, Claude 4 release notes_
