@@ -124,6 +124,8 @@ jobs:
           PUBLIC_GISCUS_REPO_ID: ${{ vars.PUBLIC_GISCUS_REPO_ID }}
           PUBLIC_GISCUS_CATEGORY: ${{ vars.PUBLIC_GISCUS_CATEGORY }}
           PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.PUBLIC_GISCUS_CATEGORY_ID }}
+          # /projects page's live GitHub stats — see deploy-cloudflare.yml
+          PROJECTS_REPO: ${{ vars.PROJECTS_REPO || 'arifbazli/Cloud-AI-Agent-Guardrails' }}
         run: bun run build
 
       - name: Upload artifact
