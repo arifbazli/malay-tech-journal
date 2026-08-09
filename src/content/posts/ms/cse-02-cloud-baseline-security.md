@@ -48,7 +48,7 @@ Security Hardening:         Cloud Security Baseline:
 
 ```mermaid
 flowchart LR
-  subgraph csb [Cloud Security Baseline<br/>CSB]
+  subgraph csb [Cloud Security Baseline · CSB]
     direction TB
     S1["Definisi<br/>STATIC"]:::csb
     S2["Apa yang<br/>MESTI ada"]:::csb
@@ -56,7 +56,7 @@ flowchart LR
     S4["Foundation<br/>floor"]:::csb
     S5["Checklist<br/>policy-as-code"]:::csb
   end
-  subgraph cspm [Cloud Security Posture Management<br/>CSPM]
+  subgraph cspm [Cloud Security Posture Management · CSPM]
     direction TB
     M1["Monitoring<br/>BERTERUSAN"]:::cspm
     M2["Adakah ia<br/>masih ada?"]:::cspm

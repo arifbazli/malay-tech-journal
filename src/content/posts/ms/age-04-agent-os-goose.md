@@ -34,7 +34,7 @@ Post ni: breakdown ekosistem, apa yang setiap project buat, dan yang paling pent
 
 ```mermaid
 flowchart LR
-  subgraph aaif [Agentic AI Foundation<br/>bawah Linux Foundation]
+  subgraph aaif [Agentic AI Foundation · bawah Linux Foundation]
     direction TB
     AAIF[Agentic AI Foundation<br/>AAIF]:::foundation
     G[Goose<br/>Block]:::project
@@ -44,7 +44,7 @@ flowchart LR
     AAIF --> AG
     AAIF --> O1
   end
-  subgraph standalone [Standalone<br/>Vendor-backed]
+  subgraph standalone [Standalone · Vendor-backed]
     direction TB
     SB[Projek Standalone<br/>Vendor-backed]:::foundation
     AN[Anolis<br/>Alibaba]:::standalone
