@@ -46,8 +46,18 @@
             edgeLabelBackground: '#16181f',
             secondaryColor: '#1e2130',
             tertiaryColor: '#1e2130',
-            fontFamily: 'system-ui, -apple-system, sans-serif',
-            fontSize: '13px',
+            // Must match the font-family/font-size the CSS in global.css
+            // forces onto .mermaid .nodeLabel (Inter, 14px). Mermaid sizes
+            // each node's box (and decides where <br/> forces a line break
+            // inside a fixed-width, white-space:nowrap label) using THESE
+            // values at render time — if they don't match what actually
+            // gets painted, the box is the wrong size for the real text
+            // and words get clipped/hidden behind the border. Confirmed by
+            // inspecting the rendered SVG: some node labels compute with
+            // white-space:nowrap sized in system-ui/13px, then Inter/14px
+            // (wider) paints inside that same fixed box.
+            fontFamily: 'Inter, system-ui, -apple-system, sans-serif',
+            fontSize: '14px',
           },
           flowchart: {
             curve: 'basis',
@@ -55,7 +65,7 @@
             nodeSpacing: 25,
             rankSpacing: 30,
           },
-          fontSize: 13,
+          fontSize: 14,
         });
       } catch (e) {
         console.error('[mermaid] init failed', e);
@@ -128,10 +138,23 @@
         })(pres[j]);
       }
     }
+    // Wait for Inter to actually be loaded before rendering. mermaid.render()
+    // measures text with whatever font is available at that moment — if Inter
+    // hasn't finished loading yet, it measures with a fallback font instead,
+    // sizing node boxes for the wrong glyph widths. document.fonts.ready
+    // resolves once every requested font (Inter is preloaded in
+    // BaseLayout.astro) has finished loading.
+    function initWhenFontsReady() {
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(init);
+      } else {
+        init();
+      }
+    }
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+      document.addEventListener('DOMContentLoaded', initWhenFontsReady);
     } else {
-      init();
+      initWhenFontsReady();
     }
   })();
 </script>
