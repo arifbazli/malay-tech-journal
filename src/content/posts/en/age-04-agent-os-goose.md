@@ -34,7 +34,7 @@ This post: breakdown of the ecosystem, what each project does, and most importan
 
 ```mermaid
 flowchart LR
-  subgraph aaif [Agentic AI Foundation<br/>under Linux Foundation]
+  subgraph aaif [Agentic AI Foundation · under Linux Foundation]
     direction TB
     AAIF[Agentic AI Foundation<br/>AAIF]:::foundation
     G[Goose<br/>Block]:::project
@@ -44,7 +44,7 @@ flowchart LR
     AAIF --> AG
     AAIF --> O1
   end
-  subgraph standalone [Standalone<br/>Vendor-backed]
+  subgraph standalone [Standalone · Vendor-backed]
     direction TB
     SB[Standalone<br/>Vendor-backed]:::foundation
     AN[Anolis<br/>Alibaba]:::standalone
