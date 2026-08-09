@@ -1,5 +1,9 @@
 # Malay Tech Journal
 
+[![Deploy to GitHub Pages](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/deploy.yml)
+[![PR Checks](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/arifbazli/malay-tech-journal/actions/workflows/pr-checks.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
 **Bilingual (Bahasa Melayu / English) technical blog** covering cloud security,
 AI guardrail engineering, and regional defence tech for Malaysian engineers.
 Built entirely through prompt-driven development on a Debian WSL environment
@@ -9,17 +13,29 @@ running the Local Agent Harness — no manual IDE work.
 
 ---
 
+## Features
+
+- 🌓 Dark-only theme with purpose-built design tokens (no daisyUI dependency)
+- 🌐 Full bilingual routing (Bahasa Melayu / English) with locale-aware dates and hreflang
+- 🔍 Pagefind static search — no external service, no runtime cost
+- 💬 Optional Giscus comments (GitHub Discussions-backed)
+- 🖼️ Automatic Open Graph image generation via Satori, per post
+- 🧮 Opt-in KaTeX math and Mermaid diagram rendering
+- 📖 Reading time, tags, categories, series navigation, and RSS per locale
+- ✅ Strict TypeScript, zero-warning ESLint, Prettier, and markdownlint enforced in CI
+
 ## Tech stack
 
-| Layer                     | Technology                            |
-| ------------------------- | ------------------------------------- |
-| Framework                 | Astro v7 (static output)              |
-| Styling                   | Tailwind CSS v4 + daisyUI v5          |
-| Runtime / package manager | Bun ≥ 1.1.0                           |
-| Language                  | TypeScript (strict)                   |
-| Hosting                   | Cloudflare Pages                      |
-| Search                    | Pagefind (static index)               |
-| Comments                  | Giscus (GitHub Discussions, optional) |
+| Layer                     | Technology                                 |
+| ------------------------- | ------------------------------------------ |
+| Framework                 | Astro v7 (static output)                   |
+| Styling                   | Tailwind CSS v4 (dark-only, custom tokens) |
+| Runtime / package manager | Bun ≥ 1.1.0                                |
+| Language                  | TypeScript (strict)                        |
+| Hosting                   | Cloudflare Pages                           |
+| Search                    | Pagefind (static index)                    |
+| Comments                  | Giscus (GitHub Discussions, optional)      |
+| OG images                 | Satori + resvg (auto-generated per post)   |
 
 ## Quickstart
 
@@ -27,16 +43,24 @@ running the Local Agent Harness — no manual IDE work.
 bun install
 bun run dev        # http://localhost:4321
 bun run build      # production build → dist/
+bun run preview    # serve dist/ locally (search only works here, not in dev)
 bun run typecheck  # type-check only
 bun run lint       # ESLint (zero-warnings policy)
+bun run format     # Prettier — auto-fix formatting
 ```
+
+> Full contributor setup, environment variables, and architecture notes live
+> in [AGENTS.md](./AGENTS.md).
 
 ## Pipeline
 
 ```mermaid
 flowchart LR
-    A["💻 Debian WSL\nLocal Agent Harness"] -->|"prompt-crafted\nbun run build"| B["🚀 Astro v7 + 🎨 Tailwind v4\nBuild & Styling Stack"]
-    B -->|"bun run build → dist/\nWrangler CLI deploy"| C["☁️ Cloudflare Pages\nStatic Web — Prompt-Crafted"]
+    A[Local Dev\nBun + Astro] -->|git push / PR| B[PR Checks\nGitHub Actions]
+    B -->|lint · typecheck · build · test| C{main?}
+    C -->|yes| D[Deploy\nCloudflare Pages]
+    C -->|no| E[Review & iterate]
+    D --> F[Live Site\nmalay-tech-journal.pages.dev]
 ```
 
 ## Internationalisation (i18n)
@@ -69,11 +93,36 @@ in `astro.config.mjs`). Source-of-truth: `src/config.ts` → `SITE.defaultLocale
 | `formatDate(date, locale)`    | Locale-aware date formatting        |
 | `t(key, locale)`              | UI string lookup                    |
 
+## Writing a post
+
+Posts live under `src/content/posts/<locale>/<slug>.md` (or `.mdx`). Minimum
+required frontmatter:
+
+```yaml
+---
+title: 'Post title'
+description: 'One-sentence summary shown in listings and meta tags.'
+pubDate: 2026-01-01
+---
+```
+
+Pair translations across locales with a shared `translationKey`. See
+[AGENTS.md](./AGENTS.md) for the full frontmatter reference (tags,
+categories, hero images, `math`, `pinned`, `unlisted`, and more).
+
 ## Deployment
 
-Deployed to **Cloudflare Pages** via Wrangler CLI. Build artifacts come from
-`bun run build` → `dist/`. Helper scripts (`deploy.sh`, `new-post.sh`,
-`cover_gen.py`) live in the parent `tech-journal/` folder.
+The canonical build is **Cloudflare Pages**, tracking `main`. A GitHub Actions
+workflow (`deploy.yml`) also builds and publishes to GitHub Pages on every
+push to `main`. Both consume the same `bun run build` → `dist/` output — no
+separate build config to maintain.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup, coding standards, and PR
+expectations. Please review [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) and
+report security issues per [SECURITY.md](./SECURITY.md) rather than filing a
+public issue.
 
 ## License
 
