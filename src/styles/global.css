@@ -656,83 +656,6 @@
     @apply text-[var(--mtj-accent)] font-semibold;
     border-left-color: var(--mtj-accent);
   }
-
-  /* Post card — horizontal Chirpy card */
-  .chirpy-card {
-    @apply bg-[var(--mtj-surface)] mb-5 overflow-hidden rounded-xl transition-all duration-200;
-    border: 1px solid color-mix(in oklab, var(--mtj-text) 8%, transparent);
-  }
-  .chirpy-card:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in oklab, var(--mtj-accent) 30%, transparent);
-    box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--mtj-accent) 15%, transparent),
-      0 8px 28px -4px color-mix(in oklab, var(--mtj-bg) 60%, transparent),
-      0 2px 8px -2px color-mix(in oklab, var(--mtj-accent) 12%, transparent);
-  }
-  .chirpy-card-link {
-    @apply grid grid-cols-1 gap-0 md:grid-cols-12;
-  }
-  /* Image cards can be fixed-size (default Chirpy behavior) or dynamic
-     based on `SITE.dynamicPostCardHeight`. */
-  .chirpy-card-link.has-image {
-    @apply md:grid-cols-12;
-  }
-
-  .chirpy-card-body {
-    @apply flex min-w-0 flex-col p-4 sm:p-5 md:col-span-7 md:p-6;
-  }
-  .chirpy-card-body.full {
-    @apply md:col-span-12;
-  }
-  .chirpy-card-link.no-image .chirpy-card-body {
-    @apply md:p-5;
-  }
-  /* Title and description gain line-clamps so a very long title (or a
-     verbose description) cannot push the card past the fixed height. */
-  .chirpy-card-title {
-    @apply mt-0 text-2xl leading-snug font-bold tracking-tight sm:text-[1.55rem];
-    color: var(--mtj-text);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    transition: color 0.15s ease;
-  }
-  .chirpy-card:hover .chirpy-card-title {
-    color: color-mix(in oklab, var(--mtj-accent) 70%, var(--mtj-text));
-  }
-  .chirpy-card-title.compact {
-    @apply md:text-[1.4rem];
-  }
-  @media (min-width: 768px) {
-    .chirpy-card-link.has-image.dynamic-size .chirpy-card-title {
-      display: block;
-      -webkit-line-clamp: unset;
-      line-clamp: unset;
-      -webkit-box-orient: unset;
-      overflow: visible;
-    }
-    .chirpy-card-link.has-image.dynamic-size .chirpy-card-body > p {
-      -webkit-line-clamp: unset;
-      line-clamp: unset;
-      overflow: visible;
-      display: block;
-    }
-  }
-  .chirpy-card-image-wrap {
-    @apply order-first overflow-hidden md:order-last md:col-span-5 md:flex md:flex-col;
-    position: relative;
-  }
-  .chirpy-card-image {
-    @apply h-44 w-full object-cover md:min-h-0 md:flex-1 md:rounded-r-xl;
-    object-position: center 30%;
-    transition: transform 0.4s ease;
-  }
-  .chirpy-card:hover .chirpy-card-image {
-    transform: scale(1.04);
-  }
 }
 
 /* ---------- Prose tuning for the post body ---------- */
@@ -1869,335 +1792,9 @@
 }
 
 
-/* ============================================================
-   JOURNAL FEED — 2026 redesign (mockup v2)
-   Featured card + article cards, anti-flicker safe
-   ============================================================ */
+/* Prev/next post nav cards (PostNav.astro) and the categories index list. */
 @layer components {
-  .journal-feed {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-  }
-
-  .feed-empty {
-    color: var(--mtj-text-45);
-    font-size: 0.95rem;
-    padding: 3rem 0;
-    text-align: center;
-  }
-
-  /* ─────────────────────────────────────────────
-     FEATURED CARD
-     Anti-flicker: box-shadow border (not border property)
-     ───────────────────────────────────────────── */
-  .featured-card {
-    position: relative;
-    display: block;
-    background: var(--mtj-surface);
-    box-shadow: 0 0 0 1px var(--mtj-text-8);
-    border-radius: 12px;
-    padding: 1.5rem 1.5rem 1.25rem;
-    text-decoration: none;
-    color: inherit;
-    overflow: hidden;
-    /* ANTI-FLICKER: composite layer for box-shadow animation */
-    will-change: box-shadow;
-    transform: translateZ(0);
-    transition: box-shadow 200ms ease;
-  }
-  .featured-card:hover {
-    box-shadow: 0 0 0 1px oklch(0.72 0.19 280 / 0.5),
-                0 8px 32px oklch(0.72 0.19 280 / 0.08);
-  }
-
-  /* Gradient top bar */
-  .featured-card__bar {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, oklch(0.72 0.18 250), oklch(0.72 0.19 280));
-  }
-
-  .featured-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .featured-title {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.35;
-    color: var(--mtj-text-95);
-    margin: 0 0 0.65rem;
-  }
-
-  .featured-desc {
-    font-size: 0.875rem;
-    line-height: 1.65;
-    color: var(--mtj-text-55);
-    margin: 0 0 1.1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .featured-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
-  .post-date {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--mtj-text-45);
-  }
-
-  .read-link {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: oklch(0.72 0.18 250);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    /* ANTI-FLICKER: transform-only transition, zero reflow */
-    will-change: transform;
-  }
-  .read-link__arrow {
-    display: inline-block;
-    transition: transform 150ms ease;
-    will-change: transform;
-  }
-  .featured-card:hover .read-link__arrow {
-    transform: translateX(4px);
-  }
-
-  /* ─────────────────────────────────────────────
-     SERIES PILLS (shared by featured + cards)
-     ───────────────────────────────────────────── */
-  .series-pill {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
-    letter-spacing: 0.02em;
-  }
-  .pill-ground {
-    background: oklch(0.72 0.18 250 / 0.12);
-    color: oklch(0.72 0.18 250);
-  }
-  .pill-ai {
-    background: oklch(0.72 0.19 280 / 0.12);
-    color: oklch(0.72 0.19 280);
-  }
-  .pill-mil {
-    background: oklch(0.76 0.17 145 / 0.12);
-    color: oklch(0.76 0.17 145);
-  }
-
-  .post-type {
-    font-size: 0.7rem;
-    color: var(--mtj-text-42);
-  }
-
-  /* ─────────────────────────────────────────────
-     MONTH HEADER
-     ───────────────────────────────────────────── */
-  .feed-group { display: contents; }
-
-  .month-header {
-    display: flex;
-    align-items: center;
-    gap: 0.875rem;
-    margin: 1rem 0 0.5rem;
-  }
-  .month-label {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--mtj-text-40);
-    white-space: nowrap;
-  }
-  .month-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--mtj-text-8);
-  }
-
-  /* ─────────────────────────────────────────────
-     ARTICLE CARDS
-     Anti-flicker:
-     - isolation: isolate stops child z-index repaint cascade
-     - background-color transition (cheaper than border)
-     - box-shadow border on hover (no layout shift)
-     ───────────────────────────────────────────── */
-  .article-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .article-card {
-    isolation: isolate;
-    position: relative;
-  }
-
-  .article-card__link {
-    display: grid;
-    grid-template-columns: 44px 1fr;
-    gap: 0 1rem;
-    padding: 0.875rem 0.75rem;
-    border-radius: 10px;
-    text-decoration: none;
-    color: inherit;
-    transition: background-color 150ms ease;
-    /* ANTI-FLICKER: own stacking context prevents repaint cascade */
-  }
-  .article-card__link:hover {
-    background-color: var(--mtj-bg);
-  }
-
-  /* Pseudo-element border using box-shadow (no layout shift) */
-  .article-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    pointer-events: none;
-    transition: box-shadow 150ms ease;
-  }
-  .article-card:hover::after {
-    box-shadow: inset 0 0 0 1px var(--mtj-text-8);
-  }
-
-  .card-date-col {
-    text-align: right;
-    padding-top: 2px;
-  }
-  .card-day {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: var(--mtj-text-40);
-    line-height: 1;
-    display: block;
-  }
-  .card-mon {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--mtj-text-30);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    display: block;
-    margin-top: 2px;
-  }
-
   .card-body { min-width: 0; }
-
-  .card-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 0.25rem;
-    flex-wrap: wrap;
-  }
-
-  .card-title {
-    font-family: var(--font-display);
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--mtj-text-88);
-    line-height: 1.4;
-    margin: 0 0 0.3rem;
-    transition: color 150ms ease;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-  .article-card__link:hover .card-title {
-    color: var(--mtj-text);
-  }
-
-  .card-desc {
-    font-size: 0.78rem;
-    line-height: 1.5;
-    color: var(--mtj-text-45);
-    margin: 0 0 0.35rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .read-time {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--mtj-text-32);
-  }
-
-  /* ─────────────────────────────────────────────
-     MOBILE — ≤640px
-     Drop date column to 36px, hide read-time, smaller title
-     ───────────────────────────────────────────── */
-  @media (max-width: 640px) {
-    .featured-card {
-      padding: 1.1rem 1rem 0.95rem;
-      border-radius: 10px;
-    }
-    .featured-title { font-size: 1.1rem; }
-    .featured-desc {
-      font-size: 0.8rem;
-      -webkit-line-clamp: 2;
-    }
-
-    .article-card__link {
-      grid-template-columns: 36px 1fr;
-      gap: 0 0.7rem;
-      padding: 0.7rem 0.25rem;
-    }
-    .card-day { font-size: 0.95rem; }
-    .card-mon { font-size: 0.55rem; }
-    .card-title { font-size: 0.85rem; }
-    .card-desc {
-      font-size: 0.72rem;
-      -webkit-line-clamp: 1;
-    }
-    .read-time { display: none; }
-  }
-
-  /* ─────────────────────────────────────────────
-     VERY SMALL — ≤380px
-     Even tighter
-     ───────────────────────────────────────────── */
-  @media (max-width: 380px) {
-    .featured-card { padding: 0.9rem 0.75rem 0.85rem; }
-    .featured-title { font-size: 1rem; }
-    .featured-footer {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.4rem;
-    }
-
-    .article-card__link {
-      grid-template-columns: 30px 1fr;
-      gap: 0 0.5rem;
-      padding: 0.6rem 0.1rem;
-    }
-    .card-day { font-size: 0.85rem; }
-    .card-title { font-size: 0.8rem; }
-  }
 }
 
 /* ============================================================
@@ -2409,7 +2006,10 @@ html { scrollbar-gutter: stable; overflow-y: scroll; }
 .mtj-bento {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 148px);
+  /* minmax (not a fixed 148px) so a longer title/description in either
+     locale — Malay strings often run longer than their English
+     equivalent — grows the row instead of clipping. */
+  grid-template-rows: repeat(2, minmax(148px, auto));
   gap: 0.75rem;
   margin-bottom: 2.25rem;
 }
@@ -2489,7 +2089,7 @@ html { scrollbar-gutter: stable; overflow-y: scroll; }
   padding-top: 0.5rem;
 }
 .mtj-bento--large  .mtj-bento__foot { font-size: 0.62rem; }
-.mtj-bento--small  .mtj-bento__foot { color: var(--mtj-border); font-size: 0.58rem; }
+.mtj-bento--small  .mtj-bento__foot { font-size: 0.58rem; }
 
 /* Bento mobile: stacks to single column */
 @media (max-width: 767px) {
@@ -2638,7 +2238,10 @@ html { scrollbar-gutter: stable; overflow-y: scroll; }
 .mtj-card__mon {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 0.5rem;
-  color: var(--mtj-border);
+  /* Was --mtj-border (a border color, not a text color) — that rendered
+     at ~1.4:1 contrast against the page background, effectively invisible.
+     --mtj-muted matches the day number above it and is legible. */
+  color: var(--mtj-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   display: block;
