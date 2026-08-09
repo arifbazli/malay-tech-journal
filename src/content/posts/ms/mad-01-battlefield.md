@@ -1,6 +1,6 @@
 ---
-title: "AI di Medan Perang: Project Maven, Swarm Drone & JADC2"
-description: "Dari drone swarm ribuan unit ke sistem targeting AI yang buat keputusan dalam milisaat — AI dah ubah medan perang. Ini bukan fiksyen saintifik. Ini berlaku sekarang."
+title: 'AI di Medan Perang: Project Maven, Swarm Drone & JADC2'
+description: 'Dari drone swarm ribuan unit ke sistem targeting AI yang buat keputusan dalam milisaat — AI dah ubah medan perang. Ini bukan fiksyen saintifik. Ini berlaku sekarang.'
 pubDate: 2026-07-07
 tags:
   - ai
@@ -11,8 +11,7 @@ postType: field-note
 translationKey: mad-01-battlefield
 toc: true
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Military AI and defence — battlefield AI cover"
-
+heroImageAlt: 'Military AI and defence — battlefield AI cover'
 ---
 
 > Ini bukan post tentang fiksyen dystopia atau teori konspirasi. Ini breakdown teknikal tentang sistem AI ketenteraan yang dah deployed, dah tested, dan dah digunakan dalam konflik nyata.
@@ -35,13 +34,14 @@ Masalahnya? Footage drone yang military kumpul setiap hari dalam operasi di Iraq
 
 Google dapat kontrak ni pada 2018. Total contract value: anggaran USD 9 juta. Tak besar dari segi angka, tapi implikasinya besar.
 
-> **Apa yang berlaku:** 4,000+ Google employees tandatangan petition untuk henti projek. Lebih 10 senior engineers buat keputusan resign. Alasan: Google tak patut build teknologi warfare. Letter itu sebut: *"We believe Google should not be in the business of war."*
+> **Apa yang berlaku:** 4,000+ Google employees tandatangan petition untuk henti projek. Lebih 10 senior engineers buat keputusan resign. Alasan: Google tak patut build teknologi warfare. Letter itu sebut: _"We believe Google should not be in the business of war."_
 
 Google umumkan mereka tak akan renew kontrak selepas tamat pada 2019.
 
 Tapi Project Maven tak berhenti. **Palantir Technologies** ambil alih. Platform mereka — **Palantir AIP** dan **Gotham** — sekarang jadi infrastructure untuk AI-assisted targeting dan intelligence analysis dalam DoD. Contract terbaru 2023: USD 463 juta untuk NATO Special Operations Command.
 
 **Apa yang kita belajar:**
+
 - Commercial AI company boleh exit. Program tak akan stop.
 - Bila kau build general-purpose AI tools, kau tak boleh fully control macam mana ia digunakan.
 - Engineer yang buat keputusan resign tu bukan salah — tapi gap yang mereka tinggalkan diisi oleh vendor lain.
@@ -86,9 +86,9 @@ flowchart LR
   PE --> D3
   PE --> D4
   PE --> D5
-  classDef sensor fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
-  classDef process fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef cmd fill:#dcfce7,stroke:#16a34a,color:#14532d
+  classDef sensor fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef process fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef cmd fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
 ```
 
 Dulu setiap service ada network sendiri: Army ada ABMS (Advanced Battle Management System), Air Force ada benda lain, Navy ada benda lain. JADC2 adalah usaha nak unify semua ni.
@@ -111,7 +111,7 @@ Heron Systems' AI agent lawan Colonel Dan "Torch" Lehoski — one of the top F-1
 
 Keputusan: **AI menang 5-0**.
 
-> *"It was the most aggressive, creative, and dynamic flying I've ever seen,"* — Dan Lehoski selepas kalah.
+> _"It was the most aggressive, creative, and dynamic flying I've ever seen,"_ — Dan Lehoski selepas kalah.
 
 AI guna taktik yang pilot manusia tak akan guna — terbang sangat dekat, tukar arah dengan cara yang secara fisiologi akan knock out manusia (high-G maneuvers), dan exploit setiap microsecond advantage.
 
@@ -137,7 +137,7 @@ Kalau satu drone bahaya, seribu drone terbang dalam koordinasi adalah masalah ya
 
 Pentagon launch **Replicator Initiative** pada Ogos 2023 — target deploy lebih 1,000 autonomous systems (darat, laut, udara) menjelang 2025. Budget: berbilion dollar. Tujuan: counter China's numerical advantage dengan smaller, cheaper, attritable (boleh rugi/ganti) autonomous assets.
 
-> *"Replicator is meant to help us field attritable autonomous systems at scale."* — Deputy Secretary of Defense Kathleen Hicks, Ogos 2023.
+> _"Replicator is meant to help us field attritable autonomous systems at scale."_ — Deputy Secretary of Defense Kathleen Hicks, Ogos 2023.
 
 ### Ukraine: Komersial-ke-Ketenteraan
 
@@ -179,6 +179,7 @@ class DroneAgent:
 ```
 
 **Kenapa ini penting untuk cloud/security engineer:**
+
 - Swarm software adalah distributed system dengan fault tolerance dan consensus requirements.
 - Swarm communication channel adalah attack surface — jamming, spoofing, takeover.
 - Commercial drone firmware (DJI, ArduPilot) yang digunakan dalam military context adalah supply chain risk.
@@ -210,7 +211,7 @@ AI guna dalam analisis network data yang besar untuk identify target dan maintai
 
 Groups yang involved: **Forest Blizzard** (Russia/GRU), **Emerald Sleet** (North Korea), **Crimson Sandstorm** (Iran), **Charcoal Typhoon** dan **Salmon Typhoon** (China).
 
-> *"These actors generally sought to use OpenAI services for querying open-source information, translating, finding coding errors, and running basic coding tasks."* — Microsoft Threat Intelligence, February 2024.
+> _"These actors generally sought to use OpenAI services for querying open-source information, translating, finding coding errors, and running basic coding tasks."_ — Microsoft Threat Intelligence, February 2024.
 
 Ni bukan cerita "AI akan ganti hacker". Ini cerita tentang AI sebagai **force multiplier** untuk adversaries yang dah ada capability — buat kerja lagi laju, lagi murah, lagi scale.
 
@@ -223,6 +224,7 @@ Kalau kau buat AI, cloud security, atau software engineering — ini bukan "buka
 ### 1. Dual-Use Technology adalah Reality
 
 PyTorch, Kubernetes, Kafka, computer vision libraries — semua ni boleh digunakan dalam sistem ketenteraan. Kau tak boleh fully control downstream usage. Tapi kau boleh:
+
 - Baca export control laws (US EAR, EU dual-use regulation)
 - Faham macam mana company kau approach military contracts
 - Buat keputusan yang informed tentang di mana kau nak kerja dan apa yang kau nak build
@@ -230,6 +232,7 @@ PyTorch, Kubernetes, Kafka, computer vision libraries — semua ni boleh digunak
 ### 2. AI Safety dalam Sistem Kritikal
 
 **DoD Directive 3000.09** require human judgment dalam lethal decision-making. Tapi implementation detail penting:
+
 - Human-in-the-loop vs human-on-the-loop (very different)
 - Latency requirement dalam real combat mungkin incompatible dengan meaningful human review
 - Kalau kau design AI systems yang boleh jadi kritikal, safety architecture bukan optional
@@ -254,11 +257,12 @@ Field ni perlukan orang yang faham teknologi dan faham implikasi. Bukan satu ata
 
 ---
 
-*Rujukan:*
-- *DoD Directive 3000.09 — Autonomous Weapon Systems (2023 revision)*
-- *DARPA ACE Program — AlphaDogfight Trials results, August 2020*
-- *Pentagon Replicator Initiative — Deputy SecDef Hicks announcement, August 2023*
-- *OpenAI/Microsoft Threat Intelligence Report — Nation-state actors using LLMs, February 2024*
-- *PLA Intelligentized Warfare doctrine — CMC Science and Technology Commission*
-- *CISA/NSA Advisory — Volt Typhoon, May 2023*
-- *Mandiant/Google TAG — GhostWriter attribution, multiple reports 2020-2024*
+_Rujukan:_
+
+- _DoD Directive 3000.09 — Autonomous Weapon Systems (2023 revision)_
+- _DARPA ACE Program — AlphaDogfight Trials results, August 2020_
+- _Pentagon Replicator Initiative — Deputy SecDef Hicks announcement, August 2023_
+- _OpenAI/Microsoft Threat Intelligence Report — Nation-state actors using LLMs, February 2024_
+- _PLA Intelligentized Warfare doctrine — CMC Science and Technology Commission_
+- _CISA/NSA Advisory — Volt Typhoon, May 2023_
+- _Mandiant/Google TAG — GhostWriter attribution, multiple reports 2020-2024_

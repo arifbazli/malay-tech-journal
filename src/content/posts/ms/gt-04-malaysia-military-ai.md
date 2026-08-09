@@ -1,6 +1,6 @@
 ---
-title: "Infrastruktur AI Pertahanan Malaysia 2026 — Kajian Kes dan Senario Ancaman"
-description: "PSPN 2026-2030, PSEP Cyber Command, dron STRIDE, serangan CL-STA-1062 ke atas infrastruktur kritikal ASEAN, TNB AI grid, dan NACSA Cryptology Centre — kajian kes bagaimana Malaysia membina dan melindungi infrastruktur AI ketenteraan di tengah ancaman sebenar 2026."
+title: 'Infrastruktur AI Pertahanan Malaysia 2026 — Kajian Kes dan Senario Ancaman'
+description: 'PSPN 2026-2030, PSEP Cyber Command, dron STRIDE, serangan CL-STA-1062 ke atas infrastruktur kritikal ASEAN, TNB AI grid, dan NACSA Cryptology Centre — kajian kes bagaimana Malaysia membina dan melindungi infrastruktur AI ketenteraan di tengah ancaman sebenar 2026.'
 pubDate: 2026-07-13
 tags:
   - ai
@@ -12,8 +12,7 @@ translationKey: gt-04-malaysia-military-ai
 toc: true
 postType: case-study
 heroImage: /images/covers/webp/cover-military-ai.webp
-heroImageAlt: "Ground truth essay — Malaysia military AI context"
-
+heroImageAlt: 'Ground truth essay — Malaysia military AI context'
 ---
 
 ## Konteks: Peralihan Pertahanan Terbesar Malaysia Dalam Satu Dekad
@@ -33,6 +32,7 @@ PSPN menggariskan tiga teras AI dalam konteks pertahanan:
 **Teras 1 — Situational Awareness (SA) Enhancement**
 
 Integrasi AI untuk real-time intelligence fusion daripada pelbagai sumber:
+
 - SIGINT (Signals Intelligence) daripada radar coastal surveillance
 - IMINT (Imagery Intelligence) daripada satelit Razak-1 dan MEASAT partnership
 - HUMINT feeds daripada CGSS (Central Government Security Service)
@@ -43,6 +43,7 @@ Sistem yang dibangunkan: **TINDAK (Tactical Intelligence Network for Defence and
 **Teras 2 — Unmanned Systems Integration**
 
 Malaysia adopt rangka kerja **STRIDE** untuk kawalan dron:
+
 - **S**urveillance — ISR drones untuk maritime patrol
 - **T**ransport — logistic UAVs untuk forward operating bases
 - **R**esponse — rapid deployment drones untuk SAR
@@ -55,6 +56,7 @@ Kontrak utama: BAE Systems Malaysia untuk C2 (Command and Control) infrastructur
 **Teras 3 — Cyber Defence AI**
 
 **PSEP (Pelan Strategik Eksekutif Pertahanan) Cyber Command** — ditubuhkan secara formal Ogos 2025 dengan mandate:
+
 - Protect Rangkaian Sulit Pertahanan (RSP)
 - Monitor dan respond kepada cyber threats terhadap pertahanan assets
 - Offensive cyber capability development (terhad dan highly classified)
@@ -79,6 +81,7 @@ Cryptology Centre adalah juga hub untuk collaboration dengan **GCSC (Global Comm
 Tenaga Nasional Berhad (TNB) adalah komponen pertahanan yang tidak disebut dalam dokumen pertahanan — tapi ia adalah critical dependency.
 
 **TNB Grid AI System (2025):**
+
 - Predictive maintenance untuk 33kV transmission lines
 - Anomaly detection untuk substation operations
 - Load balancing AI untuk peak demand management
@@ -120,12 +123,12 @@ flowchart TB
   OBJ -.targets.-> T3
   OBJ -.targets.-> T4
 
-  classDef recon    fill:#fef3c7,stroke:#d97706,color:#78350f
-  classDef ia       fill:#fed7aa,stroke:#ea580c,color:#7c2d12
-  classDef persist  fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
-  classDef lm       fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
-  classDef obj      fill:#1e1b4b,stroke:#4338ca,color:#e0e7ff
-  classDef targets  fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+  classDef recon    fill:#2e2410,stroke:#fbbf24,color:#fde68a
+  classDef ia       fill:#2e1d10,stroke:#fb923c,color:#fed7aa
+  classDef persist  fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef lm       fill:#2d1518,stroke:#f87171,color:#fecaca
+  classDef obj      fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+  classDef targets  fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
 ```
 
 **TTPs (Tactics, Techniques, Procedures) yang didokumentasikan:**
@@ -155,6 +158,7 @@ Objectives:
 **Malaysia Exposure:**
 
 Infrastruktur yang identified sebagai high-risk berdasarkan public threat intel:
+
 - Port Klang Authority systems (maritime logistics)
 - PETRONAS upstream operations
 - TNB grid management systems
@@ -169,6 +173,7 @@ Dalam context pertahanan: **pre-positioning untuk wartime disruption** adalah co
 ASEAN sedang experience peningkatan drone incidents yang dramatic:
 
 **2025 Incidents (Public Record):**
+
 - Myanmar: Multiple documented drone strikes oleh non-state actors
 - Philippines: Commercial drone surveillance near military installations (suspected)
 - Malaysia: 3 reported incidents of unregistered drones near Labuan air base (RMAF confirmed)
@@ -197,6 +202,7 @@ Bukan hypothetical — ini adalah **documented attack pattern** dalam Ukraine co
 **Malaysia-specific concern:**
 
 Defence procurement untuk AI systems sering involve:
+
 - Hardware dari multiple origins (termasuk dari jurisdictions dengan interests yang potentially berbeza)
 - Software dari international vendors dengan global supply chains
 - Integration done by local system integrators dengan varying security maturity
@@ -228,6 +234,7 @@ NACSA ada supply chain security guidelines. Tapi enforcement dan verification da
 ### Gap 3: AI Model Integrity
 
 **Masalah:** AI models yang digunakan dalam defence applications (threat classification, image recognition, anomaly detection) boleh diserang melalui:
+
 - **Model poisoning** — corrupt training data
 - **Adversarial examples** — inputs yang fool classifier
 - **Model extraction** — steal model capabilities
@@ -251,6 +258,7 @@ Kalau anda bina critical infrastructure AI — cloud security platforms, financi
 ### 2. AI Systems Adalah Soft Target Dalam Supply Chain
 
 Defence procurement belajar ini dengan cara yang susah. Untuk enterprise AI:
+
 - Audit semua third-party components dalam AI stack
 - Verify integrity daripada model artifacts (hash checking)
 - Monitor unusual behaviour dari AI systems yang suggest model compromise
@@ -258,6 +266,7 @@ Defence procurement belajar ini dengan cara yang susah. Untuk enterprise AI:
 ### 3. Power dan Connectivity Assumptions
 
 Defence planning highlight bahawa AI depends on power and connectivity yang boleh fail. Enterprise AI resilience planning perlu include:
+
 - Degraded mode operations (bila AI tidak available)
 - Offline fallback procedures
 - Human override protocols yang dilatih, bukan hanya documented
@@ -272,17 +281,17 @@ Explainable AI adalah regulatory requirement. Tapi dalam defence, explainability
 
 ## Status Summary
 
-| Komponen | Status | Maturity |
-|---|---|---|
-| PSPN AI Teras 1 (SA) | Piloting | Medium |
-| STRIDE Drone Framework | Deployed (partial) | Low-Medium |
-| PSEP Cyber Command | Operational | Medium |
-| NACSA Cryptology Centre | Operational | High |
-| TNB Grid AI | Production | Medium |
-| Counter-CL-STA-1062 measures | In progress | Low-Medium |
-| Counter-UAS coverage | Partial | Low |
-| AI Model Security | Nascent | Low |
-| Talent Pipeline | Development | Low |
+| Komponen                     | Status             | Maturity   |
+| ---------------------------- | ------------------ | ---------- |
+| PSPN AI Teras 1 (SA)         | Piloting           | Medium     |
+| STRIDE Drone Framework       | Deployed (partial) | Low-Medium |
+| PSEP Cyber Command           | Operational        | Medium     |
+| NACSA Cryptology Centre      | Operational        | High       |
+| TNB Grid AI                  | Production         | Medium     |
+| Counter-CL-STA-1062 measures | In progress        | Low-Medium |
+| Counter-UAS coverage         | Partial            | Low        |
+| AI Model Security            | Nascent            | Low        |
+| Talent Pipeline              | Development        | Low        |
 
 ---
 
@@ -291,6 +300,7 @@ Explainable AI adalah regulatory requirement. Tapi dalam defence, explainability
 Malaysia sedang membuat pelaburan serius dalam AI untuk pertahanan. PSPN 2026-2030 memberikan framework, PSEP Cyber Command memberikan institutional home, dan NACSA memberikan technical backbone.
 
 Tapi gap yang wujud adalah real:
+
 - Talent pipeline tidak cukup untuk 5 tahun ke hadapan
 - Supply chain security untuk defence AI perlu lebih rigour
 - Counter-UAS adalah genuinely behind the threat curve
@@ -302,4 +312,4 @@ Pertahanan bukan hanya tentang tentera. Ia juga tentang infrastruktur, grid, dan
 
 ---
 
-*Sumber: MINDEF Malaysia PSPN 2026-2030 (public summary), NACSA Annual Report 2025, CrowdStrike Adversary Intelligence (CL-STA-1062 TTP documentation), Mandiant APT40 and Related Groups Analysis, Jane's Defence Weekly Malaysia reporting, TNB Annual Report 2025, ASEAN Counter-UAS Working Group documentation*
+_Sumber: MINDEF Malaysia PSPN 2026-2030 (public summary), NACSA Annual Report 2025, CrowdStrike Adversary Intelligence (CL-STA-1062 TTP documentation), Mandiant APT40 and Related Groups Analysis, Jane's Defence Weekly Malaysia reporting, TNB Annual Report 2025, ASEAN Counter-UAS Working Group documentation_
