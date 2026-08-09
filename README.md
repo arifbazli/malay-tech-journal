@@ -57,7 +57,7 @@ bun run format     # Prettier — auto-fix formatting
 
 ```mermaid
 flowchart LR
-    A[Local Dev\nBun + Astro] -->|git push| B[Pull Request]
+    A[Local Agent Harness\nClaude Code CLI] -->|git push| B[Pull Request]
     B --> C[PR Checks\nlint · typecheck · build · test]
     C -->|fail| D[Review & iterate]
     C -->|pass| E[Merge to main]
@@ -65,14 +65,17 @@ flowchart LR
     F --> G[Live Site\nmalay-tech-journal.pages.dev]
 ```
 
-`PR Checks` (`pr-checks.yml`) runs on every PR and push to `main`, and gates
-merges via required status checks. On merge, `deploy-cloudflare.yml` builds
-the site and publishes it with `wrangler pages deploy`, authenticated via
-the `CLOUDFLARE_API_TOKEN` repository secret. Cloudflare Pages' own Git
-integration is intentionally **not** used for this project — auto-deploy
-must stay off in the Cloudflare dashboard (**Pages → malay-tech-journal →
-Settings → Builds & deployments**), or every merge would trigger two
-competing deploys of the same project.
+Every change starts in the **Local Agent Harness** (Claude Code CLI, run
+from a Debian WSL environment) — code is written, reviewed, and pushed from
+there, never edited directly on GitHub. `PR Checks` (`pr-checks.yml`) then
+runs on every PR and push to `main`, gating merges via required status
+checks. On merge, `deploy-cloudflare.yml` builds the site and publishes it
+with `wrangler pages deploy`, authenticated via the `CLOUDFLARE_API_TOKEN`
+repository secret. Cloudflare Pages' own Git integration is intentionally
+**not** used for this project — auto-deploy must stay off in the Cloudflare
+dashboard (**Pages → malay-tech-journal → Settings → Builds &
+deployments**), or every merge would trigger two competing deploys of the
+same project.
 
 A separate `deploy.yml` workflow builds the same site for GitHub Pages on
 every push to `main`, but its publish step only fires if GitHub Pages is
