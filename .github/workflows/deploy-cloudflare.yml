@@ -64,6 +64,10 @@ jobs:
           PUBLIC_GISCUS_REPO_ID: ${{ vars.PUBLIC_GISCUS_REPO_ID }}
           PUBLIC_GISCUS_CATEGORY: ${{ vars.PUBLIC_GISCUS_CATEGORY }}
           PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.PUBLIC_GISCUS_CATEGORY_ID }}
+          # /projects page's live GitHub stats (stars, forks, commits,
+          # languages) — the repo actually being showcased there, distinct
+          # from PUBLIC_GITHUB_REPO which is this site's own source repo.
+          PROJECTS_REPO: ${{ vars.PROJECTS_REPO || 'arifbazli/Cloud-AI-Agent-Guardrails' }}
         run: bun run build
 
       - name: Deploy to Cloudflare Pages

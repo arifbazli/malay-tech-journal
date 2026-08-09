@@ -108,9 +108,9 @@ export const messages = {
     'projects.subtitle': 'Experiments and research in cloud security and AI systems.',
     'projects.empty': 'No projects yet.',
     'projects.status.active': 'ACTIVE R&D',
-    'projects.github': 'View on GitHub',
     'projects.repo.eyebrow': 'live repo',
-    'projects.repo.description': 'Live snapshot of the public GitHub repository. Pulled at build time from the GitHub REST API.',
+    'projects.repo.description':
+      'Live snapshot of the public GitHub repository. Pulled at build time from the GitHub REST API.',
     'projects.repo.stars': 'stars',
     'projects.repo.forks': 'forks',
     'projects.repo.watchers': 'watchers',
@@ -159,16 +159,12 @@ export const messages = {
     'post.comments': 'Komen',
     'post.commentsDisabled': 'Komen dilumpuhkan untuk post ini.',
     'post.commentsSetupTitle': 'Komen perlu konfigurasi',
-    'post.commentsSetupBody':
-      'Giscus diaktifkan tetapi belum dikonfigurasi.',
-    'post.commentsSetupStep1':
-      'Lawati giscus.app dan pilih repositori GitHub awam anda.',
-    'post.commentsSetupStep2':
-      'Salin nilai repo-id, category dan category-id.',
+    'post.commentsSetupBody': 'Giscus diaktifkan tetapi belum dikonfigurasi.',
+    'post.commentsSetupStep1': 'Lawati giscus.app dan pilih repositori GitHub awam anda.',
+    'post.commentsSetupStep2': 'Salin nilai repo-id, category dan category-id.',
     'post.commentsSetupStep3':
       'Tetapkan pemboleh ubah persekitaran PUBLIC_GISCUS_* dalam fail .env anda.',
-    'post.commentsSetupStep4':
-      'Bina semula tapak — notis ini akan diganti dengan ulasan langsung.',
+    'post.commentsSetupStep4': 'Bina semula tapak — notis ini akan diganti dengan ulasan langsung.',
     'post.commentsSetupDocs': 'Buka giscus.app',
     'post.share': 'Kongsi',
     'post.copyLink': 'Salin pautan',
@@ -229,9 +225,9 @@ export const messages = {
     'projects.subtitle': 'Eksperimen dan penyelidikan dalam cloud security dan sistem AI.',
     'projects.empty': 'Tiada projek lagi.',
     'projects.status.active': 'ACTIVE R&D',
-    'projects.github': 'Lihat di GitHub',
     'projects.repo.eyebrow': 'repo langsung',
-    'projects.repo.description': 'Snapshot langsung repositori GitHub awam. Ditarik pada masa-bina dari GitHub REST API.',
+    'projects.repo.description':
+      'Snapshot langsung repositori GitHub awam. Ditarik pada masa-bina dari GitHub REST API.',
     'projects.repo.stars': 'bintang',
     'projects.repo.forks': 'fork',
     'projects.repo.watchers': 'pemerhati',

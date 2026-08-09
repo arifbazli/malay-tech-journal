@@ -40,7 +40,8 @@ const agents = isBM
       {
         name: 'Benchmark Agent',
         role: 'Hab & orkestrasi',
-        detail: 'Satu-satunya titik masuk untuk interaksi pemaju — semakan kod, soal jawab, triase.',
+        detail:
+          'Satu-satunya titik masuk untuk interaksi pemaju — semakan kod, soal jawab, triase.',
         cls: 'agent-bench',
       },
       {
@@ -108,7 +109,6 @@ const project = {
   narrow
 >
   <article class="proj">
-
     <!-- ── Header row ── -->
     <header class="proj__head">
       <div class="proj__id">
@@ -120,16 +120,6 @@ const project = {
           <span class="proj__status-dot" aria-hidden="true"></span>
           {t('projects.status.active')}
         </span>
-        <a
-          href={repoHtml}
-          class="proj__gh"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={t('projects.github')}
-        >
-          <Icon name="simple-icons:github" width={14} height={14} />
-          <span>GitHub</span>
-        </a>
       </div>
     </header>
 
@@ -148,13 +138,15 @@ const project = {
         <span>{isBM ? 'Ejen' : 'Agents'}</span>
       </p>
       <ul class="proj__agent-list">
-        {agents.map((a) => (
-          <li class={`proj__agent proj__agent--${a.cls}`}>
-            <div class="proj__agent-name">{a.name}</div>
-            <div class="proj__agent-role">{a.role}</div>
-            <div class="proj__agent-detail">{a.detail}</div>
-          </li>
-        ))}
+        {
+          agents.map((a) => (
+            <li class={`proj__agent proj__agent--${a.cls}`}>
+              <div class="proj__agent-name">{a.name}</div>
+              <div class="proj__agent-role">{a.role}</div>
+              <div class="proj__agent-detail">{a.detail}</div>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
@@ -164,101 +156,349 @@ const project = {
         <Icon name="lucide:workflow" width={12} height={12} />
         <span>{isBM ? 'Aliran Kerja' : 'Workflow'}</span>
       </p>
-      {/*
+      {
+        /*
         Compact inline SVG — single static file, no Mermaid runtime needed.
         Drawn in the same dark theme as the rest of the site. Color tokens
         mapped to the same `agent-*` classes as the table above so each
         agent has a consistent hue across the page.
-      */}
+      */
+      }
       <svg
         class="proj__diagram-svg"
         viewBox="0 0 540 320"
         role="img"
-        aria-label={isBM ? 'Carta aliran kerja: PR masuk, ejen mengorkestrasi, gelung auto-fixa, atau peningkatan Isu' : 'Workflow diagram: PR enters, agents orchestrate, loop auto-fixes, or escalates to Issue'}
+        aria-label={isBM
+          ? 'Carta aliran kerja: PR masuk, ejen mengorkestrasi, gelung auto-fixa, atau peningkatan Isu'
+          : 'Workflow diagram: PR enters, agents orchestrate, loop auto-fixes, or escalates to Issue'}
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b8fff" />
+          <marker
+            id="ah"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b8fff"></path>
           </marker>
-          <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399" />
+          <marker
+            id="ag"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"></path>
           </marker>
-          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171" />
+          <marker
+            id="ar"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f87171"></path>
           </marker>
         </defs>
 
         <!-- 1. Developer PR entry -->
         <g>
-          <rect x="200" y="6" width="140" height="34" rx="6" fill="#1e2130" stroke="#2a2d3e" />
-          <text x="270" y="22" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">{isBM ? 'PEMBANGUN' : 'DEVELOPER'}</text>
-          <text x="270" y="34" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="11">{isBM ? 'buka PR' : 'opens PR'}</text>
+          <rect x="200" y="6" width="140" height="34" rx="6" fill="#1e2130" stroke="#2a2d3e"></rect>
+          <text
+            x="270"
+            y="22"
+            text-anchor="middle"
+            fill="#a78bfa"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">{isBM ? 'PEMBANGUN' : 'DEVELOPER'}</text
+          >
+          <text
+            x="270"
+            y="34"
+            text-anchor="middle"
+            fill="#e2e4ef"
+            font-family="ui-monospace, monospace"
+            font-size="11">{isBM ? 'buka PR' : 'opens PR'}</text
+          >
         </g>
 
         <!-- Arrow down -->
-        <line x1="270" y1="40" x2="270" y2="62" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+        <line
+          x1="270"
+          y1="40"
+          x2="270"
+          y2="62"
+          stroke="#5b8fff"
+          stroke-width="1.4"
+          marker-end="url(#ah)"></line>
 
         <!-- 2. Benchmark Agent (hub) -->
         <g>
-          <rect x="170" y="62" width="200" height="46" rx="7" fill="#5b8fff" fill-opacity="0.18" stroke="#5b8fff" stroke-width="1.2" />
-          <text x="270" y="80" text-anchor="middle" fill="#5b8fff" font-family="ui-monospace, monospace" font-size="11" font-weight="700">Benchmark Agent</text>
-          <text x="270" y="95" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="9">{isBM ? 'Hab · orkestrasi' : 'Hub · orchestrator'}</text>
+          <rect
+            x="170"
+            y="62"
+            width="200"
+            height="46"
+            rx="7"
+            fill="#5b8fff"
+            fill-opacity="0.18"
+            stroke="#5b8fff"
+            stroke-width="1.2"></rect>
+          <text
+            x="270"
+            y="80"
+            text-anchor="middle"
+            fill="#5b8fff"
+            font-family="ui-monospace, monospace"
+            font-size="11"
+            font-weight="700">Benchmark Agent</text
+          >
+          <text
+            x="270"
+            y="95"
+            text-anchor="middle"
+            fill="#a78bfa"
+            font-family="ui-monospace, monospace"
+            font-size="9">{isBM ? 'Hab · orkestrasi' : 'Hub · orchestrator'}</text
+          >
         </g>
 
         <!-- Branch arrows to sub-agents -->
-        <line x1="220" y1="108" x2="120" y2="138" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
-        <line x1="320" y1="108" x2="420" y2="138" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+        <line
+          x1="220"
+          y1="108"
+          x2="120"
+          y2="138"
+          stroke="#5b8fff"
+          stroke-width="1.4"
+          marker-end="url(#ah)"></line>
+        <line
+          x1="320"
+          y1="108"
+          x2="420"
+          y2="138"
+          stroke="#5b8fff"
+          stroke-width="1.4"
+          marker-end="url(#ah)"></line>
 
         <!-- 3a. Guardrail Enforcement -->
         <g>
-          <rect x="38" y="138" width="170" height="50" rx="6" fill="#a78bfa" fill-opacity="0.16" stroke="#a78bfa" stroke-width="1.1" />
-          <text x="123" y="156" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Guardrail</text>
-          <text x="123" y="169" text-anchor="middle" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Enforcement</text>
-          <text x="123" y="182" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="10">34 {isBM ? 'peraturan' : 'rules'}</text>
+          <rect
+            x="38"
+            y="138"
+            width="170"
+            height="50"
+            rx="6"
+            fill="#a78bfa"
+            fill-opacity="0.16"
+            stroke="#a78bfa"
+            stroke-width="1.1"></rect>
+          <text
+            x="123"
+            y="156"
+            text-anchor="middle"
+            fill="#a78bfa"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">Guardrail</text
+          >
+          <text
+            x="123"
+            y="169"
+            text-anchor="middle"
+            fill="#a78bfa"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">Enforcement</text
+          >
+          <text
+            x="123"
+            y="182"
+            text-anchor="middle"
+            fill="#e2e4ef"
+            font-family="ui-monospace, monospace"
+            font-size="10">34 {isBM ? 'peraturan' : 'rules'}</text
+          >
         </g>
 
         <!-- 3b. Pi Guardrail -->
         <g>
-          <rect x="332" y="138" width="170" height="50" rx="6" fill="#facc15" fill-opacity="0.14" stroke="#facc15" stroke-width="1.1" />
-          <text x="417" y="156" text-anchor="middle" fill="#facc15" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Pi Guardrail</text>
-          <text x="417" y="169" text-anchor="middle" fill="#facc15" font-family="ui-monospace, monospace" font-size="10" font-weight="700">Agent</text>
-          <text x="417" y="182" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="10">10 {isBM ? 'peraturan' : 'rules'}</text>
+          <rect
+            x="332"
+            y="138"
+            width="170"
+            height="50"
+            rx="6"
+            fill="#facc15"
+            fill-opacity="0.14"
+            stroke="#facc15"
+            stroke-width="1.1"></rect>
+          <text
+            x="417"
+            y="156"
+            text-anchor="middle"
+            fill="#facc15"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">Pi Guardrail</text
+          >
+          <text
+            x="417"
+            y="169"
+            text-anchor="middle"
+            fill="#facc15"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">Agent</text
+          >
+          <text
+            x="417"
+            y="182"
+            text-anchor="middle"
+            fill="#e2e4ef"
+            font-family="ui-monospace, monospace"
+            font-size="10">10 {isBM ? 'peraturan' : 'rules'}</text
+          >
         </g>
 
         <!-- Lines from sub-agents to Loop Engine -->
-        <line x1="123" y1="188" x2="200" y2="220" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
-        <line x1="417" y1="188" x2="340" y2="220" stroke="#5b8fff" stroke-width="1.4" marker-end="url(#ah)" />
+        <line
+          x1="123"
+          y1="188"
+          x2="200"
+          y2="220"
+          stroke="#5b8fff"
+          stroke-width="1.4"
+          marker-end="url(#ah)"></line>
+        <line
+          x1="417"
+          y1="188"
+          x2="340"
+          y2="220"
+          stroke="#5b8fff"
+          stroke-width="1.4"
+          marker-end="url(#ah)"></line>
 
         <!-- 4. Loop Engine -->
         <g>
-          <rect x="160" y="220" width="220" height="44" rx="6" fill="#1e2130" stroke="#34d399" stroke-width="1.2" />
-          <text x="270" y="237" text-anchor="middle" fill="#34d399" font-family="ui-monospace, monospace" font-size="11" font-weight="700">Loop Engine</text>
-          <text x="270" y="251" text-anchor="middle" fill="#e2e4ef" font-family="ui-monospace, monospace" font-size="9.5">{isBM ? 'GAGAL → auto-fixa → nilai semula' : 'FAIL → AI auto-fix → re-evaluate'}</text>
-          <text x="270" y="262" text-anchor="middle" fill="#6b7194" font-family="ui-monospace, monospace" font-size="9">{isBM ? 'maks 3 pusingan setiap pelanggaran' : 'max 3 attempts per violation'}</text>
+          <rect
+            x="160"
+            y="220"
+            width="220"
+            height="44"
+            rx="6"
+            fill="#1e2130"
+            stroke="#34d399"
+            stroke-width="1.2"></rect>
+          <text
+            x="270"
+            y="237"
+            text-anchor="middle"
+            fill="#34d399"
+            font-family="ui-monospace, monospace"
+            font-size="11"
+            font-weight="700">Loop Engine</text
+          >
+          <text
+            x="270"
+            y="251"
+            text-anchor="middle"
+            fill="#e2e4ef"
+            font-family="ui-monospace, monospace"
+            font-size="9.5"
+            >{isBM ? 'GAGAL → auto-fixa → nilai semula' : 'FAIL → AI auto-fix → re-evaluate'}</text
+          >
+          <text
+            x="270"
+            y="262"
+            text-anchor="middle"
+            fill="#6b7194"
+            font-family="ui-monospace, monospace"
+            font-size="9"
+            >{isBM ? 'maks 3 pusingan setiap pelanggaran' : 'max 3 attempts per violation'}</text
+          >
         </g>
 
         <!-- Two outcomes -->
-        <line x1="220" y1="264" x2="120" y2="288" stroke="#34d399" stroke-width="1.4" marker-end="url(#ag)" />
-        <line x1="320" y1="264" x2="420" y2="288" stroke="#f87171" stroke-width="1.4" marker-end="url(#ar)" />
+        <line
+          x1="220"
+          y1="264"
+          x2="120"
+          y2="288"
+          stroke="#34d399"
+          stroke-width="1.4"
+          marker-end="url(#ag)"></line>
+        <line
+          x1="320"
+          y1="264"
+          x2="420"
+          y2="288"
+          stroke="#f87171"
+          stroke-width="1.4"
+          marker-end="url(#ar)"></line>
 
         <!-- 5a. PASS -->
         <g>
-          <rect x="38" y="288" width="170" height="26" rx="5" fill="#34d399" fill-opacity="0.10" stroke="#34d399" stroke-width="1" />
-          <text x="123" y="305" text-anchor="middle" fill="#34d399" font-family="ui-monospace, monospace" font-size="10" font-weight="700">✓ {isBM ? 'LULUS' : 'PASS'}</text>
+          <rect
+            x="38"
+            y="288"
+            width="170"
+            height="26"
+            rx="5"
+            fill="#34d399"
+            fill-opacity="0.10"
+            stroke="#34d399"
+            stroke-width="1"></rect>
+          <text
+            x="123"
+            y="305"
+            text-anchor="middle"
+            fill="#34d399"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">✓ {isBM ? 'LULUS' : 'PASS'}</text
+          >
         </g>
 
         <!-- 5b. ESCALATE -->
         <g>
-          <rect x="332" y="288" width="170" height="26" rx="5" fill="#f87171" fill-opacity="0.10" stroke="#f87171" stroke-width="1" />
-          <text x="417" y="305" text-anchor="middle" fill="#f87171" font-family="ui-monospace, monospace" font-size="10" font-weight="700">✗ {isBM ? 'TINGKATKAN' : 'ESCALATE'}</text>
+          <rect
+            x="332"
+            y="288"
+            width="170"
+            height="26"
+            rx="5"
+            fill="#f87171"
+            fill-opacity="0.10"
+            stroke="#f87171"
+            stroke-width="1"></rect>
+          <text
+            x="417"
+            y="305"
+            text-anchor="middle"
+            fill="#f87171"
+            font-family="ui-monospace, monospace"
+            font-size="10"
+            font-weight="700">✗ {isBM ? 'TINGKATKAN' : 'ESCALATE'}</text
+          >
         </g>
       </svg>
 
       <p class="proj__diagram-caption">
-        {isBM
-          ? 'Auto-fixa dikomit ke cawangan dengan komen PR; jika had dilevati, GitHub Issue dibuka dengan sejarah gelung penuh.'
-          : 'Auto-fix committed to branch with PR comment; past limit → GitHub Issue opened with full loop history.'}
+        {
+          isBM
+            ? 'Auto-fixa dikomit ke cawangan dengan komen PR; jika had dilevati, GitHub Issue dibuka dengan sejarah gelung penuh.'
+            : 'Auto-fix committed to branch with PR comment; past limit → GitHub Issue opened with full loop history.'
+        }
       </p>
     </section>
 
@@ -294,45 +534,53 @@ const project = {
         </span>
         <span class="proj__repo-meta-sep">·</span>
         <span class="proj__repo-meta-item">{(repo.sizeKB / 1024).toFixed(2)} MB</span>
-        {repo.languages.length > 0 && (
-          <>
-            <span class="proj__repo-meta-sep">·</span>
-            <span class="proj__repo-meta-item">
-              <span class="proj__repo-meta-dot" style={`background:${repo.languages[0].color}`}></span>
-              {repo.languages.map((l, i) => (
-                <span>{l.name} {l.percent}%{i < repo.languages.length - 1 ? ' · ' : ''}</span>
-              ))}
-            </span>
-          </>
-        )}
+        {
+          repo.languages.length > 0 && (
+            <>
+              <span class="proj__repo-meta-sep">·</span>
+              <span class="proj__repo-meta-item">
+                <span class="proj__repo-meta-dot" style={`background:${repo.languages[0].color}`} />
+                {repo.languages.map((l, i) => (
+                  <span>
+                    {l.name} {l.percent}%{i < repo.languages.length - 1 ? ' · ' : ''}
+                  </span>
+                ))}
+              </span>
+            </>
+          )
+        }
       </div>
 
-      {repo.latestCommit && (
-        <a
-          href={repo.latestCommit.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="proj__commit"
-        >
-          <code class="proj__commit-sha">{repo.latestCommit.shortSha}</code>
-          <span class="proj__commit-msg">{repo.latestCommit.message}</span>
-          <span class="proj__commit-meta">
-            {repo.latestCommit.author} · {relativeTime(repo.latestCommit.date)}
-          </span>
-        </a>
-      )}
+      {
+        repo.latestCommit && (
+          <a
+            href={repo.latestCommit.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="proj__commit"
+          >
+            <code class="proj__commit-sha">{repo.latestCommit.shortSha}</code>
+            <span class="proj__commit-msg">{repo.latestCommit.message}</span>
+            <span class="proj__commit-meta">
+              {repo.latestCommit.author} · {relativeTime(repo.latestCommit.date)}
+            </span>
+          </a>
+        )
+      }
 
-      {repo.languages.length > 1 && (
-        <div class="proj__langbar" role="img" aria-label={t('projects.repo.languages')}>
-          {repo.languages.map((l) => (
-            <span
-              class="proj__langbar-seg"
-              style={`width:${l.percent}%; background:${l.color};`}
-              title={`${l.name} ${l.percent}%`}
-            ></span>
-          ))}
-        </div>
-      )}
+      {
+        repo.languages.length > 1 && (
+          <div class="proj__langbar" role="img" aria-label={t('projects.repo.languages')}>
+            {repo.languages.map((l) => (
+              <span
+                class="proj__langbar-seg"
+                style={`width:${l.percent}%; background:${l.color};`}
+                title={`${l.name} ${l.percent}%`}
+              />
+            ))}
+          </div>
+        )
+      }
     </div>
 
     <!-- ── Footer ── -->
@@ -356,14 +604,15 @@ const project = {
       <p class="proj__synced">
         <Icon name="lucide:refresh-cw" width={11} height={11} />
         <span>{t('projects.repo.fetchedAt')} {syncedRel}</span>
-        {repo.isStale && (
-          <span class="proj__stale" title={t('projects.repo.stale')}>
-            <Icon name="lucide:alert-triangle" width={11} height={11} />
-          </span>
-        )}
+        {
+          repo.isStale && (
+            <span class="proj__stale" title={t('projects.repo.stale')}>
+              <Icon name="lucide:alert-triangle" width={11} height={11} />
+            </span>
+          )
+        }
       </p>
     </footer>
-
   </article>
 </BaseLayout>
 
@@ -406,7 +655,10 @@ const project = {
     gap: 1rem;
   }
   @media (max-width: 640px) {
-    .proj { padding: 1rem 1.05rem; gap: 0.8rem; }
+    .proj {
+      padding: 1rem 1.05rem;
+      gap: 0.8rem;
+    }
   }
 
   /* ── Section labels (compact, mono) ── */
@@ -422,7 +674,9 @@ const project = {
     color: var(--mtj-muted);
     font-weight: 700;
   }
-  .proj__section-label :global(svg) { color: var(--mtj-accent); }
+  .proj__section-label :global(svg) {
+    color: var(--mtj-accent);
+  }
 
   /* ── Head row ── */
   .proj__head {
@@ -465,7 +719,7 @@ const project = {
     font-family: ui-monospace, monospace;
     background: oklch(0.76 0.17 145 / 0.12);
     color: oklch(0.76 0.17 145);
-    border: 0.5px solid oklch(0.76 0.17 145 / 0.30);
+    border: 0.5px solid oklch(0.76 0.17 145 / 0.3);
   }
   .proj__status-dot {
     width: 5px;
@@ -476,26 +730,21 @@ const project = {
     animation: proj-pulse 2s ease-in-out infinite;
   }
   @keyframes proj-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%      { opacity: 0.55; transform: scale(0.78); }
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(0.78);
+    }
   }
-  @media (prefers-reduced-motion: reduce) { .proj__status-dot { animation: none; } }
-
-  .proj__gh {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 9px;
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--mtj-text);
-    background: var(--mtj-surface);
-    border: 0.5px solid var(--mtj-muted);
-    text-decoration: none;
-    transition: color 150ms ease, border-color 150ms ease;
+  @media (prefers-reduced-motion: reduce) {
+    .proj__status-dot {
+      animation: none;
+    }
   }
-  .proj__gh:hover { color: var(--mtj-accent); border-color: var(--mtj-accent); }
 
   /* ── Summary ── */
   .proj__summary {
@@ -531,7 +780,9 @@ const project = {
   }
   /* Stack to single column on phones */
   @media (max-width: 520px) {
-    .proj__agent-list { grid-template-columns: 1fr; }
+    .proj__agent-list {
+      grid-template-columns: 1fr;
+    }
   }
 
   .proj__agent {
@@ -546,10 +797,18 @@ const project = {
     min-width: 0;
   }
   /* Color-coded left border per agent — matches diagram nodes */
-  .proj__agent--agent-bench    { border-left-color: var(--mtj-accent); }   /* blue */
-  .proj__agent--agent-harness  { border-left-color: var(--mtj-accent-2); } /* purple */
-  .proj__agent--agent-pi       { border-left-color: #facc15; }             /* yellow */
-  .proj__agent--agent-research { border-left-color: var(--mtj-green); }    /* green */
+  .proj__agent--agent-bench {
+    border-left-color: var(--mtj-accent);
+  } /* blue */
+  .proj__agent--agent-harness {
+    border-left-color: var(--mtj-accent-2);
+  } /* purple */
+  .proj__agent--agent-pi {
+    border-left-color: #facc15;
+  } /* yellow */
+  .proj__agent--agent-research {
+    border-left-color: var(--mtj-green);
+  } /* green */
 
   .proj__agent-name {
     font-family: ui-monospace, monospace;
@@ -619,8 +878,13 @@ const project = {
     font-size: 0.78rem;
     color: var(--mtj-text);
   }
-  .proj__stat :global(svg) { color: var(--mtj-muted); }
-  .proj__stat b { font-weight: 700; color: var(--mtj-text); }
+  .proj__stat :global(svg) {
+    color: var(--mtj-muted);
+  }
+  .proj__stat b {
+    font-weight: 700;
+    color: var(--mtj-text);
+  }
   .proj__stat-l {
     font-size: 0.65rem;
     text-transform: uppercase;
@@ -629,8 +893,12 @@ const project = {
     font-weight: 600;
   }
   @media (max-width: 540px) {
-    .proj__stat-l { display: none; }
-    .proj__repo-stats { gap: 0.65rem; }
+    .proj__stat-l {
+      display: none;
+    }
+    .proj__repo-stats {
+      gap: 0.65rem;
+    }
   }
   .proj__repo-meta {
     display: flex;
@@ -641,9 +909,18 @@ const project = {
     font-size: 0.72rem;
     color: var(--mtj-muted);
   }
-  .proj__repo-meta-item { display: inline-flex; align-items: center; gap: 4px; }
-  .proj__repo-meta-item code { color: var(--mtj-accent); }
-  .proj__repo-meta-sep { color: var(--mtj-muted); opacity: 0.55; }
+  .proj__repo-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .proj__repo-meta-item code {
+    color: var(--mtj-accent);
+  }
+  .proj__repo-meta-sep {
+    color: var(--mtj-muted);
+    opacity: 0.55;
+  }
   .proj__repo-meta-dot {
     width: 8px;
     height: 8px;
@@ -662,7 +939,9 @@ const project = {
     transition: background 120ms ease;
     font-family: ui-monospace, monospace;
   }
-  .proj__commit:hover { background: var(--mtj-accent-10); }
+  .proj__commit:hover {
+    background: var(--mtj-accent-10);
+  }
   .proj__commit-sha {
     background: var(--mtj-accent-15, var(--mtj-accent-10));
     color: var(--mtj-accent);
@@ -692,7 +971,9 @@ const project = {
     display: flex;
     background: var(--mtj-muted);
   }
-  .proj__langbar-seg { height: 100%; }
+  .proj__langbar-seg {
+    height: 100%;
+  }
 
   /* ── Footer ── */
   .proj__foot {
@@ -723,17 +1004,26 @@ const project = {
     border: 0.5px solid var(--mtj-muted);
     cursor: pointer;
     font-family: ui-monospace, monospace;
-    transition: border-color 120ms ease, color 120ms ease;
+    transition:
+      border-color 120ms ease,
+      color 120ms ease;
     max-width: 100%;
   }
-  .proj__clone:hover { border-color: var(--mtj-accent); color: var(--mtj-accent); }
+  .proj__clone:hover {
+    border-color: var(--mtj-accent);
+    color: var(--mtj-accent);
+  }
   .proj__clone-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 220px;
   }
-  @media (max-width: 640px) { .proj__clone-text { display: none; } }
+  @media (max-width: 640px) {
+    .proj__clone-text {
+      display: none;
+    }
+  }
   .proj__clone-hint {
     font-size: 0.65rem;
     font-weight: 700;
@@ -747,7 +1037,12 @@ const project = {
     color: var(--mtj-green);
     border-left-color: var(--mtj-green);
   }
-  @media (max-width: 640px) { .proj__clone-hint { border-left: 0; padding-left: 0; } }
+  @media (max-width: 640px) {
+    .proj__clone-hint {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
   .proj__open {
     display: inline-flex;
     align-items: center;
@@ -761,7 +1056,9 @@ const project = {
     text-decoration: none;
     transition: filter 120ms ease;
   }
-  .proj__open:hover { filter: brightness(1.12); }
+  .proj__open:hover {
+    filter: brightness(1.12);
+  }
   .proj__synced {
     margin: 0;
     display: inline-flex;
