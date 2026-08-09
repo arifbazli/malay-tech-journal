@@ -1,0 +1,77 @@
+name: Deploy to Cloudflare Pages
+
+# Publishes the live site (malay-tech-journal.pages.dev) via Wrangler.
+# This replaced Cloudflare Pages' own Git integration — see the note in
+# README.md's Deployment section. Do not re-enable automatic deployments
+# in the Cloudflare dashboard while this workflow is active, or every push
+# to main triggers two competing deploys of the same project.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+      - 'tsconfig.json'
+      - 'package.json'
+      - 'bun.lock'
+      - '.github/workflows/deploy-cloudflare.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages
+  # Same rationale as deploy.yml: don't cancel an in-flight deploy, let it
+  # finish so the live site never sits in a partially-propagated state.
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.13
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build with Astro
+        # Cloudflare Pages serves from the domain root — no BASE_PATH.
+        # All values below are read from repository Variables
+        # (Settings → Secrets and variables → Actions → Variables), same
+        # pattern as deploy.yml. Every var is optional; unset expands to
+        # an empty string, which the theme treats as "feature disabled".
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://malay-tech-journal.pages.dev' }}
+          PUBLIC_GITHUB_HANDLE: ${{ vars.PUBLIC_GITHUB_HANDLE || github.repository_owner }}
+          PUBLIC_GITHUB_REPO: ${{ vars.PUBLIC_GITHUB_REPO || github.event.repository.name }}
+          PUBLIC_TWITTER_HANDLE: ${{ vars.PUBLIC_TWITTER_HANDLE }}
+          PUBLIC_CONTACT_EMAIL: ${{ vars.PUBLIC_CONTACT_EMAIL }}
+          PUBLIC_GISCUS_ENABLED: ${{ vars.PUBLIC_GISCUS_ENABLED }}
+          PUBLIC_GISCUS_REPO: ${{ vars.PUBLIC_GISCUS_REPO }}
+          PUBLIC_GISCUS_REPO_ID: ${{ vars.PUBLIC_GISCUS_REPO_ID }}
+          PUBLIC_GISCUS_CATEGORY: ${{ vars.PUBLIC_GISCUS_CATEGORY }}
+          PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.PUBLIC_GISCUS_CATEGORY_ID }}
+        run: bun run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Account IDs aren't secret (Cloudflare dashboard shows them
+          # openly), so this is hardcoded rather than requiring a second
+          # manual variable setup step.
+          accountId: 1c5731ce0fd505c95adb0069d6aa4dd2
+          command: pages deploy ./dist --project-name=malay-tech-journal
