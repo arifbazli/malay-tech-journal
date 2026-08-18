@@ -42,5 +42,3 @@ pagefind/
 # build-time caches
 .cache/
 .wrangler/
-.backup-task12/
-chirping-astro/

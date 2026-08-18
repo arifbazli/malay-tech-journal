@@ -2,34 +2,22 @@
 
 ## Supported versions
 
-Security updates are provided for the latest `main` branch.
+Security fixes are provided for the latest `main` branch only.
 
 ## Reporting a vulnerability
 
-Please do not report security vulnerabilities in public GitHub issues.
+Do not report security vulnerabilities in public GitHub issues. Use one of:
 
-Use one of these channels:
+1. [GitHub Security Advisories](https://github.com/arifbazli/malay-tech-journal/security/advisories/new) (preferred)
+2. If private reporting is unavailable, open an issue titled "Security report request" asking for a private contact channel — do not include details publicly.
 
-1. GitHub Security Advisories (preferred):
-   [https://github.com/kannansuresh/chirping-astro/security/advisories/new](https://github.com/kannansuresh/chirping-astro/security/advisories/new)
-2. If private reporting is unavailable, open an issue with only the title
-   "Security report request" and ask for a private contact channel.
-
-When reporting, include:
-
-- Affected component/file
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if known)
+Include: affected file/component, steps to reproduce, potential impact, and a suggested fix if known.
 
 ## Response targets
 
-- Initial acknowledgment: within 5 business days
-- Next status update: within 10 business days
-
-Response timing may vary based on severity and maintainer availability.
+- Acknowledgment: within 5 business days
+- Status update: within 10 business days
 
 ## Disclosure
 
-Please allow maintainers time to investigate and release a fix before public
-disclosure.
+Please allow time to investigate and ship a fix before public disclosure.
