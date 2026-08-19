@@ -225,8 +225,7 @@ export default defineConfig({
       // attribute. Site is dark-only by design (light theme removed), so
       // we no longer switch between light and dark. Code blocks always
       // render with the github-dark-dimmed palette.
-      themeCssSelector: (theme) =>
-        `[data-theme='chirpy-dark']`,
+      themeCssSelector: () => `[data-theme='chirpy-dark']`,
       useDarkModeMediaQuery: false,
       shiki: {
         langAlias: {

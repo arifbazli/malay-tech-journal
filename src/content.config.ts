@@ -32,7 +32,7 @@ const localeEnum = z.enum(SITE.locales as unknown as [string, ...string[]]);
  *   3. An external URL (https://…) — optimized at build if the host
  *      is allow-listed in `image.remotePatterns` in `astro.config.mjs`.
  */
-const baseFrontmatter = ({ image }: SchemaContext) =>
+const baseFrontmatter = (_ctx: SchemaContext) =>
   z.object({
     title: z.string().min(1).max(140),
     description: z.string().min(1).max(280),

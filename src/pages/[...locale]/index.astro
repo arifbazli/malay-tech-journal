@@ -4,7 +4,7 @@ import PostList from '../../components/post/PostList.astro';
 import Pagination from '../../components/ui/Pagination.astro';
 import { readingTime } from '~/utils/reading-time';
 import { SITE } from '~/config';
-import { localizedPath, useTranslations } from '~/i18n/utils';
+import { localizedPath } from '~/i18n/utils';
 import { getArticles } from '~/utils/posts';
 
 export function getStaticPaths() {
@@ -14,7 +14,6 @@ export function getStaticPaths() {
   }));
 }
 const { locale } = Astro.props;
-const t = useTranslations(locale);
 const ms = locale === 'ms';
 
 const articles = await getArticles(locale);

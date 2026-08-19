@@ -100,6 +100,34 @@ export interface RepoSnapshot {
   isStale: boolean;
 }
 
+/** Subset of the GitHub REST API's repo response actually consumed here. */
+interface GitHubRepoApiResponse {
+  full_name: string;
+  description: string | null;
+  default_branch: string;
+  size: number;
+  visibility: string;
+  has_issues: boolean;
+  has_discussions: boolean;
+  stargazers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  subscribers_count: number;
+}
+
+interface GitHubCommitApiResponse {
+  sha: string;
+  html_url: string;
+  commit?: { message?: string; author?: { date?: string; name?: string } };
+}
+
+interface GitHubContributorApiResponse {
+  login: string;
+  contributions: number;
+  avatar_url: string;
+  html_url: string;
+}
+
 const LANGUAGE_COLORS: Record<string, string> = {
   Python: '#3572A5',
   Bash: '#89e051',
@@ -175,7 +203,7 @@ function languageColor(name: string): string {
 export async function loadRepoSnapshot(): Promise<RepoSnapshot> {
   if (_cache) return _cache;
 
-  const repo = await fetchJson<any>(`${API}/repos/${REPO}`);
+  const repo = await fetchJson<GitHubRepoApiResponse>(`${API}/repos/${REPO}`);
   if (!repo) {
     const disk = readDiskCache();
     if (disk) {
@@ -209,9 +237,9 @@ export async function loadRepoSnapshot(): Promise<RepoSnapshot> {
 
   // Fetch auxiliary data in parallel
   const [latestCommitRaw, languagesRaw, contributorsRaw] = await Promise.all([
-    fetchJson<any>(`${API}/repos/${REPO}/commits/${repo.default_branch}`),
+    fetchJson<GitHubCommitApiResponse>(`${API}/repos/${REPO}/commits/${repo.default_branch}`),
     fetchJson<Record<string, number>>(`${API}/repos/${REPO}/languages`),
-    fetchJson<any[]>(`${API}/repos/${REPO}/contributors?per_page=5`),
+    fetchJson<GitHubContributorApiResponse[]>(`${API}/repos/${REPO}/contributors?per_page=5`),
   ]);
 
   // Languages → sorted, percent-calculated
@@ -237,7 +265,7 @@ export async function loadRepoSnapshot(): Promise<RepoSnapshot> {
       }
     : null;
 
-  const contributors: RepoContributor[] = (contributorsRaw ?? []).map((c: any) => ({
+  const contributors: RepoContributor[] = (contributorsRaw ?? []).map((c) => ({
     login: c.login,
     contributions: c.contributions,
     avatarUrl: c.avatar_url,

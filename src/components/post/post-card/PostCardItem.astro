@@ -14,7 +14,7 @@
  * squeeze the body to ~215px in a 260px sidebar).
  */
 import type { Locale } from '../../../config';
-import { useTranslations, localizedPath } from '../../../i18n/utils';
+import { localizedPath } from '../../../i18n/utils';
 import { readingTime } from '../../../utils/reading-time';
 import type { Post } from '../../../utils/posts';
 
@@ -26,7 +26,6 @@ interface Props {
 }
 
 const { post, locale, compact = false } = Astro.props;
-const t = useTranslations(locale);
 const ms = locale === 'ms';
 
 const dayFmt = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', { day: '2-digit' });

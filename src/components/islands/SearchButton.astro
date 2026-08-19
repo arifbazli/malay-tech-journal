@@ -55,20 +55,12 @@ function seriesPillMiniClass(name: string): string {
   if (s.includes('military') || s.includes('defence') || s.includes('defense')) return 'pill-mini--mil';
   return 'pill-mini--ai';
 }
-function seriesPillClass(name: string): string {
-  const s = name.toLowerCase();
-  if (s.includes('ground') || s.includes('truth')) return 'mtj-pill--ground';
-  if (s.includes('guardrail')) return 'mtj-pill--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return 'mtj-pill--mil';
-  return 'mtj-pill--ai';
-}
 function getSeries(post: any): string {
   return (post.data.categories as string[])[0] ?? '';
 }
 function postHref(post: any): string {
   return localizedPath(`/posts/${post.id.split('/').pop()}/`, locale);
 }
-const dayFmt = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', { day: '2-digit', month: 'short' });
 ---
 
 <button
@@ -190,7 +182,7 @@ const dayFmt = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', { day: '2-digit',
   }
   interface PagefindModule {
     init?: () => Promise<void>;
-    search: (term: string) => Promise<{ results: PagefindResult[] } | null>;
+    search: (_term: string) => Promise<{ results: PagefindResult[] } | null>;
   }
 
   let pagefindModule: PagefindModule | null = null;
