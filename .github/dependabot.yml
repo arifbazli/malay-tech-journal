@@ -27,3 +27,8 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@astrojs/*"
         update-types: ["version-update:semver-major"]
+      # TypeScript 7 isn't supported yet by @astrojs/check (peer dep
+      # ^5 || ^6) or typescript-eslint — pinned to ^6 in PR #34. Remove
+      # this ignore once both upstream packages add TS7 support.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
