@@ -23,7 +23,7 @@ this blog, not for reuse by others.
 | Comments | Giscus (optional, GitHub Discussions) |
 | Math | KaTeX, opt-in per post (`math: true`) |
 | Diagrams | Mermaid, client-hydrated; `render-diagrams.mjs` pre-renders SVGs for build-time checks |
-| CI | `pr-checks.yml`, `deploy-cloudflare.yml` (canonical), `deploy.yml` (GitHub Pages, non-publishing), `weekly.yml`, `bun-update-monitor.yml`, `auto-merge-dependabot.yml`, `auto-merge-imgbot.yml`, `labels.yml` |
+| CI | `pr-checks.yml`, `deploy-cloudflare.yml` (canonical), `deploy.yml` (GitHub Pages, non-publishing), `weekly.yml`, `bun-update-monitor.yml` |
 
 ---
 
@@ -272,8 +272,6 @@ bun run pagefind     # Re-run Pagefind only, after astro build
 | `pr-checks.yml` | PR + push to `main` | Change-detected lint/format/markdownlint, typecheck, test, build. PRs build in fast mode (`CI_SKIP_*` env vars). |
 | `weekly.yml` | Mon 06:17 UTC + manual | Full lint/typecheck/build/test smoke on a clean runner. |
 | `bun-update-monitor.yml` | Mon 08:00 UTC + manual | Advisory only — warns + opens an issue if pinned Bun trails latest; never fails the run. |
-| `auto-merge-dependabot.yml` / `auto-merge-imgbot.yml` | Bot PRs | Auto-merge for Dependabot / Imgbot PRs. |
-| `labels.yml` | Manual dispatch | Applies `.github/labels.yml`. |
 
 ### Cloudflare Pages one-time setup
 

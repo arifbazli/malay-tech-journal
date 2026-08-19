@@ -3,8 +3,8 @@
 version: 2
 
 updates:
-  # Runtime + dev dependencies tracked here so `auto-merge-dependabot.yml`
-  # has something to merge. Weekly cadence to keep PR noise low.
+  # Weekly cadence to keep PR noise low. PRs are reviewed and merged
+  # manually — no auto-merge workflow for this repo.
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
