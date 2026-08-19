@@ -36,7 +36,7 @@ Cloud Security Baseline = **set of security controls that must be enforced on ev
 
 How it differs from regular security hardening:
 
-```
+```text
 Security Hardening:          Cloud Security Baseline:
 - Per-workload               - Per-account/subscription
 - After deploy               - Before first workload
@@ -105,7 +105,7 @@ This is **the floor that cannot be compromised** — based on CIS AWS v7.0 + MCS
 
 ### 1. Identity & Access (IAM)
 
-```
+```text
 ✅ Root account MFA enabled
 ✅ Root account access keys DELETED (not disabled, deleted)
 ✅ MFA required for all human users
@@ -119,7 +119,7 @@ This is **the floor that cannot be compromised** — based on CIS AWS v7.0 + MCS
 
 ### 2. Logging & Monitoring
 
-```
+```text
 ✅ CloudTrail enabled — ALL regions, ALL management events
 ✅ CloudTrail log file validation enabled
 ✅ CloudTrail logs sent to S3 + CloudWatch Logs
@@ -132,7 +132,7 @@ This is **the floor that cannot be compromised** — based on CIS AWS v7.0 + MCS
 
 ### 3. Networking
 
-```
+```text
 ✅ No Security Group with inbound 0.0.0.0/0 to port 22 (SSH)
 ✅ No Security Group with inbound 0.0.0.0/0 to port 3389 (RDP)
 ✅ Default VPC not used for production workloads
@@ -142,7 +142,7 @@ This is **the floor that cannot be compromised** — based on CIS AWS v7.0 + MCS
 
 ### 4. Storage & Data
 
-```
+```text
 ✅ S3 Block Public Access enabled — account level
 ✅ S3 bucket versioning enabled for critical data
 ✅ EBS encryption by default enabled
@@ -153,7 +153,7 @@ This is **the floor that cannot be compromised** — based on CIS AWS v7.0 + MCS
 
 ### 5. Billing & Governance
 
-```
+```text
 ✅ Billing alerts configured (threshold not a big number)
 ✅ Budget alerts configured
 ✅ Cost anomaly detection enabled

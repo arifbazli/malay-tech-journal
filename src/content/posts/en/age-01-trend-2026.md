@@ -24,7 +24,7 @@ We're not living in the same era our older colleagues entered the industry five 
 
 These four trends are moving in parallel. Understand one but not the other three and you're already behind.
 
-```
+```text
 1. Cloud Security 2026  →  not just "patches and compliance"
 2. AI Evolution 2026    →  from LLM to agent
 3. Engineering Evolution → from prompt to agentic engineering
@@ -245,7 +245,7 @@ This is the **trend everyone's talking about right now** and the reason this pos
 
 Because the problem with agents today isn't **"my agent isn't smart enough"**. The problem is:
 
-```
+```text
 "My agent is smart enough.
 But when it escapes the sandbox, it can do things I didn't authorize."
 ```

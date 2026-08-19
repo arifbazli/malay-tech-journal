@@ -198,6 +198,7 @@ The battlefield isn't only physical. AI has penetrated **cyber warfare** deeply:
 3. **AI safety scales with stakes** — when AI is wrong in a chatbot, you get a weird answer. When AI is wrong in a targeting system, people die. Reliability, explainability, and human oversight are non-negotiable at this level.
 
 4. **Know what your work builds toward** — Google engineers found out about Maven after it was running. Ask the question early.
+
    :::
 
 ---

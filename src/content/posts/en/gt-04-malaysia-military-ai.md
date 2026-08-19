@@ -133,7 +133,7 @@ flowchart TB
 
 **Documented TTPs (Tactics, Techniques, Procedures):**
 
-```
+```text
 Initial Access:
 - Spearphishing against procurement officers (T1566.001)
 - Supply chain compromise via third-party software vendors (T1195.002)

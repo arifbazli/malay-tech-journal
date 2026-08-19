@@ -36,7 +36,7 @@ Cloud Security Baseline = **set kontrol security yang kena enforce di setiap acc
 
 Bezanya dengan security hardening biasa:
 
-```
+```text
 Security Hardening:         Cloud Security Baseline:
 - Per-workload               - Per-account/subscription
 - Selepas deploy             - Sebelum workload pertama
@@ -105,7 +105,7 @@ Ini **floor yang tidak boleh dikompromikan** — berdasarkan CIS AWS v7.0 + MCSB
 
 ### 1. Identity & Access (IAM)
 
-```
+```text
 ✅ Root account MFA enabled
 ✅ Root account access keys DELETED (bukan disabled, deleted)
 ✅ MFA required untuk semua human users
@@ -119,7 +119,7 @@ Ini **floor yang tidak boleh dikompromikan** — berdasarkan CIS AWS v7.0 + MCSB
 
 ### 2. Logging & Monitoring
 
-```
+```text
 ✅ CloudTrail enabled — ALL regions, ALL management events
 ✅ CloudTrail log file validation enabled
 ✅ CloudTrail logs dihantar ke S3 + CloudWatch Logs
@@ -132,7 +132,7 @@ Ini **floor yang tidak boleh dikompromikan** — berdasarkan CIS AWS v7.0 + MCSB
 
 ### 3. Networking
 
-```
+```text
 ✅ Tiada Security Group dengan inbound 0.0.0.0/0 ke port 22 (SSH)
 ✅ Tiada Security Group dengan inbound 0.0.0.0/0 ke port 3389 (RDP)
 ✅ Default VPC tidak digunakan untuk production workload
@@ -142,7 +142,7 @@ Ini **floor yang tidak boleh dikompromikan** — berdasarkan CIS AWS v7.0 + MCSB
 
 ### 4. Storage & Data
 
-```
+```text
 ✅ S3 Block Public Access enabled — account level
 ✅ S3 bucket versioning enabled untuk critical data
 ✅ EBS encryption by default enabled
@@ -153,7 +153,7 @@ Ini **floor yang tidak boleh dikompromikan** — berdasarkan CIS AWS v7.0 + MCSB
 
 ### 5. Billing & Governance
 
-```
+```text
 ✅ Billing alerts configured (threshold bukan nombor besar)
 ✅ Budget alerts configured
 ✅ Cost anomaly detection enabled

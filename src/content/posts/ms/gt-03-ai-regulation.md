@@ -71,7 +71,7 @@ EU AI Act kategorikan AI systems kepada 4 tahap:
 
 Ini yang engineer perlu implement:
 
-```
+```text
 1. Risk Management System
    - Kena ada documented risk assessment
    - Iterative — bukan sekali sahaja

@@ -33,7 +33,7 @@ This post: a full map of all 6 layers, which tools to use for each, and what ven
 
 Prompt injection has been **OWASP LLM #1 for three consecutive years** (2024, 2025, 2026). One reason: there's no single fix that works.
 
-```
+```text
 Attacker bypasses input filter → inject via tool output (indirect injection)
 Attacker bypasses semantic check → use multi-step reasoning to leak data
 Attacker bypasses output filter → exfil via timing side-channel

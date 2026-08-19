@@ -180,7 +180,7 @@ This isn't an anti-vendor essay. Vendor guardrails are an important layer. But t
 
 ### Defense-in-Depth Framework for AI
 
-```
+```text
 Layer 0 — Input Sanitization
   - Length limits, encoding validation
   - Rate limiting per user/session

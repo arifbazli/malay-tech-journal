@@ -71,7 +71,7 @@ The EU AI Act categorises AI systems into 4 tiers:
 
 This is what engineers need to implement:
 
-```
+```text
 1. Risk Management System
    - Must have documented risk assessment
    - Iterative — not one-time

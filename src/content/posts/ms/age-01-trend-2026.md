@@ -24,7 +24,7 @@ Kita tak hidup dalam zaman yang sama dengan abang kita masuk kerja lima tahun le
 
 Empat trend ni bergerak serentak. Kalau kau faham satu tapi tak faham tiga lagi, kau tertinggal.
 
-```
+```text
 1. Cloud Security 2026  →  bukan setakat "patches and compliance"
 2. AI Evolution 2026    →  dari LLM ke agent
 3. Engineering Evolution → dari prompt ke agentic engineering
@@ -245,7 +245,7 @@ Ini **trend yang orang tengah cakap sekarang** dan pasal ni post ni updated. Kal
 
 Sebab masalah agent sekarang bukan lagi **"agent aku tak cukup pandai"**. Masalah dia:
 
-```
+```text
 "Agen aku dah cukup pandai.
 Tapi bila dia keluar dari sandbox, dia boleh buat benda yang aku tak authorize."
 ```

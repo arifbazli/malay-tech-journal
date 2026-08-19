@@ -133,7 +133,7 @@ flowchart TB
 
 **TTPs (Tactics, Techniques, Procedures) yang didokumentasikan:**
 
-```
+```text
 Initial Access:
 - Spearphishing terhadap procurement officers (T1566.001)
 - Supply chain compromise melalui third-party software vendors (T1195.002)

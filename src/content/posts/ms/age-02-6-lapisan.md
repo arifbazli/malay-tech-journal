@@ -33,7 +33,7 @@ Post ni: peta penuh 6 lapisan, tool mana untuk setiap lapisan, dan apa yang vend
 
 Prompt injection masih **OWASP LLM #1 untuk tahun ke-3 berturut-turut** (2024, 2025, 2026). Satu sebab: tiada single fix yang work.
 
-```
+```text
 Attacker bypass input filter → inject via tool output (indirect injection)
 Attacker bypass semantic check → use multi-step reasoning to leak data
 Attacker bypass output filter → exfil via timing side-channel
