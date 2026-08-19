@@ -48,12 +48,30 @@ pubDate: 2026-01-01
 Pair translations with a matching `translationKey`. Full i18n and
 frontmatter reference: [AGENTS.md](./AGENTS.md).
 
-## Deployment
+## Pipeline
 
-Cloudflare Pages is the canonical deploy — every push to `main` builds and
-deploys via Wrangler in `deploy-cloudflare.yml`. A secondary `deploy.yml`
-builds the same site for GitHub Pages as a build-health check. One-time
-Cloudflare setup: [AGENTS.md](./AGENTS.md#cloudflare-pages-one-time-setup).
+```mermaid
+flowchart LR
+    A["Prompt-driven dev<br/>Claude Code CLI"] -->|git push| B["Pull Request"]
+    B --> C{"pr-checks.yml<br/>lint · typecheck · test · build"}
+    C -->|fail| A
+    C -->|pass| D["Merge to main"]
+    D --> E["deploy-cloudflare.yml<br/>build + wrangler deploy"]
+    D --> F["deploy.yml<br/>GitHub Pages health check"]
+    E --> G(["malay-tech-journal.pages.dev"])
+
+    classDef check fill:#1e293b,stroke:#38bdf8,color:#e2e8f0
+    classDef deploy fill:#052e2b,stroke:#34d399,color:#e2e8f0
+    classDef live fill:#1e1b4b,stroke:#818cf8,color:#e2e8f0
+    class C check
+    class E,F deploy
+    class G live
+```
+
+Cloudflare Pages (`deploy-cloudflare.yml`) is the canonical, live deploy via
+Wrangler; `deploy.yml` builds the same site for GitHub Pages as a secondary
+health check (not currently published). One-time Cloudflare setup:
+[AGENTS.md](./AGENTS.md#cloudflare-pages-one-time-setup).
 
 ## Contributing
 
