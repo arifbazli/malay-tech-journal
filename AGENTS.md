@@ -275,6 +275,25 @@ bun run pagefind     # Re-run Pagefind only, after astro build
 | `auto-merge-dependabot.yml` / `auto-merge-imgbot.yml` | Bot PRs | Auto-merge for Dependabot / Imgbot PRs. |
 | `labels.yml` | Manual dispatch | Applies `.github/labels.yml`. |
 
+### Cloudflare Pages one-time setup
+
+Only needed once per Cloudflare account/repo pairing:
+
+1. Create the Pages project named `malay-tech-journal` (must match
+   `--project-name` in `deploy-cloudflare.yml`).
+2. Disable the project's own Git integration (**Settings → Builds &
+   deployments**) — leaving it on double-deploys every push.
+3. Create an API token scoped to **Account → Cloudflare Pages → Edit**.
+4. Set repo secrets:
+   ```bash
+   gh secret set CLOUDFLARE_API_TOKEN --repo arifbazli/malay-tech-journal
+   gh secret set CLOUDFLARE_ACCOUNT_ID --repo arifbazli/malay-tech-journal
+   ```
+5. Push to `main` (or `gh workflow run deploy-cloudflare.yml`) to deploy.
+
+Never paste a token into an issue, PR, chat, or commit — treat any exposed
+token as compromised and roll it immediately.
+
 ---
 
 ## Common Agent Tasks
