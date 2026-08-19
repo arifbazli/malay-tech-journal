@@ -1,6 +1,6 @@
 ---
-title: "bakat muda Malaysia di pentas cloud & AI"
-description: "Gen Z Malaysia dah bina, bukan sekadar pakai. Cloud, AI, open source — bakat ada, cuma ramai yang senyap."
+title: 'bakat muda Malaysia di pentas cloud & AI'
+description: 'Gen Z Malaysia dah bina, bukan sekadar pakai. Cloud, AI, open source — bakat ada, cuma ramai yang senyap.'
 pubDate: 2026-06-30
 tags:
   - meta
@@ -11,8 +11,7 @@ postType: field-note
 translationKey: malaysia-anak-muda
 toc: true
 heroImage: /images/covers/webp/cover-malaysia.webp
-heroImageAlt: "Malaysia talent in cloud and AI technology"
-
+heroImageAlt: 'Malaysia talent in cloud and AI technology'
 ---
 
 > Catatan peribadi — ditulis dalam Bahasa Melayu untuk meraikan akar, dan berharap lebih ramai yang tulis dalam bahasa sendiri.
@@ -61,13 +60,13 @@ DevFest, hackathon, Discord server cloud & security lokal, meetup hujung minggu 
 
 Bukan skema nasional. Tindakan peribadi, sorang-sorang:
 
-| Buat apa | Kenapa |
-|---|---|
-| **Tulis satu nota teknikal dalam BM** | Dokumentasi dalam bahasa sendiri buat penjelasan jadi lebih jelas |
-| **Open source repo kau** | Satu titik data lagi yang tunjukkan Malaysia bukan pengguna pasif |
-| **Contribute ke projek orang lain** | Translate docs, jawab issue, perbaiki typo — semua kira |
-| **Ajar seseorang yang baru** | Teaching = cara paling effective untuk solidify pemahaman sendiri |
-| **Stop minta maaf sebab tulis dalam BM** | Bahasa bukan halangan — bahasa adalah jambatan |
+| Buat apa                                 | Kenapa                                                            |
+| ---------------------------------------- | ----------------------------------------------------------------- |
+| **Tulis satu nota teknikal dalam BM**    | Dokumentasi dalam bahasa sendiri buat penjelasan jadi lebih jelas |
+| **Open source repo kau**                 | Satu titik data lagi yang tunjukkan Malaysia bukan pengguna pasif |
+| **Contribute ke projek orang lain**      | Translate docs, jawab issue, perbaiki typo — semua kira           |
+| **Ajar seseorang yang baru**             | Teaching = cara paling effective untuk solidify pemahaman sendiri |
+| **Stop minta maaf sebab tulis dalam BM** | Bahasa bukan halangan — bahasa adalah jambatan                    |
 
 ## Pasal AI dan ke mana kita pergi
 

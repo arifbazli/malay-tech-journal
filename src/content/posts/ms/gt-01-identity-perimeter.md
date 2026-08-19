@@ -1,6 +1,6 @@
 ---
-title: "Identiti Adalah Perimeter Baru — Pelajaran dari Snowflake, MGM dan Scattered Spider"
-description: "Pada 2024, UNC5537 curi data 165 syarikat Snowflake tanpa exploit sebiji pun. Pada 2023, Scattered Spider letak MGM lumpuh dalam 10 minit telefon. Ini bukan serangan teknikal biasa — ini adalah era baru di mana identiti adalah satu-satunya perimeter yang tinggal."
+title: 'Identiti Adalah Perimeter Baru — Pelajaran dari Snowflake, MGM dan Scattered Spider'
+description: 'Pada 2024, UNC5537 curi data 165 syarikat Snowflake tanpa exploit sebiji pun. Pada 2023, Scattered Spider letak MGM lumpuh dalam 10 minit telefon. Ini bukan serangan teknikal biasa — ini adalah era baru di mana identiti adalah satu-satunya perimeter yang tinggal.'
 pubDate: 2026-07-10
 tags:
   - cloud
@@ -11,8 +11,7 @@ translationKey: gt-01-identity-perimeter
 toc: true
 postType: essay
 heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: "Ground truth essay — identity is the new perimeter"
-
+heroImageAlt: 'Ground truth essay — identity is the new perimeter'
 ---
 
 ## Pendahuluan: Bila Firewall Tidak Lagi Relevan
@@ -21,9 +20,9 @@ Ada satu soalan yang saya selalu tanya bila onboarding engineer baru ke projek c
 
 > "Kalau penyerang dah ada username dan password yang sah, apa yang kita ada untuk hentikan dia?"
 
-Jawapan yang biasa: *"Kita ada MFA."*
+Jawapan yang biasa: _"Kita ada MFA."_
 
-Dan saya kata: *"Apa jenis MFA? TOTP? SMS? Hardware key? Boleh bypass tak? Ada session hijacking tak? Credential yang kena steal tu — dari laptop pekerja, dari CI/CD pipeline, atau dari third-party contractor yang guna laptop kerja untuk stream Netflix?"*
+Dan saya kata: _"Apa jenis MFA? TOTP? SMS? Hardware key? Boleh bypass tak? Ada session hijacking tak? Credential yang kena steal tu — dari laptop pekerja, dari CI/CD pipeline, atau dari third-party contractor yang guna laptop kerja untuk stream Netflix?"_
 
 Biasanya senyap.
 
@@ -72,6 +71,7 @@ Dalam **10 minit**, mereka berjaya social engineer akses kepada Okta identity pl
 **Kesan:** 10 hari outage. Anggaran kerugian: lebih **$100 juta**. MGM terpaksa disclosed dalam SEC filing.
 
 Cara serangan yang Scattered Spider guna bukan teknikal sophistication — ia adalah **vishing** (voice phishing) yang dibantu oleh:
+
 - LinkedIn data untuk tahu nama IT staff dan struktur org
 - Caller ID spoofing
 - Script social engineering yang convince helpdesk untuk reset MFA
@@ -85,6 +85,7 @@ Pada 2025, kumpulan yang sama bertukar nama kepada "Scattered Lapsus$ Hunters" d
 **Helpdesk adalah attack surface.** Identity reset flows adalah attack surface. Setiap proses yang boleh "unblock" seseorang dari authentication adalah attack surface.
 
 Pertanyaan untuk semak sekarang:
+
 - Proses reset MFA dalam org kau — apa verification yang diperlukan?
 - Staff helpdesk kau — berapa dalam training mereka tentang vishing?
 - Okta, Azure AD, atau whatever IdP yang kau guna — ada anomaly detection untuk admin actions?
@@ -95,12 +96,12 @@ Pertanyaan untuk semak sekarang:
 
 Kenapa penyerang focus pada identity? Kerana **risk/reward calculation** dah berubah.
 
-| Attack Vector | Effort | Detection Risk | Payoff |
-|---|---|---|---|
-| Exploit zero-day | Sangat tinggi | Tinggi | Tinggi tapi susah dapat |
-| Phish credentials | Rendah | Rendah | Tinggi, scalable |
-| Buy stolen creds | Sangat rendah | Sangat rendah | Tinggi, immediate |
-| Social engineer helpdesk | Rendah-sederhana | Rendah | Akses penuh |
+| Attack Vector            | Effort           | Detection Risk | Payoff                  |
+| ------------------------ | ---------------- | -------------- | ----------------------- |
+| Exploit zero-day         | Sangat tinggi    | Tinggi         | Tinggi tapi susah dapat |
+| Phish credentials        | Rendah           | Rendah         | Tinggi, scalable        |
+| Buy stolen creds         | Sangat rendah    | Sangat rendah  | Tinggi, immediate       |
+| Social engineer helpdesk | Rendah-sederhana | Rendah         | Akses penuh             |
 
 Dari perspektif penyerang, kenapa nak habiskan masa bulan-bulan reverse engineering vulnerability bila boleh beli credentials untuk $50 di dark web dan log in macam pekerja sah?
 
@@ -115,26 +116,31 @@ Industri perlahan-lahan bergerak dari model **"trust but verify"** kepada **"nev
 Tapi Zero Trust bukan produk. Ia adalah posture. Dan posture memerlukan:
 
 **1. MFA yang betul-betul kuat**
+
 - Hardware keys (FIDO2/WebAuthn) untuk privileged accounts
 - TOTP sebagai minimum, bukan SMS (SIM swapping adalah real threat)
 - Phishing-resistant MFA — passkeys, Yubikey
 
 **2. Least-privilege yang serius dijalankan**
+
 - Review IAM policies setiap quarter, bukan setahun sekali
 - Just-in-time access untuk privileged operations
 - Tidak ada standing admin access untuk human users
 
 **3. Session monitoring dan anomaly detection**
+
 - Impossible travel detection
 - New device alerts
 - Unusual data access patterns
 
 **4. Third-party dan contractor hygiene**
+
 - Vendor access reviews setiap 90 hari
 - Separate identity domains untuk contractors
 - No shared credentials antara contractors
 
 **5. Helpdesk hardening**
+
 - Multi-step identity verification sebelum credential reset
 - Training spesifik tentang social engineering
 - Approval workflow untuk high-risk identity operations
@@ -165,4 +171,4 @@ Dan dalam era ini, harapan bukan strategi.
 
 ---
 
-*Sumber: Mandiant UNC5537 analysis, Push Security Snowflake retrospective 2025, CSA Top Threats to Cloud Computing 2025, MGM SEC 10-Q filings.*
+_Sumber: Mandiant UNC5537 analysis, Push Security Snowflake retrospective 2025, CSA Top Threats to Cloud Computing 2025, MGM SEC 10-Q filings._

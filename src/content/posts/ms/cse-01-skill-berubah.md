@@ -1,6 +1,6 @@
 ---
-title: "jadi cloud security engineer 2026 — skill yang dah berubah"
-description: "Role cloud security engineer dah berubah lebih dalam 2 tahun ni dari 5 tahun sebelumnya. Ini breakdown jujur apa yang berubah, apa yang masih sama, dan skill baru yang kena ada sekarang."
+title: 'jadi cloud security engineer 2026 — skill yang dah berubah'
+description: 'Role cloud security engineer dah berubah lebih dalam 2 tahun ni dari 5 tahun sebelumnya. Ini breakdown jujur apa yang berubah, apa yang masih sama, dan skill baru yang kena ada sekarang.'
 pubDate: 2026-07-01
 tags:
   - cloud
@@ -12,8 +12,7 @@ postType: field-note
 translationKey: cse-01-skill-berubah
 toc: true
 heroImage: /images/covers/webp/cover-cse.webp
-heroImageAlt: "Cloud security engineering — modern 2026 cover"
-
+heroImageAlt: 'Cloud security engineering — modern 2026 cover'
 ---
 
 > Nota dalam Bahasa Melayu untuk sesiapa yang nak masuk atau dah dalam bidang cloud security dan nak tahu apa yang sebenarnya berubah sekarang.
@@ -22,7 +21,7 @@ heroImageAlt: "Cloud security engineering — modern 2026 cover"
 
 Ada satu quote dari CSOH.org yang kena dengan betul:
 
-> *"Cloud Security Engineer is the connective tissue that turns ten specialists' work into one coherent security posture."*
+> _"Cloud Security Engineer is the connective tissue that turns ten specialists' work into one coherent security posture."_
 
 Kau bukan specialist dalam satu benda. Kau adalah orang yang sambung semua benda.
 
@@ -38,14 +37,14 @@ Sebelum cakap pasal benda baru, kena jelas dulu: **foundation masih sama**. Oran
 
 **Foundation yang masih wajib:**
 
-| Skill | Kenapa masih penting |
-|---|---|
-| **Networking fundamentals** | VPC, subnets, security groups, NACLs — cloud networking masih pakai konsep yang sama |
-| **IAM basics** | Roles, policies, least-privilege — sekarang lagi penting sebab agent pun ada identity |
-| **Linux** | EC2, containers, pods — semua run atas Linux. `ss`, `iptables`, `strace`, `auditd` |
-| **Scripting (Python/Bash)** | Automation, detection engineering, custom tooling |
-| **Threat modeling** | STRIDE masih relevant. Sekarang kena extend untuk AI/agent threats |
-| **Incident response basics** | Collect evidence, contain, eradicate, recover — flow tak berubah |
+| Skill                        | Kenapa masih penting                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------- |
+| **Networking fundamentals**  | VPC, subnets, security groups, NACLs — cloud networking masih pakai konsep yang sama  |
+| **IAM basics**               | Roles, policies, least-privilege — sekarang lagi penting sebab agent pun ada identity |
+| **Linux**                    | EC2, containers, pods — semua run atas Linux. `ss`, `iptables`, `strace`, `auditd`    |
+| **Scripting (Python/Bash)**  | Automation, detection engineering, custom tooling                                     |
+| **Threat modeling**          | STRIDE masih relevant. Sekarang kena extend untuk AI/agent threats                    |
+| **Incident response basics** | Collect evidence, contain, eradicate, recover — flow tak berubah                      |
 
 Kalau kau lemah dalam mana-mana di atas — fix itu dulu sebelum belajar benda lain.
 
@@ -58,6 +57,7 @@ Kalau kau lemah dalam mana-mana di atas — fix itu dulu sebelum belajar benda l
 Dulu IAM = manage user dan service accounts.
 
 Sekarang kau kena manage:
+
 - **Human identity** — MFA, SSO, conditional access
 - **Workload identity** — SPIFFE/SPIRE, pod service accounts, instance profiles
 - **Agent identity** — AI agent pun ada identity. Manifest declaration, capability token, audit binding
@@ -94,6 +94,7 @@ cosign verify \
 ```
 
 **Tools:**
+
 - `Trivy` — SCA + container scan + secret detection (semua dalam satu)
 - `Grype` — vulnerability scanner untuk SBOM
 - `Syft` — generate SBOM dari container/filesystem
@@ -122,6 +123,7 @@ Sekarang dengan **eBPF**, runtime security boleh deploy ke semua orang tanpa ker
 ```
 
 **Tools yang kena tahu:**
+
 - `Falco` — runtime threat detection, Kubernetes-native
 - `Tetragon` (Cilium) — eBPF-based enforcement, bukan sekadar detect tapi boleh enforce
 - `KubeArmor` — security policy enforcement untuk Kubernetes workloads
@@ -176,6 +178,7 @@ Gartner predict 50% SOC akan ada AI decision support by end 2026. Prediction tu 
 - **Automated remediation** — agent detect misconfigured S3 bucket, generate PR untuk fix, tunggu human approval sebelum apply
 
 **Apa kena belajar sekarang:**
+
 - Cara validate AI-generated detection rules (bukan blind trust)
 - Cara tune AI alert classifier untuk reduce false positive
 - Cara design human-in-the-loop workflow untuk automated remediation
@@ -207,13 +210,13 @@ December 2025: OWASP publish **Top 10 for Agentic Applications** — first forma
 
 Dari breadth role cloud security engineer, sekarang ada beberapa specialization yang muncul:
 
-| Specialization | Focus | Contoh kerja |
-|---|---|---|
-| **Cloud Security Engineer (generalist)** | Connective tissue — IAM, posture, design review, detections | AWS security audit, policy review, architecture sign-off |
-| **Detection Engineer** | Tulis dan maintain detection rules, alert triage pipeline | Sigma rules, KQL queries, SIEM tuning |
-| **AI/LLM Security Engineer** | Secure AI systems, guardrail design, agentic threat modeling | OWASP LLM compliance, NeMo Guardrails implementation |
-| **Supply Chain Security Engineer** | SBOM, provenance, dependency risk | Sigstore setup, SLSA compliance, SCA pipeline |
-| **Platform Security Engineer** | Secure the developer platform itself | CI/CD security, secrets management, IaC policy |
+| Specialization                           | Focus                                                        | Contoh kerja                                             |
+| ---------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------- |
+| **Cloud Security Engineer (generalist)** | Connective tissue — IAM, posture, design review, detections  | AWS security audit, policy review, architecture sign-off |
+| **Detection Engineer**                   | Tulis dan maintain detection rules, alert triage pipeline    | Sigma rules, KQL queries, SIEM tuning                    |
+| **AI/LLM Security Engineer**             | Secure AI systems, guardrail design, agentic threat modeling | OWASP LLM compliance, NeMo Guardrails implementation     |
+| **Supply Chain Security Engineer**       | SBOM, provenance, dependency risk                            | Sigstore setup, SLSA compliance, SCA pipeline            |
+| **Platform Security Engineer**           | Secure the developer platform itself                         | CI/CD security, secrets management, IaC policy           |
 
 **Realist take:** Untuk entry-level, kau masuk sebagai generalist. Specialization datang dengan experience. Tapi kau kena aware tentang semua specialization ni supaya boleh communicate dan collaborate dengan specialist.
 
@@ -222,24 +225,28 @@ Dari breadth role cloud security engineer, sekarang ada beberapa specialization 
 ## Roadmap konkrit: dari sekarang ke 12 bulan
 
 ### Bulan 1-3: Foundation + modern tooling
+
 - [ ] AWS/Azure fundamentals — minimum 1 cloud platform sampai operational depth
 - [ ] Checkov + Trivy daily use — scan code repo kau sendiri
 - [ ] Falco setup kat local Kubernetes (minikube/kind)
 - [ ] Baca OWASP Top 10 for LLM Applications + Agentic Applications
 
 ### Bulan 4-6: Intermediate + automation
+
 - [ ] Tulis satu OPA/Rego policy dari scratch
 - [ ] Setup pre-commit hooks dengan security scan dalam satu project
 - [ ] Cuba SPIFFE/SPIRE locally — faham workload identity flow
 - [ ] SBOM generation dengan Syft, scan dengan Grype
 
 ### Bulan 7-9: Advanced + AI security
+
 - [ ] Setup NeMo Guardrails untuk satu LLM application
 - [ ] Implement agent Manifest + Agent Governance Toolkit dalam satu project
 - [ ] Setup Langfuse untuk trace agent behavior
 - [ ] Baca Microsoft Agent Governance Toolkit documentation + try it
 
 ### Bulan 10-12: Portfolio + specialization
+
 - [ ] Bina satu complete "secure agent" project — dari threat model, Manifest, guardrails, sampai observability
 - [ ] Join satu CTF yang ada cloud/AI security category (CloudGoat, HackTheBox Cloud)
 - [ ] Contribute ke salah satu open source security tool (Falco, Checkov, Guardrails AI)
@@ -261,12 +268,13 @@ Bukan expert dalam semua. Tapi **faham semua cukup untuk buat keputusan yang bet
 
 ---
 
-*Rujukan:*
-- *CSOH.org — Cloud Security Engineer: The Role in Depth*
-- *Scaler — Cloud Security Engineer Roadmap 2026*
-- *Datacipher — 10 Cloud Security Skills That Set IT Professionals Apart in 2026*
-- *Refonte Learning — Cloud Security Engineering in 2026: 5 Trends*
-- *Microsoft — Secure Agentic AI End-to-End (RSAC 2026)*
-- *OWASP Top 10 for Agentic Applications (Dec 2025)*
-- *Forrester AEGIS Framework for Agentic AI (2026)*
-- *SLSA Framework — Supply Chain Levels for Software Artifacts*
+_Rujukan:_
+
+- _CSOH.org — Cloud Security Engineer: The Role in Depth_
+- _Scaler — Cloud Security Engineer Roadmap 2026_
+- _Datacipher — 10 Cloud Security Skills That Set IT Professionals Apart in 2026_
+- _Refonte Learning — Cloud Security Engineering in 2026: 5 Trends_
+- _Microsoft — Secure Agentic AI End-to-End (RSAC 2026)_
+- _OWASP Top 10 for Agentic Applications (Dec 2025)_
+- _Forrester AEGIS Framework for Agentic AI (2026)_
+- _SLSA Framework — Supply Chain Levels for Software Artifacts_

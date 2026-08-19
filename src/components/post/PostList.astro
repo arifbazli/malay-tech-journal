@@ -47,22 +47,24 @@ for (const post of posts) {
 }
 ---
 
-{posts.length === 0 ? (
-  <p class="text-[var(--mtj-muted)]">{t('list.empty')}</p>
-) : (
-  <>
-    {groups.map((group) => (
-      <section>
-        <div class="mtj-month">
-          <span class="mtj-month__label">{group.label}</span>
-          <div class="mtj-month__rule"></div>
-        </div>
-        <ol class="mtj-articles">
-          {group.posts.map((post) => (
-            <PostCardItem post={post} locale={locale} />
-          ))}
-        </ol>
-      </section>
-    ))}
-  </>
-)}
+{
+  posts.length === 0 ? (
+    <p class="text-[var(--mtj-muted)]">{t('list.empty')}</p>
+  ) : (
+    <>
+      {groups.map((group) => (
+        <section>
+          <div class="mtj-month">
+            <span class="mtj-month__label">{group.label}</span>
+            <div class="mtj-month__rule" />
+          </div>
+          <ol class="mtj-articles">
+            {group.posts.map((post) => (
+              <PostCardItem post={post} locale={locale} />
+            ))}
+          </ol>
+        </section>
+      ))}
+    </>
+  )
+}

@@ -33,9 +33,9 @@ const monShort = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', { month: 'short
 
 function typeLabel(type: string | undefined): string {
   if (!type) return '';
-  if (type === 'essay')        return ms ? 'Esei'       : 'Essay';
-  if (type === 'case-study')   return ms ? 'Kajian Kes' : 'Case Study';
-  if (type === 'field-note')   return ms ? 'Nota'       : 'Field Note';
+  if (type === 'essay') return ms ? 'Esei' : 'Essay';
+  if (type === 'case-study') return ms ? 'Kajian Kes' : 'Case Study';
+  if (type === 'field-note') return ms ? 'Nota' : 'Field Note';
   if (type === 'series-index') return '';
   return type;
 }
@@ -44,7 +44,8 @@ function seriesPillClass(series: string): string {
   const s = series.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return 'mtj-pill--ground';
   if (s.includes('guardrail')) return 'mtj-pill--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return 'mtj-pill--mil';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return 'mtj-pill--mil';
   if (s.includes('cloud') && s.includes('security')) return 'mtj-pill--ground';
   return 'mtj-pill--ai';
 }
@@ -53,7 +54,8 @@ function seriesDisplayName(series: string): string {
   const s = series.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return ms ? 'Ground Truth' : 'Ground Truth';
   if (s.includes('guardrail')) return ms ? 'AI Guardrail' : 'AI Guardrail';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return ms ? 'Military AI' : 'Military AI';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return ms ? 'Military AI' : 'Military AI';
   if (s.includes('cloud') && s.includes('security')) return ms ? 'Cloud Sec' : 'Cloud Sec';
   return series;
 }
@@ -76,27 +78,27 @@ const mon = monShort.format(post.data.pubDate);
 
 <li class:list={['mtj-card', compact && 'mtj-card--compact']}>
   <a href={postHref(post, locale)} class="mtj-card__link">
-    {!compact && (
-      <div class="mtj-card__date">
-        <span class="mtj-card__day">{day}</span>
-        <span class="mtj-card__mon">{mon}</span>
-      </div>
-    )}
+    {
+      !compact && (
+        <div class="mtj-card__date">
+          <span class="mtj-card__day">{day}</span>
+          <span class="mtj-card__mon">{mon}</span>
+        </div>
+      )
+    }
     <div class="mtj-card__body">
       <div class="mtj-card__meta">
-        {series && (
-          <span class={`mtj-pill ${seriesPillClass(series)}`} style="margin-bottom:0">
-            {seriesDisplayName(series)}
-          </span>
-        )}
-        {type && type !== 'series-index' && (
-          <span class="mtj-card__type">{typeLabel(type)}</span>
-        )}
+        {
+          series && (
+            <span class={`mtj-pill ${seriesPillClass(series)}`} style="margin-bottom:0">
+              {seriesDisplayName(series)}
+            </span>
+          )
+        }
+        {type && type !== 'series-index' && <span class="mtj-card__type">{typeLabel(type)}</span>}
       </div>
       <div class="mtj-card__title">{post.data.title}</div>
-      {post.data.description && (
-        <div class="mtj-card__desc">{post.data.description}</div>
-      )}
+      {post.data.description && <div class="mtj-card__desc">{post.data.description}</div>}
       <div class="mtj-card__read">{readTime(post)}</div>
     </div>
   </a>

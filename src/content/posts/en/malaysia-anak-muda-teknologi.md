@@ -1,5 +1,5 @@
 ---
-title: "young Malaysian talent on the cloud & AI stage"
+title: 'young Malaysian talent on the cloud & AI stage'
 description: "Gen Z Malaysia is building, not just using. Cloud, AI, open source — talent is there, it's just quiet."
 pubDate: 2026-06-30
 tags:
@@ -9,10 +9,9 @@ tags:
   - ai
 postType: field-note
 toc: true
-translationKey: "malaysia-anak-muda"
+translationKey: 'malaysia-anak-muda'
 heroImage: /images/covers/webp/cover-malaysia.webp
-heroImageAlt: "Malaysia talent in cloud and AI technology"
-
+heroImageAlt: 'Malaysia talent in cloud and AI technology'
 ---
 
 > Personal note — written in English to reach wider, and hope more of us write about tech in our own ways.
@@ -61,13 +60,13 @@ DevFest, hackathons, local cloud & security Discord servers, weekend meetups —
 
 Not national schemes. Personal action, solo:
 
-| Do what | Why |
-|---|---|
-| **Write one technical note in English** | Documentation in a language you're comfortable with makes explanation clearer |
-| **Open source your repo** | One more data point showing Malaysia isn't passive |
-| **Contribute to someone else's project** | Translate docs, answer issues, fix typos — all counts |
-| **Teach someone new** | Teaching = most effective way to solidify your own understanding |
-| **Stop apologizing for writing about tech in your style** | Language isn't a barrier — language is a bridge |
+| Do what                                                   | Why                                                                           |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Write one technical note in English**                   | Documentation in a language you're comfortable with makes explanation clearer |
+| **Open source your repo**                                 | One more data point showing Malaysia isn't passive                            |
+| **Contribute to someone else's project**                  | Translate docs, answer issues, fix typos — all counts                         |
+| **Teach someone new**                                     | Teaching = most effective way to solidify your own understanding              |
+| **Stop apologizing for writing about tech in your style** | Language isn't a barrier — language is a bridge                               |
 
 ## About AI and where we're headed
 

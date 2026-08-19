@@ -23,8 +23,8 @@ const pagePosts = articles.slice(0, pageSize);
 
 // ── Bento selection (homepage only): top 4 posts by reading time
 const bentoPosts = pagePosts.slice(0, 4);
-const bentoLong  = bentoPosts[0];
-const bentoMid   = bentoPosts[1];
+const bentoLong = bentoPosts[0];
+const bentoMid = bentoPosts[1];
 const bentoSmall1 = bentoPosts[2];
 const bentoSmall2 = bentoPosts[3];
 const remainingPosts = pagePosts.slice(4);
@@ -40,9 +40,9 @@ function readTimeLabel(post: any): string {
 }
 function typeLabel(type: string | undefined): string {
   if (!type) return '';
-  if (type === 'essay')       return ms ? 'Esei'       : 'Essay';
-  if (type === 'case-study')  return ms ? 'Kajian Kes' : 'Case Study';
-  if (type === 'field-note')  return ms ? 'Nota'       : 'Field Note';
+  if (type === 'essay') return ms ? 'Esei' : 'Essay';
+  if (type === 'case-study') return ms ? 'Kajian Kes' : 'Case Study';
+  if (type === 'field-note') return ms ? 'Nota' : 'Field Note';
   if (type === 'series-index') return '';
   return type;
 }
@@ -50,15 +50,18 @@ function seriesDisplay(name: string): string {
   const s = name.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return ms ? 'Ground Truth' : 'Ground Truth';
   if (s.includes('guardrail')) return ms ? 'AI Guardrail' : 'AI Guardrail';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return ms ? 'Military AI' : 'Military AI';
-  if (s.includes('cloud') && s.includes('security')) return ms ? 'Cloud Security' : 'Cloud Security';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return ms ? 'Military AI' : 'Military AI';
+  if (s.includes('cloud') && s.includes('security'))
+    return ms ? 'Cloud Security' : 'Cloud Security';
   return name;
 }
 function seriesPillClass(name: string): string {
   const s = name.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return 'mtj-pill--ground';
   if (s.includes('guardrail')) return 'mtj-pill--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return 'mtj-pill--mil';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return 'mtj-pill--mil';
   if (s.includes('cloud') && s.includes('security')) return 'mtj-pill--ground';
   return 'mtj-pill--ai';
 }
@@ -78,87 +81,80 @@ const monShort = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', { month: 'short
 const hrefForPage = (n: number) => localizedPath(n === 1 ? '/' : `/page/${n}/`, locale);
 ---
 
-<BaseLayout
-  title={SITE.title}
-  description={SITE.description}
-  pathWithoutLocale="/"
-  homepage
->
+<BaseLayout title={SITE.title} description={SITE.description} pathWithoutLocale="/" homepage>
   <div class="mtj-page">
     <main class="min-w-0" id="main" aria-label="Main Content">
+      {
+        bentoPosts.length > 0 && (
+          <>
+            <div class="mtj-section-label">{ms ? 'Terbaru' : 'Latest'}</div>
 
-      {bentoPosts.length > 0 && (
-        <>
-          <div class="mtj-section-label">{ms ? 'Terbaru' : 'Latest'}</div>
+            <div class="mtj-bento">
+              {bentoLong && (
+                <a href={postHref(bentoLong)} class="mtj-bento__card mtj-bento--large">
+                  <span class={`mtj-pill ${seriesPillClass(getSeries(bentoLong))}`}>
+                    {seriesDisplay(getSeries(bentoLong))} · {typeLabel(getType(bentoLong))}
+                  </span>
+                  <div class="mtj-bento__title">{bentoLong.data.title}</div>
+                  {bentoLong.data.description && (
+                    <div class="mtj-bento__desc">{bentoLong.data.description}</div>
+                  )}
+                  <div class="mtj-bento__foot">
+                    {dayFmt.format(bentoLong.data.pubDate)}{' '}
+                    {monShort.format(bentoLong.data.pubDate)} · {readTimeLabel(bentoLong)}
+                  </div>
+                </a>
+              )}
 
-          <div class="mtj-bento">
-            {bentoLong && (
-              <a href={postHref(bentoLong)} class="mtj-bento__card mtj-bento--large">
-                <span class={`mtj-pill ${seriesPillClass(getSeries(bentoLong))}`}>
-                  {seriesDisplay(getSeries(bentoLong))} · {typeLabel(getType(bentoLong))}
-                </span>
-                <div class="mtj-bento__title">{bentoLong.data.title}</div>
-                {bentoLong.data.description && (
-                  <div class="mtj-bento__desc">{bentoLong.data.description}</div>
-                )}
-                <div class="mtj-bento__foot">
-                  {dayFmt.format(bentoLong.data.pubDate)} {monShort.format(bentoLong.data.pubDate)} · {readTimeLabel(bentoLong)}
-                </div>
-              </a>
-            )}
+              {bentoMid && (
+                <a href={postHref(bentoMid)} class="mtj-bento__card mtj-bento--medium">
+                  <span class={`mtj-pill ${seriesPillClass(getSeries(bentoMid))}`}>
+                    {seriesDisplay(getSeries(bentoMid))} · {typeLabel(getType(bentoMid))}
+                  </span>
+                  <div class="mtj-bento__title">{bentoMid.data.title}</div>
+                  {bentoMid.data.description && (
+                    <div class="mtj-bento__desc">{bentoMid.data.description}</div>
+                  )}
+                  <div class="mtj-bento__foot">
+                    {dayFmt.format(bentoMid.data.pubDate)} {monShort.format(bentoMid.data.pubDate)}{' '}
+                    · {readTimeLabel(bentoMid)}
+                  </div>
+                </a>
+              )}
 
-            {bentoMid && (
-              <a href={postHref(bentoMid)} class="mtj-bento__card mtj-bento--medium">
-                <span class={`mtj-pill ${seriesPillClass(getSeries(bentoMid))}`}>
-                  {seriesDisplay(getSeries(bentoMid))} · {typeLabel(getType(bentoMid))}
-                </span>
-                <div class="mtj-bento__title">{bentoMid.data.title}</div>
-                {bentoMid.data.description && (
-                  <div class="mtj-bento__desc">{bentoMid.data.description}</div>
-                )}
-                <div class="mtj-bento__foot">
-                  {dayFmt.format(bentoMid.data.pubDate)} {monShort.format(bentoMid.data.pubDate)} · {readTimeLabel(bentoMid)}
-                </div>
-              </a>
-            )}
+              {bentoSmall1 && (
+                <a href={postHref(bentoSmall1)} class="mtj-bento__card mtj-bento--small">
+                  <span class={`mtj-pill ${seriesPillClass(getSeries(bentoSmall1))}`}>
+                    {seriesDisplay(getSeries(bentoSmall1))}
+                  </span>
+                  <div class="mtj-bento__title">{bentoSmall1.data.title}</div>
+                  <div class="mtj-bento__foot">
+                    {dayFmt.format(bentoSmall1.data.pubDate)}{' '}
+                    {monShort.format(bentoSmall1.data.pubDate)} · {readTimeLabel(bentoSmall1)}
+                  </div>
+                </a>
+              )}
 
-            {bentoSmall1 && (
-              <a href={postHref(bentoSmall1)} class="mtj-bento__card mtj-bento--small">
-                <span class={`mtj-pill ${seriesPillClass(getSeries(bentoSmall1))}`}>
-                  {seriesDisplay(getSeries(bentoSmall1))}
-                </span>
-                <div class="mtj-bento__title">{bentoSmall1.data.title}</div>
-                <div class="mtj-bento__foot">
-                  {dayFmt.format(bentoSmall1.data.pubDate)} {monShort.format(bentoSmall1.data.pubDate)} · {readTimeLabel(bentoSmall1)}
-                </div>
-              </a>
-            )}
-
-            {bentoSmall2 && (
-              <a href={postHref(bentoSmall2)} class="mtj-bento__card mtj-bento--small">
-                <span class={`mtj-pill ${seriesPillClass(getSeries(bentoSmall2))}`}>
-                  {seriesDisplay(getSeries(bentoSmall2))}
-                </span>
-                <div class="mtj-bento__title">{bentoSmall2.data.title}</div>
-                <div class="mtj-bento__foot">
-                  {dayFmt.format(bentoSmall2.data.pubDate)} {monShort.format(bentoSmall2.data.pubDate)} · {readTimeLabel(bentoSmall2)}
-                </div>
-              </a>
-            )}
-          </div>
-        </>
-      )}
+              {bentoSmall2 && (
+                <a href={postHref(bentoSmall2)} class="mtj-bento__card mtj-bento--small">
+                  <span class={`mtj-pill ${seriesPillClass(getSeries(bentoSmall2))}`}>
+                    {seriesDisplay(getSeries(bentoSmall2))}
+                  </span>
+                  <div class="mtj-bento__title">{bentoSmall2.data.title}</div>
+                  <div class="mtj-bento__foot">
+                    {dayFmt.format(bentoSmall2.data.pubDate)}{' '}
+                    {monShort.format(bentoSmall2.data.pubDate)} · {readTimeLabel(bentoSmall2)}
+                  </div>
+                </a>
+              )}
+            </div>
+          </>
+        )
+      }
 
       <PostList posts={remainingPosts} locale={locale} />
 
-      <Pagination
-        currentPage={1}
-        lastPage={lastPage}
-        hrefForPage={hrefForPage}
-        locale={locale}
-      />
-
+      <Pagination currentPage={1} lastPage={lastPage} hrefForPage={hrefForPage} locale={locale} />
     </main>
-
   </div>
 </BaseLayout>

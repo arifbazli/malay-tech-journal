@@ -1,6 +1,6 @@
 ---
-title: "Malaysia dan AI Pertahanan: Ketinggalan atau Berhati-hati?"
-description: "Singapore dah deploy autonomous drone, DSTA buat AI sistem pengesanan — dan Malaysia? Kita kena tanya soalan ni dengan jujur: di mana kita, dan ke mana patut kita pergi?"
+title: 'Malaysia dan AI Pertahanan: Ketinggalan atau Berhati-hati?'
+description: 'Singapore dah deploy autonomous drone, DSTA buat AI sistem pengesanan — dan Malaysia? Kita kena tanya soalan ni dengan jujur: di mana kita, dan ke mana patut kita pergi?'
 pubDate: 2026-07-08
 tags:
   - ai
@@ -11,8 +11,7 @@ postType: field-note
 translationKey: mad-03-malaysia-defence
 toc: true
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Military AI and defence — Malaysia context 2026"
-
+heroImageAlt: 'Military AI and defence — Malaysia context 2026'
 ---
 
 > Nota lapangan. Ini bukan serangan terhadap kerajaan — ini soalan yang engineer muda Malaysia perlu tanya dengan serius. Sumber yang digunakan: laporan awam, Hansard parlimen, dan dokumen dasar yang tersedia secara terbuka.
@@ -62,11 +61,13 @@ Kedua-dua negara ada program drone ketenteraan tapi terhad kepada platform yang 
 **STRIDE** (Science and Technology Research Institute for Defence) adalah badan penyelidikan pertahanan utama Malaysia di bawah Kementerian Pertahanan.
 
 Apa yang kita tahu (berdasarkan maklumat awam):
+
 - Fokus utama: bahan, elektronik, dan sistem senjata konvensional
 - Ada beberapa projek R&D dalam bidang C4I (Command, Control, Communications, Computers, and Intelligence)
 - **Tiada perisytiharan awam** tentang program AI spesifik untuk autonomous systems atau AI-assisted targeting
 
 Apa yang tak diketahui:
+
 - Berapa besar peruntukan untuk AI R&D? Laporan tahunan STRIDE tidak diterbitkan secara awam dengan breakdown terperinci.
 - Ada kerjasama dengan akademia tempatan (UTM, UTP, UM) untuk AI pertahanan? Tiada data awam yang jelas.
 
@@ -102,14 +103,14 @@ Malaysia AI Roadmap (**AIRMAP 2.0**) yang dikeluarkan oleh MDEC adalah dokumen d
 
 ## Gap Konkrit: Malaysia vs Singapore
 
-| Dimensi | Malaysia | Singapore |
-|---|---|---|
-| Badan R&D pertahanan AI | STRIDE (terhad, kurang data awam) | DSTA + DSO (aktif, published output) |
-| Autonomous systems program | Tiada pengumuman awam | SAF drone program aktif |
-| Kerjasama industri-pertahanan | Terhad (DEFTECH, SME Aerospace) | Ekosistem luas (ST Engineering, Thales SG) |
-| Doktrin AI pertahanan awam | Tiada | Sebahagian dalam Singapore Defence White Paper |
-| AI talent dalam sektor pertahanan | Terhad — tiada pipeline jelas | Sistemik — NSmen dengan AI background diagihkan |
-| Belanjawan pertahanan (% GDP) | ~1.0% GDP | ~3.0% GDP |
+| Dimensi                           | Malaysia                          | Singapore                                       |
+| --------------------------------- | --------------------------------- | ----------------------------------------------- |
+| Badan R&D pertahanan AI           | STRIDE (terhad, kurang data awam) | DSTA + DSO (aktif, published output)            |
+| Autonomous systems program        | Tiada pengumuman awam             | SAF drone program aktif                         |
+| Kerjasama industri-pertahanan     | Terhad (DEFTECH, SME Aerospace)   | Ekosistem luas (ST Engineering, Thales SG)      |
+| Doktrin AI pertahanan awam        | Tiada                             | Sebahagian dalam Singapore Defence White Paper  |
+| AI talent dalam sektor pertahanan | Terhad — tiada pipeline jelas     | Sistemik — NSmen dengan AI background diagihkan |
+| Belanjawan pertahanan (% GDP)     | ~1.0% GDP                         | ~3.0% GDP                                       |
 
 Ini bukan soal nombor semata-mata. Ini soal **strategic intent** — adakah kita serius tentang pertahanan AI sebagai keutamaan nasional?
 

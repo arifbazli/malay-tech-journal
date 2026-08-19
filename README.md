@@ -8,15 +8,15 @@ development with the Claude Code CLI — no manual IDE edits.
 
 ## Stack
 
-| Layer | Technology |
-| --- | --- |
-| Framework | Astro v7 (static output) |
-| Styling | Tailwind CSS v4, dark-only |
-| Runtime | Bun ≥ 1.1.0 |
-| Language | TypeScript (strict) |
-| Hosting | Cloudflare Pages |
-| Search | Pagefind (static index) |
-| Comments | Giscus (optional) |
+| Layer     | Technology                 |
+| --------- | -------------------------- |
+| Framework | Astro v7 (static output)   |
+| Styling   | Tailwind CSS v4, dark-only |
+| Runtime   | Bun ≥ 1.1.0                |
+| Language  | TypeScript (strict)        |
+| Hosting   | Cloudflare Pages           |
+| Search    | Pagefind (static index)    |
+| Comments  | Giscus (optional)          |
 
 Also: auto-generated OG images per post, opt-in KaTeX math and Mermaid
 diagrams, per-locale RSS, and a zero-warning ESLint/Prettier/markdownlint CI gate.

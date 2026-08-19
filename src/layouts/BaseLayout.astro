@@ -107,16 +107,20 @@ const meta: SeoMeta =
       href={withBase('/ms/rss.xml')}
     />
     <SEO meta={meta} />
-    {/* Custom fonts configured via Astro Fonts API (see astro.config.mjs).
+    {
+      /* Custom fonts configured via Astro Fonts API (see astro.config.mjs).
        Preload the two above-the-fold display fonts: Space Grotesk (nav-title,
        bento/featured/card titles) and Inter (body text). JetBrains Mono is
-       used in panels, search, and post body inline code — preload it too. */}
+       used in panels, search, and post body inline code — preload it too. */
+    }
     <Font cssVariable="--font-space-grotesk" preload />
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-jetbrains-mono" preload />
-    {/* No ClientRouter — full page navigation. No view transitions, no flicker.
+    {
+      /* No ClientRouter — full page navigation. No view transitions, no flicker.
        No theme toggle — site is dark-only by design; all colors come from
-       the single --mtj-* token set in :root. */}
+       the single --mtj-* token set in :root. */
+    }
   </head>
 
   <body>
@@ -129,39 +133,43 @@ const meta: SeoMeta =
 
     <div class="chirpy-main-wrapper">
       <div class="chirpy-shell">
-        <Topbar locale={locale} currentPath={pathWithoutLocale} availableLocales={availableLocales} />
+        <Topbar
+          locale={locale}
+          currentPath={pathWithoutLocale}
+          availableLocales={availableLocales}
+        />
 
-        {homepage ? (
-          // Homepage provides its own mtj-page + main structure.
-          <>
-            <slot />
-          </>
-        ) : (
-          <div class="flex flex-1 gap-10">
-            <div class="flex min-w-0 flex-1 flex-col">
-              <main
-                id="main"
-                aria-label="Main Content"
-                class:list={[
-                  'min-w-0 flex-1',
-                  flush ? '' : 'py-6 lg:pr-2',
-                  narrow ? 'mx-auto w-full max-w-3xl' : '',
-                ]}
-              >
-                <slot />
-              </main>
-            </div>
+        {
+          homepage ? (
+            // Homepage provides its own mtj-page + main structure.
+            <>
+              <slot />
+            </>
+          ) : (
+            <div class="flex flex-1 gap-10">
+              <div class="flex min-w-0 flex-1 flex-col">
+                <main
+                  id="main"
+                  aria-label="Main Content"
+                  class:list={[
+                    'min-w-0 flex-1',
+                    flush ? '' : 'py-6 lg:pr-2',
+                    narrow ? 'mx-auto w-full max-w-3xl' : '',
+                  ]}
+                >
+                  <slot />
+                </main>
+              </div>
 
-            {
-              !hidePanel && (
+              {!hidePanel && (
                 <aside class="chirpy-panel-rail" aria-label="Sidebar widgets">
                   <Panel locale={locale} />
                   <slot name="aside-bottom" />
                 </aside>
-              )
-            }
-          </div>
-        )}
+              )}
+            </div>
+          )
+        }
 
         <Footer locale={locale} />
       </div>

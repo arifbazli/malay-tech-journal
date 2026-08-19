@@ -1,6 +1,6 @@
 ---
-title: "Malaysia & Defence AI: Left Behind or Being Careful?"
-description: "Singapore has deployed autonomous drones, DSTA runs AI detection systems — and Malaysia? We need to ask this question honestly: where do we stand, and where should we go?"
+title: 'Malaysia & Defence AI: Left Behind or Being Careful?'
+description: 'Singapore has deployed autonomous drones, DSTA runs AI detection systems — and Malaysia? We need to ask this question honestly: where do we stand, and where should we go?'
 pubDate: 2026-07-08
 tags:
   - ai
@@ -9,10 +9,9 @@ tags:
 categories: ['Military AI & Defence']
 postType: field-note
 toc: true
-translationKey: "mad-03-malaysia-defence"
+translationKey: 'mad-03-malaysia-defence'
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Military AI and defence — Malaysia context 2026"
-
+heroImageAlt: 'Military AI and defence — Malaysia context 2026'
 ---
 
 > Field notes. This is not an attack on the Malaysian government — it's a question that young Malaysian engineers need to take seriously. All sources used are publicly available reports, parliamentary records, and open policy documents.
@@ -62,11 +61,13 @@ Both have military drone programmes but limited to purchased platforms rather th
 **STRIDE** (Science and Technology Research Institute for Defence) is Malaysia's primary defence research body under the Ministry of Defence.
 
 What we know (from public sources):
+
 - Core focus: materials, electronics, and conventional weapons systems
 - Some R&D in **C4I** (Command, Control, Communications, Computers, and Intelligence)
 - **No public announcements** on specific AI programmes for autonomous systems or AI-assisted targeting
 
 What remains unknown:
+
 - How much of STRIDE's budget goes to AI R&D? Annual reports are not publicly detailed.
 - Is there formal collaboration with local universities (UTM, UTP, UM) on defence AI? No clear public data.
 
@@ -102,15 +103,15 @@ Malaysia's AI Roadmap (**AIRMAP 2.0**), released by MDEC, is a comprehensive AI 
 
 ## The Gap: Malaysia vs Singapore (and Beyond)
 
-| Dimension | Malaysia | Singapore | Indonesia |
-|---|---|---|---|
-| Defence AI R&D body | STRIDE (limited public output) | DSTA + DSO (active, published) | BRIN (early stage) |
-| Autonomous systems programme | No public announcement | SAF active drone programme | Early stage |
-| Industry-defence collaboration | Limited (DEFTECH, SME Aerospace) | Broad ecosystem (ST Engineering, Thales SG) | Growing |
-| Public AI defence doctrine | None | Partially in Singapore Defence White Paper | None |
-| AI talent in defence sector | Limited — no clear pipeline | Systematic — NSmen with AI background placed | Limited |
-| Defence budget (% GDP) | ~1.0% | ~3.0% | ~0.8% |
-| Autonomous weapons policy | No public stance | Engaged in UN CCW discussions | No public stance |
+| Dimension                      | Malaysia                         | Singapore                                    | Indonesia          |
+| ------------------------------ | -------------------------------- | -------------------------------------------- | ------------------ |
+| Defence AI R&D body            | STRIDE (limited public output)   | DSTA + DSO (active, published)               | BRIN (early stage) |
+| Autonomous systems programme   | No public announcement           | SAF active drone programme                   | Early stage        |
+| Industry-defence collaboration | Limited (DEFTECH, SME Aerospace) | Broad ecosystem (ST Engineering, Thales SG)  | Growing            |
+| Public AI defence doctrine     | None                             | Partially in Singapore Defence White Paper   | None               |
+| AI talent in defence sector    | Limited — no clear pipeline      | Systematic — NSmen with AI background placed | Limited            |
+| Defence budget (% GDP)         | ~1.0%                            | ~3.0%                                        | ~0.8%              |
+| Autonomous weapons policy      | No public stance                 | Engaged in UN CCW discussions                | No public stance   |
 
 This isn't just about numbers. It's about **strategic intent** — is AI defence a national priority or not?
 

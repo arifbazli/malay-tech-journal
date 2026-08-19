@@ -60,58 +60,63 @@ if (lastPage <= 7) {
 }
 ---
 
-<nav class="mtj-pagination" aria-label={`${t('pagination.page')} ${currentPage} ${t('pagination.of')} ${lastPage}`}>
-  {prev ? (
-    <a
-      rel="prev"
-      href={hrefForPage(currentPage - 1)}
-      class="mtj-page-btn mtj-page-btn--nav"
-      aria-label={t('pagination.previous')}
-    >
-      <span aria-hidden="true">←</span>
-      <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
-    </a>
-  ) : (
-    <span
-      class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled"
-      aria-disabled="true"
-    >
-      <span aria-hidden="true">←</span>
-      <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
-    </span>
-  )}
-
-  {numbers.map((n) =>
-    n === '…' ? (
-      <span class="mtj-page-btn mtj-page-btn--ellipsis" aria-hidden="true">…</span>
-    ) : (
+<nav
+  class="mtj-pagination"
+  aria-label={`${t('pagination.page')} ${currentPage} ${t('pagination.of')} ${lastPage}`}
+>
+  {
+    prev ? (
       <a
-        href={hrefForPage(n)}
-        aria-current={n === currentPage ? 'page' : undefined}
-        class={`mtj-page-btn ${n === currentPage ? 'mtj-page-btn--active' : ''}`}
+        rel="prev"
+        href={hrefForPage(currentPage - 1)}
+        class="mtj-page-btn mtj-page-btn--nav"
+        aria-label={t('pagination.previous')}
       >
-        {n}
+        <span aria-hidden="true">←</span>
+        <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
       </a>
-    ),
-  )}
+    ) : (
+      <span class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled" aria-disabled="true">
+        <span aria-hidden="true">←</span>
+        <span class="mtj-page-btn__label">{t('pagination.previous')}</span>
+      </span>
+    )
+  }
 
-  {next ? (
-    <a
-      rel="next"
-      href={hrefForPage(currentPage + 1)}
-      class="mtj-page-btn mtj-page-btn--nav"
-      aria-label={t('pagination.next')}
-    >
-      <span class="mtj-page-btn__label">{t('pagination.next')}</span>
-      <span aria-hidden="true">→</span>
-    </a>
-  ) : (
-    <span
-      class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled"
-      aria-disabled="true"
-    >
-      <span class="mtj-page-btn__label">{t('pagination.next')}</span>
-      <span aria-hidden="true">→</span>
-    </span>
-  )}
+  {
+    numbers.map((n) =>
+      n === '…' ? (
+        <span class="mtj-page-btn mtj-page-btn--ellipsis" aria-hidden="true">
+          …
+        </span>
+      ) : (
+        <a
+          href={hrefForPage(n)}
+          aria-current={n === currentPage ? 'page' : undefined}
+          class={`mtj-page-btn ${n === currentPage ? 'mtj-page-btn--active' : ''}`}
+        >
+          {n}
+        </a>
+      ),
+    )
+  }
+
+  {
+    next ? (
+      <a
+        rel="next"
+        href={hrefForPage(currentPage + 1)}
+        class="mtj-page-btn mtj-page-btn--nav"
+        aria-label={t('pagination.next')}
+      >
+        <span class="mtj-page-btn__label">{t('pagination.next')}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    ) : (
+      <span class="mtj-page-btn mtj-page-btn--nav mtj-page-btn--disabled" aria-disabled="true">
+        <span class="mtj-page-btn__label">{t('pagination.next')}</span>
+        <span aria-hidden="true">→</span>
+      </span>
+    )
+  }
 </nav>

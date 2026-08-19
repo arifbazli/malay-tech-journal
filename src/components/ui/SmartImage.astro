@@ -72,7 +72,8 @@ const isRemote =
 // Detect public-path strings AND public-path ImageMetadata objects (Astro's
 // image() helper can resolve a `/public/...` string into a metadata wrapper
 // whose `src` is the public URL — we must NOT try to re-optimize that).
-const isObjectSrc = typeof src === 'object' && src !== null && 'src' in (src as Record<string, unknown>);
+const isObjectSrc =
+  typeof src === 'object' && src !== null && 'src' in (src as Record<string, unknown>);
 const objectSrcStr = isObjectSrc ? (src as { src?: unknown }).src : undefined;
 const isPublicPathObject =
   isObjectSrc &&
@@ -124,7 +125,7 @@ const defaultSizes = sizes ?? '(max-width: 768px) 100vw, 1024px';
   ) : (
     /* Public-folder image: pass-through. Use object `src` if we got one. */
     <img
-      src={(isObjectSrc && typeof objectSrcStr === 'string' ? objectSrcStr : (src as string))}
+      src={isObjectSrc && typeof objectSrcStr === 'string' ? objectSrcStr : (src as string)}
       alt={alt}
       loading={loading}
       decoding={decoding}

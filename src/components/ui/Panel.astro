@@ -44,16 +44,16 @@ const recent = posts
 ---
 
 <div class="mtj-sidebar__inner">
-
-  {recent.length > 0 && (
-    <section class="mtj-sb-section">
-      <h2 class="mtj-sb-heading">{ms ? 'Kemaskini Terkini' : 'Recently Updated'}</h2>
-      <ol class="mtj-articles">
-        {recent.map((post) => (
-          <PostCardItem post={post} locale={locale} compact />
-        ))}
-      </ol>
-    </section>
-  )}
-
+  {
+    recent.length > 0 && (
+      <section class="mtj-sb-section">
+        <h2 class="mtj-sb-heading">{ms ? 'Kemaskini Terkini' : 'Recently Updated'}</h2>
+        <ol class="mtj-articles">
+          {recent.map((post) => (
+            <PostCardItem post={post} locale={locale} compact />
+          ))}
+        </ol>
+      </section>
+    )
+  }
 </div>

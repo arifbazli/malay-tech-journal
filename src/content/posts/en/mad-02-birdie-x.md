@@ -13,7 +13,7 @@ postType: field-note
 toc: true
 translationKey: mad-02-birdie-x
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Field notes — Malaysia Birdie-X anti-drone laser cost reduction"
+heroImageAlt: 'Field notes — Malaysia Birdie-X anti-drone laser cost reduction'
 ---
 
 > **Reading note.** This is a field-note summary of publicly reported coverage of the Birdie-X anti-drone laser programme. All claims are paraphrased and linked to the source. Where a fact comes from a single report, that report is cited inline. Where a report extrapolates (e.g. cost comparisons), the extrapolation is attributed to the report, not treated as an official figure. Nothing below is sourced from classified or non-public material. The author is not affiliated with STRIDE, RMAF, Benua Defence, or the Ministry of Defence.

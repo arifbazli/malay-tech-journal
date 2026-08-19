@@ -1,6 +1,6 @@
 ---
-title: "Tergesa-gesa AI Ketenteraan Malaysia: Ambisi Berdaulat, Titik Buta Keselamatan Awan"
-description: "AI luar talian TactiDrone adalah pengakuan senyap tentang risiko C2 bergantung awan. Jurang yang sama yang menggangu keselamatan awan kerajaan — bakat, silo, rasuah — juga akan menguji pelaksanaan AI ketenteraan Malaysia."
+title: 'Tergesa-gesa AI Ketenteraan Malaysia: Ambisi Berdaulat, Titik Buta Keselamatan Awan'
+description: 'AI luar talian TactiDrone adalah pengakuan senyap tentang risiko C2 bergantung awan. Jurang yang sama yang menggangu keselamatan awan kerajaan — bakat, silo, rasuah — juga akan menguji pelaksanaan AI ketenteraan Malaysia.'
 pubDate: 2026-07-27
 tags:
   - ai
@@ -13,7 +13,7 @@ translationKey: gt-05-military-ai-cloud-blind-spots
 toc: true
 postType: case-study
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Esei ground truth — ambisi AI ketenteraan Malaysia dan titik buta keselamatan awan"
+heroImageAlt: 'Esei ground truth — ambisi AI ketenteraan Malaysia dan titik buta keselamatan awan'
 ---
 
 > Ground truth. Jurang struktur yang sama yang menghalang keselamatan awan kerajaan Malaysia akan diuji oleh pelaksanaan AI ketenteraannya. AI taktikal luar talian adalah amaran yang kebanyakan pembaca akan terlepas.

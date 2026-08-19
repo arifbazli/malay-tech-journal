@@ -1,6 +1,6 @@
 ---
-title: "Ground Truth"
-description: "Essays and case studies on the global cloud security and AI guardrail engineering landscape — perspective, analysis, and real threat scenarios from a Malaysian and ASEAN context."
+title: 'Ground Truth'
+description: 'Essays and case studies on the global cloud security and AI guardrail engineering landscape — perspective, analysis, and real threat scenarios from a Malaysian and ASEAN context.'
 pubDate: 2026-07-10
 tags:
   - cloud
@@ -11,15 +11,14 @@ categories: ['Ground Truth']
 postType: series-index
 pinned: false
 toc: true
-translationKey: "ground-truth-index"
+translationKey: 'ground-truth-index'
 heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: "Ground truth essay — research-grade field notes"
-
+heroImageAlt: 'Ground truth essay — research-grade field notes'
 ---
 
 This series is different from regular technical notes. No tutorials. No walkthroughs.
 
-This is writing about *why* things happen, *who* makes the decisions, and *what* we should think about as engineers working inside this reality.
+This is writing about _why_ things happen, _who_ makes the decisions, and _what_ we should think about as engineers working inside this reality.
 
 Two formats, one series:
 
@@ -31,12 +30,12 @@ Two formats, one series:
 
 ## Essays in this series
 
-| # | Title | Format | Focus |
-|---|---|---|---|
-| 01 | **Identity Is the New Perimeter** | Essay | Snowflake, MGM, Scattered Spider — the identity-first attack era |
-| 02 | **Guardrail Vendors vs Production Reality** | Essay | AWS, Azure, Google — the gaps they don't put in the official docs |
-| 03 | **The World Is Writing AI Law** | Essay | EU AI Act, Malaysia AI Governance Bill — what engineers actually need to know |
-| 04 | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios |
+| #   | Title                                          | Format     | Focus                                                                         |
+| --- | ---------------------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| 01  | **Identity Is the New Perimeter**              | Essay      | Snowflake, MGM, Scattered Spider — the identity-first attack era              |
+| 02  | **Guardrail Vendors vs Production Reality**    | Essay      | AWS, Azure, Google — the gaps they don't put in the official docs             |
+| 03  | **The World Is Writing AI Law**                | Essay      | EU AI Act, Malaysia AI Governance Bill — what engineers actually need to know |
+| 04  | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios    |
 
 ---
 

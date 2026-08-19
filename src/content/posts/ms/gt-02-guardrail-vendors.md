@@ -1,6 +1,6 @@
 ---
-title: "Guardrail Vendor vs Realiti Produksi — Apa yang AWS, Azure dan Google Tak Cerita"
-description: "AWS Bedrock Guardrails, Azure AI Content Safety, Google Vertex AI Safety — semua kelihatan bagus dalam dokumentasi. Tapi dalam production, ada jurang nyata antara janji vendor dan perlindungan sebenar. Data daripada Unit42, AML bypass research, dan production latency benchmarks."
+title: 'Guardrail Vendor vs Realiti Produksi — Apa yang AWS, Azure dan Google Tak Cerita'
+description: 'AWS Bedrock Guardrails, Azure AI Content Safety, Google Vertex AI Safety — semua kelihatan bagus dalam dokumentasi. Tapi dalam production, ada jurang nyata antara janji vendor dan perlindungan sebenar. Data daripada Unit42, AML bypass research, dan production latency benchmarks.'
 pubDate: 2026-07-11
 tags:
   - ai
@@ -12,8 +12,7 @@ translationKey: gt-02-guardrail-vendors
 toc: true
 postType: essay
 heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: "Ground truth essay — guardrail vendor landscape"
-
+heroImageAlt: 'Ground truth essay — guardrail vendor landscape'
 ---
 
 ## Masalah Dengan "Guardrails Included"
@@ -22,7 +21,7 @@ Apabila pasukan engineering decide nak deploy model AI dalam production, soalan 
 
 > "Kita guna AWS Bedrock — dia ada guardrails built-in."
 
-Atau versi Azure: *"Content Safety dah handle semua tu."*
+Atau versi Azure: _"Content Safety dah handle semua tu."_
 
 Ini bukan salah. Tapi ia juga bukan betul sepenuhnya.
 
@@ -94,12 +93,12 @@ Ini yang paling kritikal untuk pasukan Malaysia.
 
 Contoh konkrit daripada internal testing (bukan proprietary — ini well-documented dalam academic literature):
 
-| Input | Bahasa | AWS Block | Azure Block | Vertex Block |
-|---|---|---|---|---|
-| Jelas violent content | EN | ✓ | ✓ | ✓ |
-| Sama content | Bahasa Melayu | ✗ | ✗ | ✗ |
-| Sama content | Malay-English code-switch | ✗ | ✗ | Partial |
-| Romanised Malay slang | BM | ✗ | ✗ | ✗ |
+| Input                 | Bahasa                    | AWS Block | Azure Block | Vertex Block |
+| --------------------- | ------------------------- | --------- | ----------- | ------------ |
+| Jelas violent content | EN                        | ✓         | ✓           | ✓            |
+| Sama content          | Bahasa Melayu             | ✗         | ✗           | ✗            |
+| Sama content          | Malay-English code-switch | ✗         | ✗           | Partial      |
+| Romanised Malay slang | BM                        | ✗         | ✗           | ✗            |
 
 Ini bukan teori. Microsoft sendiri acknowledge dalam Azure AI Content Safety docs bahawa performance adalah "optimised for English" dengan nota bahawa bahasa lain "may have lower accuracy."
 
@@ -120,6 +119,7 @@ Kenapa ini susah untuk vendor guardrails catch:
 3. **Timing issue** — guardrails biasanya check input dan output, bukan intermediate reasoning steps
 
 AWS Bedrock Grounding Check dan Azure Prompt Shields ada attempt untuk address ini. Tapi effectiveness bergantung kepada:
+
 - Seberapa complex injection chain nya
 - Berapa banyak retrieval steps ada dalam pipeline
 - Sama ada model dah "compromised" dalam earlier turn
@@ -136,15 +136,16 @@ Ini yang engineering manager perlu tahu sebelum architecture decision.
 
 **Production reality** (aggregated dari multiple case studies dan public benchmarks):
 
-| Vendor | Stated Overhead | P99 Latency Tambahan | Cold Start |
-|---|---|---|---|
-| AWS Bedrock Guardrails (full) | ~50ms | 180–320ms | 800ms+ |
-| Azure Content Safety | ~30ms | 120–240ms | 400ms+ |
-| Vertex AI Safety Filters | Built-in | 80–160ms | N/A |
+| Vendor                        | Stated Overhead | P99 Latency Tambahan | Cold Start |
+| ----------------------------- | --------------- | -------------------- | ---------- |
+| AWS Bedrock Guardrails (full) | ~50ms           | 180–320ms            | 800ms+     |
+| Azure Content Safety          | ~30ms           | 120–240ms            | 400ms+     |
+| Vertex AI Safety Filters      | Built-in        | 80–160ms             | N/A        |
 
 "Full" untuk AWS bermakna semua features enabled: content filter + denied topics + grounding check. Grounding check sahaja boleh tambah 200ms+ kerana ia run additional inference pass.
 
 **Pattern yang biasa berlaku:**
+
 1. Team enable semua guardrails dalam testing
 2. Latency acceptable dalam isolation (single request)
 3. Production hit — concurrent requests expose P99 degradation
@@ -211,16 +212,19 @@ Untuk rujukan production yang lebih dalam (6 lapisan dengan tools dan tradeoffs)
 ### Specific Recommendations
 
 **Untuk AWS Bedrock:**
+
 - Enable Grounding Check hanya untuk RAG-heavy flows, bukan semua requests
 - Build custom denied topics berdasarkan domain — jangan rely pada generic categories
 - Test dengan Bahasa Melayu inputs sebelum production
 
 **Untuk Azure:**
+
 - Combine Content Safety dengan Prompt Shields — jangan satu sahaja
 - Enable diagnostic logging — Azure content safety events perlu masuk ke SIEM
 - Set up custom blocklist untuk domain-specific terms
 
 **Untuk Vertex AI:**
+
 - Use BLOCK_MEDIUM_AND_ABOVE sebagai starting point, bukan default
 - Enable citation untuk semua grounded responses
 - Implement separate input classification sebelum Vertex call
@@ -234,6 +238,7 @@ Guardrail vendors buat kerja yang bagus untuk kes biasa. Mereka patut digunakan.
 Tapi **"vendor guardrails ada" ≠ "AI system selamat."**
 
 Jurang sebenar adalah:
+
 1. Bahasa bukan-Inggeris — semua vendor underperform
 2. Indirect injection melalui RAG — masih largely unsolved
 3. Latency vs coverage trade-off — kena buat secara explicit
@@ -243,4 +248,4 @@ Engineer yang faham jurang ini boleh bina sistem yang lebih jujur tentang risk p
 
 ---
 
-*Sumber: Palo Alto Unit42 AI Security Report 2024, Microsoft Azure AI Content Safety Documentation, AWS Bedrock Guardrails User Guide, Google Vertex AI Safety Settings Reference, OWASP LLM Top 10 v1.1*
+_Sumber: Palo Alto Unit42 AI Security Report 2024, Microsoft Azure AI Content Safety Documentation, AWS Bedrock Guardrails User Guide, Google Vertex AI Safety Settings Reference, OWASP LLM Top 10 v1.1_

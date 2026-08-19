@@ -13,7 +13,7 @@ translationKey: gt-05-military-ai-cloud-blind-spots
 toc: true
 postType: case-study
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Ground truth essay — Malaysia military AI ambition and cloud security blind spots"
+heroImageAlt: 'Ground truth essay — Malaysia military AI ambition and cloud security blind spots'
 ---
 
 > Ground truth. The same structural gaps that hold back Malaysia's government cloud security are about to be stress-tested by its military AI roll-out. Tactical offline AI is the warning sign most readers will miss.

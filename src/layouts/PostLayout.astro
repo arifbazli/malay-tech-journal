@@ -77,8 +77,7 @@ for (const candidate of filePathCandidates) {
  *   2. File mtime (auto-derived; updates on every build)
  *   3. `pubDate` (fallback so we always have a value)
  */
-const effectiveUpdated: Date =
-  post.data.updatedDate ?? fileMtime ?? post.data.pubDate;
+const effectiveUpdated: Date = post.data.updatedDate ?? fileMtime ?? post.data.pubDate;
 
 // Translation siblings (used by language switcher links).
 const translations = await getTranslations(post);
@@ -163,7 +162,6 @@ const hasMermaid = body.includes('```mermaid');
   }
 
   <article class={articleClass}>
-
     {/* ── Hero image — full-bleed with gradient fade ───────────────────── */}
     {
       showHero && heroAsset && (
@@ -186,23 +184,30 @@ const hasMermaid = body.includes('```mermaid');
     }
 
     {/* ── Article header ───────────────────────────────────────────────── */}
-    <header class="post-article-header mb-10 mt-6">
-
+    <header class="post-article-header mt-6 mb-10">
       {/* Breadcrumb row: series + postType badge */}
       <div class="mb-3 flex flex-wrap items-center gap-2">
         {
           (post.data as any).postType && (
-            <span
-              class="post-type-badge"
-              data-type={(post.data as any).postType}
-            >
+            <span class="post-type-badge" data-type={(post.data as any).postType}>
               <span class="post-type-dot" />
-              {
-                (post.data as any).postType === 'essay'        ? (locale === 'ms' ? 'Esei' : 'Essay') :
-                (post.data as any).postType === 'case-study'   ? (locale === 'ms' ? 'Kajian Kes' : 'Case Study') :
-                (post.data as any).postType === 'series-index' ? (locale === 'ms' ? 'Indeks Siri' : 'Series Index') :
-                (post.data as any).postType === 'field-note'   ? (locale === 'ms' ? 'Nota Lapangan' : 'Field Note') : null
-              }
+              {(post.data as any).postType === 'essay'
+                ? locale === 'ms'
+                  ? 'Esei'
+                  : 'Essay'
+                : (post.data as any).postType === 'case-study'
+                  ? locale === 'ms'
+                    ? 'Kajian Kes'
+                    : 'Case Study'
+                  : (post.data as any).postType === 'series-index'
+                    ? locale === 'ms'
+                      ? 'Indeks Siri'
+                      : 'Series Index'
+                    : (post.data as any).postType === 'field-note'
+                      ? locale === 'ms'
+                        ? 'Nota Lapangan'
+                        : 'Field Note'
+                      : null}
             </span>
           )
         }
@@ -218,17 +223,22 @@ const hasMermaid = body.includes('```mermaid');
         }
       </div>
 
-      {/* Title — modern display type: clamp() keeps it responsive,
+      {
+        /* Title — modern display type: clamp() keeps it responsive,
           line-height 1.1 with tight tracking -0.035em feels modern,
-          and the gradient text uses the accent palette. */}
-      <h1 class="post-title" style="font-size: clamp(1.75rem, 5vw, 2.6rem); line-height: 1.1; letter-spacing: -0.035em; font-weight: 700;">
+          and the gradient text uses the accent palette. */
+      }
+      <h1
+        class="post-title"
+        style="font-size: clamp(1.75rem, 5vw, 2.6rem); line-height: 1.1; letter-spacing: -0.035em; font-weight: 700;"
+      >
         {post.data.title}
       </h1>
 
       {/* Description */}
       {
         post.data.description && (
-          <p class="text-mtj-text/60 mt-4 text-lg leading-relaxed max-w-2xl">
+          <p class="text-mtj-text/60 mt-4 max-w-2xl text-lg leading-relaxed">
             {post.data.description}
           </p>
         )
@@ -243,12 +253,15 @@ const hasMermaid = body.includes('```mermaid');
         <span class="post-meta-sep" aria-hidden="true">·</span>
         <span class="post-meta-chip">
           <Icon name="lucide:clock" width={13} height={13} />
-          {minutes} {t('post.readingTime')}
+          {minutes}
+          {t('post.readingTime')}
         </span>
         {
           effectiveUpdated && (
             <>
-              <span class="post-meta-sep" aria-hidden="true">·</span>
+              <span class="post-meta-sep" aria-hidden="true">
+                ·
+              </span>
               <span class="post-meta-chip">
                 <Icon name="lucide:pencil" width={13} height={13} />
                 <time datetime={isoDate(effectiveUpdated)}>
@@ -261,7 +274,7 @@ const hasMermaid = body.includes('```mermaid');
       </div>
 
       {/* Divider */}
-      <div class="post-header-rule mt-8" aria-hidden="true" />
+      <div class="post-header-rule mt-8" aria-hidden="true"></div>
     </header>
 
     <div class="prose-chirpy max-w-none">

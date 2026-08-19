@@ -50,7 +50,10 @@ const hrefForPage = (n: number) => localizedPath(n === 1 ? '/' : `/page/${n}/`, 
     <header class="mb-6">
       <h1 class="text-3xl font-bold tracking-tight">{t('list.allPosts')}</h1>
       <p class="text-mtj-text/70 text-sm">
-        {t('pagination.page')} {current} {t('pagination.of')} {last}
+        {t('pagination.page')}
+        {current}
+        {t('pagination.of')}
+        {last}
       </p>
     </header>
     <PostList posts={pagePosts} locale={locale} />

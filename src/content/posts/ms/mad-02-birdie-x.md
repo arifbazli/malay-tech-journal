@@ -1,19 +1,19 @@
 ---
-title: "Birdie-X Malaysia: Ratusan Ringgit Sebatang — Bagaimana Laser Anak Negara Mengubah Persamaan Kos"
-description: "Birdie-X, laser anti-dron RMAF + STRIDE + Benua Defence yang dilancarkan Jun 2026, menggantikan peluru berpintas jutaan ringgit dengan pancaran tenaga tinggi. Kos setiap pertempuran jatuh ke ratusan ringgit. Berikut adalah apa kata nota lapangan — dan apa yang tidak dikatakannya."
+title: 'Birdie-X Malaysia: Ratusan Ringgit Sebatang — Bagaimana Laser Anak Negara Mengubah Persamaan Kos'
+description: 'Birdie-X, laser anti-dron RMAF + STRIDE + Benua Defence yang dilancarkan Jun 2026, menggantikan peluru berpintas jutaan ringgit dengan pancaran tenaga tinggi. Kos setiap pertempuran jatuh ke ratusan ringgit. Berikut adalah apa kata nota lapangan — dan apa yang tidak dikatakannya.'
 pubDate: 2026-07-28
 tags:
- - ai
- - security
- - malaysia
- - military
- - drone
+  - ai
+  - security
+  - malaysia
+  - military
+  - drone
 categories: ['Military AI & Defence']
 postType: field-note
 toc: true
 translationKey: mad-02-birdie-x
 heroImage: /images/covers/webp/cover-malaysia-defence.webp
-heroImageAlt: "Nota lapangan — pengurangan kos laser anti-dron Birdie-X Malaysia"
+heroImageAlt: 'Nota lapangan — pengurangan kos laser anti-dron Birdie-X Malaysia'
 ---
 
 > **Nota bacaan.** Ini adalah ringkasan nota lapangan bagi liputan awam yang dilaporkan tentang program laser anti-dron Birdie-X. Semua tuntutan diparafrasekan dan dipautkan ke sumber. Di mana fakta datang dari satu laporan, laporan itu dipetik secara dalaman. Di mana laporan membuat ekstrapolasi (contohnya perbandingan kos), ekstrapolasi itu diatribusikan kepada laporan, bukan dianggap angka rasmi. Tiada apa-apa di bawah yang bersumberkan bahan rahsia atau bukan awam. Penulis tidak berafiliasi dengan STRIDE, RMAF, Benua Defence, atau Kementerian Pertahanan.

@@ -1,6 +1,6 @@
 ---
-title: "Dunia Sedang Menulis Undang-Undang AI — Apa yang Engineer Sebenarnya Perlu Tahu"
-description: "EU AI Act mula dikuatkuasakan Feb 2025. Malaysia sedang muktamadkan AI Governance Bill. ASEAN ada framework sendiri. Regulasi sedang membentuk cara kita bina AI — sama ada kita perasan atau tidak. Panduan untuk engineer."
+title: 'Dunia Sedang Menulis Undang-Undang AI — Apa yang Engineer Sebenarnya Perlu Tahu'
+description: 'EU AI Act mula dikuatkuasakan Feb 2025. Malaysia sedang muktamadkan AI Governance Bill. ASEAN ada framework sendiri. Regulasi sedang membentuk cara kita bina AI — sama ada kita perasan atau tidak. Panduan untuk engineer.'
 pubDate: 2026-07-12
 tags:
   - ai
@@ -12,8 +12,7 @@ translationKey: gt-03-ai-regulation
 toc: true
 postType: essay
 heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: "Ground truth essay — AI regulation 2026"
-
+heroImageAlt: 'Ground truth essay — AI regulation 2026'
 ---
 
 ## Kenapa Engineer Perlu Ambil Berat Tentang Regulasi
@@ -43,12 +42,14 @@ Ini bukan "future legislation." Sebahagian darinya **sudah dikuatkuasakan sekara
 EU AI Act kategorikan AI systems kepada 4 tahap:
 
 **Unacceptable Risk (Diharamkan):**
+
 - Social scoring oleh kerajaan
 - Real-time biometric surveillance di ruang awam (dengan pengecualian terhad)
 - Subliminal manipulation
 - Exploitation of vulnerabilities (kanak-kanak, orang tua)
 
 **High Risk:**
+
 - Critical infrastructure (tenaga, air, pengangkutan)
 - Educational assessment
 - Employment screening
@@ -58,10 +59,12 @@ EU AI Act kategorikan AI systems kepada 4 tahap:
 - Administration of justice
 
 **Limited Risk:**
+
 - Chatbots (kena disclosure bahawa ia AI)
 - Deepfakes (kena label)
 
 **Minimal Risk:**
+
 - Spam filters, recommendation engines, dll
 
 ### Technical Requirements untuk High-Risk AI
@@ -112,6 +115,7 @@ Model macam GPT-4, Claude, Gemini masuk kategori GPAI. Requirements:
 - Publish summary of training data content
 
 Untuk **GPAI dengan systemic risk** (model yang sangat powerful — estimated FLOPs > 10^25):
+
 - Adversarial testing (red-teaming)
 - Incident reporting kepada European AI Office
 - Cybersecurity measures
@@ -160,11 +164,13 @@ Engineer yang build customer-facing AI di Malaysia perlu audit data collection f
 ### Sektor-Spesifik: BNM dan SC
 
 **Bank Negara Malaysia (BNM):**
+
 - Discussion paper tentang Responsible AI in Finance (2024)
 - Fokus pada explainability untuk credit decisions
 - Requirement untuk human oversight dalam high-stakes decisions
 
 **Securities Commission Malaysia:**
+
 - Guidelines on Digital Assets include AI trading restrictions
 - Algorithmic trading disclosure requirements
 
@@ -191,14 +197,14 @@ Yang menarik adalah **ASEAN-wide AI incident database** yang sedang dibina — a
 
 ## Comparison: EU vs Malaysia vs ASEAN
 
-| Dimensi | EU AI Act | Malaysia (Incoming) | ASEAN |
-|---|---|---|---|
-| Legal force | Binding legislation | Bill (incoming) | Non-binding |
-| Risk classification | 4 tiers (formal) | High-risk focus | Principle-based |
-| Technical requirements | Very specific | TBD | General |
-| Penalties | Up to €35M or 7% global revenue | TBD (PDPA model reference) | N/A |
-| Scope | Organisations placing AI in EU market | Malaysian organisations | Member state guidance |
-| Effective for engineer | August 2026 (high-risk) | 2027 (est.) | Now (voluntary) |
+| Dimensi                | EU AI Act                             | Malaysia (Incoming)        | ASEAN                 |
+| ---------------------- | ------------------------------------- | -------------------------- | --------------------- |
+| Legal force            | Binding legislation                   | Bill (incoming)            | Non-binding           |
+| Risk classification    | 4 tiers (formal)                      | High-risk focus            | Principle-based       |
+| Technical requirements | Very specific                         | TBD                        | General               |
+| Penalties              | Up to €35M or 7% global revenue       | TBD (PDPA model reference) | N/A                   |
+| Scope                  | Organisations placing AI in EU market | Malaysian organisations    | Member state guidance |
+| Effective for engineer | August 2026 (high-risk)               | 2027 (est.)                | Now (voluntary)       |
 
 ---
 
@@ -210,6 +216,7 @@ Walaupun AI Bill Malaysia belum final, ini adalah actions yang masuk akal sekara
 
 **1. Inventory AI Systems**
 Dokumentasikan semua AI/ML systems yang sedang digunakan. Untuk setiap satu:
+
 - Apa decision yang ia buat atau influence?
 - Data apa yang digunakan?
 - Ada human oversight atau fully automated?
@@ -219,6 +226,7 @@ Gunakan EU AI Act risk tiers sebagai reference walaupun anda bukan EU company. I
 
 **3. Start Logging**
 Logging untuk AI decisions adalah hampir pasti akan jadi mandatory. Implement sekarang:
+
 - Input/output logging dengan timestamps
 - Decision rationale (untuk explainable AI)
 - Version tracking untuk models
@@ -233,6 +241,7 @@ Run bias audits pada models yang deal dengan people decisions. Baseline metrics 
 ### Bila Malaysia AI Bill Passed
 
 Jangka:
+
 - Registration process untuk high-risk AI systems
 - Designated compliance officer requirement (kemungkinan besar)
 - Audit trail yang boleh dikemukakan kepada NACSA
@@ -257,6 +266,7 @@ Cara terbaik untuk think about regulasi AI:
 Regulasi AI bukan future concern. Sebahagian darinya sudah aktif (EU), sebahagian lagi akan datang (Malaysia). Perbezaan antara engineer yang perlu do emergency refactoring dan yang tidak — adalah sama ada mereka audit systems mereka sekarang.
 
 Framework yang perlu tahu:
+
 - **EU AI Act** — paling comprehensive, most prescriptive technically
 - **Malaysia AIGF + incoming AI Bill** — voluntary sekarang, legislation coming
 - **PDPA Amendment 2024** — berkuatkuasa sekarang, impacts AI data use
@@ -266,4 +276,4 @@ Baca technical annexes. Bukan hanya summary. Itulah yang akan jadi implementatio
 
 ---
 
-*Sumber: EUR-Lex EU AI Act Full Text, MDEC AI Governance Framework 2024, NACSA Malaysia Cybersecurity Reports, ASEAN Guide on AI Governance and Ethics, Bank Negara Malaysia Discussion Paper on Responsible AI*
+_Sumber: EUR-Lex EU AI Act Full Text, MDEC AI Governance Framework 2024, NACSA Malaysia Cybersecurity Reports, ASEAN Guide on AI Governance and Ethics, Bank Negara Malaysia Discussion Paper on Responsible AI_

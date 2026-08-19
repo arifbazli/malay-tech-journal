@@ -44,15 +44,18 @@ function seriesDisplay(name: string): string {
   const s = name.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return ms ? 'Ground Truth' : 'Ground Truth';
   if (s.includes('guardrail')) return ms ? 'AI Guardrail Engineering' : 'AI Guardrail Engineering';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return ms ? 'Military AI & Defence' : 'Military AI & Defence';
-  if (s.includes('cloud') && s.includes('security')) return ms ? 'Cloud Security Engineering' : 'Cloud Security Engineering';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return ms ? 'Military AI & Defence' : 'Military AI & Defence';
+  if (s.includes('cloud') && s.includes('security'))
+    return ms ? 'Cloud Security Engineering' : 'Cloud Security Engineering';
   return name;
 }
 function seriesPillMiniClass(name: string): string {
   const s = name.toLowerCase();
   if (s.includes('ground') || s.includes('truth')) return 'pill-mini--ground';
   if (s.includes('guardrail')) return 'pill-mini--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense')) return 'pill-mini--mil';
+  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
+    return 'pill-mini--mil';
   return 'pill-mini--ai';
 }
 function getSeries(post: any): string {
@@ -70,17 +73,29 @@ function postHref(post: any): string {
   title={i18n.openLabel}
   data-cmdk-open
 >
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8"/>
-    <path d="m21 21-4.35-4.35"/>
+  <svg
+    width="13"
+    height="13"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <path d="m21 21-4.35-4.35"></path>
   </svg>
   <span class="search-pill__label">{ms ? 'Cari' : 'Search'}</span>
-  {/* FIX (2026-07-22): platform-aware keyboard hint.
+  {
+    /* FIX (2026-07-22): platform-aware keyboard hint.
        - Shows ⌘K on Mac, Ctrl K on Windows/Linux — the more powerful
          shortcut that 99% of power users actually use.
        - Slash fallback kept as a secondary badge for muscle memory.
        - Icons rendered via <kbd data-kbd-mod> by platform-detection script
-         below; the static / is shown if JS is disabled. */}
+         below; the static / is shown if JS is disabled. */
+  }
   <kbd class="search-pill__kbd search-pill__kbd--primary" data-kbd-mod aria-hidden="true">⌘K</kbd>
   <kbd class="search-pill__kbd search-pill__kbd--slash" aria-hidden="true">/</kbd>
 </button>
@@ -97,9 +112,19 @@ function postHref(post: any): string {
   <div class="mtj-cmdk__modal">
     {/* Search input row */}
     <div class="mtj-cmdk__row">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/>
-        <path d="m21 21-4.35-4.35"/>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
       </svg>
       <input
         type="search"
@@ -116,16 +141,24 @@ function postHref(post: any): string {
 
     {/* Body */}
     <div data-cmdk-body class="mtj-cmdk__body">
-
       {/* Artikel Terkini (default state, hidden when typing) */}
       <div data-cmdk-section="recent">
         <div class="mtj-cmdk__group">{ms ? 'Artikel Terkini' : 'Recent Articles'}</div>
         {
           recent.map((post) => (
             <a href={postHref(post)} class="mtj-cmdk__item" data-cmdk-item>
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
               </svg>
               <span class="label">{post.data.title}</span>
               <span class="meta">
@@ -138,12 +171,23 @@ function postHref(post: any): string {
         }
 
         {/* Lompat Ke Siri */}
-        <div class="mtj-cmdk__group" style="margin-top: 0.5rem">{ms ? 'Lompat Ke Siri' : 'Jump To Series'}</div>
+        <div class="mtj-cmdk__group" style="margin-top: 0.5rem">
+          {ms ? 'Lompat Ke Siri' : 'Jump To Series'}
+        </div>
         {
           series.map((s) => (
             <a href={categoryPath(locale, s.name)} class="mtj-cmdk__item" data-cmdk-item>
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+              <svg
+                class="icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
               <span class="label">{seriesDisplay(s.name)}</span>
               <span class="meta">
@@ -398,7 +442,8 @@ function postHref(post: any): string {
 
     document.addEventListener('keydown', (e: KeyboardEvent) => {
       const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
-      const isSlash = e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !isTypingTarget(e.target);
+      const isSlash =
+        e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !isTypingTarget(e.target);
       if (isCmdK || isSlash) {
         e.preventDefault();
         open();
