@@ -59,7 +59,7 @@ const {
   homepage = false,
   narrow = false,
   flush = false,
-  crumbs = [],
+  crumbs: _crumbs = [],
   seo,
   availableLocales,
 } = Astro.props;
@@ -129,7 +129,7 @@ const meta: SeoMeta =
 
     <div class="chirpy-main-wrapper">
       <div class="chirpy-shell">
-        <Topbar locale={locale} crumbs={crumbs} currentPath={pathWithoutLocale} availableLocales={availableLocales} />
+        <Topbar locale={locale} currentPath={pathWithoutLocale} availableLocales={availableLocales} />
 
         {homepage ? (
           // Homepage provides its own mtj-page + main structure.

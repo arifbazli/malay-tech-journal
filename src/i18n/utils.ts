@@ -99,7 +99,6 @@ export function stripLocale(pathname: string): string {
  *   const t = useTranslations('ms');
  *   t('nav.home') // 'Utama'
  */
-// eslint-disable-next-line no-unused-vars
 export function useTranslations(locale: Locale): (key: UIKey) => string {
   return function t(key: UIKey): string {
     const dict = messages[locale] ?? messages[DEFAULT_LOCALE];

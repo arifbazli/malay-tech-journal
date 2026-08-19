@@ -9,6 +9,7 @@ import type { Locale } from '../config';
 export const messages = {
   en: {
     'site.skipToContent': 'Skip to content',
+    'site.email': 'Email',
     'nav.home': 'Home',
     'nav.posts': 'Posts',
     'nav.tags': 'Tags',
@@ -130,6 +131,7 @@ export const messages = {
 
   ms: {
     'site.skipToContent': 'Terus ke kandungan',
+    'site.email': 'E-mel',
     'nav.home': 'Utama',
     'nav.posts': 'Posts',
     'nav.tags': 'Tag',

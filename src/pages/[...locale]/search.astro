@@ -97,8 +97,7 @@ const i18n = {
 
   interface PagefindModule {
     init?: () => Promise<void>;
-    // eslint-disable-next-line no-unused-vars
-    search: (term: string) => Promise<{ results: PagefindResult[] } | null>;
+    search: (_term: string) => Promise<{ results: PagefindResult[] } | null>;
   }
 
   let pagefindModule: PagefindModule | null = null;
