@@ -272,6 +272,11 @@ bun run pagefind     # Re-run Pagefind only, after astro build
 | `pr-checks.yml` | PR + push to `main` | Change-detected lint/format/markdownlint, typecheck, test, build. PRs build in fast mode (`CI_SKIP_*` env vars). |
 | `weekly.yml` | Mon 06:17 UTC + manual | Full lint/typecheck/build/test smoke on a clean runner. |
 | `bun-update-monitor.yml` | Mon 08:00 UTC + manual | Advisory only — warns + opens an issue if pinned Bun trails latest; never fails the run. |
+| `publish-on-merge.yml` | PR merged with `publish` label | Content-publishing companion to `/write-post`. Flips `draft: true` → `false` on the post files that PR touched and pushes to `main` directly — which then triggers `deploy-cloudflare.yml` as normal. No-ops if the label isn't present or nothing needed flipping. |
+
+### Content pipeline (`/write-post`)
+
+`.claude/commands/write-post.md` (local, untracked) drives a research → draft → PR pipeline for weekly posts: a research subagent verifies facts via WebSearch/WebFetch against real sources, a drafting step writes the `en`/`ms` pair matching the schema below with `draft: true`, and the result is opened as a PR — never pushed to `main`, never published automatically. Applying the `publish` label to that PR and merging is what makes `publish-on-merge.yml` flip `draft: false` and deploy.
 
 ### Cloudflare Pages one-time setup
 

@@ -1,0 +1,68 @@
+name: Publish on Merge
+
+# Companion to the /write-post pipeline. That pipeline always opens PRs with
+# draft: true and never flips it — publishing is a human decision, made by
+# applying the `publish` label to a content PR (before or at merge time).
+#
+# This workflow only flips draft: true -> false on the post files that PR
+# actually touched, then pushes straight to main. That push is what
+# triggers deploy-cloudflare.yml (path-filtered on src/**) — there is no
+# separate deploy step here.
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Flip draft:false and push
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'publish')
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: List files changed in the merged PR
+        id: files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh pr view "${{ github.event.pull_request.number }}" --json files \
+            --jq '.files[].path' > changed-files.txt
+          # Only touch actual post content files, never anything else the PR
+          # might have also included.
+          grep -E '^src/content/posts/(en|ms)/.*\.mdx?$' changed-files.txt > post-files.txt || true
+          echo "count=$(wc -l < post-files.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Flip draft:true -> false
+        if: steps.files.outputs.count != '0'
+        run: |
+          set -euo pipefail
+          flipped=0
+          while IFS= read -r file; do
+            [ -f "$file" ] || continue
+            if grep -qx 'draft: true' "$file"; then
+              sed -i 's/^draft: true$/draft: false/' "$file"
+              echo "Published: $file"
+              flipped=$((flipped + 1))
+            fi
+          done < post-files.txt
+          echo "flipped=${flipped}" >> "$GITHUB_ENV"
+
+      - name: Commit and push
+        if: steps.files.outputs.count != '0' && env.flipped != '0'
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A -- src/content/posts
+          git commit -m "content: publish post(s) from #${{ github.event.pull_request.number }} (draft:false) [publish-on-merge]"
+          git push origin main
