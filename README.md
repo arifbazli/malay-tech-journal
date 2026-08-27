@@ -41,7 +41,7 @@ flowchart LR
     subgraph author["✍️ Author"]
         direction LR
         A1["/write-post agent"]
-        A2["Manual · Claude Code CLI"]
+        A2["Manual · CLI agent harness"]
     end
 
     subgraph review["🔎 Review"]
