@@ -36,6 +36,8 @@ Two formats, one series:
 | 02  | **Guardrail Vendors vs Production Reality**    | Essay      | AWS, Azure, Google — the gaps they don't put in the official docs             |
 | 03  | **The World Is Writing AI Law**                | Essay      | EU AI Act, Malaysia AI Governance Bill — what engineers actually need to know |
 | 04  | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios    |
+| 05  | **Malaysia's Military AI Push**                | Case Study | TactiDrone's offline AI and the cloud-security blind spots behind it          |
+| 06  | **CSA's 2026 Top Threats**                     | Essay      | Identity overtakes infrastructure, AI enters the ranking for the first time   |
 
 ---
 
