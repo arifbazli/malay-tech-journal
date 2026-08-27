@@ -368,4 +368,4 @@ Before committing:
 [ ] README.md updated for any user-facing change
 ```
 
-*Last updated: 2026-08-18.*
+*Last updated: 2026-08-27.*

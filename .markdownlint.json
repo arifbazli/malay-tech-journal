@@ -2,5 +2,6 @@
   "default": true,
   "MD033": { "allowed_elements": ["kbd", "details", "summary", "strong"] },
   "MD013": false,
-  "MD036": false
+  "MD036": false,
+  "MD024": { "siblings_only": true }
 }
