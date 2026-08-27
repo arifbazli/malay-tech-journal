@@ -1,8 +1,8 @@
 # Malay Tech Journal
 
 Bilingual (Bahasa Melayu / English) blog on cloud security, AI guardrails,
-and regional defence tech. Built via prompt-driven development with the
-Claude Code CLI.
+and regional defence tech. Built via prompt-driven development — multiple
+CLI coding agents and harnesses, no manual IDE edits.
 
 🌐 **Live:** <https://malay-tech-journal.pages.dev/>
 
