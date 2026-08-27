@@ -1,8 +1,8 @@
 # Malay Tech Journal
 
-Bilingual (Bahasa Melayu / English) blog on cloud security, AI guardrail
-engineering, and regional defence tech. Built solo via prompt-driven
-development with the Claude Code CLI — no manual IDE edits.
+Bilingual (Bahasa Melayu / English) blog on cloud security, AI guardrails,
+and regional defence tech. Built via prompt-driven development with the
+Claude Code CLI.
 
 🌐 **Live:** <https://malay-tech-journal.pages.dev/>
 
@@ -18,37 +18,21 @@ development with the Claude Code CLI — no manual IDE edits.
 | Search    | Pagefind (static index)    |
 | Comments  | Giscus (optional)          |
 
-Also: auto-generated OG images per post, opt-in KaTeX math and Mermaid
-diagrams, per-locale RSS, and a zero-warning ESLint/Prettier/markdownlint CI gate.
-
 ## Quickstart
 
 ```bash
 bun install
-bun run dev        # http://localhost:4321
-bun run build      # → dist/
-bun run preview    # serve dist/ (search only works here, not in dev)
+bun run dev      # http://localhost:4321
+bun run build    # → dist/
+bun run preview  # serve dist/ (search only works here, not in dev)
 ```
-
-Architecture, config reference, and full contributor guide: [AGENTS.md](./AGENTS.md).
 
 ## Content
 
-Posts live in `src/content/posts/<locale>/<slug>.md`, one folder per locale
-(`ms` default, `en` at `/en/`):
-
-```yaml
----
-title: 'Post title'
-description: 'One-sentence summary for listings and meta tags.'
-pubDate: 2026-01-01
----
-```
-
-Pair translations with a matching `translationKey`. New posts can also come
-from the `/write-post` agent pipeline (research → draft → PR, always
-`draft: true`) — see [AGENTS.md](./AGENTS.md#content-pipeline-write-post).
-Full i18n and frontmatter reference: [AGENTS.md](./AGENTS.md).
+Posts: `src/content/posts/<locale>/<slug>.md` (`ms` default, `en` at
+`/en/`), paired across locales by `translationKey`. New posts can also
+come from the `/write-post` agent pipeline (research → draft → PR,
+`draft: true`). Full schema and i18n reference: [AGENTS.md](./AGENTS.md).
 
 ## Pipeline
 
@@ -94,22 +78,11 @@ flowchart LR
     class H live
 ```
 
-Every push runs `pr-checks.yml` (lint, format, markdownlint, typecheck,
-test, build). Merging to `main` always builds and deploys via Wrangler
-(`deploy-cloudflare.yml`, the canonical live deploy); a content PR only
-goes live as a _visible_ post if it carried the `publish` label, which
-`publish-on-merge.yml` uses to flip `draft: false` before that deploy runs.
-`deploy.yml` builds the same site for GitHub Pages as a secondary health
-check (not currently published). One-time Cloudflare setup:
+Every PR runs full CI; merging always deploys via Wrangler, but a content
+PR only goes _live_ if it carried the `publish` label first. Setup:
 [AGENTS.md](./AGENTS.md#cloudflare-pages-one-time-setup).
 
-## Contributing
+## More
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup and PR expectations, and
-[SECURITY.md](./SECURITY.md) to report vulnerabilities privately.
-
-## License
-
-MIT — see [LICENSE](./LICENSE). Original theme
-([chirping-astro](https://github.com/kannansuresh/chirping-astro)) also
-MIT-licensed.
+- [AGENTS.md](./AGENTS.md) — architecture, config, and content schema
+- [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md) · [LICENSE](./LICENSE) (MIT)
