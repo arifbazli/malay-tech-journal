@@ -22,7 +22,7 @@ this blog, not for reuse by others.
 | Search | Pagefind (static index, built after `astro build`) |
 | Comments | Giscus (optional, GitHub Discussions) |
 | Math | KaTeX, opt-in per post (`math: true`) |
-| Diagrams | Mermaid, client-hydrated; `render-diagrams.mjs` pre-renders SVGs for build-time checks |
+| Diagrams | Mermaid, client-hydrated via `MermaidLoader.astro` — no build-time pre-render |
 | CI | `pr-checks.yml`, `deploy-cloudflare.yml` (canonical), `deploy.yml` (GitHub Pages, non-publishing), `weekly.yml`, `bun-update-monitor.yml` |
 
 ---
@@ -32,7 +32,6 @@ this blog, not for reuse by others.
 ```text
 .
 ├── astro.config.mjs      # Astro + integrations, i18n, markdown pipeline
-├── render-diagrams.mjs   # Pre-renders Mermaid diagrams in posts to SVG
 ├── .env.example          # All recognised env vars, documented inline
 ├── public/               # Static assets served as-is
 └── src/
