@@ -38,6 +38,7 @@ Two formats, one series:
 | 04  | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios    |
 | 05  | **Malaysia's Military AI Push**                | Case Study | TactiDrone's offline AI and the cloud-security blind spots behind it          |
 | 06  | **CSA's 2026 Top Threats**                     | Essay      | Identity overtakes infrastructure, AI enters the ranking for the first time   |
+| 07  | **AI-SPM Isn't a New Category**                | Essay      | Orca and Microsoft ship it as a CSPM extension — except one 2026 carve-out    |
 
 ---
 

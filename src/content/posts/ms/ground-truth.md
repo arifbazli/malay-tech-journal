@@ -39,6 +39,7 @@ Dua format dalam satu siri:
 | 04  | **Infrastruktur AI Pertahanan Malaysia 2026** | Kajian Kes | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — ancaman sebenar, senario serangan |
 | 05  | **Dorongan AI Ketenteraan Malaysia**          | Kajian Kes | AI offline TactiDrone dan blind spot cloud security di belakangnya            |
 | 06  | **Top Threats CSA 2026**                      | Esei       | Identiti menewaskan infrastruktur, AI mula muncul dalam ranking               |
+| 07  | **AI-SPM Bukan Kategori Baru**                | Esei       | Orca dan Microsoft ship sebagai extension CSPM — kecuali satu carve-out 2026  |
 
 ---
 
