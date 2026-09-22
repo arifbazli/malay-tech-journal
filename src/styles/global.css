@@ -3064,6 +3064,27 @@ html {
   font-size: 14px !important;
   color: var(--mtj-text);
 }
+/* Mermaid's htmlLabels wrap each line in a <p>. The site's own prose
+   styles reset <p> to `white-space: normal`, which overrides the
+   `nowrap` Mermaid sets on the label's ancestor — so a label that's
+   even a fraction of a pixel wider than Mermaid's own text measurement
+   wraps onto a hidden second line inside the (single-line-height)
+   foreignObject, silently dropping the last character(s). Confirmed by
+   screenshotting every diagram on the site: every node whose text
+   looked "cut off" was actually wrapping out of view, not overflowing.
+   `overflow: visible` on the foreignObject is the second half of the
+   fix — it lets a still-too-tight measurement spill into the node
+   rect's existing padding instead of clipping at the foreignObject's
+   own edge. */
+.mermaid .nodeLabel p,
+.mermaid .edgeLabel p,
+.mermaid .label p {
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+.mermaid foreignObject {
+  overflow: visible;
+}
 .mermaid .edgeLabel {
   background-color: var(--mtj-surface) !important;
   padding: 0 0.3em;
