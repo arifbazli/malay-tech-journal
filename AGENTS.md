@@ -71,8 +71,7 @@ this blog, not for reuse by others.
         ├── reading-time.ts
         ├── seo.ts
         ├── slugify.ts       # Unicode-aware tag/category slugifier
-        ├── og-image.ts      # Satori render helper
-        └── github-repo.ts   # /projects page live GitHub stats
+        └── og-image.ts      # Satori render helper
 ```
 
 ---
@@ -145,12 +144,10 @@ Secrets are reserved for deploy tokens.
 | --- | --- | --- |
 | `SITE_URL` | Recommended | Canonical origin, no trailing slash. Falls back to the Cloudflare Pages URL. |
 | `BASE_PATH` | GitHub Pages only | Sub-path prefix; auto-detected by `deploy.yml`. Cloudflare Pages serves from root — never set here. |
-| `PUBLIC_GITHUB_HANDLE` / `PUBLIC_GITHUB_REPO` | Optional | This site's own repo slug; used as a fallback for `PROJECTS_REPO`. |
+| `PUBLIC_GITHUB_HANDLE` / `PUBLIC_GITHUB_REPO` | Optional | This site's own repo slug. |
 | `PUBLIC_TWITTER_HANDLE` | Optional | Unused by the current `SOCIALS` list (see below); reserved. |
 | `PUBLIC_CONTACT_EMAIL` | Optional | Email social link + mailto target. |
 | `PUBLIC_AUTHOR_NAME` / `PUBLIC_AUTHOR_URL` | Optional | Overrides `SITE.author` and the LinkedIn social link. |
-| `PROJECTS_REPO` | Optional | Repo the `/projects` page fetches live GitHub stats for (via `github-repo.ts`) — not necessarily this repo. |
-| `GITHUB_TOKEN` / `GH_TOKEN` | Optional | Raises the GitHub API rate limit for `github-repo.ts` at build time. |
 | `PUBLIC_GISCUS_ENABLED` + `PUBLIC_GISCUS_*` | Optional (Giscus) | Master switch + giscus.app values. |
 | `CI_SKIP_AUTO_OG_IMAGE` / `CI_SKIP_RSS_SITEMAP` / `CI_SKIP_CONTENT_COLLECTIONS` | CI only | Fast-build mode for PRs. Never set locally. |
 
