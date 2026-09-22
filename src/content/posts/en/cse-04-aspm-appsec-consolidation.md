@@ -11,7 +11,7 @@ categories: ['Cloud Security Engineering']
 translationKey: 'cse-04-aspm-appsec-consolidation'
 toc: true
 postType: field-note
-draft: true
+draft: false
 heroImage: /images/covers/webp/cover-tech-essay.webp
 heroImageAlt: 'Cloud security engineering — ASPM consolidating AppSec tool sprawl'
 ---
