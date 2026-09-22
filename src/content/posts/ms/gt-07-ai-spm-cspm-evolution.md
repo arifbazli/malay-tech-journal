@@ -11,7 +11,7 @@ categories: ['Ground Truth']
 translationKey: 'gt-07-ai-spm-cspm-evolution'
 toc: true
 postType: essay
-draft: true
+draft: false
 heroImage: /images/covers/webp/cover-tech-essay.webp
 heroImageAlt: 'Ground truth essay — AI-SPM as an extension of CSPM'
 ---
