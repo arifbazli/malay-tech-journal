@@ -28,9 +28,7 @@ This is my attempt to put some of it on the open web. Short notes on:
 
 ## What you'll find here
 
-:::note
 This is **not** a tutorial series. Posts are written fast and published when they're useful — usually unpolished. I optimize for _grep_, not readability.
-:::
 
 Typical post format:
 

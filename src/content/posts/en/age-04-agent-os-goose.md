@@ -113,7 +113,6 @@ flowchart LR
   classDef ext fill:#2e2410,stroke:#fbbf24,color:#fde68a
   classDef tool fill:#2e1d10,stroke:#fb923c,color:#fed7aa
   classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
-  classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
 ```
 
 ### Security guardrails in Goose — what's included

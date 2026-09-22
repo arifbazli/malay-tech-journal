@@ -188,7 +188,6 @@ The battlefield isn't only physical. AI has penetrated **cyber warfare** deeply:
 
 ## For the Engineer: 4 Takeaways
 
-:::note
 **Key engineering implications from military AI deployments:**
 
 1. **Dual-use is real** — computer vision, LLMs, cloud security, autonomous systems: skills you build have defence applications. Understand the ethics before someone else decides for you.
@@ -198,8 +197,6 @@ The battlefield isn't only physical. AI has penetrated **cyber warfare** deeply:
 3. **AI safety scales with stakes** — when AI is wrong in a chatbot, you get a weird answer. When AI is wrong in a targeting system, people die. Reliability, explainability, and human oversight are non-negotiable at this level.
 
 4. **Know what your work builds toward** — Google engineers found out about Maven after it was running. Ask the question early.
-
-   :::
 
 ---
 

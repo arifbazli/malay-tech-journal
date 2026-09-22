@@ -28,9 +28,7 @@ Ini usaha aku untuk letak sikit benda kat open web. Nota ringkas pasal:
 
 ## Apa yang kau akan jumpa sini
 
-:::note
 Ini **bukan** siri tutorial. Post ditulis cepat dan publish bila dah useful — usually unpolished. Aku optimize untuk _grep_, bukan readability.
-:::
 
 Format post typical:
 
