@@ -11,7 +11,7 @@ categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
 translationKey: 'age-06-malaysia-ai-guardrails-2027'
-draft: true
+draft: false
 ---
 
 > Nota lapangan tentang cara Malaysia mendekati AI guardrail: undang-undang yang akan datang, institusi baru, di mana kemudaratan sebenar muncul, dan apa yang team engineering boleh sediakan sebelum peraturan dimuktamadkan.

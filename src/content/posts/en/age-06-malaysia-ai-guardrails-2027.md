@@ -11,7 +11,7 @@ categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
 translationKey: 'age-06-malaysia-ai-guardrails-2027'
-draft: true
+draft: false
 ---
 
 > Field notes on how Malaysia is approaching AI guardrails: the coming law, the new institutions, where the real harms are showing up, and what engineering teams can get ready before the rules are final.
