@@ -52,7 +52,7 @@ Takde jadual tetap. Aku tulis bila ada benda yang berbaloi ditulis, biasanya sek
 
 ### Boleh share / repost?
 
-Boleh. Sila kreditkan post asal dan letak pautan balik kepadanya.
+Boleh. Tulisan di sini dilesenkan di bawah [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): kongsi atau ubah suai dengan bebas, kreditkan post asal dan letak pautan balik kepadanya.
 
 ## Hubungi
 

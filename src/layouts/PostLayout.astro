@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import PostNav from '../components/post/PostNav.astro';
+import AuthorCard from '../components/post/AuthorCard.astro';
 import SmartImage from '../components/ui/SmartImage.astro';
 import TableOfContents from '../components/islands/TableOfContents.astro';
 import Giscus from '../components/islands/Giscus.astro';
@@ -254,6 +255,8 @@ const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true
         </footer>
       )
     }
+
+    <AuthorCard locale={locale} />
 
     <PostNav prev={prev} next={next} locale={locale} />
 

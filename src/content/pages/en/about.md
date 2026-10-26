@@ -52,7 +52,7 @@ There is no fixed schedule. I write when something is worth writing down, usuall
 
 ### Can I share or repost?
 
-Yes. Please credit the original post and link back to it.
+Yes. The writing is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): share or adapt it freely, credit the original post and link back to it.
 
 ## Contact
 

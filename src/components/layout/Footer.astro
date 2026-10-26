@@ -40,7 +40,17 @@ const links = [
   <div class="mtj-footer__inner">
     <div class="mtj-footer__brand">
       <Logo size={24} strokeWidth={3} />
-      <span class="mtj-footer__copy">© {year} {SITE.title}</span>
+      <span class="mtj-footer__copy">
+        © {year}
+        {SITE.title} ·{' '}
+        <a
+          href="https://creativecommons.org/licenses/by/4.0/"
+          rel="license noopener"
+          target="_blank"
+        >
+          {t('footer.license')}
+        </a>
+      </span>
     </div>
     <span class="mtj-footer__sep" aria-hidden="true"></span>
     <ul class="mtj-footer__links" aria-label="Footer">
