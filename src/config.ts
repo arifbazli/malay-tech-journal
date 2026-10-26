@@ -51,11 +51,13 @@ export const SITE: SiteConfig = {
   title: 'Malay Tech Journal',
   /** Site tagline / description. */
   description:
-    'Field notes on cloud security and AI guardrails. Written for engineers who build and defend modern systems.',
+    'Field notes on cloud security, AI guardrails and defence tech, written for engineers who build and defend production systems.',
   /** Author/handle shown in footer + meta. */
   author: {
     name: import.meta.env.PUBLIC_AUTHOR_NAME ?? 'Arif Bazli',
-    url: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
+    url:
+      import.meta.env.PUBLIC_AUTHOR_URL ??
+      'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     avatar: avatarImg,
   },
   /** Default OG image. */
@@ -135,7 +137,9 @@ export const NAV: readonly NavItem[] = [
 export const SOCIALS: readonly SocialLink[] = [
   {
     label: 'LinkedIn',
-    href: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
+    href:
+      import.meta.env.PUBLIC_AUTHOR_URL ??
+      'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     icon: 'simple-icons:linkedin',
   },
   {

@@ -1,6 +1,6 @@
 /* global URL */
 import { SITE, type Locale } from '../config';
-import { alternates, withBase } from '../i18n/utils';
+import { alternates, useTranslations, withBase } from '../i18n/utils';
 
 export interface SeoMeta {
   title: string;
@@ -49,7 +49,9 @@ interface BuildSeoArgs {
 export function buildSeo(args: BuildSeoArgs): SeoMeta {
   return {
     title: args.title && args.title !== SITE.title ? `${args.title} — ${SITE.title}` : SITE.title,
-    description: args.description ?? SITE.description,
+    // Fall back to the locale's own site description so the Malay pages
+    // don't advertise an English meta description.
+    description: args.description ?? useTranslations(args.locale)('site.description'),
     canonical: new URL(args.fullPath, SITE.url).toString(),
     ogImage: new URL(withBase(args.ogImage ?? SITE.defaultOgImage), SITE.url).toString(),
     ogImageAlt: args.ogImageAlt,
