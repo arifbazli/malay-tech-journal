@@ -56,8 +56,13 @@ function el(type: string, style: Record<string, unknown>, children?: unknown): N
   return { type, props: { style: { display: 'flex', ...style }, children } };
 }
 
+/** Shorten to `max` characters, cutting at a word boundary (never mid-word). */
 function truncate(text: string, max: number): string {
-  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  const lastSpace = cut.lastIndexOf(' ');
+  const head = lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut;
+  return `${head.replace(/[\s,.;:—–-]+$/u, '')}…`;
 }
 
 /**
