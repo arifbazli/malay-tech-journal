@@ -2985,16 +2985,9 @@ ul.mtj-footer__links {
   }
 }
 
-/* -- Footer copy now carries the licence link; allow wrapping -- */
+/* -- Footer copyright: keep "© 2026 Malay Tech Journal" on one line -- */
 .mtj-footer__copy {
-  white-space: normal;
-}
-.mtj-footer__copy a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--mtj-border);
-  text-underline-offset: 3px;
-}
-.mtj-footer__copy a:hover {
-  color: var(--mtj-text);
+  white-space: nowrap;
+  color: var(--mtj-text-75);
+  letter-spacing: 0.01em;
 }

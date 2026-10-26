@@ -10,6 +10,9 @@ interface Props {
 
 const { locale } = Astro.props;
 const year = new Date().getFullYear();
+// Built as one string: splitting `© {year}` and `{SITE.title}` across lines
+// (which Prettier does for long JSX) made Astro drop the space between them.
+const copyright = `© ${year} ${SITE.title}`;
 const t = useTranslations(locale);
 
 // Social links come from SOCIALS (src/config.ts) so the footer, SEO and
@@ -40,17 +43,7 @@ const links = [
   <div class="mtj-footer__inner">
     <div class="mtj-footer__brand">
       <Logo size={24} strokeWidth={3} />
-      <span class="mtj-footer__copy">
-        © {year}
-        {SITE.title} ·{' '}
-        <a
-          href="https://creativecommons.org/licenses/by/4.0/"
-          rel="license noopener"
-          target="_blank"
-        >
-          {t('footer.license')}
-        </a>
-      </span>
+      <span class="mtj-footer__copy">{copyright}</span>
     </div>
     <span class="mtj-footer__sep" aria-hidden="true"></span>
     <ul class="mtj-footer__links" aria-label="Footer">
