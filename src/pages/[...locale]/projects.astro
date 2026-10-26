@@ -153,20 +153,18 @@ const projects: Project[] = isBM
     </header>
 
     <ul class="proj__list">
-      {
-        projects.map((p) => (
-          <li class="proj__item">
-            <a href={p.url} target="_blank" rel="noopener noreferrer" class="proj__link">
-              <div class="proj__item-head">
-                <span class="proj__item-name">{p.name}</span>
-                <Icon name="lucide:arrow-up-right" width={13} height={13} class="proj__item-icon" />
-              </div>
-              <p class="proj__item-desc">{p.description}</p>
-              <span class="proj__item-lang">{p.language}</span>
-            </a>
-          </li>
-        ))
-      }
+      {projects.map((p) => (
+        <li class="proj__item">
+          <a href={p.url} target="_blank" rel="noopener noreferrer" class="proj__link">
+            <div class="proj__item-head">
+              <span class="proj__item-name">{p.name}</span>
+              <Icon name="lucide:arrow-up-right" width={13} height={13} class="proj__item-icon" />
+            </div>
+            <p class="proj__item-desc">{p.description}</p>
+            <span class="proj__item-lang">{p.language}</span>
+          </a>
+        </li>
+      ))}
     </ul>
 
     <a href={githubAllUrl} target="_blank" rel="noopener noreferrer" class="proj__all">

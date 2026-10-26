@@ -82,17 +82,17 @@ const hrefForPage = (n: number) => localizedPath(n === 1 ? '/' : `/page/${n}/`, 
           <span class="mtj-hero__dot" aria-hidden="true"></span>
           {t('home.eyebrow')}
         </p>
-        <h1 id="home-title" class="mtj-hero__title">{t('home.title')}</h1>
+        <h1 id="home-title" class="mtj-hero__title">
+          {t('home.title')}
+        </h1>
         <p class="mtj-hero__lede">{t('home.lede')}</p>
         <div class="mtj-hero__actions">
-          {
-            lead && (
-              <a class="mtj-btn mtj-btn--primary" href={postHref(lead)}>
-                {t('home.ctaRead')}
-                <span aria-hidden="true">→</span>
-              </a>
-            )
-          }
+          {lead && (
+            <a class="mtj-btn mtj-btn--primary" href={postHref(lead)}>
+              {t('home.ctaRead')}
+              <span aria-hidden="true">→</span>
+            </a>
+          )}
           <a class="mtj-btn" href={localizedPath('/categories/', locale)}>
             {t('home.ctaSeries')}
           </a>
@@ -124,126 +124,118 @@ const hrefForPage = (n: number) => localizedPath(n === 1 ? '/' : `/page/${n}/`, 
             <dt>{t('home.statSeries')}</dt>
             <dd>{seriesList.length}</dd>
           </div>
-          {
-            lastUpdated && (
-              <div>
-                <dt>{t('home.statUpdated')}</dt>
-                <dd>
-                  <time datetime={isoDate(lastUpdated)}>{dateFmt.format(lastUpdated)}</time>
-                </dd>
-              </div>
-            )
-          }
+          {lastUpdated && (
+            <div>
+              <dt>{t('home.statUpdated')}</dt>
+              <dd>
+                <time datetime={isoDate(lastUpdated)}>{dateFmt.format(lastUpdated)}</time>
+              </dd>
+            </div>
+          )}
         </dl>
       </section>
 
       {/* ── Featured: newest article large with cover, next three compact ── */}
-      {
-        lead && (
-          <section aria-labelledby="home-latest">
-            <h2 id="home-latest" class="mtj-section-label">
-              {t('home.latest')}
-            </h2>
-            <div class="mtj-bento">
-              <a href={postHref(lead)} class="mtj-bento__card mtj-bento--large">
-                {leadCover && (
-                  <img
-                    class="mtj-bento__cover"
-                    src={leadCover}
-                    alt=""
-                    width="1200"
-                    height="630"
-                    loading="eager"
-                    decoding="async"
-                    fetchpriority="high"
-                  />
+      {lead && (
+        <section aria-labelledby="home-latest">
+          <h2 id="home-latest" class="mtj-section-label">
+            {t('home.latest')}
+          </h2>
+          <div class="mtj-bento">
+            <a href={postHref(lead)} class="mtj-bento__card mtj-bento--large">
+              {leadCover && (
+                <img
+                  class="mtj-bento__cover"
+                  src={leadCover}
+                  alt=""
+                  width="1200"
+                  height="630"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+              )}
+              <div class="mtj-bento__content">
+                <span class={`mtj-pill mtj-pill--${seriesInfo(postSeries(lead)).tone}`}>
+                  {pillText(lead)}
+                </span>
+                <h3 class="mtj-bento__title">{lead.data.title}</h3>
+                {lead.data.description && <p class="mtj-bento__desc">{lead.data.description}</p>}
+                <div class="mtj-bento__foot">
+                  <time datetime={isoDate(lead.data.pubDate)}>
+                    {dateFmt.format(lead.data.pubDate)}
+                  </time>{' '}
+                  · {readTimeLabel(minutes(lead), locale)}
+                </div>
+              </div>
+            </a>
+
+            {featuredRest.map((post, index) => (
+              <a
+                href={postHref(post)}
+                class:list={[
+                  'mtj-bento__card',
+                  index === 0 ? 'mtj-bento--medium' : 'mtj-bento--small',
+                ]}
+              >
+                <span class={`mtj-pill mtj-pill--${seriesInfo(postSeries(post)).tone}`}>
+                  {index === 0 ? pillText(post) : seriesInfo(postSeries(post)).short}
+                </span>
+                <h3 class="mtj-bento__title">{post.data.title}</h3>
+                {index === 0 && post.data.description && (
+                  <p class="mtj-bento__desc">{post.data.description}</p>
                 )}
-                <div class="mtj-bento__content">
-                  <span class={`mtj-pill mtj-pill--${seriesInfo(postSeries(lead)).tone}`}>
-                    {pillText(lead)}
-                  </span>
-                  <h3 class="mtj-bento__title">{lead.data.title}</h3>
-                  {lead.data.description && <p class="mtj-bento__desc">{lead.data.description}</p>}
-                  <div class="mtj-bento__foot">
-                    <time datetime={isoDate(lead.data.pubDate)}>
-                      {dateFmt.format(lead.data.pubDate)}
-                    </time>{' '}
-                    · {readTimeLabel(minutes(lead), locale)}
-                  </div>
+                <div class="mtj-bento__foot">
+                  <time datetime={isoDate(post.data.pubDate)}>
+                    {dateFmt.format(post.data.pubDate)}
+                  </time>{' '}
+                  · {readTimeLabel(minutes(post), locale)}
                 </div>
               </a>
-
-              {featuredRest.map((post, index) => (
-                <a
-                  href={postHref(post)}
-                  class:list={[
-                    'mtj-bento__card',
-                    index === 0 ? 'mtj-bento--medium' : 'mtj-bento--small',
-                  ]}
-                >
-                  <span class={`mtj-pill mtj-pill--${seriesInfo(postSeries(post)).tone}`}>
-                    {index === 0 ? pillText(post) : seriesInfo(postSeries(post)).short}
-                  </span>
-                  <h3 class="mtj-bento__title">{post.data.title}</h3>
-                  {index === 0 && post.data.description && (
-                    <p class="mtj-bento__desc">{post.data.description}</p>
-                  )}
-                  <div class="mtj-bento__foot">
-                    <time datetime={isoDate(post.data.pubDate)}>
-                      {dateFmt.format(post.data.pubDate)}
-                    </time>{' '}
-                    · {readTimeLabel(minutes(post), locale)}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </section>
-        )
-      }
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Series: give new readers a map, not just a feed ───────────── */}
-      {
-        seriesList.length > 0 && (
-          <section aria-labelledby="home-series" class="mtj-series">
-            <h2 id="home-series" class="mtj-section-label">
-              {t('home.series')}
-            </h2>
-            <ul class="mtj-series__grid">
-              {seriesList.map((s) => {
-                const info = seriesInfo(s.name);
-                return (
-                  <li>
-                    <a
-                      class={`mtj-series__card mtj-series__card--${info.tone}`}
-                      href={categoryPath(locale, s.name)}
-                    >
-                      <span class="mtj-series__name">{info.name}</span>
-                      {seriesBlurb[info.tone] && (
-                        <span class="mtj-series__blurb">{seriesBlurb[info.tone]}</span>
-                      )}
-                      <span class="mtj-series__meta">
-                        {s.count} {t('home.statArticles')} ·{' '}
-                        <time datetime={isoDate(s.latest)}>{dateFmt.format(s.latest)}</time>
-                      </span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        )
-      }
+      {seriesList.length > 0 && (
+        <section aria-labelledby="home-series" class="mtj-series">
+          <h2 id="home-series" class="mtj-section-label">
+            {t('home.series')}
+          </h2>
+          <ul class="mtj-series__grid">
+            {seriesList.map((s) => {
+              const info = seriesInfo(s.name);
+              return (
+                <li>
+                  <a
+                    class={`mtj-series__card mtj-series__card--${info.tone}`}
+                    href={categoryPath(locale, s.name)}
+                  >
+                    <span class="mtj-series__name">{info.name}</span>
+                    {seriesBlurb[info.tone] && (
+                      <span class="mtj-series__blurb">{seriesBlurb[info.tone]}</span>
+                    )}
+                    <span class="mtj-series__meta">
+                      {s.count} {t('home.statArticles')} ·{' '}
+                      <time datetime={isoDate(s.latest)}>{dateFmt.format(s.latest)}</time>
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
-      {
-        remainingPosts.length > 0 && (
-          <section aria-labelledby="home-archive">
-            <h2 id="home-archive" class="mtj-section-label">
-              {t('home.archive')}
-            </h2>
-            <PostList posts={remainingPosts} locale={locale} />
-          </section>
-        )
-      }
+      {remainingPosts.length > 0 && (
+        <section aria-labelledby="home-archive">
+          <h2 id="home-archive" class="mtj-section-label">
+            {t('home.archive')}
+          </h2>
+          <PostList posts={remainingPosts} locale={locale} />
+        </section>
+      )}
 
       <Pagination currentPage={1} lastPage={lastPage} hrefForPage={hrefForPage} locale={locale} />
     </main>

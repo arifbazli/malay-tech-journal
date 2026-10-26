@@ -42,14 +42,12 @@ const mon = monShort.format(post.data.pubDate);
 
 <li class:list={['mtj-card', compact && 'mtj-card--compact']}>
   <a href={href} class="mtj-card__link">
-    {
-      !compact && (
-        <time class="mtj-card__date" datetime={isoDate(post.data.pubDate)}>
-          <span class="mtj-card__day">{day}</span>
-          <span class="mtj-card__mon">{mon}</span>
-        </time>
-      )
-    }
+    {!compact && (
+      <time class="mtj-card__date" datetime={isoDate(post.data.pubDate)}>
+        <span class="mtj-card__day">{day}</span>
+        <span class="mtj-card__mon">{mon}</span>
+      </time>
+    )}
     <div class="mtj-card__body">
       <div class="mtj-card__meta">
         {series && <span class={`mtj-pill mtj-pill--${series.tone}`}>{series.short}</span>}

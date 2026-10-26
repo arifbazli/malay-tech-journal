@@ -54,21 +54,19 @@ const links = [
     </div>
     <span class="mtj-footer__sep" aria-hidden="true"></span>
     <ul class="mtj-footer__links" aria-label="Footer">
-      {
-        links.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="mtj-footer__link"
-              rel={link.external ? 'noopener me' : undefined}
-              target={link.external ? '_blank' : undefined}
-            >
-              <Icon name={link.icon} width={14} height={14} aria-hidden="true" />
-              <span>{link.label}</span>
-            </a>
-          </li>
-        ))
-      }
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="mtj-footer__link"
+            rel={link.external ? 'noopener me' : undefined}
+            target={link.external ? '_blank' : undefined}
+          >
+            <Icon name={link.icon} width={14} height={14} aria-hidden="true" />
+            <span>{link.label}</span>
+          </a>
+        </li>
+      ))}
     </ul>
   </div>
 </footer>

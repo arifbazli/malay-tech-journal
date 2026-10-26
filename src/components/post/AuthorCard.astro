@@ -33,21 +33,19 @@ const t = useTranslations(locale);
     </p>
     <p class="mtj-author__bio">{t('author.bio')}</p>
     <ul class="mtj-author__links">
-      {
-        SOCIALS.map((s) => (
-          <li>
-            <a
-              href={s.href}
-              rel={s.href.startsWith('mailto:') ? undefined : 'noopener me'}
-              target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-              aria-label={s.label}
-              title={s.label}
-            >
-              <Icon name={s.icon} width={16} height={16} aria-hidden="true" />
-            </a>
-          </li>
-        ))
-      }
+      {SOCIALS.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            rel={s.href.startsWith('mailto:') ? undefined : 'noopener me'}
+            target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+            aria-label={s.label}
+            title={s.label}
+          >
+            <Icon name={s.icon} width={16} height={16} aria-hidden="true" />
+          </a>
+        </li>
+      ))}
       <li>
         <a
           href={localizedPath('/rss.xml', locale)}
