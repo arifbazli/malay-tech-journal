@@ -11,7 +11,7 @@ categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
 translationKey: 'age-05-guardrails-october-2026'
-draft: true
+draft: false
 ---
 
 > Nota lapangan untuk bulan yang sibuk bagi AI guardrail: apa attacker buat, apa research tunjuk, apa vendor dan kerajaan ubah, dan apa maksudnya untuk team yang build atas LLM dan agent.
