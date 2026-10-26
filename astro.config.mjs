@@ -24,7 +24,10 @@ import { SITE } from './src/config';
 
 const rawBase = (process.env.BASE_PATH ?? '/').replace(/\/$/, '');
 const BASE = rawBase.startsWith('/') ? rawBase : `/${rawBase}`;
-const SITEMAP_XSL_HREF = `${BASE}/sitemap/styles.xsl`;
+// BASE is '/' when no sub-path is configured; prefixing that directly gave
+// '//sitemap/styles.xsl' (a protocol-relative URL to a host named 'sitemap').
+const BASE_PREFIX = BASE === '/' ? '' : BASE;
+const SITEMAP_XSL_HREF = `${BASE_PREFIX}/sitemap/styles.xsl`;
 const SKIP_RSS_SITEMAP = process.env.CI_SKIP_RSS_SITEMAP === 'true';
 
 /**
