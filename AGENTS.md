@@ -227,6 +227,27 @@ Pages additionally support `showInNav` (boolean, default `false`) and treat
 
 ---
 
+## Series & post-type presentation
+
+Series names, short labels, colour tones and localized post-type labels
+live in `src/utils/taxonomy.ts` (`seriesInfo()`, `postSeries()`,
+`postTypeLabel()`, `readTimeLabel()`). Every listing surface (homepage,
+`PostCardItem`, command palette, post header) must use these helpers —
+never re-implement the mapping inline. Adding a series: add a matcher to
+`KNOWN` in `taxonomy.ts`, a `home.series*` blurb in `src/i18n/ui.ts`, and
+a `.mtj-series__card--<tone>` / `.mtj-pill--<tone>` style if it needs a new
+colour. `getSeriesSummaries()` in `src/utils/posts.ts` counts articles only.
+
+## Layout slots
+
+`BaseLayout.astro` exposes named slots `head`, `body-start` and
+`body-end`. Anything a page needs outside `<main>` (preloads, the reading
+progress bar, inline data scripts) goes through these — never as a
+sibling of `<BaseLayout>`, which renders outside `<html>`.
+
+"Updated on" is shown only when a post sets `updatedDate` (different day
+from `pubDate`). File mtime is not used: CI checkouts reset it.
+
 ## Hydration Islands (`src/components/islands/`)
 
 | Island | Loads when |

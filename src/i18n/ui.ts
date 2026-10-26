@@ -108,6 +108,28 @@ export const messages = {
     'projects.title': 'Projects',
     'projects.subtitle': 'Experiments and research in cloud security and AI systems.',
     'projects.viewAll': 'View all on GitHub',
+    'site.description':
+      'Field notes on cloud security, AI guardrails and defence tech, written for engineers who build and defend production systems.',
+    'nav.openMenu': 'Open navigation menu',
+    'footer.rss': 'RSS feed',
+    'home.eyebrow': 'Bilingual field notes · EN / BM',
+    'home.title': 'Cloud security and AI guardrails, from production, not press releases.',
+    'home.lede':
+      'Verified, source-linked notes on what actually breaks in cloud and AI systems: identity, posture, guardrails, and the vendor claims worth checking. Written in Malaysia for engineers everywhere.',
+    'home.ctaRead': 'Start reading',
+    'home.ctaSeries': 'Browse series',
+    'home.ctaRss': 'Subscribe via RSS',
+    'home.latest': 'Latest',
+    'home.series': 'Series',
+    'home.archive': 'More articles',
+    'home.statArticles': 'articles',
+    'home.statSeries': 'series',
+    'home.statUpdated': 'last updated',
+    'home.seriesGround':
+      'Research essays that check vendor and industry claims against primary sources.',
+    'home.seriesAi': 'How to design, test and break guardrails for LLM and agentic systems.',
+    'home.seriesCloud': 'Posture, identity and remediation for cloud security engineers.',
+    'home.seriesMil': 'Military AI and defence tech, with a Malaysian lens.',
   },
 
   ms: {
@@ -207,6 +229,29 @@ export const messages = {
     'projects.title': 'Projek',
     'projects.subtitle': 'Eksperimen dan penyelidikan dalam cloud security dan sistem AI.',
     'projects.viewAll': 'Lihat semua di GitHub',
+    'site.description':
+      'Nota lapangan tentang cloud security, AI guardrail dan teknologi pertahanan, untuk engineer yang membina dan mempertahankan sistem production.',
+    'nav.openMenu': 'Buka menu navigasi',
+    'footer.rss': 'Suapan RSS',
+    'home.eyebrow': 'Nota lapangan dwibahasa · BM / EN',
+    'home.title': 'Cloud security dan AI guardrail, dari production, bukan siaran akhbar.',
+    'home.lede':
+      'Nota yang disahkan dan bersumber tentang apa yang sebenarnya rosak dalam sistem cloud dan AI: identiti, posture, guardrail, dan dakwaan vendor yang patut disemak. Ditulis di Malaysia untuk engineer di mana-mana.',
+    'home.ctaRead': 'Mula membaca',
+    'home.ctaSeries': 'Lihat siri',
+    'home.ctaRss': 'Langgan RSS',
+    'home.latest': 'Terbaru',
+    'home.series': 'Siri',
+    'home.archive': 'Artikel lain',
+    'home.statArticles': 'artikel',
+    'home.statSeries': 'siri',
+    'home.statUpdated': 'kemaskini terakhir',
+    'home.seriesGround':
+      'Esei penyelidikan yang menyemak dakwaan vendor dan industri dengan sumber primer.',
+    'home.seriesAi':
+      'Cara mereka bentuk, menguji dan menembusi guardrail untuk sistem LLM dan agentic.',
+    'home.seriesCloud': 'Posture, identiti dan remediasi untuk cloud security engineer.',
+    'home.seriesMil': 'AI ketenteraan dan teknologi pertahanan, dari kaca mata Malaysia.',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

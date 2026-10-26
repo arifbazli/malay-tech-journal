@@ -563,7 +563,7 @@
     margin-bottom: 0.875rem;
   }
   .panel-heading {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     font-weight: 600;
     letter-spacing: 0.12em;
@@ -593,7 +593,7 @@
     gap: 0.5rem;
   }
   .series-count {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     color: var(--mtj-text-45);
     flex-shrink: 0;
@@ -663,7 +663,7 @@
     color: oklch(0.72 0.18 250);
   }
   .recent-date {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.62rem;
     color: var(--mtj-text-40);
   }
@@ -679,7 +679,7 @@
     box-shadow: inset 0 0 0 1px var(--mtj-text-8);
     border: none;
     border-radius: 4px;
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.65rem;
     color: var(--mtj-text-55);
     padding: 0.25rem 0.55rem;
@@ -1128,7 +1128,7 @@
     border-radius: 6px;
     color: var(--mtj-muted);
     font-size: 0.72rem;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     padding: 0.32rem 0.65rem;
     cursor: pointer;
     height: 32px;
@@ -2022,7 +2022,7 @@ html {
   border-top: 1px solid var(--mtj-border);
   font-size: 0.78rem;
   color: var(--mtj-muted);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
 }
 /* FIX: inner flex uses a single symmetric gap and lets the explicit
    `<span class="mtj-footer__sep">` divider handle the visual separator.
@@ -2149,7 +2149,7 @@ html {
 }
 
 .mtj-section-label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -2283,7 +2283,7 @@ html {
 
 .mtj-bento__foot {
   margin-top: auto;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--mtj-muted);
   padding-top: 0.5rem;
@@ -2328,7 +2328,7 @@ html {
 
 /* -- Pills (bento + cards + command palette share) -- */
 .mtj-pill {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.56rem;
   font-weight: 500;
   padding: 0.19rem 0.5rem;
@@ -2366,7 +2366,7 @@ html {
   margin: 1.5rem 0 0.75rem;
 }
 .mtj-month__label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.69rem;
   letter-spacing: 0.1em;
   color: var(--mtj-muted);
@@ -2468,7 +2468,7 @@ html {
   padding-top: 2px;
 }
 .mtj-card__day {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--mtj-muted);
@@ -2476,7 +2476,7 @@ html {
   display: block;
 }
 .mtj-card__mon {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.5rem;
   /* Was --mtj-border (a border color, not a text color) — that rendered
      at ~1.4:1 contrast against the page background, effectively invisible.
@@ -2538,7 +2538,7 @@ html {
 }
 /* Reading time (e.g. "6 min baca") — clearly secondary meta text. */
 .mtj-card__read {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 400;
   color: var(--mtj-muted);
@@ -2617,7 +2617,7 @@ html {
   border: none;
   border-radius: 6px;
   color: var(--mtj-muted);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   width: 32px;
   height: 32px;
@@ -2709,7 +2709,7 @@ html {
   margin-bottom: 0.875rem;
 }
 .mtj-sb-heading {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -2739,7 +2739,7 @@ html {
   margin-bottom: 0.28rem;
 }
 .mtj-series__count {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6rem;
   color: var(--mtj-muted);
   flex-shrink: 0;
@@ -2781,7 +2781,7 @@ html {
   box-shadow: inset 0 0 0 1px var(--mtj-border);
   border: none;
   border-radius: 4px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   color: var(--mtj-muted);
   padding: 0.25rem 0.55rem;
@@ -2856,7 +2856,7 @@ html {
   color: var(--mtj-muted);
 }
 .mtj-cmdk__esc {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   color: var(--mtj-muted);
   background: var(--mtj-surface-2);
@@ -2872,7 +2872,7 @@ html {
   min-height: 0;
 }
 .mtj-cmdk__group {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -2913,7 +2913,7 @@ html {
   flex-shrink: 0;
 }
 .mtj-cmdk__item .pill-mini {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.56rem;
   padding: 0.13rem 0.4rem;
   border-radius: 4px;
@@ -2936,7 +2936,7 @@ html {
   gap: 0.75rem;
   padding: 0.5rem 1rem;
   border-top: 1px solid var(--mtj-border);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   color: var(--mtj-muted);
 }
@@ -3116,5 +3116,409 @@ html {
   }
   100% {
     background-position: -200% 0;
+  }
+}
+
+/* ============================================================
+   2026 UI/UX REFRESH
+   Kept as one trailing layer so it is easy to review and revert.
+   - Readability: raises muted-text contrast to WCAG AA and lifts the
+     smallest UI text (8-10px pills, dates, meta) to >= 11px.
+   - Homepage: hero, featured cover card, series map.
+   - Taxonomy: Cloud Security gets its own tone (was sharing Ground
+     Truth's blue), driven by utils/taxonomy.ts.
+   ============================================================ */
+:root {
+  /* #6b7194 measured ~3.9:1 on --mtj-bg (fails AA for body-size text).
+     #8b91b3 measures ~6:1 and keeps the same cool hue. */
+  --mtj-muted: #8b91b3;
+  --mtj-cloud: #38bdf8;
+  --mtj-radius-lg: 16px;
+
+  /* These opacity steps were referenced (nav hover, panels, cmdk) but
+     never defined, so those hover/focus states silently did nothing. */
+  --mtj-text-4: color-mix(in oklch, var(--mtj-text) 4%, transparent);
+  --mtj-text-5: color-mix(in oklch, var(--mtj-text) 5%, transparent);
+  --mtj-text-6: color-mix(in oklch, var(--mtj-text) 6%, transparent);
+  --mtj-text-8: color-mix(in oklch, var(--mtj-text) 8%, transparent);
+  --mtj-text-10: color-mix(in oklch, var(--mtj-text) 10%, transparent);
+  --mtj-text-12: color-mix(in oklch, var(--mtj-text) 12%, transparent);
+  --mtj-text-40: color-mix(in oklch, var(--mtj-text) 40%, transparent);
+  --mtj-text-42: color-mix(in oklch, var(--mtj-text) 42%, transparent);
+  --mtj-text-50: color-mix(in oklch, var(--mtj-text) 50%, transparent);
+  --mtj-text-72: color-mix(in oklch, var(--mtj-text) 72%, transparent);
+  --mtj-text-88: color-mix(in oklch, var(--mtj-text) 88%, transparent);
+  --mtj-text-92: color-mix(in oklch, var(--mtj-text) 92%, transparent);
+  --mtj-text-95: color-mix(in oklch, var(--mtj-text) 95%, transparent);
+}
+
+/* -- Series tones (cards, bento, command palette) -- */
+.mtj-pill--cloud,
+.mtj-cmdk__item .pill-mini--cloud {
+  background: color-mix(in oklch, var(--mtj-cloud) 14%, transparent);
+  color: var(--mtj-cloud);
+}
+.mtj-pill--neutral,
+.mtj-cmdk__item .pill-mini--neutral {
+  background: var(--mtj-text-6);
+  color: var(--mtj-text-75);
+}
+
+/* -- Legibility floor for small UI text -- */
+.mtj-pill {
+  font-size: 0.69rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+}
+.mtj-card__meta .mtj-pill {
+  margin-bottom: 0;
+}
+.mtj-card__title {
+  font-size: 1.02rem;
+  line-height: 1.35;
+  margin: 0.1rem 0 0.25rem;
+}
+.mtj-card__desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.mtj-card__type,
+.mtj-card__read {
+  font-size: 0.72rem;
+}
+.mtj-card__day {
+  font-size: 1rem;
+  color: var(--mtj-text-75);
+}
+.mtj-card__mon {
+  font-size: 0.66rem;
+}
+.mtj-card--compact .mtj-card__title {
+  font-size: 0.875rem;
+}
+.mtj-card--compact .mtj-card__desc {
+  font-size: 0.75rem;
+}
+.mtj-card--compact .mtj-card__read,
+.mtj-card--compact .mtj-card__type {
+  font-size: 0.68rem;
+}
+.mtj-month__label {
+  font-size: 0.72rem;
+}
+@media (max-width: 640px) {
+  .mtj-card__title {
+    font-size: 0.97rem;
+  }
+  .mtj-card__desc {
+    font-size: 0.82rem;
+    -webkit-line-clamp: 2;
+  }
+  .mtj-card__mon {
+    font-size: 0.62rem;
+  }
+}
+
+/* -- Section labels are real <h2>s now (document outline) -- */
+h2.mtj-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  margin: 2.5rem 0 1rem;
+}
+.mtj-hero + section h2.mtj-section-label {
+  margin-top: 0;
+}
+
+/* -- Hero -- */
+.mtj-hero {
+  padding: 1.5rem 0 2.75rem;
+  max-width: 46rem;
+}
+.mtj-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-text-75);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  background: color-mix(in oklch, var(--mtj-surface) 70%, transparent);
+  margin: 0 0 1.25rem;
+}
+.mtj-hero__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mtj-green);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--mtj-green) 25%, transparent);
+}
+.mtj-hero__title {
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(180deg, var(--mtj-text) 30%, var(--mtj-text-70));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mtj-hero__lede {
+  margin: 1.1rem 0 0;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--mtj-text-75);
+  max-width: 40rem;
+}
+.mtj-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+.mtj-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--mtj-text);
+  background: var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.mtj-btn:hover {
+  background: var(--mtj-surface-2);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--mtj-accent) 55%, transparent);
+}
+.mtj-btn--primary {
+  background: var(--mtj-accent);
+  color: #0b0d14;
+  box-shadow: none;
+}
+.mtj-btn--primary:hover {
+  background: color-mix(in oklch, var(--mtj-accent) 85%, white);
+  box-shadow: 0 6px 24px color-mix(in oklch, var(--mtj-accent) 35%, transparent);
+}
+.mtj-btn--ghost {
+  background: transparent;
+  box-shadow: none;
+  color: var(--mtj-text-75);
+}
+.mtj-btn--ghost:hover {
+  color: var(--mtj-text);
+  background: var(--mtj-surface);
+  box-shadow: none;
+}
+.mtj-hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+.mtj-hero__stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.mtj-hero__stats dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-muted);
+}
+.mtj-hero__stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--mtj-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- Featured grid: headings are semantic now; reset heading margins -- */
+.mtj-bento {
+  margin-bottom: 0;
+}
+h3.mtj-bento__title {
+  margin: 0 0 0.4rem;
+}
+.mtj-bento__card {
+  border-radius: var(--mtj-radius-lg);
+  padding: 1.25rem;
+}
+.mtj-bento--large .mtj-bento__title {
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+}
+.mtj-bento--medium .mtj-bento__title {
+  font-size: 1.12rem;
+}
+.mtj-bento--small .mtj-bento__title {
+  font-size: 0.98rem;
+}
+.mtj-bento__desc,
+.mtj-bento--medium .mtj-bento__desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.mtj-bento__foot,
+.mtj-bento--large .mtj-bento__foot,
+.mtj-bento--small .mtj-bento__foot {
+  font-size: 0.72rem;
+}
+/* Lead card: cover image behind the text, with a fade for contrast. */
+.mtj-bento--large {
+  justify-content: flex-end;
+  min-height: 320px;
+}
+.mtj-bento__cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  transition: opacity 250ms ease;
+}
+.mtj-bento--large::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--mtj-surface) 10%, transparent) 0%,
+    color-mix(in oklch, var(--mtj-surface) 80%, transparent) 45%,
+    var(--mtj-surface) 85%
+  );
+  pointer-events: none;
+}
+.mtj-bento--large:hover .mtj-bento__cover {
+  opacity: 0.7;
+}
+.mtj-bento__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mtj-bento__card::before {
+  z-index: 2;
+}
+@media (max-width: 767px) {
+  .mtj-bento--large {
+    min-height: 280px;
+  }
+  .mtj-bento--small .mtj-bento__title {
+    font-size: 1rem;
+  }
+}
+
+/* -- Series map -- */
+.mtj-series__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+.mtj-series__card {
+  --tone: var(--mtj-accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  height: 100%;
+  padding: 1.1rem 1.15rem 1rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  background:
+    radial-gradient(
+      120% 80% at 0% 0%,
+      color-mix(in oklch, var(--tone) 12%, transparent),
+      transparent 60%
+    ),
+    var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  transition: box-shadow 150ms ease;
+}
+.mtj-series__card:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--tone) 70%, transparent);
+}
+.mtj-series__card--ai {
+  --tone: var(--mtj-accent-2);
+}
+.mtj-series__card--mil {
+  --tone: var(--mtj-green);
+}
+.mtj-series__card--cloud {
+  --tone: var(--mtj-cloud);
+}
+.mtj-series__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--mtj-text);
+}
+.mtj-series__name::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.5rem;
+  border-radius: 2px;
+  background: var(--tone);
+  vertical-align: 0.1em;
+}
+.mtj-series__blurb {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--mtj-text-70);
+}
+.mtj-series__meta {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--mtj-muted);
+}
+
+/* -- Footer links are a list now -- */
+ul.mtj-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* -- Respect reduced motion for hover lifts -- */
+@media (prefers-reduced-motion: reduce) {
+  .mtj-card,
+  .mtj-card__link,
+  .mtj-bento__card,
+  .mtj-bento__cover,
+  .mtj-btn,
+  .logo-icon {
+    transition: none !important;
+  }
+  .mtj-card:hover,
+  .logo-icon:hover {
+    transform: none;
   }
 }
