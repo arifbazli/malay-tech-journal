@@ -12,8 +12,6 @@ translationKey: 'cse-04-aspm-appsec-consolidation'
 toc: true
 postType: field-note
 draft: false
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Cloud security engineering — ASPM consolidating AppSec tool sprawl'
 ---
 
 ## The Problem ASPM Is Actually Responding To

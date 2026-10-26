@@ -163,7 +163,7 @@ SITE.defaultOgImage // fallback OG image
 SITE.postsPerPage // listing page size
 SITE.isoDates // ISO dates vs. locale-formatted
 SITE.showFeaturedImages / boxedArticles / dynamicPostCardHeight // listing/article presentation
-SITE.autoOgImage // Satori OG generation on/off (default false)
+SITE.autoOgImage // Satori share-image generation for posts without heroImage (on)
 SITE.showPrivacyPolicy // footer privacy link
 SITE.footer.{leftText,rightText,showPrivacyPolicy,showThemeCredits,themeName,themeUrl}
 SITE.url // canonical origin (see env table)
@@ -237,6 +237,37 @@ never re-implement the mapping inline. Adding a series: add a matcher to
 `KNOWN` in `taxonomy.ts`, a `home.series*` blurb in `src/i18n/ui.ts`, and
 a `.mtj-series__card--<tone>` / `.mtj-pill--<tone>` style if it needs a new
 colour. `getSeriesSummaries()` in `src/utils/posts.ts` counts articles only.
+
+## Writing voice (Bahasa Melayu)
+
+One voice per post, never mixed inside a post:
+
+| Use | Pronouns | Register |
+| --- | --- | --- |
+| **Default** — every series (Ground Truth, AI Guardrail, Cloud Security, Military AI), About, field notes and essays | `aku` / `kau` | Conversational Malay with English technical terms kept as-is (code-switching is intentional — see the About FAQ) |
+| **Formal report** — a news-style write-up with no direct address to the reader (e.g. `mad-02-birdie-x`, `gt-05-…`) | none, or `saya` once for an explicit author note | Bahasa baku, no `kat` / `pasal` / `tak` |
+
+Never use `anda` in a default-voice post, and never pair `saya` with `kau`.
+English posts use plain, direct English with "I" / "you".
+
+Titles are sentence case (first letter capitalised, proper nouns as
+written). Every post needs `title`, `description` (≤ 160 chars, not a copy of
+the title) and a first category that names its series.
+
+## Share images and covers
+
+`SITE.autoOgImage` is on: every post without a `heroImage` gets a unique
+1200×630 share card from `src/utils/og-image.ts` (dark theme, series colour,
+title, date). Only set `heroImage` for a cover made for that post — don't
+reuse a generic cover across posts; leave it out and the generated card is
+used for social previews instead.
+
+## Structured data & licence
+
+`SEO.astro` emits JSON-LD from `buildJsonLd()` in `src/utils/seo.ts`
+(`BlogPosting` on posts, `WebSite` elsewhere, with the author as a
+`Person`). The writing (`src/content/`, cover images) is CC BY 4.0 —
+`LICENSE-CONTENT.md`; code stays MIT (`LICENSE`).
 
 ## Layout slots
 

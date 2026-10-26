@@ -12,8 +12,6 @@ translationKey: 'gt-07-ai-spm-cspm-evolution'
 toc: true
 postType: essay
 draft: false
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — AI-SPM as an extension of CSPM'
 ---
 
 ## AI-SPM Bunyi Macam Market Baru — Sebenarnya Bukan
