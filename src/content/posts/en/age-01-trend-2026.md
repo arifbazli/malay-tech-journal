@@ -1,5 +1,5 @@
 ---
-title: 'cloud, AI, agentic OS — 2026 trends for Gen Z'
+title: 'Cloud, AI, agentic OS — 2026 trends for Gen Z'
 description: 'Cloud security has shifted to intent filtering. AI has become an agent. Agents have become an OS. Four trends Gen Z needs to understand now.'
 pubDate: 2026-07-03
 tags:

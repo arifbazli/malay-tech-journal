@@ -11,8 +11,6 @@ categories: ['Ground Truth']
 translationKey: gt-02-guardrail-vendors
 toc: true
 postType: essay
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — guardrail vendor landscape'
 ---
 
 ## The Problem With "Guardrails Included"

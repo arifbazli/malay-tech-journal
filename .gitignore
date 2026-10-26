@@ -42,3 +42,6 @@ pagefind/
 # build-time caches
 .cache/
 .wrangler/
+
+# Local AI work records (never committed)
+.ai-work/

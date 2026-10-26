@@ -1,5 +1,5 @@
 ---
-title: 'bakat muda Malaysia di pentas cloud & AI'
+title: 'Bakat muda Malaysia di pentas cloud & AI'
 description: 'Gen Z Malaysia dah bina, bukan sekadar pakai. Cloud, AI, open source — bakat ada, cuma ramai yang senyap.'
 pubDate: 2026-06-30
 tags:
@@ -76,9 +76,7 @@ Model bahasa besar, autonomous agent, data pipeline — semua ni tengah dibina t
 - Bahasa yang "kurang profitable" selalu terabai
 - Masalah tempatan jarang jadi keutamaan
 
-:::caution
 Kalau kita cuma jadi **pengguna** AI dan bukan **pembina**, kita akan selalu tertinggal dalam keputusan tentang macam mana teknologi ni digunakan dalam masyarakat kita sendiri.
-:::
 
 Sebab tu Gen Z Malaysia kena labur dalam kemahiran yang lebih dalam — bukan sekadar guna API ChatGPT, tapi faham macam mana model dibenam, data dilatih, sistem diedar.
 

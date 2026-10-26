@@ -1,5 +1,5 @@
 ---
-title: 'open source AI agent OS — Goose dan ekosistem agentic 2026'
+title: 'Open source AI agent OS — Goose dan ekosistem agentic 2026'
 description: 'Goose oleh Block (kini under Linux Foundation), Anolis AgenticOS Alibaba, dan stack open source agentic AI yang sedang membentuk cara agent run, deploy, dan dikawal keselamatannya.'
 pubDate: 2026-07-06
 tags:

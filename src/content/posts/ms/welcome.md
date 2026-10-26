@@ -1,5 +1,5 @@
 ---
-title: 'selamat datang'
+title: 'Selamat datang'
 description: 'Jurnal kerja pasal cloud security, AI, dan agentic engineering. Nota lapangan — bukan tutorial.'
 pubDate: 2026-06-30
 tags:
@@ -28,9 +28,7 @@ Ini usaha aku untuk letak sikit benda kat open web. Nota ringkas pasal:
 
 ## Apa yang kau akan jumpa sini
 
-:::note
 Ini **bukan** siri tutorial. Post ditulis cepat dan publish bila dah useful — usually unpolished. Aku optimize untuk _grep_, bukan readability.
-:::
 
 Format post typical:
 

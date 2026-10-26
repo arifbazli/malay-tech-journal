@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import PostNav from '../components/post/PostNav.astro';
+import AuthorCard from '../components/post/AuthorCard.astro';
 import SmartImage from '../components/ui/SmartImage.astro';
 import TableOfContents from '../components/islands/TableOfContents.astro';
 import Giscus from '../components/islands/Giscus.astro';
@@ -21,6 +22,7 @@ import {
   shouldShowHero,
 } from '../utils/posts';
 import { buildSeo } from '../utils/seo';
+import { postTypeLabel } from '../utils/taxonomy';
 import type { MarkdownHeading } from 'astro';
 
 interface Props {
@@ -39,45 +41,18 @@ const t = useTranslations(locale);
 const minutes = readingTime(body).minutes;
 
 /**
- * Resolve the source markdown file's filesystem path so we can read its
- * mtime for an auto-derived "Last updated" timestamp. Astro content
- * entries expose the source via `entry.filePath` (v5+) or, as a fallback,
- * we derive it from the entry id (`<locale>/<slug>` -> file path under
- * src/content/posts).
+ * "Last updated" is shown only when the author sets `updatedDate`.
+ *
+ * It used to fall back to the source file's mtime, but a CI checkout gives
+ * every file the checkout time, so every post claimed to be "updated" on
+ * the deploy date and `article:modified_time` changed on every build —
+ * misleading for readers and noisy for search engines.
  */
-const filePathCandidates: string[] = [];
-const entryAny = post as unknown as { filePath?: string; id?: string };
-if (entryAny.filePath) {
-  filePathCandidates.push(entryAny.filePath);
-}
-if (entryAny.id) {
-  // id format is "<locale>/<slug>" (e.g. "en/cse-03-shift-left-agentic")
-  const idSlug = entryAny.id.split(/[\\/]/).slice(1).join('/') || entryAny.id;
-  filePathCandidates.push(`src/content/posts/${entryAny.id}.md`);
-  filePathCandidates.push(`src/content/posts/${entryAny.id}.mdx`);
-  filePathCandidates.push(`src/content/posts/${idSlug}.md`);
-  filePathCandidates.push(`src/content/posts/${idSlug}.mdx`);
-}
-
-let fileMtime: Date | null = null;
-for (const candidate of filePathCandidates) {
-  try {
-    const { statSync } = await import('node:fs');
-    const s = statSync(candidate);
-    fileMtime = s.mtime;
-    break;
-  } catch {
-    // try next candidate
-  }
-}
-
-/**
- * Effective "updated" timestamp, in priority order:
- *   1. Explicit `updatedDate` frontmatter (author override)
- *   2. File mtime (auto-derived; updates on every build)
- *   3. `pubDate` (fallback so we always have a value)
- */
-const effectiveUpdated: Date = post.data.updatedDate ?? fileMtime ?? post.data.pubDate;
+const updatedDate = post.data.updatedDate;
+const showUpdated =
+  updatedDate !== undefined &&
+  isoDate(updatedDate).slice(0, 10) !== isoDate(post.data.pubDate).slice(0, 10);
+const effectiveUpdated: Date = updatedDate ?? post.data.pubDate;
 
 // Translation siblings (used by language switcher links).
 const translations = await getTranslations(post);
@@ -139,9 +114,9 @@ if (post.data.math) {
 // Auto-detection keeps authors from having to set a flag and ensures zero
 // JS cost on posts that don't use diagrams.
 const hasMermaid = body.includes('```mermaid');
+const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true });
 ---
 
-<div class="reading-progress-bar" aria-hidden="true"></div>
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
@@ -153,6 +128,7 @@ const hasMermaid = body.includes('```mermaid');
   seo={seo}
   availableLocales={availableLocales}
 >
+  <div slot="body-start" class="reading-progress-bar" aria-hidden="true"></div>
   {post.data.math && MathStylesComponent && <MathStylesComponent />}
   {hasMermaid && <MermaidLoader />}
   {
@@ -188,26 +164,10 @@ const hasMermaid = body.includes('```mermaid');
       {/* Breadcrumb row: series + postType badge */}
       <div class="mb-3 flex flex-wrap items-center gap-2">
         {
-          (post.data as any).postType && (
-            <span class="post-type-badge" data-type={(post.data as any).postType}>
+          typeLabel && (
+            <span class="post-type-badge" data-type={post.data.postType}>
               <span class="post-type-dot" />
-              {(post.data as any).postType === 'essay'
-                ? locale === 'ms'
-                  ? 'Esei'
-                  : 'Essay'
-                : (post.data as any).postType === 'case-study'
-                  ? locale === 'ms'
-                    ? 'Kajian Kes'
-                    : 'Case Study'
-                  : (post.data as any).postType === 'series-index'
-                    ? locale === 'ms'
-                      ? 'Indeks Siri'
-                      : 'Series Index'
-                    : (post.data as any).postType === 'field-note'
-                      ? locale === 'ms'
-                        ? 'Nota Lapangan'
-                        : 'Field Note'
-                      : null}
+              {typeLabel}
             </span>
           )
         }
@@ -257,15 +217,15 @@ const hasMermaid = body.includes('```mermaid');
           {t('post.readingTime')}
         </span>
         {
-          effectiveUpdated && (
+          showUpdated && updatedDate && (
             <>
               <span class="post-meta-sep" aria-hidden="true">
                 ·
               </span>
               <span class="post-meta-chip">
                 <Icon name="lucide:pencil" width={13} height={13} />
-                <time datetime={isoDate(effectiveUpdated)}>
-                  {t('post.updatedOn')} {formatDate(effectiveUpdated, locale)}
+                <time datetime={isoDate(updatedDate)}>
+                  {t('post.updatedOn')} {formatDate(updatedDate, locale)}
                 </time>
               </span>
             </>
@@ -296,6 +256,8 @@ const hasMermaid = body.includes('```mermaid');
       )
     }
 
+    <AuthorCard locale={locale} />
+
     <PostNav prev={prev} next={next} locale={locale} />
 
     {
@@ -308,9 +270,9 @@ const hasMermaid = body.includes('```mermaid');
       )
     }
   </article>
-</BaseLayout>
 
-{/* Translation links exposed for the LanguageSwitcher to read at runtime */}
-<script is:inline define:vars={{ links: translationLinks }}>
-  window.__chirpyTranslations = links;
-</script>
+  {/* Translation links exposed for the LanguageSwitcher to read at runtime */}
+  <script slot="body-end" is:inline define:vars={{ links: translationLinks }}>
+    window.__chirpyTranslations = links;
+  </script>
+</BaseLayout>

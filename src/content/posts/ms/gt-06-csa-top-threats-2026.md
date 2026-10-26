@@ -13,8 +13,6 @@ translationKey: 'gt-06-csa-top-threats-2026'
 toc: true
 postType: essay
 draft: false
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — CSA 2026 Top Threats: identity and AI'
 ---
 
 ## Ranking Baru Terbalik
@@ -71,7 +69,7 @@ Methodology di belakang list ni: proses dua peringkat — mula dengan survey in-
 
 ## Apa Maksudnya Kalau Kau Bina Cloud di Malaysia
 
-Laporan CSA tak sebut Malaysia secara khusus — bahagian ni analisis saya, bukan apa yang laporan tu cakap. Tapi tekanan yang sama terpakai terus di sini: estet cloud Malaysia (bank dan GLIC bawah ekspektasi RMiT Bank Negara, dan push cloud-first kerajaan yang lebih luas) sedang kumpul non-human identity — service account CI/CD, integrasi API, dan sekarang AI agent — lebih cepat daripada kebanyakan pasukan audit mereka.
+Laporan CSA tak sebut Malaysia secara khusus — bahagian ni analisis aku, bukan apa yang laporan tu cakap. Tapi tekanan yang sama terpakai terus di sini: estet cloud Malaysia (bank dan GLIC bawah ekspektasi RMiT Bank Negara, dan push cloud-first kerajaan yang lebih luas) sedang kumpul non-human identity — service account CI/CD, integrasi API, dan sekarang AI agent — lebih cepat daripada kebanyakan pasukan audit mereka.
 
 Dua benda konkrit yang patut buat sebelum ini jadi insiden bukan sekadar ranking survey:
 

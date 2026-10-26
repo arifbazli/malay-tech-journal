@@ -1,5 +1,5 @@
 ---
-title: 'cara guardrail AI digodam — teknik bypass yang engineer kena tahu'
+title: 'Cara guardrail AI digodam — teknik bypass yang engineer kena tahu'
 description: 'Guardrail bukan tembok yang tidak boleh roboh. Ini 7 teknik bypass yang dibuktikan dalam 2026 — roleplay, crescendo, encoding, prompt overflow, dan cara defend setiap satu.'
 pubDate: 2026-07-05
 tags:

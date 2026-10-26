@@ -1,5 +1,5 @@
 ---
-title: 'guardrail AI — 6 lapisan yang wajib ada dalam production'
+title: 'Guardrail AI — 6 lapisan yang wajib ada dalam production'
 description: "Kebanyakan team pasang satu atau dua guardrail pastu panggil dia 'selamat'. Ini rujukan 6 lapisan lengkap untuk LLM production — dengan tool, framework, dan kos false positive."
 pubDate: 2026-07-04
 tags:

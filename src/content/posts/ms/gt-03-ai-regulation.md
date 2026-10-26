@@ -11,8 +11,6 @@ categories: ['Ground Truth']
 translationKey: gt-03-ai-regulation
 toc: true
 postType: essay
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — AI regulation 2026'
 ---
 
 ## Kenapa Engineer Perlu Ambil Berat Tentang Regulasi
@@ -222,7 +220,7 @@ Dokumentasikan semua AI/ML systems yang sedang digunakan. Untuk setiap satu:
 - Ada human oversight atau fully automated?
 
 **2. Classify Risk Level**
-Gunakan EU AI Act risk tiers sebagai reference walaupun anda bukan EU company. Ia adalah framework terbaik yang ada. Kalau system anda jatuh dalam "high-risk" oleh EU standard, assume Malaysia akan ada similar requirements.
+Gunakan EU AI Act risk tiers sebagai reference walaupun kau bukan EU company. Ia adalah framework terbaik yang ada. Kalau system kau jatuh dalam "high-risk" oleh EU standard, assume Malaysia akan ada similar requirements.
 
 **3. Start Logging**
 Logging untuk AI decisions adalah hampir pasti akan jadi mandatory. Implement sekarang:
@@ -253,11 +251,11 @@ Jangka:
 
 Cara terbaik untuk think about regulasi AI:
 
-**Regulasi adalah lagging indicator.** Ia mencerminkan harms yang dah berlaku. Yang bermakna — kalau anda bina responsibly hari ini, anda sudah ahead.
+**Regulasi adalah lagging indicator.** Ia mencerminkan harms yang dah berlaku. Yang bermakna — kalau kau bina responsibly hari ini, kau sudah ahead.
 
 **Technical controls = regulatory compliance.** Logging, explainability, human oversight — semua ini adalah good engineering yang juga happen to be regulatory requirements. Bukan dua benda berbeza.
 
-**Scope tidak terhad kepada headquarters.** EU AI Act berlaku kepada sesiapa yang place AI systems dalam EU market — walaupun syarikat anda di Kuala Lumpur. SaaS product yang accessible dari EU? Potentially in scope.
+**Scope tidak terhad kepada headquarters.** EU AI Act berlaku kepada sesiapa yang place AI systems dalam EU market — walaupun syarikat kau di Kuala Lumpur. SaaS product yang accessible dari EU? Potentially in scope.
 
 ---
 

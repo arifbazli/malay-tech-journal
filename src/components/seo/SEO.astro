@@ -1,7 +1,7 @@
 ---
 import { SITE } from '../../config';
 import { localizedPath, withBase } from '../../i18n/utils';
-import type { SeoMeta } from '../../utils/seo';
+import { buildJsonLd, type SeoMeta } from '../../utils/seo';
 
 interface Props {
   meta: SeoMeta;
@@ -26,6 +26,8 @@ const otherFeeds = SITE.multilingual
       }))
   : [];
 const sitemapHref = withBase('/sitemap-index.xml');
+// `<` is escaped so a title containing "</script>" cannot end the block.
+const jsonLd = JSON.stringify(buildJsonLd(meta)).replace(/</g, '\\u003c');
 ---
 
 <title>{meta.title}</title>
@@ -95,3 +97,6 @@ const sitemapHref = withBase('/sitemap-index.xml');
   SITE.multilingual &&
     meta.hreflangs.map(({ locale, href }) => <link rel="alternate" hreflang={locale} href={href} />)
 }
+
+{/* Structured data (schema.org) */}
+<script is:inline type="application/ld+json" set:html={jsonLd} />

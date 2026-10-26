@@ -57,8 +57,14 @@ function collectUnlistedUrls() {
             if (!entry.data.unlisted) continue;
             // Derive locale and slug from the entry id (e.g. "en/my-post.md").
             const segs = entry.id.split(/[\\/]/);
-            const locale = segs[0] && /** @type {readonly string[]} */ (SITE.locales).includes(segs[0]) ? segs[0] : SITE.defaultLocale;
-            const slug = segs.slice(1).join('/').replace(/\.(md|mdx)$/i, '');
+            const locale =
+              segs[0] && /** @type {readonly string[]} */ (SITE.locales).includes(segs[0])
+                ? segs[0]
+                : SITE.defaultLocale;
+            const slug = segs
+              .slice(1)
+              .join('/')
+              .replace(/\.(md|mdx)$/i, '');
             if (locale === SITE.defaultLocale) {
               unlistedPathSegments.add(`posts/${slug}`);
             } else {
@@ -230,12 +236,17 @@ export default defineConfig({
       shiki: {
         langAlias: {
           env: 'dotenv',
+          // Shiki ships no Rego (OPA) grammar; render as plain text without
+          // a build warning per block.
+          rego: 'txt',
         },
       },
       styleOverrides: {
         borderRadius: '0.5rem',
+        // The Fonts API registers hashed family names, so the literal
+        // 'JetBrains Mono' never matched the loaded font. Use the variable.
         codeFontFamily:
-          "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+          'var(--font-jetbrains-mono, ui-monospace), SFMono-Regular, Menlo, Monaco, Consolas, monospace',
         codeFontSize: '0.875rem',
         frames: {
           shadowColor: 'transparent',

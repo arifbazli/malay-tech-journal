@@ -186,6 +186,29 @@ export async function getCategoriesWithCount(
 }
 
 /**
+ * Series summaries for navigation surfaces (homepage, command palette).
+ * Counts articles only — series-index pages are excluded so "8 articles"
+ * really means eight readable posts. Sorted by most recent activity.
+ */
+export async function getSeriesSummaries(
+  locale: Locale,
+): Promise<Array<{ name: string; count: number; latest: Date }>> {
+  const articles = await getArticles(locale);
+  const map = new Map<string, { count: number; latest: Date }>();
+  for (const p of articles) {
+    const name = p.data.categories[0];
+    if (!name) continue;
+    const entry = map.get(name) ?? { count: 0, latest: p.data.pubDate };
+    entry.count += 1;
+    if (p.data.pubDate > entry.latest) entry.latest = p.data.pubDate;
+    map.set(name, entry);
+  }
+  return Array.from(map.entries())
+    .map(([name, v]) => ({ name, ...v }))
+    .sort((a, b) => b.latest.valueOf() - a.latest.valueOf() || b.count - a.count);
+}
+
+/**
  * Series (categories) with article counts — used for the sidebar
  * "Siri Aktif" widget with progress bars.
  * Returns top N by count.

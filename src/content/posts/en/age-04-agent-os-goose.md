@@ -1,5 +1,5 @@
 ---
-title: 'open source AI agent OS — Goose and the 2026 agentic ecosystem'
+title: 'Open source AI agent OS — Goose and the 2026 agentic ecosystem'
 description: "Goose by Block (now under Linux Foundation), Alibaba's Anolis AgenticOS, and the open source agentic AI stack shaping how agents run, deploy, and get secured."
 pubDate: 2026-07-06
 tags:
@@ -112,7 +112,6 @@ flowchart LR
   classDef agent fill:#0f2a1c,stroke:#4ade80,color:#bbf7d0
   classDef ext fill:#2e2410,stroke:#fbbf24,color:#fde68a
   classDef tool fill:#2e1d10,stroke:#fb923c,color:#fed7aa
-  classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
   classDef llm fill:#0f2436,stroke:#38bdf8,color:#bae6fd
 ```
 

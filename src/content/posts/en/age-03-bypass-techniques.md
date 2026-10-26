@@ -1,5 +1,5 @@
 ---
-title: 'how AI guardrails get hacked — bypass techniques every engineer needs to know'
+title: 'How AI guardrails get hacked — bypass techniques every engineer needs to know'
 description: "Guardrails aren't walls that can't be broken. These are 7 proven bypass techniques from 2026 — roleplay, crescendo, encoding, prompt overflow — and how to defend against each one."
 pubDate: 2026-07-05
 tags:

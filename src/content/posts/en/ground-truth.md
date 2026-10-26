@@ -30,14 +30,15 @@ Two formats, one series:
 
 ## Essays in this series
 
-| #   | Title                                          | Format     | Focus                                                                         |
-| --- | ---------------------------------------------- | ---------- | ----------------------------------------------------------------------------- |
-| 01  | **Identity Is the New Perimeter**              | Essay      | Snowflake, MGM, Scattered Spider — the identity-first attack era              |
-| 02  | **Guardrail Vendors vs Production Reality**    | Essay      | AWS, Azure, Google — the gaps they don't put in the official docs             |
-| 03  | **The World Is Writing AI Law**                | Essay      | EU AI Act, Malaysia AI Governance Bill — what engineers actually need to know |
-| 04  | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios    |
-| 05  | **Malaysia's Military AI Push**                | Case Study | TactiDrone's offline AI and the cloud-security blind spots behind it          |
-| 06  | **CSA's 2026 Top Threats**                     | Essay      | Identity overtakes infrastructure, AI enters the ranking for the first time   |
+| #   | Title                                          | Format     | Focus                                                                          |
+| --- | ---------------------------------------------- | ---------- | ------------------------------------------------------------------------------ |
+| 01  | **Identity Is the New Perimeter**              | Essay      | Snowflake, MGM, Scattered Spider — the identity-first attack era               |
+| 02  | **Guardrail Vendors vs Production Reality**    | Essay      | AWS, Azure, Google — the gaps they don't put in the official docs              |
+| 03  | **The World Is Writing AI Law**                | Essay      | EU AI Act, Malaysia AI Governance Bill — what engineers actually need to know  |
+| 04  | **Malaysia's Military AI Infrastructure 2026** | Case Study | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — real threats, attack scenarios     |
+| 05  | **Malaysia's Military AI Push**                | Case Study | TactiDrone's offline AI and the cloud-security blind spots behind it           |
+| 06  | **CSA's 2026 Top Threats**                     | Essay      | Identity overtakes infrastructure, AI enters the ranking for the first time    |
+| 07  | **AI-SPM Isn't a New Category**                | Essay      | Orca and Microsoft ship it as a CSPM extension — except for one 2026 carve-out |
 
 ---
 

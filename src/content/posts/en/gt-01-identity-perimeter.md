@@ -10,8 +10,6 @@ categories: ['Ground Truth']
 postType: essay
 toc: true
 translationKey: 'gt-01-identity-perimeter'
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — identity is the new perimeter'
 ---
 
 ## Introduction: When the Firewall Stopped Mattering

@@ -2,12 +2,21 @@
 
 @import 'tailwindcss';
 
-/* The `chirping-astro/` directory is the upstream template (unused at build
-   time but contains its own .astro files). Tailwind's content scanner would
-   otherwise pick up its daisyUI utility classes and fail the strict-mode
-   build. Exclude it explicitly. */
-@source not './chirping-astro';
-@source not './.backup-task12';
+/* Colour utilities (`text-mtj-text/50`, `border-mtj-border`, `bg-mtj-surface`
+   …) are used across components but were never registered with Tailwind,
+   so those classes generated no CSS. Map them onto the --mtj-* tokens. */
+@theme inline {
+  --color-mtj-bg: var(--mtj-bg);
+  --color-mtj-surface: var(--mtj-surface);
+  --color-mtj-surface-2: var(--mtj-surface-2);
+  --color-mtj-border: var(--mtj-border);
+  --color-mtj-text: var(--mtj-text);
+  --color-mtj-muted: var(--mtj-muted);
+  --color-mtj-accent: var(--mtj-accent);
+  --color-mtj-accent-2: var(--mtj-accent-2);
+  --color-mtj-accent-content: #0b0d14;
+  --color-mtj-green: var(--mtj-green);
+}
 
 /* ---------- Remark-alert safelist ----------
    remark-alert.ts generates .mtj-alert-* HTML in markdown.
@@ -15,15 +24,13 @@
    responsive Tailwind variant. */
 @source inline('sm:mtj-alert--horizontal');
 
-/* ---------- Alert plugin safelist ---------- */
-
 /* ---------- Chirpy-specific tokens (non-daisyUI) ---------- */
 @theme {
   /* Sidebar/panel widths — matches Chirpy ($sidebar-width 260px, $sidebar-width-large 300px) */
-  --width-panel: 13.75rem; /* 220px */
+  --width-panel: 13.75rem;
 
   /* Top bar height — Chirpy $topbar-height: 3rem */
-  --height-topbar: 3rem; /* 48px */
+  --height-topbar: 3rem;
 
   /* Reading column max width on post pages */
   --width-prose: 50rem;
@@ -69,7 +76,7 @@
     line-height: 1.75;
     letter-spacing: -0.011em;
     font-synthesis: none; /* never synthesize fake bold/italic */
-    overflow-x: hidden; /* prevent horizontal scroll on mobile */
+    overflow-x: hidden;
   }
 
   /* Headings — Space Grotesk with tighter tracking (-0.025em to -0.04em)
@@ -171,7 +178,7 @@
   }
 
   ::selection {
-    @apply bg-[var(--mtj-accent)-25] text-[var(--mtj-text)];
+    @apply bg-[var(--mtj-accent-25)] text-[var(--mtj-text)];
   }
 
   /* Navigation is full-page (no ClientRouter) — no view transition animation
@@ -184,7 +191,7 @@
   }
   .heading-anchor:hover::after {
     content: '#';
-    @apply ml-2 text-[var(--mtj-text)-30];
+    @apply ml-2 text-[var(--mtj-text-30)];
   }
 
   /* Custom scrollbar (Webkit) — Chirpy-like thin grey thumb */
@@ -490,12 +497,12 @@
   }
   @media (min-width: 1440px) {
     .chirpy-panel-rail {
-      width: 15rem; /* 240px */
+      width: 15rem;
     }
   }
   @media (min-width: 1650px) {
     .chirpy-panel-rail {
-      width: 16.25rem; /* 260px */
+      width: 16.25rem;
     }
   }
   .chirpy-panel-rail > * + * {
@@ -504,49 +511,9 @@
   /* Search slot inside the topbar — on xl+ its width matches the right
      panel rail so the search pill aligns vertically over the panel column.
      Below xl, the right rail is hidden so the slot shrinks to fit. */
-  .chirpy-topbar__search {
-    @apply flex shrink-0 items-center justify-start gap-2 px-1;
-  }
-  @media (min-width: 1280px) {
-    .chirpy-topbar__search {
-      width: calc(var(--width-panel) + 2.5rem);
-      padding-left: 2.5rem;
-    }
-  }
-  @media (min-width: 1440px) {
-    .chirpy-topbar__search {
-      width: calc(15rem + 2.5rem);
-    }
-  }
-  @media (min-width: 1650px) {
-    .chirpy-topbar__search {
-      width: calc(16.25rem + 2.5rem);
-    }
-  }
-  /* Tight phones — shrink gaps so topbar fits in 320px */
-  @media (max-width: 380px) {
-    .chirpy-topbar__search {
-      gap: 0.25rem;
-      padding-inline: 0;
-    }
-  }
-  /* Very small screens — tighten topbar right side gap */
-  @media (max-width: 380px) {
-    .chirpy-topbar__search {
-      gap: 0.25rem;
-      padding-inline: 0;
-    }
-  }
-  /* Search row at the very top of the right panel rail. */
-  .chirpy-panel-rail__search {
-    @apply w-full;
-  }
 
   /* Inner Panel widget (Recently Updated + Trending Tags). Width and
      visibility are owned by the rail wrapper, so this is content-only. */
-  .chirpy-panel {
-    @apply block text-sm;
-  }
 
   /* ─────────────────────────────────────────────
      2026 PANEL — Siri Aktif bars + Kemaskini + Tags
@@ -555,167 +522,9 @@
      - transitions only on width (composite-safe)
      - hover uses color/background (no border shifts)
      ───────────────────────────────────────────── */
-  .panel-section {
-    background: var(--mtj-surface);
-    box-shadow: 0 0 0 1px var(--mtj-text-8);
-    border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 0.875rem;
-  }
-  .panel-heading {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--mtj-text-42);
-    margin: 0 0 0.875rem;
-  }
-
-  /* Series progress bars */
-  .series-list {
-    display: flex;
-    flex-direction: column;
-  }
-  .series-item {
-    margin-bottom: 0.75rem;
-  }
-  .series-item:last-child {
-    margin-bottom: 0;
-  }
-  .series-name {
-    font-size: 0.78rem;
-    color: var(--mtj-text-88);
-    margin-bottom: 0.3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 0.5rem;
-  }
-  .series-count {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--mtj-text-45);
-    flex-shrink: 0;
-  }
-  .series-bar {
-    height: 3px;
-    background: var(--mtj-text-8);
-    border-radius: 99px;
-    overflow: hidden;
-    /* ANTI-FLICKER: own layer so width animation doesn't trigger layout */
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  .series-fill {
-    height: 100%;
-    border-radius: 99px;
-    /* ANTI-FLICKER: width transition only — no height/border changes */
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: width;
-  }
-  .series-fill--ground {
-    background: oklch(0.72 0.18 250);
-  }
-  .series-fill--ai {
-    background: oklch(0.72 0.19 280);
-  }
-  .series-fill--mil {
-    background: oklch(0.76 0.17 145);
-  }
-
-  /* Recent posts list */
-  .recent-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .recent-item {
-    border-bottom: 1px solid var(--mtj-text-6);
-  }
-  .recent-item:last-child {
-    border-bottom: none;
-  }
-  .recent-link {
-    display: block;
-    padding: 0.55rem 0;
-    text-decoration: none;
-    color: inherit;
-    /* ANTI-FLICKER: transition only color */
-    transition: opacity 150ms ease;
-  }
-  .recent-link:hover {
-    opacity: 0.75;
-  }
-  .recent-title {
-    font-size: 0.78rem;
-    color: var(--mtj-text-88);
-    line-height: 1.4;
-    margin-bottom: 0.2rem;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    /* ANTI-FLICKER: color-only transition */
-    transition: color 150ms ease;
-  }
-  .recent-link:hover .recent-title {
-    color: oklch(0.72 0.18 250);
-  }
-  .recent-date {
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--mtj-text-40);
-  }
-
-  /* Tag cloud */
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-  .tag-pill {
-    background: var(--mtj-bg);
-    box-shadow: inset 0 0 0 1px var(--mtj-text-8);
-    border: none;
-    border-radius: 4px;
-    font-family: ui-monospace, 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--mtj-text-55);
-    padding: 0.25rem 0.55rem;
-    cursor: pointer;
-    text-decoration: none;
-    /* ANTI-FLICKER: composite-only properties */
-    transition:
-      box-shadow 150ms ease,
-      color 150ms ease,
-      background-color 150ms ease;
-  }
-  .tag-pill:hover {
-    box-shadow: inset 0 0 0 1px oklch(0.72 0.18 250);
-    color: oklch(0.72 0.18 250);
-    background-color: oklch(0.72 0.18 250 / 0.07);
-  }
 
   /* Subtle left rail for aside items (Recently Updated, TOC, etc.).
      Each item gets a faint left border that turns primary on hover/active. */
-  .chirpy-aside-list {
-    @apply flex flex-col;
-    border-left: 1px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
-  }
-  .chirpy-aside-item {
-    @apply block py-1.5 pr-2 pl-3 text-sm text-[var(--mtj-text)-75] transition;
-    margin-left: -1px;
-    border-left: 1px solid transparent;
-  }
-  .chirpy-aside-item:hover {
-    @apply text-[var(--mtj-accent)];
-    border-left-color: var(--mtj-accent);
-  }
-  .chirpy-aside-item[data-active='true'] {
-    @apply font-semibold text-[var(--mtj-accent)];
-    border-left-color: var(--mtj-accent);
-  }
 }
 
 /* ---------- Prose tuning for the post body ---------- */
@@ -801,7 +610,7 @@
     @apply my-5;
   }
   .prose-chirpy a:not(.heading-anchor) {
-    @apply text-[var(--mtj-accent)] underline decoration-[var(--mtj-accent)-30] underline-offset-2 hover:decoration-[var(--mtj-accent)];
+    @apply text-[var(--mtj-accent)] underline decoration-[var(--mtj-accent-30)] underline-offset-2 hover:decoration-[var(--mtj-accent)];
   }
   .prose-chirpy a.heading-anchor {
     @apply text-inherit no-underline;
@@ -815,7 +624,7 @@
   /* Blockquote — same font family as the body but slightly muted, with
      Space Grotesk on the optional leading element. */
   .prose-chirpy blockquote {
-    @apply my-6 rounded-r-sm border-l-4 border-[var(--mtj-accent)-50] bg-[var(--mtj-bg)] px-5 py-3 text-[var(--mtj-text)-80] italic;
+    @apply my-6 rounded-r-sm border-l-4 border-[var(--mtj-accent-50)] bg-[var(--mtj-bg)] px-5 py-3 text-[var(--mtj-text-80)] italic;
     font-style: italic;
     font-feature-settings:
       'kern' 1,
@@ -878,7 +687,7 @@
     display: block;
   }
   .prose-chirpy figcaption {
-    @apply mt-2 text-center text-xs text-[var(--mtj-text)-70] italic;
+    @apply mt-2 text-center text-xs text-[var(--mtj-text-70)] italic;
   }
 
   /* Video embeds — responsive 16:9 iframe container */
@@ -894,19 +703,6 @@
 
   /* Hero image — contained within content width, using the sidebar's
      subtle gradient as a placeholder background. */
-  .post-hero {
-    @apply mx-auto;
-    max-width: 100%;
-  }
-  .post-hero__frame {
-    @apply relative overflow-hidden rounded-md;
-    background: var(--mtj-surface);
-  }
-  .post-hero__img {
-    @apply block w-full;
-    height: auto;
-    object-fit: cover;
-  }
   .prose-chirpy table {
     @apply my-6 w-full border-collapse text-left text-sm;
   }
@@ -923,16 +719,16 @@
     @apply my-6 rounded-md border-l-4 px-4 py-3;
   }
   .callout-info {
-    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent-10)];
   }
   .callout-success {
-    @apply border-[var(--mtj-green)] bg-[var(--mtj-green)-10];
+    @apply border-[var(--mtj-green)] bg-[var(--mtj-green-10)];
   }
   .callout-warning {
-    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent-10)];
   }
   .callout-error {
-    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent)-10];
+    @apply border-[var(--mtj-accent)] bg-[var(--mtj-accent-10)];
   }
 
   /* Alert plugin: only add space when alerts are stacked together. */
@@ -976,7 +772,7 @@
     gap: 0.5rem;
   }
   .prose-chirpy details > summary::-webkit-details-marker {
-    display: none; /* hide default triangle in WebKit */
+    display: none;
   }
   .prose-chirpy details > summary::before {
     content: '';
@@ -1022,7 +818,7 @@
     border-left: 1px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
   }
   .toc a {
-    @apply block py-1 pr-2 pl-3 text-sm text-[var(--mtj-text)-70] transition-colors;
+    @apply block py-1 pr-2 pl-3 text-sm text-[var(--mtj-text-70)] transition-colors;
     margin-left: -1px;
     border-left: 1px solid transparent;
   }
@@ -1068,51 +864,13 @@
 
 /* ---------- .icon-btn — 2026 Linear-style ghost icon button ---------- */
 @layer components {
-  .icon-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    color: var(--mtj-text-50);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    flex-shrink: 0;
-    transition:
-      color 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      background 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 180ms ease;
-  }
-  .icon-btn:hover {
-    color: var(--mtj-text-92);
-    background: var(--mtj-text-8);
-    transform: scale(1.1);
-  }
   /* Per-brand accent hover glow */
-  .icon-btn[data-social='linkedin']:hover {
-    color: #5aabff;
-    box-shadow: 0 0 10px oklch(0.65 0.17 240 / 0.3);
-  }
-  .icon-btn[data-social='email']:hover {
-    color: oklch(0.78 0.17 200);
-    box-shadow: 0 0 10px oklch(0.78 0.17 200 / 0.3);
-  }
-  .icon-btn[data-social='rss']:hover {
-    color: oklch(0.8 0.18 55);
-    box-shadow: 0 0 10px oklch(0.8 0.18 55 / 0.3);
-  }
   .post-tag {
     @apply inline-flex items-center rounded-full border bg-[var(--mtj-surface)] px-3 py-1 text-xs font-medium text-[var(--mtj-accent)] transition-all duration-150;
     border-color: color-mix(in oklab, var(--mtj-accent) 35%, transparent);
   }
   .post-tag:hover {
     @apply text-[var(--mtj-bg)];
-    background: var(--mtj-accent);
-    box-shadow: 0 0 10px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
   }
 }
 
@@ -1122,13 +880,11 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--mtj-surface);
     box-shadow: inset 0 0 0 1px var(--mtj-border);
-    border: none;
     border-radius: 6px;
     color: var(--mtj-muted);
     font-size: 0.72rem;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--font-mono);
     padding: 0.32rem 0.65rem;
     cursor: pointer;
     height: 32px;
@@ -1140,9 +896,6 @@
   .search-pill:hover {
     box-shadow: inset 0 0 0 1px var(--mtj-accent);
     color: var(--mtj-accent);
-  }
-  .search-pill__icon {
-    flex-shrink: 0;
   }
   .search-pill__label {
     flex: 1;
@@ -1202,18 +955,9 @@
      site title + search + language switcher). Hide the slash fallback
      first (it's just a secondary hint), then collapse to icon-only —
      the ⌘K primary badge hides earliest to keep the search pill compact. */
-  @media (max-width: 767px) {
-    .search-pill__kbd--slash {
-      display: none;
-    }
-  }
   @media (max-width: 639px) {
     .search-pill {
       @apply h-9 w-9 justify-center gap-0 px-0;
-    }
-    .search-pill__label,
-    .search-pill__kbd {
-      display: none;
     }
   }
 }
@@ -1225,13 +969,7 @@
     opacity: 0;
     pointer-events: none;
   }
-  .back-to-top.is-visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
 }
-
-/* ========== Post Article Layout (2026 redesign) ========== */
 
 /* Full-bleed hero banner */
 .post-hero-banner {
@@ -1312,12 +1050,7 @@
   );
 }
 
-/* End Post Article Layout */
-
 /* Post page H1 — subtle gradient on dark, solid on light */
-.post-title {
-  color: var(--mtj-text);
-}
 .post-title {
   background: linear-gradient(
     135deg,
@@ -1330,8 +1063,6 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
-
-/* Avatar ring glow removed (no .chirpy-sidebar) */
 
 /* Scrollbar — darker thumb in dark mode */
 ::-webkit-scrollbar-thumb {
@@ -1365,12 +1096,6 @@
 .prose-chirpy table thead {
   background: oklch(18% 0.01 264);
 }
-
-/* Aside/TOC active item glow */
-.chirpy-aside-item:hover,
-.chirpy-aside-item[data-active='true'] {
-  text-shadow: 0 0 8px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
-}
 /* End 2026 Polish */
 
 @media (prefers-reduced-motion: reduce) {
@@ -1387,8 +1112,6 @@
    design; the theme toggle UI was deleted. The base ::view-transition
    fade rules above (lines ~1130) stay as a no-op safety net in case any
    future view-transition usage appears. */
-
-/* ---------- Custom search modal (Pagefind headless API) ---------- */
 /*
  * The site uses Pagefind's headless `pagefind.js` API and renders all
  * results with our own Tailwind / daisyUI markup. We intentionally do
@@ -1569,22 +1292,6 @@
       0 0 10px oklch(74% 0.17 200 / 0.22);
     transform: translateY(-1px);
   }
-
-  /* Category chips (breadcrumb) — slightly larger */
-  .post-category-chip {
-    @apply inline-flex items-center gap-1 rounded-md px-2.5 py-0.5 text-xs font-medium;
-    background: color-mix(in oklab, var(--mtj-accent) 8%, transparent);
-    color: var(--mtj-accent);
-    border: 1px solid color-mix(in oklab, var(--mtj-accent) 20%, transparent);
-    transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  .post-category-chip:hover {
-    background: color-mix(in oklab, var(--mtj-accent) 16%, transparent);
-    border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
-  }
 }
 
 /* ── 4. Back-to-top — glass morphism upgrade ────────────────
@@ -1592,34 +1299,12 @@
    ---------------------------------------------------------- */
 @layer components {
   .back-to-top {
-    position: fixed;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    z-index: 30;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
     opacity: 0;
     pointer-events: none;
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 0.25s ease;
     transform: translateY(8px) scale(0.9);
 
-    /* Glass base */
-    background: color-mix(in oklab, var(--mtj-surface) 75%, transparent);
-    backdrop-filter: blur(12px) saturate(1.4);
-    -webkit-backdrop-filter: blur(12px) saturate(1.4);
-
     /* Gradient border via outline trick */
-    border: 1px solid color-mix(in oklab, var(--mtj-text) 14%, transparent);
     color: var(--mtj-text);
-    box-shadow: 0 4px 16px oklch(0% 0 0 / 0.12);
   }
 
   .back-to-top.is-visible {
@@ -1628,23 +1313,32 @@
     transform: translateY(0) scale(1);
   }
 
-  .back-to-top:hover {
-    border-color: color-mix(in oklab, var(--mtj-accent) 50%, transparent);
-    color: var(--mtj-accent);
-    box-shadow:
-      0 0 0 3px color-mix(in oklab, var(--mtj-accent) 12%, transparent),
-      0 0 18px color-mix(in oklab, var(--mtj-accent) 28%, transparent),
-      0 4px 16px oklch(0% 0 0 / 0.15);
-    transform: translateY(-2px) scale(1.06);
-  }
-
   .back-to-top {
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 14%, transparent);
+    -webkit-backdrop-filter: blur(12px) saturate(1.4);
+    backdrop-filter: blur(12px) saturate(1.4);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.25s ease;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 50%;
+    height: 2.75rem;
+    width: 2.75rem;
+    z-index: 30;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    position: fixed;
     background: oklch(16% 0.01 264 / 0.8);
     border-color: oklch(28% 0.018 264);
     box-shadow: 0 4px 20px oklch(0% 0 0 / 0.35);
   }
 
   .back-to-top:hover {
+    transform: translateY(-2px) scale(1.06);
     border-color: oklch(74% 0.17 200 / 0.55);
     color: oklch(74% 0.17 200);
     box-shadow:
@@ -1702,94 +1396,18 @@
     color: var(--mtj-text-72);
     background: var(--mtj-text-6);
   }
-
-  /* Backward compat: keep locale-pill hidden to avoid layout breaks */
-  .locale-pill {
-    display: none;
-  }
 }
 
 /* ── 6. .btn-glow — reusable CTA button ─────────────────────
    Use on any <a> or <button> that needs a primary CTA look.
    e.g.: <a class="btn-glow" href="...">Read More</a>
    ---------------------------------------------------------- */
-@layer components {
-  .btn-glow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 1.25rem;
-    border-radius: 999px;
-    font-size: 0.825rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid color-mix(in oklab, var(--mtj-accent) 40%, transparent);
-    background: color-mix(in oklab, var(--mtj-accent) 12%, transparent);
-    color: var(--mtj-accent);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* Shimmer */
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        transparent 30%,
-        oklch(100% 0 0 / 0.15) 50%,
-        transparent 70%
-      );
-      transform: translateX(-100%);
-      transition: transform 0s;
-    }
-
-    &:hover::before {
-      transform: translateX(100%);
-      transition: transform 0.45s ease;
-    }
-
-    &:hover {
-      background: color-mix(in oklab, var(--mtj-accent) 22%, transparent);
-      border-color: color-mix(in oklab, var(--mtj-accent) 65%, transparent);
-      box-shadow:
-        0 0 0 3px color-mix(in oklab, var(--mtj-accent) 10%, transparent),
-        0 0 18px color-mix(in oklab, var(--mtj-accent) 25%, transparent);
-      transform: translateY(-1px);
-      text-decoration: none;
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
-  /* Solid variant */
-  .btn-glow--solid {
-    background: var(--mtj-accent);
-    color: var(--mtj-bg);
-    border-color: var(--mtj-accent);
-
-    &:hover {
-      background: color-mix(in oklab, var(--mtj-accent) 85%, oklch(99% 0 0));
-      box-shadow:
-        0 0 0 3px color-mix(in oklab, var(--mtj-accent) 25%, transparent),
-        0 0 20px color-mix(in oklab, var(--mtj-accent) 40%, transparent);
-    }
-  }
-}
 
 /* ── 7. Search pill upgrade — stronger glass look ───────────── */
 @layer components {
   .search-pill {
     @apply inline-flex h-9 items-center gap-2 rounded-full pr-1.5 pl-3 text-sm transition-all duration-200;
-    background: color-mix(in oklab, var(--mtj-surface) 80%, transparent);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
     color: color-mix(in oklab, var(--mtj-text) 65%, transparent);
-    border: 1px solid color-mix(in oklab, var(--mtj-text) 11%, transparent);
 
     &:hover {
       color: var(--mtj-text);
@@ -1801,6 +1419,9 @@
   }
 
   .search-pill {
+    border: 1px solid color-mix(in oklab, var(--mtj-text) 11%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     background: oklch(18% 0.012 264 / 0.75);
     border-color: oklch(28% 0.016 264);
   }
@@ -1821,106 +1442,9 @@
   }
 }
 
-/* End 2026 UI Upgrades */
-
 /* ── Projects page — Linear-style project card system ───────
    Used by src/pages/[...locale]/projects.astro
    ---------------------------------------------------------- */
-@layer components {
-  /* Main project card shell */
-  .project-card {
-    background: var(--mtj-surface);
-    border: 0.5px solid color-mix(in oklab, var(--mtj-text) 10%, transparent);
-    border-radius: 12px;
-    padding: 1.75rem;
-    transition:
-      border-color 0.25s ease,
-      box-shadow 0.25s ease,
-      transform 0.2s ease;
-  }
-
-  .project-card:hover {
-    border-color: color-mix(in oklab, var(--mtj-accent) 40%, transparent);
-    box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--mtj-accent) 12%, transparent),
-      0 8px 28px -4px color-mix(in oklab, var(--mtj-text) 8%, transparent);
-    transform: translateY(-2px);
-  }
-
-  .project-card {
-    background: var(--mtj-surface);
-    border-color: oklch(21% 0.013 264);
-  }
-
-  .project-card:hover {
-    border-color: oklch(70% 0.2 264 / 0.35);
-    box-shadow:
-      0 0 0 1px oklch(70% 0.2 264 / 0.12),
-      0 0 20px oklch(70% 0.2 264 / 0.12),
-      0 8px 28px oklch(0% 0 0 / 0.3);
-  }
-
-  /* ACTIVE R&D status badge — green OKLCH glow, mirrors field-note badge */
-  .project-status-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.2rem 0.65rem;
-    border-radius: 999px;
-    font-family: var(--font-mono, ui-monospace, monospace);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    background: oklch(50% 0.15 145 / 0.12);
-    color: oklch(72% 0.16 145);
-    border: 1px solid oklch(60% 0.15 145 / 0.3);
-  }
-
-  .project-status-badge {
-    background: oklch(50% 0.15 145 / 0.15);
-    box-shadow: 0 0 8px oklch(60% 0.15 145 / 0.18);
-  }
-
-  /* Pillar cards — 3-col grid desktop / 1-col mobile */
-  .project-pillar-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 1.25rem;
-  }
-
-  @media (max-width: 639px) {
-    .project-pillar-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .project-pillar-card {
-    background: var(--mtj-bg);
-    border-radius: 8px;
-    padding: 1rem 1.125rem;
-    border: 0.5px solid color-mix(in oklab, var(--mtj-text) 8%, transparent);
-    font-size: 0.875rem;
-  }
-
-  .project-pillar-card {
-    background: var(--mtj-surface-2);
-    border-color: oklch(21% 0.013 264);
-  }
-
-  .project-pillar-title {
-    font-weight: 600;
-    font-size: 0.8rem;
-    margin-bottom: 0.25rem;
-    color: var(--mtj-text);
-  }
-
-  .project-pillar-desc {
-    font-size: 0.78rem;
-    color: color-mix(in oklab, var(--mtj-text) 65%, transparent);
-    line-height: 1.5;
-  }
-}
 
 /* Prev/next post nav cards (PostNav.astro) and the categories index list. */
 @layer components {
@@ -1939,37 +1463,6 @@
    - Page grid (1fr 280px)
    - Bug fixes (sticky transforms, view-transitions, CLS, scrollbar)
    ============================================================ */
-
-/* -- Design tokens (mockup colors) -- */
-:root {
-  --mtj-bg: #0f1117;
-  --mtj-surface: #16181f;
-  --mtj-surface-2: #1e2130;
-  --mtj-border: #2a2d3e;
-  --mtj-text: #e2e4ef;
-  --mtj-muted: #6b7194;
-  --mtj-accent: #5b8fff;
-  --mtj-accent-2: #a78bfa;
-  --mtj-green: #34d399;
-  --mtj-tag-bg: #1a1d2e;
-
-  /* Semi-transparent tokens used by @apply bg/text/border/decoration with opacity */
-  --mtj-accent-10: color-mix(in oklch, var(--mtj-accent) 10%, transparent);
-  --mtj-accent-25: color-mix(in oklch, var(--mtj-accent) 25%, transparent);
-  --mtj-accent-30: color-mix(in oklch, var(--mtj-accent) 30%, transparent);
-  --mtj-accent-40: color-mix(in oklch, var(--mtj-accent) 40%, transparent);
-  --mtj-accent-50: color-mix(in oklch, var(--mtj-accent) 50%, transparent);
-  --mtj-text-30: color-mix(in oklch, var(--mtj-text) 30%, transparent);
-  --mtj-text-45: color-mix(in oklch, var(--mtj-text) 45%, transparent);
-  --mtj-text-55: color-mix(in oklch, var(--mtj-text) 55%, transparent);
-  --mtj-text-65: color-mix(in oklch, var(--mtj-text) 65%, transparent);
-  --mtj-text-70: color-mix(in oklch, var(--mtj-text) 70%, transparent);
-  --mtj-text-75: color-mix(in oklch, var(--mtj-text) 75%, transparent);
-  --mtj-text-80: color-mix(in oklch, var(--mtj-text) 80%, transparent);
-  --mtj-text-90: color-mix(in oklch, var(--mtj-text) 90%, transparent);
-  --mtj-green-10: color-mix(in oklch, var(--mtj-green) 10%, transparent);
-  --mtj-green-15: color-mix(in oklch, var(--mtj-green) 15%, transparent);
-}
 
 /* -- Bug fix #6: stable scrollbar (no page-width shift between routes) -- */
 html {
@@ -2007,8 +1500,6 @@ html {
   }
 }
 
-/* Topbar light-mode overrides removed (site is dark-only by design). */
-
 /* ============================================================
    FOOTER
    ============================================================ */
@@ -2022,7 +1513,7 @@ html {
   border-top: 1px solid var(--mtj-border);
   font-size: 0.78rem;
   color: var(--mtj-muted);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
 }
 /* FIX: inner flex uses a single symmetric gap and lets the explicit
    `<span class="mtj-footer__sep">` divider handle the visual separator.
@@ -2043,9 +1534,6 @@ html {
   gap: 0.6rem;
   color: var(--mtj-muted);
   min-width: 0;
-}
-.mtj-footer__copy {
-  white-space: nowrap;
 }
 
 /* FIX: explicit divider element — symmetric on both sides, replaces
@@ -2149,7 +1637,7 @@ html {
 }
 
 .mtj-section-label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -2181,15 +1669,12 @@ html {
      equivalent — grows the row instead of clipping. */
   grid-template-rows: repeat(2, minmax(148px, auto));
   gap: 0.75rem;
-  margin-bottom: 2.25rem;
 }
 .mtj-bento__card {
   position: relative;
   overflow: hidden;
   background: var(--mtj-surface);
   box-shadow: 0 0 0 1px var(--mtj-border);
-  border-radius: 12px;
-  padding: 1.125rem;
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -2208,9 +1693,6 @@ html {
 .mtj-bento__card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--mtj-accent), var(--mtj-accent-2));
   opacity: 0;
@@ -2248,16 +1730,13 @@ html {
     'ss01' 1;
 }
 .mtj-bento--large .mtj-bento__title {
-  font-size: 1.4rem;
   letter-spacing: -0.035em;
 }
 .mtj-bento--medium .mtj-bento__title {
-  font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
 }
 .mtj-bento--small .mtj-bento__title {
-  font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 0.3rem;
 }
@@ -2283,7 +1762,7 @@ html {
 
 .mtj-bento__foot {
   margin-top: auto;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--mtj-muted);
   padding-top: 0.5rem;
@@ -2308,9 +1787,6 @@ html {
     grid-column: span 1;
     grid-row: auto;
   }
-  .mtj-bento--large {
-    min-height: 200px;
-  }
   .mtj-bento--medium {
     min-height: 110px;
   }
@@ -2328,15 +1804,11 @@ html {
 
 /* -- Pills (bento + cards + command palette share) -- */
 .mtj-pill {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.56rem;
+  font-family: var(--font-mono);
   font-weight: 500;
-  padding: 0.19rem 0.5rem;
-  border-radius: 4px;
   display: inline-block;
   width: fit-content;
   margin-bottom: 0.5rem;
-  letter-spacing: 0.02em;
 }
 .mtj-pill--ground {
   background: oklch(0.72 0.18 250 / 0.12);
@@ -2351,11 +1823,6 @@ html {
   color: var(--mtj-green);
 }
 
-.mtj-pill__type {
-  font-size: 0.72rem;
-  color: var(--mtj-muted);
-}
-
 /* ============================================================
    MONTH HEADER + ARTICLE CARDS (homepage list under bento)
    ============================================================ */
@@ -2366,8 +1833,7 @@ html {
   margin: 1.5rem 0 0.75rem;
 }
 .mtj-month__label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.69rem;
+  font-family: var(--font-mono);
   letter-spacing: 0.1em;
   color: var(--mtj-muted);
   text-transform: uppercase;
@@ -2430,7 +1896,6 @@ html {
   padding: 0.5rem 0.5rem;
 }
 .mtj-card--compact .mtj-card__title {
-  font-size: 0.78rem;
   font-weight: 600;
   -webkit-line-clamp: 3;
   line-clamp: 3;
@@ -2439,9 +1904,7 @@ html {
   overflow: hidden;
 }
 .mtj-card--compact .mtj-card__desc {
-  font-size: 0.66rem;
   -webkit-line-clamp: 2;
-  line-clamp: 2;
 }
 .mtj-card--compact .mtj-card__read {
   font-size: 0.58rem;
@@ -2468,16 +1931,13 @@ html {
   padding-top: 2px;
 }
 .mtj-card__day {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.78rem;
+  font-family: var(--font-mono);
   font-weight: 500;
-  color: var(--mtj-muted);
   line-height: 1;
   display: block;
 }
 .mtj-card__mon {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.5rem;
+  font-family: var(--font-mono);
   /* Was --mtj-border (a border color, not a text color) — that rendered
      at ~1.4:1 contrast against the page background, effectively invisible.
      --mtj-muted matches the day number above it and is legible. */
@@ -2500,34 +1960,20 @@ html {
 }
 .mtj-card__title {
   font-family: var(--font-display);
-  font-size: 0.84rem;
   font-weight: 600;
   color: var(--mtj-text);
-  line-height: 1.35;
-  margin: 0 0 0.2rem;
   letter-spacing: -0.022em;
-  text-wrap: balance;
-  font-feature-settings:
-    'kern' 1,
-    'liga' 1,
-    'calt' 1,
-    'ss01' 1;
   transition: color 150ms ease;
-  overflow-wrap: break-word;
-  word-break: break-word;
 }
 .mtj-card__link:hover .mtj-card__title {
   color: #ffffff;
 }
 .mtj-card__desc {
-  font-size: 0.72rem;
-  line-height: 1.55;
   letter-spacing: -0.006em;
   color: var(--mtj-muted);
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .mtj-card__type {
@@ -2538,7 +1984,7 @@ html {
 }
 /* Reading time (e.g. "6 min baca") — clearly secondary meta text. */
 .mtj-card__read {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 400;
   color: var(--mtj-muted);
@@ -2557,16 +2003,6 @@ html {
   }
   .mtj-card__day {
     font-size: 0.74rem;
-  }
-  .mtj-card__mon {
-    font-size: 0.5rem;
-  }
-  .mtj-card__title {
-    font-size: 0.8rem;
-  }
-  .mtj-card__desc {
-    font-size: 0.68rem;
-    -webkit-line-clamp: 1;
   }
   .mtj-card__read {
     font-size: 0.6rem;
@@ -2617,7 +2053,7 @@ html {
   border: none;
   border-radius: 6px;
   color: var(--mtj-muted);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   width: 32px;
   height: 32px;
@@ -2688,18 +2124,6 @@ html {
    - Recent: title + date, hover title turns accent
    - Tags: monospace pills, hover inset border accent
    ============================================================ */
-.mtj-sidebar {
-  /* ANTI-FLICKER: own GPU layer for sticky scroll */
-  position: sticky;
-  top: 84px;
-  transform: translateZ(0);
-  will-change: transform;
-}
-@media (max-width: 1023px) {
-  .mtj-sidebar {
-    position: static;
-  }
-}
 
 .mtj-sb-section {
   background: var(--mtj-surface);
@@ -2709,93 +2133,13 @@ html {
   margin-bottom: 0.875rem;
 }
 .mtj-sb-heading {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--mtj-muted);
   margin: 0 0 0.75rem;
   font-weight: 600;
-}
-
-/* Series progress bars */
-.mtj-series {
-  display: flex;
-  flex-direction: column;
-}
-.mtj-series__row {
-  margin-bottom: 0.65rem;
-}
-.mtj-series__row:last-child {
-  margin-bottom: 0;
-}
-.mtj-series__name {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 0.5rem;
-  font-size: 0.72rem;
-  color: var(--mtj-text);
-  margin-bottom: 0.28rem;
-}
-.mtj-series__count {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.6rem;
-  color: var(--mtj-muted);
-  flex-shrink: 0;
-}
-.mtj-series__bar {
-  height: 3px;
-  background: var(--mtj-text-10);
-  border-radius: 99px;
-  overflow: hidden;
-  transform: translateZ(0);
-  will-change: transform;
-}
-.mtj-series__fill {
-  height: 100%;
-  border-radius: 99px;
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: width;
-}
-.mtj-series__fill--ground {
-  background: var(--mtj-accent);
-}
-.mtj-series__fill--ai {
-  background: var(--mtj-accent-2);
-}
-.mtj-series__fill--mil {
-  background: var(--mtj-green);
-}
-
-/* Recent posts */
-
-/* Tag cloud */
-.mtj-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-.mtj-tag {
-  background: var(--mtj-tag-bg);
-  box-shadow: inset 0 0 0 1px var(--mtj-border);
-  border: none;
-  border-radius: 4px;
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.62rem;
-  color: var(--mtj-muted);
-  padding: 0.25rem 0.55rem;
-  cursor: pointer;
-  text-decoration: none;
-  transition:
-    box-shadow 150ms ease,
-    color 150ms ease,
-    background-color 150ms ease;
-}
-.mtj-tag:hover {
-  box-shadow: inset 0 0 0 1px var(--mtj-accent);
-  color: var(--mtj-accent);
-  background-color: oklch(0.72 0.18 250 / 0.07);
 }
 
 /* ============================================================
@@ -2856,7 +2200,7 @@ html {
   color: var(--mtj-muted);
 }
 .mtj-cmdk__esc {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   color: var(--mtj-muted);
   background: var(--mtj-surface-2);
@@ -2872,7 +2216,7 @@ html {
   min-height: 0;
 }
 .mtj-cmdk__group {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -2913,7 +2257,7 @@ html {
   flex-shrink: 0;
 }
 .mtj-cmdk__item .pill-mini {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.56rem;
   padding: 0.13rem 0.4rem;
   border-radius: 4px;
@@ -2936,7 +2280,7 @@ html {
   gap: 0.75rem;
   padding: 0.5rem 1rem;
   border-top: 1px solid var(--mtj-border);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
   color: var(--mtj-muted);
 }
@@ -2996,7 +2340,7 @@ html {
 } /* amber */
 .mtj-alert--error {
   border-left: 3px solid #f87171;
-} /* red 400 */
+}
 
 /* Style modifiers */
 .mtj-alert--soft {
@@ -3064,6 +2408,27 @@ html {
   font-size: 14px !important;
   color: var(--mtj-text);
 }
+/* Mermaid's htmlLabels wrap each line in a <p>. The site's own prose
+   styles reset <p> to `white-space: normal`, which overrides the
+   `nowrap` Mermaid sets on the label's ancestor — so a label that's
+   even a fraction of a pixel wider than Mermaid's own text measurement
+   wraps onto a hidden second line inside the (single-line-height)
+   foreignObject, silently dropping the last character(s). Confirmed by
+   screenshotting every diagram on the site: every node whose text
+   looked "cut off" was actually wrapping out of view, not overflowing.
+   `overflow: visible` on the foreignObject is the second half of the
+   fix — it lets a still-too-tight measurement spill into the node
+   rect's existing padding instead of clipping at the foreignObject's
+   own edge. */
+.mermaid .nodeLabel p,
+.mermaid .edgeLabel p,
+.mermaid .label p {
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+.mermaid foreignObject {
+  overflow: visible;
+}
 .mermaid .edgeLabel {
   background-color: var(--mtj-surface) !important;
   padding: 0 0.3em;
@@ -3096,4 +2461,540 @@ html {
   100% {
     background-position: -200% 0;
   }
+}
+
+/* ============================================================
+   2026 UI/UX REFRESH
+   Kept as one trailing layer so it is easy to review and revert.
+   - Readability: raises muted-text contrast to WCAG AA and lifts the
+     smallest UI text (8-10px pills, dates, meta) to >= 11px.
+   - Homepage: hero, featured cover card, series map.
+   - Taxonomy: Cloud Security gets its own tone (was sharing Ground
+     Truth's blue), driven by utils/taxonomy.ts.
+   ============================================================ */
+:root {
+  --mtj-green-15: color-mix(in oklch, var(--mtj-green) 15%, transparent);
+  --mtj-green-10: color-mix(in oklch, var(--mtj-green) 10%, transparent);
+  --mtj-text-90: color-mix(in oklch, var(--mtj-text) 90%, transparent);
+  --mtj-text-80: color-mix(in oklch, var(--mtj-text) 80%, transparent);
+  --mtj-text-75: color-mix(in oklch, var(--mtj-text) 75%, transparent);
+  --mtj-text-70: color-mix(in oklch, var(--mtj-text) 70%, transparent);
+  --mtj-text-65: color-mix(in oklch, var(--mtj-text) 65%, transparent);
+  --mtj-text-55: color-mix(in oklch, var(--mtj-text) 55%, transparent);
+  --mtj-text-45: color-mix(in oklch, var(--mtj-text) 45%, transparent);
+  --mtj-text-30: color-mix(in oklch, var(--mtj-text) 30%, transparent);
+  --mtj-accent-50: color-mix(in oklch, var(--mtj-accent) 50%, transparent);
+  --mtj-accent-40: color-mix(in oklch, var(--mtj-accent) 40%, transparent);
+  --mtj-accent-30: color-mix(in oklch, var(--mtj-accent) 30%, transparent);
+  --mtj-accent-25: color-mix(in oklch, var(--mtj-accent) 25%, transparent);
+  --mtj-accent-10: color-mix(in oklch, var(--mtj-accent) 10%, transparent);
+  --mtj-tag-bg: #1a1d2e;
+  --mtj-green: #34d399;
+  --mtj-accent-2: #a78bfa;
+  --mtj-accent: #5b8fff;
+  --mtj-text: #e2e4ef;
+  --mtj-border: #2a2d3e;
+  --mtj-surface-2: #1e2130;
+  --mtj-surface: #16181f;
+  --mtj-bg: #0f1117;
+  /* #6b7194 measured ~3.9:1 on --mtj-bg (fails AA for body-size text).
+     #8b91b3 measures ~6:1 and keeps the same cool hue. */
+  --mtj-muted: #8b91b3;
+  --mtj-cloud: #38bdf8;
+  --mtj-radius-lg: 16px;
+
+  /* These opacity steps were referenced (nav hover, panels, cmdk) but
+     never defined, so those hover/focus states silently did nothing. */
+  --mtj-text-4: color-mix(in oklch, var(--mtj-text) 4%, transparent);
+  --mtj-text-5: color-mix(in oklch, var(--mtj-text) 5%, transparent);
+  --mtj-text-6: color-mix(in oklch, var(--mtj-text) 6%, transparent);
+  --mtj-text-8: color-mix(in oklch, var(--mtj-text) 8%, transparent);
+  --mtj-text-10: color-mix(in oklch, var(--mtj-text) 10%, transparent);
+  --mtj-text-12: color-mix(in oklch, var(--mtj-text) 12%, transparent);
+  --mtj-text-40: color-mix(in oklch, var(--mtj-text) 40%, transparent);
+  --mtj-text-42: color-mix(in oklch, var(--mtj-text) 42%, transparent);
+  --mtj-text-50: color-mix(in oklch, var(--mtj-text) 50%, transparent);
+  --mtj-text-72: color-mix(in oklch, var(--mtj-text) 72%, transparent);
+  --mtj-text-88: color-mix(in oklch, var(--mtj-text) 88%, transparent);
+  --mtj-text-92: color-mix(in oklch, var(--mtj-text) 92%, transparent);
+  --mtj-text-95: color-mix(in oklch, var(--mtj-text) 95%, transparent);
+}
+
+/* -- Series tones (cards, bento, command palette) -- */
+.mtj-pill--cloud,
+.mtj-cmdk__item .pill-mini--cloud {
+  background: color-mix(in oklch, var(--mtj-cloud) 14%, transparent);
+  color: var(--mtj-cloud);
+}
+.mtj-pill--neutral,
+.mtj-cmdk__item .pill-mini--neutral {
+  background: var(--mtj-text-6);
+  color: var(--mtj-text-75);
+}
+
+/* -- Legibility floor for small UI text -- */
+.mtj-pill {
+  font-size: 0.69rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  letter-spacing: 0.01em;
+}
+.mtj-card__meta .mtj-pill {
+  margin-bottom: 0;
+}
+.mtj-card__title {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1,
+    'calt' 1,
+    'ss01' 1;
+  text-wrap: balance;
+  font-size: 1.02rem;
+  line-height: 1.35;
+  margin: 0.1rem 0 0.25rem;
+}
+.mtj-card__desc {
+  -webkit-box-orient: vertical;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.mtj-card__type,
+.mtj-card__read {
+  font-size: 0.72rem;
+}
+.mtj-card__day {
+  font-size: 1rem;
+  color: var(--mtj-text-75);
+}
+.mtj-card__mon {
+  font-size: 0.66rem;
+}
+.mtj-card--compact .mtj-card__title {
+  font-size: 0.875rem;
+}
+.mtj-card--compact .mtj-card__desc {
+  line-clamp: 2;
+  font-size: 0.75rem;
+}
+.mtj-card--compact .mtj-card__read,
+.mtj-card--compact .mtj-card__type {
+  font-size: 0.68rem;
+}
+.mtj-month__label {
+  font-size: 0.72rem;
+}
+@media (max-width: 640px) {
+  .mtj-card__title {
+    font-size: 0.97rem;
+  }
+  .mtj-card__desc {
+    font-size: 0.82rem;
+    -webkit-line-clamp: 2;
+  }
+  .mtj-card__mon {
+    font-size: 0.62rem;
+  }
+}
+
+/* -- Section labels are real <h2>s now (document outline) -- */
+h2.mtj-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  margin: 2.5rem 0 1rem;
+}
+.mtj-hero + section h2.mtj-section-label {
+  margin-top: 0;
+}
+
+/* -- Hero -- */
+.mtj-hero {
+  padding: 1.5rem 0 2.75rem;
+  max-width: 46rem;
+}
+.mtj-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-text-75);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  background: color-mix(in oklch, var(--mtj-surface) 70%, transparent);
+  margin: 0 0 1.25rem;
+}
+.mtj-hero__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mtj-green);
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--mtj-green) 25%, transparent);
+}
+.mtj-hero__title {
+  font-size: clamp(1.9rem, 4.6vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(180deg, var(--mtj-text) 30%, var(--mtj-text-70));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mtj-hero__lede {
+  margin: 1.1rem 0 0;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--mtj-text-75);
+  max-width: 40rem;
+}
+.mtj-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+.mtj-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--mtj-text);
+  background: var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+.mtj-btn:hover {
+  background: var(--mtj-surface-2);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--mtj-accent) 55%, transparent);
+}
+.mtj-btn--primary {
+  background: var(--mtj-accent);
+  color: #0b0d14;
+  box-shadow: none;
+}
+.mtj-btn--primary:hover {
+  background: color-mix(in oklch, var(--mtj-accent) 85%, white);
+  box-shadow: 0 6px 24px color-mix(in oklch, var(--mtj-accent) 35%, transparent);
+}
+.mtj-btn--ghost {
+  background: transparent;
+  box-shadow: none;
+  color: var(--mtj-text-75);
+}
+.mtj-btn--ghost:hover {
+  color: var(--mtj-text);
+  background: var(--mtj-surface);
+  box-shadow: none;
+}
+.mtj-hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 2rem 0 0;
+  padding: 0;
+}
+.mtj-hero__stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.mtj-hero__stats dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-muted);
+}
+.mtj-hero__stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--mtj-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- Featured grid: headings are semantic now; reset heading margins -- */
+.mtj-bento {
+  margin-bottom: 0;
+}
+h3.mtj-bento__title {
+  margin: 0 0 0.4rem;
+}
+.mtj-bento__card {
+  border-radius: var(--mtj-radius-lg);
+  padding: 1.25rem;
+}
+.mtj-bento--large .mtj-bento__title {
+  font-size: clamp(1.35rem, 2.4vw, 1.7rem);
+}
+.mtj-bento--medium .mtj-bento__title {
+  font-size: 1.12rem;
+}
+.mtj-bento--small .mtj-bento__title {
+  font-size: 0.98rem;
+}
+.mtj-bento__desc,
+.mtj-bento--medium .mtj-bento__desc {
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+.mtj-bento__foot,
+.mtj-bento--large .mtj-bento__foot,
+.mtj-bento--small .mtj-bento__foot {
+  font-size: 0.72rem;
+}
+/* Lead card: cover image behind the text, with a fade for contrast. */
+.mtj-bento--large {
+  justify-content: flex-end;
+  min-height: 320px;
+}
+.mtj-bento__cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+  transition: opacity 250ms ease;
+}
+.mtj-bento--large::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--mtj-surface) 10%, transparent) 0%,
+    color-mix(in oklch, var(--mtj-surface) 80%, transparent) 45%,
+    var(--mtj-surface) 85%
+  );
+  pointer-events: none;
+}
+.mtj-bento--large:hover .mtj-bento__cover {
+  opacity: 0.7;
+}
+.mtj-bento__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mtj-bento__card::before {
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+@media (max-width: 767px) {
+  .mtj-bento--large {
+    min-height: 280px;
+  }
+  .mtj-bento--small .mtj-bento__title {
+    font-size: 1rem;
+  }
+}
+
+/* -- Series map -- */
+.mtj-series__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+.mtj-series__card {
+  --tone: var(--mtj-accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  height: 100%;
+  padding: 1.1rem 1.15rem 1rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  background:
+    radial-gradient(
+      120% 80% at 0% 0%,
+      color-mix(in oklch, var(--tone) 12%, transparent),
+      transparent 60%
+    ),
+    var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  transition: box-shadow 150ms ease;
+}
+.mtj-series__card:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--tone) 70%, transparent);
+}
+.mtj-series__card--ai {
+  --tone: var(--mtj-accent-2);
+}
+.mtj-series__card--mil {
+  --tone: var(--mtj-green);
+}
+.mtj-series__card--cloud {
+  --tone: var(--mtj-cloud);
+}
+.mtj-series__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--mtj-text);
+}
+.mtj-series__name::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.5rem;
+  border-radius: 2px;
+  background: var(--tone);
+  vertical-align: 0.1em;
+}
+.mtj-series__blurb {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--mtj-text-70);
+}
+.mtj-series__meta {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--mtj-muted);
+}
+
+/* -- Footer links are a list now -- */
+ul.mtj-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* -- Respect reduced motion for hover lifts -- */
+@media (prefers-reduced-motion: reduce) {
+  .mtj-card,
+  .mtj-card__link,
+  .mtj-bento__card,
+  .mtj-bento__cover,
+  .mtj-btn,
+  .logo-icon {
+    transition: none !important;
+  }
+  .mtj-card:hover,
+  .logo-icon:hover {
+    transform: none;
+  }
+}
+
+/* -- Author card (end of every post) -- */
+.mtj-author {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  border-radius: 14px;
+  background: var(--mtj-surface);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+}
+.mtj-author__avatar {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--mtj-surface-2);
+  box-shadow: 0 0 0 2px var(--mtj-border);
+}
+.mtj-author__body {
+  min-width: 0;
+}
+.mtj-author__body p {
+  margin: 0;
+}
+.mtj-author__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-muted);
+}
+.mtj-author__name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.mtj-author__name a {
+  color: var(--mtj-text);
+  text-decoration: none;
+}
+.mtj-author__name a:hover {
+  color: var(--mtj-accent);
+}
+.mtj-author__bio {
+  margin-top: 0.35rem !important;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--mtj-text-75);
+}
+.mtj-author__links {
+  display: flex;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+}
+.mtj-author__links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--mtj-muted);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+  transition:
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+.mtj-author__links a:hover {
+  color: var(--mtj-text);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--mtj-accent) 55%, transparent);
+}
+@media (max-width: 480px) {
+  .mtj-author {
+    flex-direction: column;
+  }
+}
+
+/* -- Footer copy now carries the licence link; allow wrapping -- */
+.mtj-footer__copy {
+  white-space: normal;
+}
+.mtj-footer__copy a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--mtj-border);
+  text-underline-offset: 3px;
+}
+.mtj-footer__copy a:hover {
+  color: var(--mtj-text);
 }

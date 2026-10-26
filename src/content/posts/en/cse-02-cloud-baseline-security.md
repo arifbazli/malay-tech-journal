@@ -1,5 +1,5 @@
 ---
-title: 'cloud security baseline — the foundation that needs to be right from day one'
+title: 'Cloud security baseline — the foundation that needs to be right from day one'
 description: "Cloud Security Baseline (CSB) is the minimum set of controls that must exist before the first workload deploys. Here's the practical breakdown — from CIS Benchmarks, drift detection, to automatically enforcing baseline."
 pubDate: 2026-07-02
 tags:

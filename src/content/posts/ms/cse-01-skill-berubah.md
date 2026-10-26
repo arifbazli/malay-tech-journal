@@ -1,5 +1,5 @@
 ---
-title: 'jadi cloud security engineer 2026 — skill yang dah berubah'
+title: 'Jadi cloud security engineer 2026 — skill yang dah berubah'
 description: 'Role cloud security engineer dah berubah lebih dalam 2 tahun ni dari 5 tahun sebelumnya. Ini breakdown jujur apa yang berubah, apa yang masih sama, dan skill baru yang kena ada sekarang.'
 pubDate: 2026-07-01
 tags:
