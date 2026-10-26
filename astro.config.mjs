@@ -236,6 +236,9 @@ export default defineConfig({
       shiki: {
         langAlias: {
           env: 'dotenv',
+          // Shiki ships no Rego (OPA) grammar; render as plain text without
+          // a build warning per block.
+          rego: 'txt',
         },
       },
       styleOverrides: {

@@ -20,7 +20,7 @@ export const GET: APIRoute = async (context) => {
   }
 
   const posts = await getPosts(locale);
-  // `BASE_URL` ends with a '/' (e.g. '/' in dev, '/chirping-astro/' on Pages),
+  // `BASE_URL` ends with a '/' (e.g. '/' in dev, '/malay-tech-journal/' on Pages),
   // so we slice it off when concatenating to avoid '//rss/styles.xsl'.
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const siteWithBase = `${(context.site ?? new URL(SITE.url)).origin}${base}`;

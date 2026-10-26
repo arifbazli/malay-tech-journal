@@ -14,7 +14,7 @@ import { messages, type UIKey } from './ui';
 
 const DEFAULT_LOCALE: Locale = SITE.defaultLocale;
 
-/** Configured base path (no trailing slash). E.g. '/chirping-astro' or ''. */
+/** Configured base path (no trailing slash). E.g. '/malay-tech-journal' or ''. */
 const BASE = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
 
 /**
@@ -41,7 +41,7 @@ export function localePrefix(locale: Locale): string {
  *   localizedPath('/posts/foo', 'ms') -> '/ms/posts/foo'
  *   localizedPath('/', 'ms')          -> '/ms/'
  *
- * The configured `base` (e.g. `/chirping-astro`) is automatically
+ * The configured `base` (e.g. `/malay-tech-journal`) is automatically
  * prefixed when set.
  */
 export function localizedPath(path: string, locale: Locale): string {
