@@ -114,7 +114,6 @@ export const messages = {
     'author.writtenBy': 'Written by',
     'author.bio':
       'Writes field notes on cloud security, AI guardrails and defence tech, in Bahasa Melayu and English, for engineers who build and defend production systems.',
-    'footer.license': 'Writing licensed under CC BY 4.0',
     'footer.rss': 'RSS feed',
     'home.eyebrow': 'Bilingual field notes · EN / BM',
     'home.title': 'Cloud security and AI guardrails, from production, not press releases.',
@@ -239,7 +238,6 @@ export const messages = {
     'author.writtenBy': 'Ditulis oleh',
     'author.bio':
       'Menulis nota lapangan tentang cloud security, AI guardrail dan teknologi pertahanan, dalam Bahasa Melayu dan English, untuk engineer yang membina dan mempertahankan sistem production.',
-    'footer.license': 'Tulisan dilesenkan di bawah CC BY 4.0',
     'footer.rss': 'Suapan RSS',
     'home.eyebrow': 'Nota lapangan dwibahasa · BM / EN',
     'home.title': 'Cloud security dan AI guardrail, dari production, bukan siaran akhbar.',
