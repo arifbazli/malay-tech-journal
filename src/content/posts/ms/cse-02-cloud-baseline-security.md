@@ -1,5 +1,5 @@
 ---
-title: 'cloud security baseline — asas posture yang kena betul dari hari pertama'
+title: 'Cloud security baseline — asas posture yang kena betul dari hari pertama'
 description: 'Cloud Security Baseline (CSB) adalah set kontrol minimum yang kena ada sebelum workload pertama deploy. Ini breakdown praktis — dari CIS Benchmark, drift detection, hingga enforce baseline secara automatik.'
 pubDate: 2026-07-02
 tags:

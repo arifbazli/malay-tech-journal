@@ -1,5 +1,5 @@
 ---
-title: 'becoming a cloud security engineer in 2026 — skills that have shifted'
+title: 'Becoming a cloud security engineer in 2026 — skills that have shifted'
 description: "The role of cloud security engineer has changed more in 2 years than in the 5 years before. Here's an honest breakdown: what's stayed the same, what's changed, and what new skills you need now."
 pubDate: 2026-07-01
 tags:
