@@ -1,5 +1,5 @@
 /* global URL */
-import { SITE, type Locale } from '../config';
+import { REPO, SITE, type Locale } from '../config';
 import { alternates, useTranslations, withBase } from '../i18n/utils';
 
 export interface SeoMeta {
@@ -21,6 +21,8 @@ export interface SeoMeta {
    * `unlistedHideFromSeo` is `true` (the default).
    */
   noindex?: boolean;
+  /** Raw page/post title without the site suffix (JSON-LD headline). */
+  headline?: string;
 }
 
 interface BuildSeoArgs {
@@ -62,5 +64,55 @@ export function buildSeo(args: BuildSeoArgs): SeoMeta {
     locale: args.locale,
     hreflangs: alternates(args.pathWithoutLocale, args.availableLocales),
     noindex: args.noindex,
+    headline: args.title,
+  };
+}
+
+/** schema.org Person for the site author (shared by every JSON-LD block). */
+function authorJsonLd() {
+  const sameAs = [SITE.author.url];
+  if (REPO.handle) sameAs.push(`https://github.com/${REPO.handle}`);
+  return {
+    '@type': 'Person',
+    name: SITE.author.name,
+    url: SITE.author.url,
+    sameAs,
+  };
+}
+
+/**
+ * JSON-LD structured data describing the visible page: a `BlogPosting`
+ * for articles, a `WebSite` for everything else. Only facts already shown
+ * on the page are emitted.
+ */
+export function buildJsonLd(meta: SeoMeta): Record<string, unknown> {
+  const inLanguage = meta.locale === 'ms' ? 'ms-MY' : 'en';
+  const siteUrl = new URL(withBase('/'), SITE.url).toString();
+  if (meta.type === 'article') {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: meta.headline ?? meta.title,
+      description: meta.description,
+      image: meta.ogImage,
+      url: meta.canonical,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': meta.canonical },
+      datePublished: meta.publishedTime,
+      dateModified: meta.modifiedTime ?? meta.publishedTime,
+      inLanguage,
+      keywords: meta.tags?.length ? meta.tags.join(', ') : undefined,
+      author: authorJsonLd(),
+      publisher: { '@type': 'Person', name: SITE.author.name, url: SITE.author.url },
+      isPartOf: { '@type': 'Blog', name: SITE.title, url: siteUrl },
+    };
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE.title,
+    url: siteUrl,
+    description: meta.description,
+    inLanguage,
+    author: authorJsonLd(),
   };
 }
