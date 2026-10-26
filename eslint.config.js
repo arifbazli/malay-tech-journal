@@ -63,6 +63,6 @@ export default [
     },
   },
   {
-    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/_pagefind/**'],
+    ignores: ['dist/**', '.astro/**', 'node_modules/**', 'public/_pagefind/**', '.ai-work/**'],
   },
 ];

@@ -8,7 +8,7 @@ import Panel from '../components/ui/Panel.astro';
 import SEO from '../components/seo/SEO.astro';
 import BackToTop from '../components/islands/BackToTop.astro';
 import faviconImg from '../assets/images/site/favicon.svg';
-import { SITE, type Locale } from '../config';
+import type { Locale } from '../config';
 import { detectLocale, htmlLang, useTranslations, stripLocale, withBase } from '../i18n/utils';
 import { buildSeo, type SeoMeta } from '../utils/seo';
 
@@ -93,34 +93,22 @@ const meta: SeoMeta =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme-color" content="#0f1117" />
+    <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/svg+xml" href={withBase(faviconImg.src)} />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={`${SITE.title} (EN)`}
-      href={withBase('/rss.xml')}
-    />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={`${SITE.title} (MS)`}
-      href={withBase('/ms/rss.xml')}
-    />
+    {/* RSS auto-discovery links are emitted (per locale) by <SEO />. */}
     <SEO meta={meta} />
-    {
-      /* Custom fonts configured via Astro Fonts API (see astro.config.mjs).
-       Preload the two above-the-fold display fonts: Space Grotesk (nav-title,
-       bento/featured/card titles) and Inter (body text). JetBrains Mono is
-       used in panels, search, and post body inline code — preload it too. */
-    }
-    <Font cssVariable="--font-space-grotesk" preload />
-    <Font cssVariable="--font-inter" preload />
-    <Font cssVariable="--font-jetbrains-mono" preload />
-    {
-      /* No ClientRouter — full page navigation. No view transitions, no flicker.
+    <slot name="head" />
+    {/* Custom fonts configured via Astro Fonts API (see astro.config.mjs).
+       Preload only the above-the-fold faces (Inter 400 body, Space Grotesk
+       600/700 headings). Preloading every weight of all three families
+       (11 files) competed with the stylesheet and LCP image for bandwidth;
+       the remaining faces load on demand via font-display. */}
+    <Font cssVariable="--font-space-grotesk" preload={[{ weight: '600' }, { weight: '700' }]} />
+    <Font cssVariable="--font-inter" preload={[{ weight: '400' }]} />
+    <Font cssVariable="--font-jetbrains-mono" />
+    {/* No ClientRouter — full page navigation. No view transitions, no flicker.
        No theme toggle — site is dark-only by design; all colors come from
-       the single --mtj-* token set in :root. */
-    }
+       the single --mtj-* token set in :root. */}
   </head>
 
   <body>
@@ -131,6 +119,8 @@ const meta: SeoMeta =
       {t('site.skipToContent')}
     </a>
 
+    <slot name="body-start" />
+
     <div class="chirpy-main-wrapper">
       <div class="chirpy-shell">
         <Topbar
@@ -139,42 +129,41 @@ const meta: SeoMeta =
           availableLocales={availableLocales}
         />
 
-        {
-          homepage ? (
-            // Homepage provides its own mtj-page + main structure.
-            <>
-              <slot />
-            </>
-          ) : (
-            <div class="flex flex-1 gap-10">
-              <div class="flex min-w-0 flex-1 flex-col">
-                <main
-                  id="main"
-                  aria-label="Main Content"
-                  class:list={[
-                    'min-w-0 flex-1',
-                    flush ? '' : 'py-6 lg:pr-2',
-                    narrow ? 'mx-auto w-full max-w-3xl' : '',
-                  ]}
-                >
-                  <slot />
-                </main>
-              </div>
-
-              {!hidePanel && (
-                <aside class="chirpy-panel-rail" aria-label="Sidebar widgets">
-                  <Panel locale={locale} />
-                  <slot name="aside-bottom" />
-                </aside>
-              )}
+        {homepage ? (
+          // Homepage provides its own mtj-page + main structure.
+          <>
+            <slot />
+          </>
+        ) : (
+          <div class="flex flex-1 gap-10">
+            <div class="flex min-w-0 flex-1 flex-col">
+              <main
+                id="main"
+                aria-label="Main Content"
+                class:list={[
+                  'min-w-0 flex-1',
+                  flush ? '' : 'py-6 lg:pr-2',
+                  narrow ? 'mx-auto w-full max-w-3xl' : '',
+                ]}
+              >
+                <slot />
+              </main>
             </div>
-          )
-        }
+
+            {!hidePanel && (
+              <aside class="chirpy-panel-rail" aria-label="Sidebar widgets">
+                <Panel locale={locale} />
+                <slot name="aside-bottom" />
+              </aside>
+            )}
+          </div>
+        )}
 
         <Footer locale={locale} />
       </div>
     </div>
 
     <BackToTop />
+    <slot name="body-end" />
   </body>
 </html>

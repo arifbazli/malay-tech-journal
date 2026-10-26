@@ -85,4 +85,4 @@ PR only goes _live_ if it carried the `publish` label first. Setup:
 ## More
 
 - [AGENTS.md](./AGENTS.md) — architecture, config, and content schema
-- [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md) · [LICENSE](./LICENSE) (MIT)
+- [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md) · [LICENSE](./LICENSE) (MIT, code) · [LICENSE-CONTENT.md](./LICENSE-CONTENT.md) (CC BY 4.0, writing)

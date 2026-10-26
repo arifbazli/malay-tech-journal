@@ -11,8 +11,6 @@ categories: ['Ground Truth']
 translationKey: gt-02-guardrail-vendors
 toc: true
 postType: essay
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — guardrail vendor landscape'
 ---
 
 ## Masalah Dengan "Guardrails Included"
@@ -104,7 +102,7 @@ Ini bukan teori. Microsoft sendiri acknowledge dalam Azure AI Content Safety doc
 
 AWS Bedrock docs lebih diam tentang topik ini.
 
-**Implikasi untuk pasukan Malaysia:** Jika application anda serve Bahasa Melayu users, vendor guardrails sahaja adalah tidak cukup. Kena ada lapisan tambahan — sama ada custom classifier atau prompt engineering yang force translate ke Inggeris sebelum safety check.
+**Implikasi untuk pasukan Malaysia:** Jika application kau serve Bahasa Melayu users, vendor guardrails sahaja adalah tidak cukup. Kena ada lapisan tambahan — sama ada custom classifier atau prompt engineering yang force translate ke Inggeris sebelum safety check.
 
 ---
 

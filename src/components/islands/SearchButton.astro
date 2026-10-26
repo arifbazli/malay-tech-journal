@@ -11,7 +11,8 @@
  */
 import { useTranslations, withBase, localizedPath } from '../../i18n/utils';
 import type { Locale } from '../../config';
-import { getArticles, getSeriesWithCount, categoryPath } from '../../utils/posts';
+import { getArticles, getSeriesSummaries, categoryPath } from '../../utils/posts';
+import { postSeries, seriesInfo } from '../../utils/taxonomy';
 
 interface Props {
   locale: Locale;
@@ -37,31 +38,10 @@ const i18n = {
 // Recent articles (top 5)
 const recent = (await getArticles(locale)).slice(0, 5);
 
-// Series for "Lompat Ke Siri"
-const series = await getSeriesWithCount(locale, 3);
+// Every series for "Lompat Ke Siri" (was capped at 3, which hid Military AI).
+const series = await getSeriesSummaries(locale);
 
-function seriesDisplay(name: string): string {
-  const s = name.toLowerCase();
-  if (s.includes('ground') || s.includes('truth')) return ms ? 'Ground Truth' : 'Ground Truth';
-  if (s.includes('guardrail')) return ms ? 'AI Guardrail Engineering' : 'AI Guardrail Engineering';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
-    return ms ? 'Military AI & Defence' : 'Military AI & Defence';
-  if (s.includes('cloud') && s.includes('security'))
-    return ms ? 'Cloud Security Engineering' : 'Cloud Security Engineering';
-  return name;
-}
-function seriesPillMiniClass(name: string): string {
-  const s = name.toLowerCase();
-  if (s.includes('ground') || s.includes('truth')) return 'pill-mini--ground';
-  if (s.includes('guardrail')) return 'pill-mini--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
-    return 'pill-mini--mil';
-  return 'pill-mini--ai';
-}
-function getSeries(post: any): string {
-  return (post.data.categories as string[])[0] ?? '';
-}
-function postHref(post: any): string {
+function postHref(post: { id: string }): string {
   return localizedPath(`/posts/${post.id.split('/').pop()}/`, locale);
 }
 ---
@@ -88,16 +68,18 @@ function postHref(post: any): string {
     <path d="m21 21-4.35-4.35"></path>
   </svg>
   <span class="search-pill__label">{ms ? 'Cari' : 'Search'}</span>
-  {
-    /* FIX (2026-07-22): platform-aware keyboard hint.
+  {/* FIX (2026-07-22): platform-aware keyboard hint.
        - Shows ⌘K on Mac, Ctrl K on Windows/Linux — the more powerful
          shortcut that 99% of power users actually use.
        - Slash fallback kept as a secondary badge for muscle memory.
        - Icons rendered via <kbd data-kbd-mod> by platform-detection script
-         below; the static / is shown if JS is disabled. */
-  }
-  <kbd class="search-pill__kbd search-pill__kbd--primary" data-kbd-mod aria-hidden="true">⌘K</kbd>
-  <kbd class="search-pill__kbd search-pill__kbd--slash" aria-hidden="true">/</kbd>
+         below; the static / is shown if JS is disabled. */}
+  <kbd class="search-pill__kbd search-pill__kbd--primary" data-kbd-mod aria-hidden="true">
+    ⌘K
+  </kbd>
+  <kbd class="search-pill__kbd search-pill__kbd--slash" aria-hidden="true">
+    /
+  </kbd>
 </button>
 
 <div
@@ -144,60 +126,56 @@ function postHref(post: any): string {
       {/* Artikel Terkini (default state, hidden when typing) */}
       <div data-cmdk-section="recent">
         <div class="mtj-cmdk__group">{ms ? 'Artikel Terkini' : 'Recent Articles'}</div>
-        {
-          recent.map((post) => (
-            <a href={postHref(post)} class="mtj-cmdk__item" data-cmdk-item>
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-              </svg>
-              <span class="label">{post.data.title}</span>
-              <span class="meta">
-                <span class={`pill-mini ${seriesPillMiniClass(getSeries(post))}`}>
-                  {seriesDisplay(getSeries(post))}
-                </span>
+        {recent.map((post) => (
+          <a href={postHref(post)} class="mtj-cmdk__item" data-cmdk-item>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            <span class="label">{post.data.title}</span>
+            <span class="meta">
+              <span class={`pill-mini pill-mini--${seriesInfo(postSeries(post)).tone}`}>
+                {seriesInfo(postSeries(post)).short}
               </span>
-            </a>
-          ))
-        }
+            </span>
+          </a>
+        ))}
 
         {/* Lompat Ke Siri */}
         <div class="mtj-cmdk__group" style="margin-top: 0.5rem">
           {ms ? 'Lompat Ke Siri' : 'Jump To Series'}
         </div>
-        {
-          series.map((s) => (
-            <a href={categoryPath(locale, s.name)} class="mtj-cmdk__item" data-cmdk-item>
-              <svg
-                class="icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-              </svg>
-              <span class="label">{seriesDisplay(s.name)}</span>
-              <span class="meta">
-                <span class={`pill-mini ${seriesPillMiniClass(s.name)}`}>
-                  {s.count} {ms ? 'artikel' : 'posts'}
-                </span>
+        {series.map((s) => (
+          <a href={categoryPath(locale, s.name)} class="mtj-cmdk__item" data-cmdk-item>
+            <svg
+              class="icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+            <span class="label">{seriesInfo(s.name).name}</span>
+            <span class="meta">
+              <span class={`pill-mini pill-mini--${seriesInfo(s.name).tone}`}>
+                {s.count} {ms ? 'artikel' : 'posts'}
               </span>
-            </a>
-          ))
-        }
+            </span>
+          </a>
+        ))}
       </div>
 
       {/* Search results (shown when typing) */}
@@ -208,9 +186,16 @@ function postHref(post: any): string {
 
     {/* Footer hint */}
     <div class="mtj-cmdk__hint">
-      <span><kbd>↑</kbd><kbd>↓</kbd> {ms ? 'navigasi' : 'navigate'}</span>
-      <span><kbd>↵</kbd> {ms ? 'buka' : 'open'}</span>
-      <span><kbd>Esc</kbd> {ms ? 'tutup' : 'close'}</span>
+      <span>
+        <kbd>↑</kbd>
+        <kbd>↓</kbd> {ms ? 'navigasi' : 'navigate'}
+      </span>
+      <span>
+        <kbd>↵</kbd> {ms ? 'buka' : 'open'}
+      </span>
+      <span>
+        <kbd>Esc</kbd> {ms ? 'tutup' : 'close'}
+      </span>
     </div>
   </div>
 </div>

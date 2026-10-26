@@ -1,0 +1,60 @@
+---
+/**
+ * AuthorCard — short "who wrote this" block at the end of every post.
+ * Name, avatar and links come from SITE.author / SOCIALS (src/config.ts);
+ * the bio is a localized UI string (author.bio in src/i18n/ui.ts).
+ */
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import { SITE, SITE_IMAGES, SOCIALS, type Locale } from '../../config';
+import { localizedPath, useTranslations } from '../../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<aside class="mtj-author" aria-label={t('post.author')}>
+  <Image
+    src={SITE_IMAGES.avatar}
+    alt=""
+    width={56}
+    height={56}
+    class="mtj-author__avatar"
+    loading="lazy"
+  />
+  <div class="mtj-author__body">
+    <p class="mtj-author__eyebrow">{t('author.writtenBy')}</p>
+    <p class="mtj-author__name">
+      <a href={localizedPath('/about/', locale)}>{SITE.author.name}</a>
+    </p>
+    <p class="mtj-author__bio">{t('author.bio')}</p>
+    <ul class="mtj-author__links">
+      {SOCIALS.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            rel={s.href.startsWith('mailto:') ? undefined : 'noopener me'}
+            target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+            aria-label={s.label}
+            title={s.label}
+          >
+            <Icon name={s.icon} width={16} height={16} aria-hidden="true" />
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href={localizedPath('/rss.xml', locale)}
+          aria-label={t('footer.rss')}
+          title={t('footer.rss')}
+        >
+          <Icon name="lucide:rss" width={16} height={16} aria-hidden="true" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>

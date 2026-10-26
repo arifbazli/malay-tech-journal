@@ -13,8 +13,6 @@ translationKey: 'gt-06-csa-top-threats-2026'
 toc: true
 postType: essay
 draft: false
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — CSA 2026 Top Threats: identity and AI'
 ---
 
 ## The Ranking Just Flipped

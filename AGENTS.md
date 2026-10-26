@@ -22,7 +22,7 @@ this blog, not for reuse by others.
 | Search | Pagefind (static index, built after `astro build`) |
 | Comments | Giscus (optional, GitHub Discussions) |
 | Math | KaTeX, opt-in per post (`math: true`) |
-| Diagrams | Mermaid, client-hydrated; `render-diagrams.mjs` pre-renders SVGs for build-time checks |
+| Diagrams | Mermaid, client-hydrated via `MermaidLoader.astro` — no build-time pre-render |
 | CI | `pr-checks.yml`, `deploy-cloudflare.yml` (canonical), `deploy.yml` (GitHub Pages, non-publishing), `weekly.yml`, `bun-update-monitor.yml` |
 
 ---
@@ -32,7 +32,6 @@ this blog, not for reuse by others.
 ```text
 .
 ├── astro.config.mjs      # Astro + integrations, i18n, markdown pipeline
-├── render-diagrams.mjs   # Pre-renders Mermaid diagrams in posts to SVG
 ├── .env.example          # All recognised env vars, documented inline
 ├── public/               # Static assets served as-is
 └── src/
@@ -71,8 +70,7 @@ this blog, not for reuse by others.
         ├── reading-time.ts
         ├── seo.ts
         ├── slugify.ts       # Unicode-aware tag/category slugifier
-        ├── og-image.ts      # Satori render helper
-        └── github-repo.ts   # /projects page live GitHub stats
+        └── og-image.ts      # Satori render helper
 ```
 
 ---
@@ -145,12 +143,10 @@ Secrets are reserved for deploy tokens.
 | --- | --- | --- |
 | `SITE_URL` | Recommended | Canonical origin, no trailing slash. Falls back to the Cloudflare Pages URL. |
 | `BASE_PATH` | GitHub Pages only | Sub-path prefix; auto-detected by `deploy.yml`. Cloudflare Pages serves from root — never set here. |
-| `PUBLIC_GITHUB_HANDLE` / `PUBLIC_GITHUB_REPO` | Optional | This site's own repo slug; used as a fallback for `PROJECTS_REPO`. |
+| `PUBLIC_GITHUB_HANDLE` / `PUBLIC_GITHUB_REPO` | Optional | This site's own repo slug. |
 | `PUBLIC_TWITTER_HANDLE` | Optional | Unused by the current `SOCIALS` list (see below); reserved. |
 | `PUBLIC_CONTACT_EMAIL` | Optional | Email social link + mailto target. |
 | `PUBLIC_AUTHOR_NAME` / `PUBLIC_AUTHOR_URL` | Optional | Overrides `SITE.author` and the LinkedIn social link. |
-| `PROJECTS_REPO` | Optional | Repo the `/projects` page fetches live GitHub stats for (via `github-repo.ts`) — not necessarily this repo. |
-| `GITHUB_TOKEN` / `GH_TOKEN` | Optional | Raises the GitHub API rate limit for `github-repo.ts` at build time. |
 | `PUBLIC_GISCUS_ENABLED` + `PUBLIC_GISCUS_*` | Optional (Giscus) | Master switch + giscus.app values. |
 | `CI_SKIP_AUTO_OG_IMAGE` / `CI_SKIP_RSS_SITEMAP` / `CI_SKIP_CONTENT_COLLECTIONS` | CI only | Fast-build mode for PRs. Never set locally. |
 
@@ -167,7 +163,7 @@ SITE.defaultOgImage // fallback OG image
 SITE.postsPerPage // listing page size
 SITE.isoDates // ISO dates vs. locale-formatted
 SITE.showFeaturedImages / boxedArticles / dynamicPostCardHeight // listing/article presentation
-SITE.autoOgImage // Satori OG generation on/off (default false)
+SITE.autoOgImage // Satori share-image generation for posts without heroImage (on)
 SITE.showPrivacyPolicy // footer privacy link
 SITE.footer.{leftText,rightText,showPrivacyPolicy,showThemeCredits,themeName,themeUrl}
 SITE.url // canonical origin (see env table)
@@ -230,6 +226,58 @@ Pages additionally support `showInNav` (boolean, default `false`) and treat
   (Astro 7.x has not stabilized this key yet — don't move it to top-level).
 
 ---
+
+## Series & post-type presentation
+
+Series names, short labels, colour tones and localized post-type labels
+live in `src/utils/taxonomy.ts` (`seriesInfo()`, `postSeries()`,
+`postTypeLabel()`, `readTimeLabel()`). Every listing surface (homepage,
+`PostCardItem`, command palette, post header) must use these helpers —
+never re-implement the mapping inline. Adding a series: add a matcher to
+`KNOWN` in `taxonomy.ts`, a `home.series*` blurb in `src/i18n/ui.ts`, and
+a `.mtj-series__card--<tone>` / `.mtj-pill--<tone>` style if it needs a new
+colour. `getSeriesSummaries()` in `src/utils/posts.ts` counts articles only.
+
+## Writing voice (Bahasa Melayu)
+
+One voice per post, never mixed inside a post:
+
+| Use | Pronouns | Register |
+| --- | --- | --- |
+| **Default** — every series (Ground Truth, AI Guardrail, Cloud Security, Military AI), About, field notes and essays | `aku` / `kau` | Conversational Malay with English technical terms kept as-is (code-switching is intentional — see the About FAQ) |
+| **Formal report** — a news-style write-up with no direct address to the reader (e.g. `mad-02-birdie-x`, `gt-05-…`) | none, or `saya` once for an explicit author note | Bahasa baku, no `kat` / `pasal` / `tak` |
+
+Never use `anda` in a default-voice post, and never pair `saya` with `kau`.
+English posts use plain, direct English with "I" / "you".
+
+Titles are sentence case (first letter capitalised, proper nouns as
+written). Every post needs `title`, `description` (≤ 160 chars, not a copy of
+the title) and a first category that names its series.
+
+## Share images and covers
+
+`SITE.autoOgImage` is on: every post without a `heroImage` gets a unique
+1200×630 share card from `src/utils/og-image.ts` (dark theme, series colour,
+title, date). Only set `heroImage` for a cover made for that post — don't
+reuse a generic cover across posts; leave it out and the generated card is
+used for social previews instead.
+
+## Structured data & licence
+
+`SEO.astro` emits JSON-LD from `buildJsonLd()` in `src/utils/seo.ts`
+(`BlogPosting` on posts, `WebSite` elsewhere, with the author as a
+`Person`). The writing (`src/content/`, cover images) is CC BY 4.0 —
+`LICENSE-CONTENT.md`; code stays MIT (`LICENSE`).
+
+## Layout slots
+
+`BaseLayout.astro` exposes named slots `head`, `body-start` and
+`body-end`. Anything a page needs outside `<main>` (preloads, the reading
+progress bar, inline data scripts) goes through these — never as a
+sibling of `<BaseLayout>`, which renders outside `<html>`.
+
+"Updated on" is shown only when a post sets `updatedDate` (different day
+from `pubDate`). File mtime is not used: CI checkouts reset it.
 
 ## Hydration Islands (`src/components/islands/`)
 

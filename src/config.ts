@@ -26,8 +26,8 @@ export type Locale = (typeof locales)[number];
  * automatically — the entry won't render and no broken `your-handle`
  * URL is exposed.
  */
-const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE ?? '';
-const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO ?? 'chirping-astro';
+const GITHUB_HANDLE = import.meta.env.PUBLIC_GITHUB_HANDLE ?? 'arifbazli';
+const GITHUB_REPO = import.meta.env.PUBLIC_GITHUB_REPO ?? 'malay-tech-journal';
 const THEME_REPO_URL = 'https://github.com/kannansuresh/chirping-astro';
 
 /**
@@ -51,11 +51,13 @@ export const SITE: SiteConfig = {
   title: 'Malay Tech Journal',
   /** Site tagline / description. */
   description:
-    'Field notes on cloud security and AI guardrails. Written for engineers who build and defend modern systems.',
+    'Field notes on cloud security, AI guardrails and defence tech, written for engineers who build and defend production systems.',
   /** Author/handle shown in footer + meta. */
   author: {
     name: import.meta.env.PUBLIC_AUTHOR_NAME ?? 'Arif Bazli',
-    url: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
+    url:
+      import.meta.env.PUBLIC_AUTHOR_URL ??
+      'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     avatar: avatarImg,
   },
   /** Default OG image. */
@@ -71,7 +73,7 @@ export const SITE: SiteConfig = {
   /** Allow listing cards to grow when title/description content is longer. */
   dynamicPostCardHeight: false,
   /** Automatically generate Open Graph images for posts that don't have a `heroImage`. */
-  autoOgImage: false,
+  autoOgImage: true,
   /** Show a link to the Privacy Policy page in the footer. */
   showPrivacyPolicy: false,
   /** Footer text/link controls. */
@@ -103,11 +105,7 @@ export const SITE: SiteConfig = {
   /** Public URL of the deployed site, no trailing slash. Breaks SEO/RSS if incorrect. */
   // `||` (not `??`) so an explicitly empty `SITE_URL=` in `.env` also
   // falls back to the default. Astro requires `site` to be a valid URL.
-  url:
-    process.env.SITE_URL ||
-    (import.meta.env.PUBLIC_GITHUB_HANDLE && import.meta.env.PUBLIC_GITHUB_REPO
-      ? `https://${import.meta.env.PUBLIC_GITHUB_HANDLE}.github.io/${import.meta.env.PUBLIC_GITHUB_REPO}`
-      : 'https://arifbazli.github.io/malay-tech-journal'),
+  url: process.env.SITE_URL || 'https://malay-tech-journal.pages.dev',
   /** Supported locales. Changing this requires adding/removing locale folders, content, and i18n entries. */
   locales: locales,
   /** Default locale. Changing this is a breaking, atomic, multi-file operation. */
@@ -135,7 +133,9 @@ export const NAV: readonly NavItem[] = [
 export const SOCIALS: readonly SocialLink[] = [
   {
     label: 'LinkedIn',
-    href: import.meta.env.PUBLIC_AUTHOR_URL ?? 'https://www.linkedin.com/in/arif-onsite',
+    href:
+      import.meta.env.PUBLIC_AUTHOR_URL ??
+      'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     icon: 'simple-icons:linkedin',
   },
   {

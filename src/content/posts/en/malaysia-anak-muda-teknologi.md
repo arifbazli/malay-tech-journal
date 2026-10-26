@@ -1,5 +1,5 @@
 ---
-title: 'young Malaysian talent on the cloud & AI stage'
+title: 'Young Malaysian talent on the cloud & AI stage'
 description: "Gen Z Malaysia is building, not just using. Cloud, AI, open source — talent is there, it's just quiet."
 pubDate: 2026-06-30
 tags:
@@ -76,9 +76,7 @@ Large language models, autonomous agents, data pipelines — all mostly being bu
 - Languages that are "less profitable" get ignored
 - Local problems rarely become a priority
 
-:::caution
 If we only **use** AI and don't **build** it, we'll always be behind in decisions about how the technology shapes our own society.
-:::
 
 That's why Gen Z Malaysia needs to invest in deeper skills — not just using ChatGPT API, but understanding how models are built, data trained, systems distributed.
 

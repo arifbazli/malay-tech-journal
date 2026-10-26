@@ -66,68 +66,64 @@ const setupSteps = [
 ---
 
 <section class="border-mtj-border mt-12 border-t pt-8" aria-labelledby="comments-heading">
-  <h2 id="comments-heading" class="mb-4 text-xl font-semibold">{t('post.comments')}</h2>
+  <h2 id="comments-heading" class="mb-4 text-xl font-semibold">
+    {t('post.comments')}
+  </h2>
 
-  {
-    state === 'live' && (
-      <div
-        data-giscus-mount
-        data-repo={GISCUS.repo}
-        data-repo-id={GISCUS.repoId}
-        data-category={GISCUS.category}
-        data-category-id={GISCUS.categoryId}
-        data-mapping={GISCUS.mapping}
-        data-strict={GISCUS.strict}
-        data-reactions-enabled={GISCUS.reactionsEnabled}
-        data-emit-metadata={GISCUS.emitMetadata}
-        data-input-position={GISCUS.inputPosition}
-        data-loading={GISCUS.loading}
-        data-locale={locale === 'ms' ? 'ms' : 'en'}
-      />
-    )
-  }
+  {state === 'live' && (
+    <div
+      data-giscus-mount
+      data-repo={GISCUS.repo}
+      data-repo-id={GISCUS.repoId}
+      data-category={GISCUS.category}
+      data-category-id={GISCUS.categoryId}
+      data-mapping={GISCUS.mapping}
+      data-strict={GISCUS.strict}
+      data-reactions-enabled={GISCUS.reactionsEnabled}
+      data-emit-metadata={GISCUS.emitMetadata}
+      data-input-position={GISCUS.inputPosition}
+      data-loading={GISCUS.loading}
+      data-locale={locale === 'ms' ? 'ms' : 'en'}
+    />
+  )}
 
-  {
-    state === 'setup' && (
+  {state === 'setup' && (
+    <div
+      role="note"
+      class="giscus-setup border-mtj-border bg-mtj-bg/60 flex gap-4 rounded-lg border p-5 text-sm sm:p-6"
+    >
       <div
-        role="note"
-        class="giscus-setup border-mtj-border bg-mtj-bg/60 flex gap-4 rounded-lg border p-5 text-sm sm:p-6"
+        class="bg-mtj-accent/15 text-mtj-accent flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+        aria-hidden="true"
       >
-        <div
-          class="bg-mtj-accent/15 text-mtj-accent flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
-          aria-hidden="true"
-        >
-          <Icon name="lucide:settings" width={18} height={18} />
-        </div>
-        <div class="min-w-0 flex-1">
-          <p class="text-mtj-text text-base font-semibold">{t('post.commentsSetupTitle')}</p>
-          <p class="text-mtj-text/70 mt-1">{t('post.commentsSetupBody')}</p>
-          <ol class="text-mtj-text/80 marker:text-mtj-text/50 mt-4 list-decimal space-y-1.5 pl-5 marker:font-semibold">
-            {setupSteps.map((step) => (
-              <li set:html={renderInlineCode(step)} />
-            ))}
-          </ol>
-          <p class="mt-4">
-            <a
-              href="https://giscus.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-mtj-accent hover:text-mtj-accent/80 inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline"
-            >
-              {t('post.commentsSetupDocs')}
-              <Icon name="lucide:arrow-up-right" width={14} height={14} />
-            </a>
-          </p>
-        </div>
+        <Icon name="lucide:settings" width={18} height={18} />
       </div>
-    )
-  }
+      <div class="min-w-0 flex-1">
+        <p class="text-mtj-text text-base font-semibold">{t('post.commentsSetupTitle')}</p>
+        <p class="text-mtj-text/70 mt-1">{t('post.commentsSetupBody')}</p>
+        <ol class="text-mtj-text/80 marker:text-mtj-text/50 mt-4 list-decimal space-y-1.5 pl-5 marker:font-semibold">
+          {setupSteps.map((step) => (
+            <li set:html={renderInlineCode(step)} />
+          ))}
+        </ol>
+        <p class="mt-4">
+          <a
+            href="https://giscus.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-mtj-accent hover:text-mtj-accent/80 inline-flex items-center gap-1 text-sm font-medium underline-offset-4 hover:underline"
+          >
+            {t('post.commentsSetupDocs')}
+            <Icon name="lucide:arrow-up-right" width={14} height={14} />
+          </a>
+        </p>
+      </div>
+    </div>
+  )}
 
-  {
-    state === 'disabled' && (
-      <p class="text-mtj-text/70 text-sm italic">{t('post.commentsDisabled')}</p>
-    )
-  }
+  {state === 'disabled' && (
+    <p class="text-mtj-text/70 text-sm italic">{t('post.commentsDisabled')}</p>
+  )}
 </section>
 
 <script>

@@ -22,16 +22,14 @@ const t = useTranslations(locale);
       {formatDate(post.data.pubDate, locale)}
     </time>
   </span>
-  {
-    post.data.updatedDate && (
-      <span class="flex items-center gap-1">
-        <Icon name="lucide:check" width={14} height={14} />
-        <time datetime={isoDate(post.data.updatedDate)}>
-          {t('post.updatedOn')} {formatDate(post.data.updatedDate, locale)}
-        </time>
-      </span>
-    )
-  }
+  {post.data.updatedDate && (
+    <span class="flex items-center gap-1">
+      <Icon name="lucide:check" width={14} height={14} />
+      <time datetime={isoDate(post.data.updatedDate)}>
+        {t('post.updatedOn')} {formatDate(post.data.updatedDate, locale)}
+      </time>
+    </span>
+  )}
   <span class="flex items-center gap-1">
     {readingMinutes}
     {t('post.readingTime')}

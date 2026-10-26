@@ -1,62 +1,59 @@
 ---
 title: About
-description: About Tech Journal — field notes on cloud security and AI guardrails by Arif Bazli.
+description: Malay Tech Journal is a bilingual field-notes blog on cloud security, AI guardrails and defence tech, written by Arif Bazli.
 translationKey: about
 ---
 
-## about this journal
-
-Field notes on **cloud security** and **AI guardrails**. Not here to flex — just keeping a record I can search later.
+**Malay Tech Journal** is a bilingual (Bahasa Melayu / English) field-notes blog on cloud security, AI guardrails and defence tech, written by Arif Bazli for engineers who build and defend production systems.
 
 > Not about being authoritative. About having a record.
 
-## why a public journal
+## Why a public journal
 
-Most of what makes cloud security work — actual production reality — lives in private Slack threads, post-mortem docs, and that one teammate's notebook. None of it is searchable, shareable, or survives a team change.
+Most of what makes cloud security work, the actual production reality, lives in private Slack threads, post-mortem docs and one teammate's notebook. None of it is searchable or shareable, and it disappears when people change teams.
 
-This is my attempt to put some of it on the open web. Short notes on:
+This journal is my attempt to put some of that on the open web, with sources linked so you can check the claims yourself.
 
-- **Cloud security** — major incidents, vendor advisories, compliance shifts
-- **AI guardrails** — keeping AI systems safe, reliable, and in-bounds
-- **Agentic systems** — what breaks when your AI agent has production access
-- **Tooling & workflow** — small tools that save time, useful commands
-- **Incident write-ups** — short, technical, after bad days
-- **Quick takes** — opinions on CVEs, viral posts, industry shifts
+## The series
 
-## what's in here
+- **[Ground Truth](/en/categories/ground-truth/)**: research essays that test vendor and industry claims against primary sources.
+- **[AI Guardrail Engineering](/en/categories/ai-guardrail-engineering/)**: designing, testing and breaking guardrails for LLM and agentic systems.
+- **[Cloud Security Engineering](/en/categories/cloud-security-engineering/)**: posture, identity, shift-left and remediation for cloud security engineers.
+- **[Military AI & Defence](/en/categories/military-ai-defence/)**: military AI and defence tech, with a Malaysian lens.
 
-- **Cloud security** — posture, drift, identity, runtime, supply chain, multi-cloud
-- **AI guardrails** — input/output filtering, prompt injection defense, LLM security layers
-- **Agentic systems** — agent runtime security, capability scoping, threat modelling
-- **Detection** — rules, runtime telemetry, alert pipelines, AI-assisted triage
-- **Automation** — infrastructure-as-code security, policy-as-code, CI/CD, secrets
-- **Incidents** — what broke, why, and how it got fixed
+## Topics I cover
 
-## who it's for
+- **Cloud security**: posture, drift, identity, runtime, supply chain and multi-cloud
+- **AI guardrails**: input/output filtering, prompt-injection defence and LLM security layers
+- **Agentic systems**: agent runtime security, capability scoping and threat modelling
+- **Detection and automation**: detection rules, telemetry, policy-as-code, CI/CD and secrets
+- **Incidents**: what broke, why, and how it got fixed
 
-- Engineers moving into cloud security and trying to understand the landscape
-- Security engineers who want to learn the AI side
+## Who it's for
+
+- Engineers moving into cloud security who want a map of the landscape
+- Security engineers learning the AI side
 - AI builders who want to know what breaks in production
 - Anyone who likes reading other people's working notes
 
-## faq
+## FAQ
 
 ### Why mix Bahasa Melayu and English?
 
-That's how I think about technical stuff. A lot of terms don't translate cleanly, and forcing it makes things awkward. Technical concepts travel better in the language they were coined in.
+That's how I think about technical work. Many terms don't translate cleanly, and forcing a translation makes the text harder to read. Technical concepts travel better in the language they were coined in.
 
 ### Is there an English version?
 
-Yes. Every post has a language toggle — **MS / EN** — at the top. Click it to switch.
+Yes. Use the **MS / EN** switch in the top bar. It appears on every page that has a translation.
 
-### How often do you post?
+### How often do you publish?
 
-No fixed schedule. When something is worth writing down — usually at least once a month.
+There is no fixed schedule. I write when something is worth writing down, usually at least once a month. Subscribe to the [RSS feed](/en/rss.xml) to get new posts.
 
 ### Can I share or repost?
 
-Yes. Nothing is locked. Take it, remix it, credit if you want.
+Yes. The writing is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): share or adapt it freely, credit the original post and link back to it.
 
-## contact
+## Contact
 
-[desktop_onsite@aol.com](mailto:desktop_onsite@aol.com) — I read everything, replies may be slow.
+Email [desktop_onsite@aol.com](mailto:desktop_onsite@aol.com). I read everything; replies may be slow.
