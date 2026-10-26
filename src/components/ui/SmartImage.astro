@@ -87,46 +87,18 @@ const defaultWidths = widths ?? [400, 640, 800, 1200, 1600];
 const defaultSizes = sizes ?? '(max-width: 768px) 100vw, 1024px';
 ---
 
-{
-  isOptimizable ? (
-    /* Imported asset → known dimensions. Remote URL → infer at build time. */
-    isStringSrc ? (
-      <Image
-        src={src as string}
-        alt={alt}
-        inferSize
-        widths={defaultWidths}
-        sizes={defaultSizes}
-        layout={layout}
-        format={format}
-        quality={quality}
-        loading={loading}
-        decoding={decoding}
-        class={className}
-        {...(width ? { width } : {})}
-        {...(height ? { height } : {})}
-        {...rest}
-      />
-    ) : (
-      <Image
-        src={src as ImageMetadata}
-        alt={alt}
-        widths={defaultWidths}
-        sizes={defaultSizes}
-        layout={layout}
-        format={format}
-        quality={quality}
-        loading={loading}
-        decoding={decoding}
-        class={className}
-        {...rest}
-      />
-    )
-  ) : (
-    /* Public-folder image: pass-through. Use object `src` if we got one. */
-    <img
-      src={isObjectSrc && typeof objectSrcStr === 'string' ? objectSrcStr : (src as string)}
+{isOptimizable ? (
+  /* Imported asset → known dimensions. Remote URL → infer at build time. */
+  isStringSrc ? (
+    <Image
+      src={src as string}
       alt={alt}
+      inferSize
+      widths={defaultWidths}
+      sizes={defaultSizes}
+      layout={layout}
+      format={format}
+      quality={quality}
       loading={loading}
       decoding={decoding}
       class={className}
@@ -134,5 +106,31 @@ const defaultSizes = sizes ?? '(max-width: 768px) 100vw, 1024px';
       {...(height ? { height } : {})}
       {...rest}
     />
+  ) : (
+    <Image
+      src={src as ImageMetadata}
+      alt={alt}
+      widths={defaultWidths}
+      sizes={defaultSizes}
+      layout={layout}
+      format={format}
+      quality={quality}
+      loading={loading}
+      decoding={decoding}
+      class={className}
+      {...rest}
+    />
   )
-}
+) : (
+  /* Public-folder image: pass-through. Use object `src` if we got one. */
+  <img
+    src={isObjectSrc && typeof objectSrcStr === 'string' ? objectSrcStr : (src as string)}
+    alt={alt}
+    loading={loading}
+    decoding={decoding}
+    class={className}
+    {...(width ? { width } : {})}
+    {...(height ? { height } : {})}
+    {...rest}
+  />
+)}

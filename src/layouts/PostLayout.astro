@@ -131,63 +131,53 @@ const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true
   <div slot="body-start" class="reading-progress-bar" aria-hidden="true"></div>
   {post.data.math && MathStylesComponent && <MathStylesComponent />}
   {hasMermaid && <MermaidLoader />}
-  {
-    post.data.toc && headings.length > 0 && (
-      <TableOfContents slot="aside-bottom" headings={headings} locale={locale} />
-    )
-  }
+  {post.data.toc && headings.length > 0 && (
+    <TableOfContents slot="aside-bottom" headings={headings} locale={locale} />
+  )}
 
   <article class={articleClass}>
     {/* ── Hero image — full-bleed with gradient fade ───────────────────── */}
-    {
-      showHero && heroAsset && (
-        <figure class="post-hero-banner" role="img" aria-label={heroAlt || post.data.title}>
-          <div class="post-hero-banner__img-wrap">
-            <SmartImage
-              src={heroAsset}
-              alt={heroAlt}
-              class="post-hero-banner__img"
-              loading="eager"
-              widths={[480, 768, 1024, 1280, 1600]}
-              sizes="(max-width: 768px) 100vw, 1024px"
-              quality={85}
-            />
-            {/* Gradient overlay — top to transparent, bottom to page bg */}
-            <div class="post-hero-banner__overlay" aria-hidden="true" />
-          </div>
-        </figure>
-      )
-    }
+    {showHero && heroAsset && (
+      <figure class="post-hero-banner" role="img" aria-label={heroAlt || post.data.title}>
+        <div class="post-hero-banner__img-wrap">
+          <SmartImage
+            src={heroAsset}
+            alt={heroAlt}
+            class="post-hero-banner__img"
+            loading="eager"
+            widths={[480, 768, 1024, 1280, 1600]}
+            sizes="(max-width: 768px) 100vw, 1024px"
+            quality={85}
+          />
+          {/* Gradient overlay — top to transparent, bottom to page bg */}
+          <div class="post-hero-banner__overlay" aria-hidden="true" />
+        </div>
+      </figure>
+    )}
 
     {/* ── Article header ───────────────────────────────────────────────── */}
     <header class="post-article-header mt-6 mb-10">
       {/* Breadcrumb row: series + postType badge */}
       <div class="mb-3 flex flex-wrap items-center gap-2">
-        {
-          typeLabel && (
-            <span class="post-type-badge" data-type={post.data.postType}>
-              <span class="post-type-dot" />
-              {typeLabel}
-            </span>
-          )
-        }
-        {
-          post.data.categories.map((c) => (
-            <a
-              href={categoryPath(locale, c)}
-              class="text-mtj-text/50 hover:text-mtj-accent text-xs font-medium tracking-wide transition"
-            >
-              {c}
-            </a>
-          ))
-        }
+        {typeLabel && (
+          <span class="post-type-badge" data-type={post.data.postType}>
+            <span class="post-type-dot" />
+            {typeLabel}
+          </span>
+        )}
+        {post.data.categories.map((c) => (
+          <a
+            href={categoryPath(locale, c)}
+            class="text-mtj-text/50 hover:text-mtj-accent text-xs font-medium tracking-wide transition"
+          >
+            {c}
+          </a>
+        ))}
       </div>
 
-      {
-        /* Title — modern display type: clamp() keeps it responsive,
+      {/* Title — modern display type: clamp() keeps it responsive,
           line-height 1.1 with tight tracking -0.035em feels modern,
-          and the gradient text uses the accent palette. */
-      }
+          and the gradient text uses the accent palette. */}
       <h1
         class="post-title"
         style="font-size: clamp(1.75rem, 5vw, 2.6rem); line-height: 1.1; letter-spacing: -0.035em; font-weight: 700;"
@@ -196,13 +186,11 @@ const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true
       </h1>
 
       {/* Description */}
-      {
-        post.data.description && (
-          <p class="text-mtj-text/60 mt-4 max-w-2xl text-lg leading-relaxed">
-            {post.data.description}
-          </p>
-        )
-      }
+      {post.data.description && (
+        <p class="text-mtj-text/60 mt-4 max-w-2xl text-lg leading-relaxed">
+          {post.data.description}
+        </p>
+      )}
 
       {/* Meta row */}
       <div class="post-meta-row mt-5 flex flex-wrap items-center gap-x-1 gap-y-2 text-sm">
@@ -210,27 +198,27 @@ const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true
           <Icon name="lucide:calendar-days" width={13} height={13} />
           <time datetime={isoDate(post.data.pubDate)}>{formatDate(post.data.pubDate, locale)}</time>
         </span>
-        <span class="post-meta-sep" aria-hidden="true">·</span>
+        <span class="post-meta-sep" aria-hidden="true">
+          ·
+        </span>
         <span class="post-meta-chip">
           <Icon name="lucide:clock" width={13} height={13} />
           {minutes}
           {t('post.readingTime')}
         </span>
-        {
-          showUpdated && updatedDate && (
-            <>
-              <span class="post-meta-sep" aria-hidden="true">
-                ·
-              </span>
-              <span class="post-meta-chip">
-                <Icon name="lucide:pencil" width={13} height={13} />
-                <time datetime={isoDate(updatedDate)}>
-                  {t('post.updatedOn')} {formatDate(updatedDate, locale)}
-                </time>
-              </span>
-            </>
-          )
-        }
+        {showUpdated && updatedDate && (
+          <>
+            <span class="post-meta-sep" aria-hidden="true">
+              ·
+            </span>
+            <span class="post-meta-chip">
+              <Icon name="lucide:pencil" width={13} height={13} />
+              <time datetime={isoDate(updatedDate)}>
+                {t('post.updatedOn')} {formatDate(updatedDate, locale)}
+              </time>
+            </span>
+          </>
+        )}
       </div>
 
       {/* Divider */}
@@ -241,34 +229,30 @@ const typeLabel = postTypeLabel(post.data.postType, locale, { includeIndex: true
       <slot />
     </div>
 
-    {
-      post.data.tags.length > 0 && (
-        <footer class="border-mtj-border mt-10 flex flex-wrap items-center gap-2 border-t pt-6">
-          <span class="text-mtj-text/70 text-sm font-semibold tracking-wide uppercase">
-            {t('post.tags')}
-          </span>
-          {post.data.tags.map((tag) => (
-            <a href={tagPath(locale, tag)} class="post-tag text-xs">
-              {tag}
-            </a>
-          ))}
-        </footer>
-      )
-    }
+    {post.data.tags.length > 0 && (
+      <footer class="border-mtj-border mt-10 flex flex-wrap items-center gap-2 border-t pt-6">
+        <span class="text-mtj-text/70 text-sm font-semibold tracking-wide uppercase">
+          {t('post.tags')}
+        </span>
+        {post.data.tags.map((tag) => (
+          <a href={tagPath(locale, tag)} class="post-tag text-xs">
+            {tag}
+          </a>
+        ))}
+      </footer>
+    )}
 
     <AuthorCard locale={locale} />
 
     <PostNav prev={prev} next={next} locale={locale} />
 
-    {
-      commentsEnabled ? (
-        <Giscus locale={locale} />
-      ) : (
-        post.data.comments === false && (
-          <p class="text-mtj-text/70 mt-10 text-sm">{t('post.commentsDisabled')}</p>
-        )
+    {commentsEnabled ? (
+      <Giscus locale={locale} />
+    ) : (
+      post.data.comments === false && (
+        <p class="text-mtj-text/70 mt-10 text-sm">{t('post.commentsDisabled')}</p>
       )
-    }
+    )}
   </article>
 
   {/* Translation links exposed for the LanguageSwitcher to read at runtime */}

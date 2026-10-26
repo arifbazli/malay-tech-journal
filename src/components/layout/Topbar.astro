@@ -34,22 +34,16 @@ function isActive(href: string): boolean {
   </a>
 
   <nav class="nav-links" aria-label="Primary">
-    {
-      NAV.map((item) => {
-        const href = localizedPath(item.href, locale);
-        const active = isActive(href);
-        const label = t(`nav.${item.key}` as 'nav.home');
-        return (
-          <a
-            href={href}
-            class:list={[active && 'active']}
-            aria-current={active ? 'page' : undefined}
-          >
-            {label}
-          </a>
-        );
-      })
-    }
+    {NAV.map((item) => {
+      const href = localizedPath(item.href, locale);
+      const active = isActive(href);
+      const label = t(`nav.${item.key}` as 'nav.home');
+      return (
+        <a href={href} class:list={[active && 'active']} aria-current={active ? 'page' : undefined}>
+          {label}
+        </a>
+      );
+    })}
   </nav>
 
   <div class="nav-right">
@@ -73,23 +67,21 @@ function isActive(href: string): boolean {
 
 <nav id="nav-mobile-panel" class="nav-mobile" aria-label="Primary mobile" data-nav-mobile hidden>
   <div class="nav-mobile__inner">
-    {
-      NAV.map((item) => {
-        const href = localizedPath(item.href, locale);
-        const active = isActive(href);
-        const label = t(`nav.${item.key}` as 'nav.home');
-        return (
-          <a
-            href={href}
-            class:list={['nav-mobile__link', active && 'active']}
-            aria-current={active ? 'page' : undefined}
-            data-nav-link
-          >
-            {label}
-          </a>
-        );
-      })
-    }
+    {NAV.map((item) => {
+      const href = localizedPath(item.href, locale);
+      const active = isActive(href);
+      const label = t(`nav.${item.key}` as 'nav.home');
+      return (
+        <a
+          href={href}
+          class:list={['nav-mobile__link', active && 'active']}
+          aria-current={active ? 'page' : undefined}
+          data-nav-link
+        >
+          {label}
+        </a>
+      );
+    })}
   </div>
 </nav>
 

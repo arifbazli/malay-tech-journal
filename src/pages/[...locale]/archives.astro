@@ -25,35 +25,31 @@ const groups = groupByYearMonth(posts, locale);
   <header class="mb-6">
     <h1 class="text-3xl font-bold tracking-tight">{t('archives.title')}</h1>
   </header>
-  {
-    groups.length === 0 ? (
-      <p class="text-[var(--mtj-muted)]">{t('archives.empty')}</p>
-    ) : (
-      <div id="archives">
-        {groups.map((g, gi) => {
-          const yearPosts = g.months.flatMap((m) => m.posts);
-          return (
-            <section class:list={['year-block', { first: gi === 0 }]}>
-              <time class="year">{g.year}</time>
-              <ul>
-                {yearPosts.map((p) => (
-                  <li>
-                    <span class="day">
-                      {formatDate(p.data.pubDate, locale, { day: '2-digit' })}
-                    </span>
-                    <span class="month">
-                      {formatDate(p.data.pubDate, locale, { month: 'short' })}
-                    </span>
-                    <a href={postPath(p)}>{p.data.title}</a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-      </div>
-    )
-  }
+  {groups.length === 0 ? (
+    <p class="text-[var(--mtj-muted)]">{t('archives.empty')}</p>
+  ) : (
+    <div id="archives">
+      {groups.map((g, gi) => {
+        const yearPosts = g.months.flatMap((m) => m.posts);
+        return (
+          <section class:list={['year-block', { first: gi === 0 }]}>
+            <time class="year">{g.year}</time>
+            <ul>
+              {yearPosts.map((p) => (
+                <li>
+                  <span class="day">{formatDate(p.data.pubDate, locale, { day: '2-digit' })}</span>
+                  <span class="month">
+                    {formatDate(p.data.pubDate, locale, { month: 'short' })}
+                  </span>
+                  <a href={postPath(p)}>{p.data.title}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  )}
 </BaseLayout>
 
 <style>
