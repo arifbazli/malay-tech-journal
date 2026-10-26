@@ -1,5 +1,5 @@
 ---
-title: 'bakat muda Malaysia di pentas cloud & AI'
+title: 'Bakat muda Malaysia di pentas cloud & AI'
 description: 'Gen Z Malaysia dah bina, bukan sekadar pakai. Cloud, AI, open source — bakat ada, cuma ramai yang senyap.'
 pubDate: 2026-06-30
 tags:

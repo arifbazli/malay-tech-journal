@@ -11,8 +11,6 @@ categories: ['Ground Truth']
 translationKey: gt-03-ai-regulation
 toc: true
 postType: essay
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — AI regulation 2026'
 ---
 
 ## Why Engineers Need to Care About Regulation

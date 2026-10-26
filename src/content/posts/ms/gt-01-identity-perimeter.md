@@ -10,19 +10,17 @@ categories: ['Ground Truth']
 translationKey: gt-01-identity-perimeter
 toc: true
 postType: essay
-heroImage: /images/covers/webp/cover-tech-essay.webp
-heroImageAlt: 'Ground truth essay — identity is the new perimeter'
 ---
 
 ## Pendahuluan: Bila Firewall Tidak Lagi Relevan
 
-Ada satu soalan yang saya selalu tanya bila onboarding engineer baru ke projek cloud security:
+Ada satu soalan yang aku selalu tanya bila onboarding engineer baru ke projek cloud security:
 
 > "Kalau penyerang dah ada username dan password yang sah, apa yang kita ada untuk hentikan dia?"
 
 Jawapan yang biasa: _"Kita ada MFA."_
 
-Dan saya kata: _"Apa jenis MFA? TOTP? SMS? Hardware key? Boleh bypass tak? Ada session hijacking tak? Credential yang kena steal tu — dari laptop pekerja, dari CI/CD pipeline, atau dari third-party contractor yang guna laptop kerja untuk stream Netflix?"_
+Dan aku kata: _"Apa jenis MFA? TOTP? SMS? Hardware key? Boleh bypass tak? Ada session hijacking tak? Credential yang kena steal tu — dari laptop pekerja, dari CI/CD pipeline, atau dari third-party contractor yang guna laptop kerja untuk stream Netflix?"_
 
 Biasanya senyap.
 

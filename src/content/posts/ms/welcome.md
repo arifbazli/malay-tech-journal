@@ -1,5 +1,5 @@
 ---
-title: 'selamat datang'
+title: 'Selamat datang'
 description: 'Jurnal kerja pasal cloud security, AI, dan agentic engineering. Nota lapangan — bukan tutorial.'
 pubDate: 2026-06-30
 tags:

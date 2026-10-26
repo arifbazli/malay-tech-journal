@@ -2,7 +2,7 @@
   "name": "malay-tech-journal",
   "version": "1.1.0",
   "type": "module",
-  "description": "A Chirpy-inspired, single-template, multilingual Astro v7 theme with Tailwind v4, MDX, Pagefind, and Giscus. Dark-only.",
+  "description": "Malay Tech Journal: a bilingual (Bahasa Melayu / English) blog on cloud security, AI guardrails and defence tech, built with Astro.",
   "license": "MIT",
   "private": false,
   "engines": {
@@ -83,14 +83,12 @@
     "zod": "^4.4.3"
   },
   "keywords": [
-    "astro",
-    "astro-theme",
-    "chirpy",
-    "tailwindcss",
-    "mdx",
-    "pagefind",
-    "giscus",
-    "i18n",
-    "blog"
+    "malay-tech-journal",
+    "cloud-security",
+    "ai-guardrails",
+    "ai-security",
+    "bahasa-melayu",
+    "blog",
+    "astro"
   ]
 }

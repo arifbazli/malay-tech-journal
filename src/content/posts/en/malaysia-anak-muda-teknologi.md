@@ -1,5 +1,5 @@
 ---
-title: 'young Malaysian talent on the cloud & AI stage'
+title: 'Young Malaysian talent on the cloud & AI stage'
 description: "Gen Z Malaysia is building, not just using. Cloud, AI, open source — talent is there, it's just quiet."
 pubDate: 2026-06-30
 tags:

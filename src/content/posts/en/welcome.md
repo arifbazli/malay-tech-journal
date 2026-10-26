@@ -1,5 +1,5 @@
 ---
-title: 'welcome'
+title: 'Welcome'
 description: 'A work journal on cloud security, AI, and agentic engineering. Field notes — not tutorials.'
 pubDate: 2026-06-30
 tags:

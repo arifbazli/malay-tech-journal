@@ -249,11 +249,11 @@ Vendor guardrails tidak address ini kerana ia berlaku pada model level, bukan ap
 
 Apa yang boleh civilian AI security engineers pelajari dari Malaysia's defence AI journey?
 
-### 1. Threat Model Anda Mesti Include State Actors
+### 1. Threat Model Kau Mesti Include State Actors
 
 Kebanyakan corporate threat models focus pada opportunistic cybercriminals dan ransomware groups. Defence experience tunjukkan bahawa **state-sponsored actors beroperasi dengan dwell time 6-18 bulan** dan beroperasi dengan kesabaran yang jauh berbeza.
 
-Kalau anda bina critical infrastructure AI — cloud security platforms, financial AI, healthcare AI — threat model anda perlu include patient, well-resourced adversaries.
+Kalau kau bina critical infrastructure AI — cloud security platforms, financial AI, healthcare AI — threat model kau perlu include patient, well-resourced adversaries.
 
 ### 2. AI Systems Adalah Soft Target Dalam Supply Chain
 

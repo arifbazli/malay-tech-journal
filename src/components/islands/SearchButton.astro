@@ -11,7 +11,8 @@
  */
 import { useTranslations, withBase, localizedPath } from '../../i18n/utils';
 import type { Locale } from '../../config';
-import { getArticles, getSeriesWithCount, categoryPath } from '../../utils/posts';
+import { getArticles, getSeriesSummaries, categoryPath } from '../../utils/posts';
+import { postSeries, seriesInfo } from '../../utils/taxonomy';
 
 interface Props {
   locale: Locale;
@@ -37,31 +38,10 @@ const i18n = {
 // Recent articles (top 5)
 const recent = (await getArticles(locale)).slice(0, 5);
 
-// Series for "Lompat Ke Siri"
-const series = await getSeriesWithCount(locale, 3);
+// Every series for "Lompat Ke Siri" (was capped at 3, which hid Military AI).
+const series = await getSeriesSummaries(locale);
 
-function seriesDisplay(name: string): string {
-  const s = name.toLowerCase();
-  if (s.includes('ground') || s.includes('truth')) return ms ? 'Ground Truth' : 'Ground Truth';
-  if (s.includes('guardrail')) return ms ? 'AI Guardrail Engineering' : 'AI Guardrail Engineering';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
-    return ms ? 'Military AI & Defence' : 'Military AI & Defence';
-  if (s.includes('cloud') && s.includes('security'))
-    return ms ? 'Cloud Security Engineering' : 'Cloud Security Engineering';
-  return name;
-}
-function seriesPillMiniClass(name: string): string {
-  const s = name.toLowerCase();
-  if (s.includes('ground') || s.includes('truth')) return 'pill-mini--ground';
-  if (s.includes('guardrail')) return 'pill-mini--ai';
-  if (s.includes('military') || s.includes('defence') || s.includes('defense'))
-    return 'pill-mini--mil';
-  return 'pill-mini--ai';
-}
-function getSeries(post: any): string {
-  return (post.data.categories as string[])[0] ?? '';
-}
-function postHref(post: any): string {
+function postHref(post: { id: string }): string {
   return localizedPath(`/posts/${post.id.split('/').pop()}/`, locale);
 }
 ---
@@ -162,8 +142,8 @@ function postHref(post: any): string {
               </svg>
               <span class="label">{post.data.title}</span>
               <span class="meta">
-                <span class={`pill-mini ${seriesPillMiniClass(getSeries(post))}`}>
-                  {seriesDisplay(getSeries(post))}
+                <span class={`pill-mini pill-mini--${seriesInfo(postSeries(post)).tone}`}>
+                  {seriesInfo(postSeries(post)).short}
                 </span>
               </span>
             </a>
@@ -189,9 +169,9 @@ function postHref(post: any): string {
               >
                 <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
-              <span class="label">{seriesDisplay(s.name)}</span>
+              <span class="label">{seriesInfo(s.name).name}</span>
               <span class="meta">
-                <span class={`pill-mini ${seriesPillMiniClass(s.name)}`}>
+                <span class={`pill-mini pill-mini--${seriesInfo(s.name).tone}`}>
                   {s.count} {ms ? 'artikel' : 'posts'}
                 </span>
               </span>
