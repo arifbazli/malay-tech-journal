@@ -11,7 +11,7 @@ categories: ['AI Guardrail Engineering']
 postType: field-note
 toc: true
 translationKey: 'age-05-guardrails-october-2026'
-draft: true
+draft: false
 ---
 
 > Field notes on a busy month for AI guardrails: what attackers did, what the research showed, what vendors and governments changed, and what it means for teams building on LLMs and agents.
