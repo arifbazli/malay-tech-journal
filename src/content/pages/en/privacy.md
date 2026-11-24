@@ -41,9 +41,10 @@ policy applies.
 
 ## If you contact me
 
-If you message me on LinkedIn, the message is handled under
-[LinkedIn's privacy policy](https://www.linkedin.com/legal/privacy-policy). I use
-it only to reply and do not share it.
+If you email me or message me on LinkedIn, I use your message and address
+only to reply and do not share them. Email is handled by Google under the
+[Google Privacy Policy](https://policies.google.com/privacy); LinkedIn messages
+under [LinkedIn's privacy policy](https://www.linkedin.com/legal/privacy-policy).
 
 ## Your rights
 
@@ -59,5 +60,6 @@ this page will be updated first and the "Last updated" date changed.
 
 ## Contact
 
-Questions about this policy: message
+Questions about this policy: email
+[arifbazli@gmail.com](mailto:arifbazli@gmail.com) or message
 [Arif Bazli on LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171).

@@ -56,4 +56,4 @@ Yes. The writing is licensed under [CC BY 4.0](https://creativecommons.org/licen
 
 ## Contact
 
-The best way to reach me is a message on [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171). For code, see my projects on [GitHub](https://github.com/arifbazli). I read everything; replies may be slow.
+The best way to reach me is email at [arifbazli@gmail.com](mailto:arifbazli@gmail.com) or a message on [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171). For code, see my projects on [GitHub](https://github.com/arifbazli). I read everything; replies may be slow.

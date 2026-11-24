@@ -41,9 +41,11 @@ tersebut terpakai.
 
 ## Jika anda menghubungi saya
 
-Jika anda menghantar mesej di LinkedIn, mesej itu dikendalikan di bawah
-[dasar privasi LinkedIn](https://www.linkedin.com/legal/privacy-policy). Saya
-menggunakannya hanya untuk membalas dan tidak berkongsinya.
+Jika anda menghantar e-mel atau mesej di LinkedIn, saya menggunakan mesej dan
+alamat anda hanya untuk membalas dan tidak berkongsinya. E-mel dikendalikan oleh
+Google di bawah [Dasar Privasi Google](https://policies.google.com/privacy);
+mesej LinkedIn di bawah
+[dasar privasi LinkedIn](https://www.linkedin.com/legal/privacy-policy).
 
 ## Hak anda
 
@@ -60,5 +62,6 @@ ini akan dikemaskini dahulu dan tarikh "Kemaskini terakhir" diubah.
 
 ## Hubungi
 
-Soalan tentang dasar ini: hantar mesej kepada
+Soalan tentang dasar ini: e-mel ke
+[arifbazli@gmail.com](mailto:arifbazli@gmail.com) atau hantar mesej kepada
 [Arif Bazli di LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171).
