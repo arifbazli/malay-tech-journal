@@ -114,14 +114,12 @@ export const messages = {
     'author.writtenBy': 'Written by',
     'author.bio':
       'Writes field notes on cloud security, AI guardrails and defence tech, in Bahasa Melayu and English, for engineers who build and defend production systems.',
-    'footer.rss': 'RSS feed',
     'home.eyebrow': 'Bilingual field notes · EN / BM',
     'home.title': 'Cloud security and AI guardrails, from production, not press releases.',
     'home.lede':
       'Verified, source-linked notes on what actually breaks in cloud and AI systems: identity, posture, guardrails, and the vendor claims worth checking. Written in Malaysia for engineers everywhere.',
     'home.ctaRead': 'Start reading',
     'home.ctaSeries': 'Browse series',
-    'home.ctaRss': 'Subscribe via RSS',
     'home.latest': 'Latest',
     'home.series': 'Series',
     'home.archive': 'More articles',
@@ -248,14 +246,12 @@ export const messages = {
     'author.writtenBy': 'Ditulis oleh',
     'author.bio':
       'Menulis nota lapangan tentang cloud security, AI guardrail dan teknologi pertahanan, dalam Bahasa Melayu dan English, untuk engineer yang membina dan mempertahankan sistem production.',
-    'footer.rss': 'Suapan RSS',
     'home.eyebrow': 'Nota lapangan dwibahasa · BM / EN',
     'home.title': 'Cloud security dan AI guardrail, dari production, bukan siaran akhbar.',
     'home.lede':
       'Nota yang disahkan dan bersumber tentang apa yang sebenarnya rosak dalam sistem cloud dan AI: identiti, posture, guardrail, dan dakwaan vendor yang patut disemak. Ditulis di Malaysia untuk engineer di mana-mana.',
     'home.ctaRead': 'Mula membaca',
     'home.ctaSeries': 'Lihat siri',
-    'home.ctaRss': 'Langgan RSS',
     'home.latest': 'Terbaru',
     'home.series': 'Siri',
     'home.archive': 'Artikel lain',
