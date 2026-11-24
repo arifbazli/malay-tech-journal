@@ -17,6 +17,11 @@ on:
       - 'package.json'
       - 'bun.lock'
       - '.github/workflows/deploy-cloudflare.yml'
+  # Daily rebuild so the Projects page (built from the GitHub API at build
+  # time, see src/utils/github-projects.ts) picks up new repositories,
+  # renames and activity without a code change.
+  schedule:
+    - cron: '23 2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -64,6 +69,9 @@ jobs:
           PUBLIC_GISCUS_REPO_ID: ${{ vars.PUBLIC_GISCUS_REPO_ID }}
           PUBLIC_GISCUS_CATEGORY: ${{ vars.PUBLIC_GISCUS_CATEGORY }}
           PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.PUBLIC_GISCUS_CATEGORY_ID }}
+          # Read-only token for the build-time GitHub API call on the
+          # Projects page (avoids the anonymous 60 requests/hour limit).
+          GITHUB_TOKEN: ${{ github.token }}
         run: bun run build
 
       - name: Deploy to Cloudflare Pages
