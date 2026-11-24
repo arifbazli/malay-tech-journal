@@ -48,7 +48,7 @@ Yes. Use the **MS / EN** switch in the top bar. It appears on every page that ha
 
 ### How often do you publish?
 
-There is no fixed schedule. I write when something is worth writing down, usually at least once a month. Subscribe to the [RSS feed](/en/rss.xml) to get new posts.
+There is no fixed schedule. I write when something is worth writing down, usually at least once a month.
 
 ### Can I share or repost?
 

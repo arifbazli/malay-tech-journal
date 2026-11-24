@@ -17,7 +17,8 @@ const t = useTranslations(locale);
 
 // Social links come from SOCIALS (src/config.ts) so the footer, SEO and
 // any other surface always point at the same profile. GitHub uses the
-// same PUBLIC_GITHUB_HANDLE as REPO.url; RSS follows the active locale.
+// same PUBLIC_GITHUB_HANDLE as REPO.url. The RSS feed is linked from the
+// homepage hero and post author cards, not the footer.
 const links = [
   ...SOCIALS.map((s) => ({ ...s, external: !s.href.startsWith('mailto:') })),
   ...(REPO.handle
@@ -30,12 +31,6 @@ const links = [
         },
       ]
     : []),
-  {
-    label: t('footer.rss'),
-    href: localizedPath('/rss.xml', locale),
-    icon: 'lucide:rss',
-    external: false,
-  },
   ...(SITE.footer.showPrivacyPolicy
     ? [
         {
