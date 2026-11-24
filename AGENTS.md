@@ -333,7 +333,7 @@ bun run pagefind     # Re-run Pagefind only, after astro build
 
 | Workflow | Trigger | Notes |
 | --- | --- | --- |
-| `deploy-cloudflare.yml` | Push to `main` | **Canonical live deploy.** `bunx wrangler pages deploy` using `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets. Cloudflare's own Git integration must stay disabled. |
+| `deploy-cloudflare.yml` | Push to `main` + daily 02:23 UTC | **Canonical live deploy.** `bunx wrangler pages deploy` using `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` secrets. Cloudflare's own Git integration must stay disabled. |
 | `deploy.yml` | Push to `main` | GitHub Pages build-health check; only publishes if Pages is enabled (currently isn't). |
 | `pr-checks.yml` | PR + push to `main` | Change-detected lint/format/markdownlint, typecheck, test, build. PRs build in fast mode (`CI_SKIP_*` env vars). |
 | `weekly.yml` | Mon 06:17 UTC + manual | Full lint/typecheck/build/test smoke on a clean runner. |
