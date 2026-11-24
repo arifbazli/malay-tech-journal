@@ -48,7 +48,7 @@ Ada. Guna suis **MS / EN** di bar atas. Suis tu muncul pada setiap halaman yang 
 
 ### Berapa kerap post?
 
-Takde jadual tetap. Aku tulis bila ada benda yang berbaloi ditulis, biasanya sekurang-kurangnya sebulan sekali. Langgan [suapan RSS](/rss.xml) untuk dapat post baru.
+Takde jadual tetap. Aku tulis bila ada benda yang berbaloi ditulis, biasanya sekurang-kurangnya sebulan sekali.
 
 ### Boleh share / repost?
 

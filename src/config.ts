@@ -128,7 +128,7 @@ export const NAV: readonly NavItem[] = [
  */
 export const AUTHOR_PROFILE: AuthorProfile = {
   role: { en: '', ms: '' },
-  organization: 'Deloitte',
+  organization: '',
   yearsOfExperience: 0,
   location: { en: 'Kuala Lumpur, Malaysia', ms: 'Kuala Lumpur, Malaysia' },
   focusAreas: [
@@ -137,16 +137,7 @@ export const AUTHOR_PROFILE: AuthorProfile = {
     { en: 'Agentic AI security', ms: 'Keselamatan agentic AI' },
     { en: 'Policy-as-code and DevSecOps', ms: 'Policy-as-code dan DevSecOps' },
   ],
-  certifications: [
-    {
-      name: 'AWS Certified Solutions Architect – Associate',
-      url: 'https://www.credly.com/badges/8b08b2b3-c026-4729-ba03-4ddb823f8547',
-    },
-    {
-      name: 'AWS Certified Cloud Practitioner',
-      url: 'https://www.credly.com/badges/45055a3a-4ce7-42bc-aa48-1aa6ca0f6d9f',
-    },
-  ],
+  certifications: [],
 };
 
 const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL || 'arifbazli@gmail.com';
