@@ -1,39 +1,111 @@
 ---
 /**
- * AuthorCard — short "who wrote this" block at the end of every post.
- * Name, avatar and links come from SITE.author / SOCIALS (src/config.ts);
- * the bio is a localized UI string (author.bio in src/i18n/ui.ts).
+ * AuthorCard — "who wrote this" block.
+ *
+ * - `variant="post"` (default): compact card at the end of every post.
+ * - `variant="profile"`: fuller "About the author" section for the About
+ *   page, adding role, experience, focus areas and certifications from
+ *   AUTHOR_PROFILE. Empty profile fields are not rendered.
+ *
+ * Name, avatar and links come from SITE.author / SOCIALS / REPO
+ * (src/config.ts); the bio is a localized UI string (author.bio).
  */
 import { Image } from 'astro:assets';
 import { Icon } from 'astro-icon/components';
-import { SITE, SITE_IMAGES, SOCIALS, type Locale } from '../../config';
+import { AUTHOR_PROFILE, REPO, SITE, SITE_IMAGES, SOCIALS, type Locale } from '../../config';
 import { localizedPath, useTranslations } from '../../i18n/utils';
 
 interface Props {
   locale: Locale;
+  variant?: 'post' | 'profile';
 }
 
-const { locale } = Astro.props;
+const { locale, variant = 'post' } = Astro.props;
 const t = useTranslations(locale);
+const profile = variant === 'profile';
+
+const role = AUTHOR_PROFILE.role[locale];
+const roleLine = [role, AUTHOR_PROFILE.organization].filter(Boolean).join(' · ');
+const metaLine = [
+  AUTHOR_PROFILE.yearsOfExperience > 0
+    ? t('author.experience').replace('{n}', String(AUTHOR_PROFILE.yearsOfExperience))
+    : '',
+  AUTHOR_PROFILE.location[locale],
+]
+  .filter(Boolean)
+  .join(' · ');
+
+const links = [
+  ...SOCIALS,
+  ...(REPO.handle
+    ? [{ label: 'GitHub', href: `https://github.com/${REPO.handle}`, icon: 'simple-icons:github' }]
+    : []),
+];
 ---
 
-<aside class="mtj-author" aria-label={t('post.author')}>
+<aside
+  class:list={['mtj-author', { 'mtj-author--profile': profile }]}
+  aria-label={profile ? t('author.aboutHeading') : t('post.author')}
+>
   <Image
     src={SITE_IMAGES.avatar}
-    alt=""
-    width={56}
-    height={56}
+    alt={profile ? SITE.author.name : ''}
+    width={profile ? 96 : 56}
+    height={profile ? 96 : 56}
     class="mtj-author__avatar"
     loading="lazy"
   />
   <div class="mtj-author__body">
-    <p class="mtj-author__eyebrow">{t('author.writtenBy')}</p>
-    <p class="mtj-author__name">
-      <a href={localizedPath('/about/', locale)}>{SITE.author.name}</a>
-    </p>
+    {profile ? (
+      <>
+        <h2 class="mtj-author__eyebrow">{t('author.aboutHeading')}</h2>
+        <p class="mtj-author__name">{SITE.author.name}</p>
+        {roleLine && <p class="mtj-author__role">{roleLine}</p>}
+        {metaLine && <p class="mtj-author__meta">{metaLine}</p>}
+      </>
+    ) : (
+      <>
+        <p class="mtj-author__eyebrow">{t('author.writtenBy')}</p>
+        <p class="mtj-author__name">
+          <a href={localizedPath('/about/', locale)}>{SITE.author.name}</a>
+        </p>
+        {roleLine && <p class="mtj-author__role">{roleLine}</p>}
+      </>
+    )}
     <p class="mtj-author__bio">{t('author.bio')}</p>
-    <ul class="mtj-author__links">
-      {SOCIALS.map((s) => (
+
+    {profile && AUTHOR_PROFILE.focusAreas.length > 0 && (
+      <div class="mtj-author__group">
+        <h3 class="mtj-author__label">{t('author.focus')}</h3>
+        <ul class="mtj-author__chips">
+          {AUTHOR_PROFILE.focusAreas.map((area) => (
+            <li>{area[locale]}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {profile && AUTHOR_PROFILE.certifications.length > 0 && (
+      <div class="mtj-author__group">
+        <h3 class="mtj-author__label">{t('author.certifications')}</h3>
+        <ul class="mtj-author__certs">
+          {AUTHOR_PROFILE.certifications.map((cert) => (
+            <li>
+              {cert.url ? (
+                <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                  {cert.name}
+                </a>
+              ) : (
+                cert.name
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    <ul class="mtj-author__links" aria-label={t('author.links')}>
+      {links.map((s) => (
         <li>
           <a
             href={s.href}
@@ -43,18 +115,21 @@ const t = useTranslations(locale);
             title={s.label}
           >
             <Icon name={s.icon} width={16} height={16} aria-hidden="true" />
+            {profile && <span>{s.label}</span>}
           </a>
         </li>
       ))}
-      <li>
-        <a
-          href={localizedPath('/rss.xml', locale)}
-          aria-label={t('footer.rss')}
-          title={t('footer.rss')}
-        >
-          <Icon name="lucide:rss" width={16} height={16} aria-hidden="true" />
-        </a>
-      </li>
+      {!profile && (
+        <li>
+          <a
+            href={localizedPath('/rss.xml', locale)}
+            aria-label={t('footer.rss')}
+            title={t('footer.rss')}
+          >
+            <Icon name="lucide:rss" width={16} height={16} aria-hidden="true" />
+          </a>
+        </li>
+      )}
     </ul>
   </div>
 </aside>

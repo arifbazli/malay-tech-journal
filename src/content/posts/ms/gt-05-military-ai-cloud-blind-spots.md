@@ -1,5 +1,5 @@
 ---
-title: 'Tergesa-gesa AI Ketenteraan Malaysia: Ambisi Berdaulat, Titik Buta Keselamatan Awan'
+title: 'Tergesa-gesa AI ketenteraan Malaysia: ambisi berdaulat, titik buta keselamatan awan'
 description: 'AI luar talian TactiDrone adalah pengakuan senyap tentang risiko C2 bergantung awan. Jurang yang sama yang menggangu keselamatan awan kerajaan — bakat, silo, rasuah — juga akan menguji pelaksanaan AI ketenteraan Malaysia.'
 pubDate: 2026-07-27
 tags:

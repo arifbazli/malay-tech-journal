@@ -1,5 +1,5 @@
 ---
-title: "Guardrail Vendors vs Production Reality — What AWS, Azure and Google Don't Tell You"
+title: "Guardrail vendors vs production reality — what AWS, Azure and Google don't tell you"
 description: 'AWS Bedrock Guardrails, Azure AI Content Safety, Google Vertex AI Safety — all look solid in documentation. But in production, there are real gaps between vendor promises and actual protection. Data from Palo Alto Unit42, AML bypass research, and production latency benchmarks.'
 pubDate: 2026-07-11
 tags:

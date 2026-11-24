@@ -1,5 +1,5 @@
 ---
-title: 'AI on the Battlefield: Project Maven, Drone Swarms & JADC2'
+title: 'AI on the battlefield: Project Maven, drone swarms & JADC2'
 description: "From thousand-unit drone swarms to AI targeting systems making decisions in milliseconds — AI has transformed warfare. This isn't science fiction. It's happening now."
 pubDate: 2026-07-07
 tags:

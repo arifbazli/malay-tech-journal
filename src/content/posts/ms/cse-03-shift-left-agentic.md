@@ -1,5 +1,5 @@
 ---
-title: 'Shift-Left → Auto-Remediation → Agentic Remediation: Landskap Vendor 2026 dan Palo Alto Cortex Cloud Deep Dive'
+title: 'Shift-left → auto-remediation → agentic remediation: landskap vendor 2026 dan Palo Alto Cortex Cloud deep dive'
 description: 'Dari Checkov block PR dalam CI ke AI agent execute one-click fix merentasi code, cloud, dan SOC — peta vendor-by-vendor bagaimana cloud security bergerak dari cari isu ke baiki isu, dan di mana Palo Alto Cortex Cloud platform berada dalam perlumbaan ni.'
 pubDate: 2026-07-15
 tags:

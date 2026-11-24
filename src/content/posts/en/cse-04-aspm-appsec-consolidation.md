@@ -1,5 +1,5 @@
 ---
-title: 'ASPM: What Actually Changes When You Merge SAST, DAST, and SCA Into One Risk View'
+title: 'ASPM: what actually changes when you merge SAST, DAST, and SCA into one risk view'
 description: "Three vendors independently ship ASPM in 2026, converging on one idea: stop treating scanner output as separate alerts, rank by what's actually reachable and exploitable. What's verified, what's vendor framing, and one vendor's bet on AI-written code."
 pubDate: 2026-09-22
 tags:

@@ -36,6 +36,16 @@ const links = [
     icon: 'lucide:rss',
     external: false,
   },
+  ...(SITE.footer.showPrivacyPolicy
+    ? [
+        {
+          label: t('footer.privacy'),
+          href: localizedPath('/privacy/', locale),
+          icon: 'lucide:shield',
+          external: false,
+        },
+      ]
+    : []),
 ];
 ---
 

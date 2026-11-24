@@ -4,8 +4,9 @@
 
 > Agentic development guide for `arifbazli/malay-tech-journal`: a personal
 > bilingual (Bahasa Melayu / English) blog on cloud security, AI guardrail
-> engineering, and regional defence tech. Built solo via prompt-driven
-> development — no manual IDE edits.
+> engineering, and regional defence tech. Built solo with an AI-assisted
+> engineering workflow: every change goes through a PR with CI quality gates
+> (lint, typecheck, format, tests, build).
 
 This repo started as a fork of the upstream [`chirping-astro`](https://github.com/kannansuresh/chirping-astro)
 theme, rebranded in place. It is **not** that theme's template repo — there
@@ -261,6 +262,22 @@ the title) and a first category that names its series.
 title, date). Only set `heroImage` for a cover made for that post — don't
 reuse a generic cover across posts; leave it out and the generated card is
 used for social previews instead.
+
+## Projects page and author profile
+
+`/projects` is built from the owner's public GitHub repositories at build
+time (`src/utils/github-projects.ts`). Forks, archived repos and the profile
+README repo are skipped. Add or edit a repo's outcome line (problem, what was
+built, result; EN and MS) in `PROJECT_HIGHLIGHTS`; its key order is the
+featured order, and other repos follow by latest push with their GitHub
+description. If the API is unreachable the build uses a fallback list and
+logs a warning instead of failing. `deploy-cloudflare.yml` rebuilds daily so
+the page stays current.
+
+The About page and homepage byline read `AUTHOR_PROFILE` in `src/config.ts`
+(role, organisation, years of experience, location, focus areas,
+certifications). Empty values are not rendered, so only list verified facts.
+The Email icon appears only when `PUBLIC_CONTACT_EMAIL` is set.
 
 ## Structured data & licence
 

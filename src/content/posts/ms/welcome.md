@@ -57,7 +57,7 @@ Boleh. Aku tak lock apa-apa. Ambil, remix, credit kalau nak.
 
 **RSS** — ada RSS feed kat `/rss.xml` untuk yang nak follow tanpa check site.
 
-**Contact** — `desktop_onsite@aol.com` kalau ada benda yang worth cakap secara private. Reply mungkin lambat — aku bukan full-time content creator, ni side project.
+**Contact** — mesej aku di [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171) kalau ada benda yang worth cakap secara private. Reply mungkin lambat — aku bukan full-time content creator, ni side project.
 
 **Senarai post yang ada kat site:**
 

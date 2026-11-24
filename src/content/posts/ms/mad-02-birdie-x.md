@@ -1,5 +1,5 @@
 ---
-title: 'Birdie-X Malaysia: Ratusan Ringgit Sebatang — Bagaimana Laser Anak Negara Mengubah Persamaan Kos'
+title: 'Birdie-X Malaysia: ratusan ringgit sebatang — bagaimana laser anak negara mengubah persamaan kos'
 description: 'Birdie-X, laser anti-dron RMAF + STRIDE + Benua Defence yang dilancarkan Jun 2026, menggantikan peluru berpintas jutaan ringgit dengan pancaran tenaga tinggi. Kos setiap pertempuran jatuh ke ratusan ringgit. Berikut adalah apa kata nota lapangan — dan apa yang tidak dikatakannya.'
 pubDate: 2026-07-28
 tags:

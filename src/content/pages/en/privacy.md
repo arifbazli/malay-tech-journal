@@ -1,120 +1,63 @@
 ---
 title: Privacy Policy
-description: How this site collects, uses, and protects personal data.
+description: What data Malay Tech Journal collects when you read it (almost none), who processes it, and how to contact the author.
 translationKey: privacy
 ---
 
-This Privacy Policy explains how **[SITE_NAME]** ("we", "us", or "our")
-collects, uses, and protects information when you visit **[SITE_URL]**.
+This policy covers **Malay Tech Journal** at
+[malay-tech-journal.pages.dev](https://malay-tech-journal.pages.dev), a personal
+blog run by Arif Bazli.
 
-> Replace values in [BRACKETS] to customize this policy for your site.
-> This template is informational and not legal advice.
+- Effective date: 24 November 2026
+- Last updated: 24 November 2026
 
-## 1. Who we are
+## The short version
 
-- Website owner: **[OWNER_NAME / LEGAL_ENTITY]**
-- Contact email: **[CONTACT_EMAIL]**
-- Effective date: **[EFFECTIVE_DATE]**
-- Last updated: **[LAST_UPDATED_DATE]**
+This site has no accounts, no comments, no newsletter, no analytics and no
+advertising. It does not set cookies or store anything in your browser. The
+only personal data involved is the technical request data every website
+receives, handled by the hosting provider.
 
-## 2. Information we collect
+## What is collected, and by whom
 
-Depending on how you use this site, we may process:
+- **Hosting (Cloudflare Pages).** When you load a page, Cloudflare receives
+  your IP address, browser user agent, the page requested and the referrer,
+  as any web server does. Cloudflare uses this to deliver the site, protect it
+  from abuse and report network errors. See the
+  [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/).
+- **Diagrams (jsDelivr).** Posts with diagrams load the Mermaid library from
+  the jsDelivr CDN, which receives the same technical request data. See the
+  [jsDelivr privacy policy](https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net).
+- **Search.** Site search runs entirely in your browser; your search terms are
+  not sent anywhere.
 
-- Usage data: pages viewed, referrer, browser, device type, and approximate
-  region.
-- Technical data: IP address, user agent, and performance/error logs.
-- Information you provide directly: email or message content when you contact us.
-- Comment data (if enabled): profile and comment metadata handled by
-  **[COMMENT_PROVIDER, e.g., Giscus/GitHub]**.
+The author does not receive or keep visitor logs and does not try to identify
+visitors.
 
-## 3. How we use information
+## External links
 
-We use data to:
+Posts link to other websites. Once you follow a link, that site's own privacy
+policy applies.
 
-- Operate and secure the site.
-- Understand traffic and improve content.
-- Respond to support or contact requests.
-- Prevent abuse, fraud, and malicious activity.
-- Comply with legal obligations.
+## If you contact me
 
-## 4. Cookies and similar technologies
+If you message me on LinkedIn, the message is handled under
+[LinkedIn's privacy policy](https://www.linkedin.com/legal/privacy-policy). I use
+it only to reply and do not share it.
 
-This site may use cookies or local storage for:
+## Your rights
 
-- Essential functionality (for example, saving theme preference).
-- Analytics (if enabled).
-- Third-party embeds or comment systems.
+Under Malaysia's Personal Data Protection Act 2010 and similar laws you can ask
+what personal data is held about you and ask for it to be corrected or
+deleted. Because this site keeps no visitor data itself, requests about
+request logs are best directed to Cloudflare.
 
-You can control cookies through your browser settings. If your region requires
-consent banners, add one and configure it to your legal requirements.
+## Changes
 
-## 5. Analytics and third-party services
+If this policy changes, for example because comments or analytics are added,
+this page will be updated first and the "Last updated" date changed.
 
-We may use third-party processors that collect information under their own
-privacy terms:
+## Contact
 
-- Hosting/CDN: **[HOSTING_PROVIDER]**
-- Analytics: **[ANALYTICS_PROVIDER or "Not used"]**
-- Comments: **[COMMENT_PROVIDER or "Not used"]**
-- Email/newsletter: **[EMAIL_PROVIDER or "Not used"]**
-
-Please review each provider's privacy policy before using related features.
-
-## 6. Legal basis (EEA/UK, if applicable)
-
-If GDPR or UK GDPR applies, we process data based on one or more of:
-
-- Consent
-- Legitimate interests
-- Contract performance
-- Legal obligation
-
-Specify the legal basis in your data inventory for each processing activity.
-
-## 7. Data retention
-
-We retain data only as long as needed for the purposes above, including
-security and legal compliance.
-
-- Analytics data retention: **[RETENTION_PERIOD]**
-- Contact messages retention: **[RETENTION_PERIOD]**
-- Server logs retention: **[RETENTION_PERIOD]**
-
-## 8. International transfers
-
-If your providers process data outside your country, data transfer safeguards
-may apply (for example, Standard Contractual Clauses).
-
-## 9. Your privacy rights
-
-Depending on your location, you may have rights to access, correct, delete,
-restrict, or object to processing of your personal data.
-
-To make a request, contact: **[PRIVACY_CONTACT_EMAIL]**
-
-If you are in the EEA/UK, you may also lodge a complaint with your local data
-protection authority.
-
-## 10. Children's privacy
-
-This site is not directed to children under **[MINIMUM_AGE, e.g., 13 or 16]**.
-We do not knowingly collect personal data from children.
-
-## 11. Security
-
-We use reasonable technical and organizational safeguards, but no method of
-transmission or storage is 100% secure.
-
-## 12. Changes to this policy
-
-We may update this Privacy Policy from time to time. Changes are effective when
-posted on this page with an updated "Last updated" date.
-
-## 13. Contact
-
-For privacy questions, contact:
-
-- Name: **[PRIVACY_CONTACT_NAME]**
-- Email: **[PRIVACY_CONTACT_EMAIL]**
-- Address (optional): **[POSTAL_ADDRESS]**
+Questions about this policy: message
+[Arif Bazli on LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171).

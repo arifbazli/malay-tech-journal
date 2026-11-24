@@ -3,7 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import PostList from '../../components/post/PostList.astro';
 import Pagination from '../../components/ui/Pagination.astro';
 import { readingTime } from '~/utils/reading-time';
-import { SITE } from '~/config';
+import { AUTHOR_PROFILE, SITE } from '~/config';
 import { isoDate, localizedPath, useTranslations } from '~/i18n/utils';
 import {
   categoryPath,
@@ -56,6 +56,7 @@ const dateFmt = new Intl.DateTimeFormat(ms ? 'ms-MY' : 'en-GB', {
   year: 'numeric',
 });
 const lastUpdated = articles[0]?.data.pubDate;
+const heroRole = AUTHOR_PROFILE.role[locale];
 
 function postHref(post: Post): string {
   return localizedPath(`/posts/${post.id.split('/').pop()}/`, locale);
@@ -86,6 +87,10 @@ const hrefForPage = (n: number) => localizedPath(n === 1 ? '/' : `/page/${n}/`, 
           {t('home.title')}
         </h1>
         <p class="mtj-hero__lede">{t('home.lede')}</p>
+        <p class="mtj-hero__byline">
+          {t('home.byline')} <a href={localizedPath('/about/', locale)}>{SITE.author.name}</a>
+          {heroRole && <span>· {heroRole}</span>}
+        </p>
         <div class="mtj-hero__actions">
           {lead && (
             <a class="mtj-btn mtj-btn--primary" href={postHref(lead)}>

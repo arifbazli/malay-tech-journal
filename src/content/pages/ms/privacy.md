@@ -1,128 +1,64 @@
 ---
-title: Politique de confidentialite
-description: Comment ce site collecte, utilise et protege vos donnees personnelles.
+title: Dasar Privasi
+description: Data apa yang Malay Tech Journal kumpul bila anda membaca (hampir tiada), siapa yang memprosesnya, dan cara menghubungi penulis.
 translationKey: privacy
 ---
 
-Cette politique de confidentialite explique comment **[NOM_DU_SITE]**
-("nous", "notre", "nos") collecte, utilise et protege les informations
-lorsque vous visitez **[URL_DU_SITE]**.
+Dasar ini meliputi **Malay Tech Journal** di
+[malay-tech-journal.pages.dev](https://malay-tech-journal.pages.dev), blog peribadi
+yang dikendalikan oleh Arif Bazli.
 
-> Remplacez les valeurs entre [CROCHETS] pour personnaliser cette politique.
-> Ce modele est informatif et ne constitue pas un avis juridique.
+- Tarikh berkuat kuasa: 24 November 2026
+- Kemaskini terakhir: 24 November 2026
 
-## 1. Qui nous sommes
+## Ringkasnya
 
-- Proprietaire du site : **[NOM_DU_PROPRIETAIRE / ENTITE_LEGALE]**
-- Email de contact : **[EMAIL_DE_CONTACT]**
-- Date d'entree en vigueur : **[DATE_ENTREE_EN_VIGUEUR]**
-- Derniere mise a jour : **[DATE_DERNIERE_MISE_A_JOUR]**
+Laman ini tiada akaun, tiada komen, tiada newsletter, tiada analitik dan tiada
+iklan. Ia tidak menetapkan cookie dan tidak menyimpan apa-apa dalam pelayar
+anda. Satu-satunya data peribadi yang terlibat ialah data teknikal permintaan
+yang diterima oleh setiap laman web, dan ia dikendalikan oleh penyedia hosting.
 
-## 2. Donnees que nous collectons
+## Apa yang dikumpul, dan oleh siapa
 
-Selon votre utilisation du site, nous pouvons traiter :
+- **Hosting (Cloudflare Pages).** Bila anda membuka halaman, Cloudflare menerima
+  alamat IP, user agent pelayar, halaman yang diminta dan referrer, sama seperti
+  mana-mana pelayan web. Cloudflare menggunakannya untuk menghantar laman,
+  melindunginya daripada penyalahgunaan dan melaporkan ralat rangkaian. Lihat
+  [Dasar Privasi Cloudflare](https://www.cloudflare.com/privacypolicy/).
+- **Rajah (jsDelivr).** Post yang ada rajah memuatkan pustaka Mermaid dari CDN
+  jsDelivr, yang menerima data teknikal permintaan yang sama. Lihat
+  [dasar privasi jsDelivr](https://www.jsdelivr.com/terms/privacy-policy-jsdelivr-net).
+- **Carian.** Carian laman berjalan sepenuhnya dalam pelayar anda; kata carian
+  tidak dihantar ke mana-mana.
 
-- Donnees d'usage : pages consultees, referent, navigateur, type d'appareil,
-  region approximative.
-- Donnees techniques : adresse IP, user-agent, journaux de performance/erreur.
-- Donnees fournies directement : email ou contenu du message lorsque vous nous
-  contactez.
-- Donnees de commentaires (si active) : profil et metadonnees de commentaire
-  gerees par **[FOURNISSEUR_COMMENTAIRES, ex. Giscus/GitHub]**.
+Penulis tidak menerima atau menyimpan log pelawat dan tidak cuba mengenal pasti
+pelawat.
 
-## 3. Comment nous utilisons les donnees
+## Pautan luar
 
-Nous utilisons les donnees pour :
+Post memaut ke laman web lain. Bila anda mengikut pautan, dasar privasi laman
+tersebut terpakai.
 
-- Exploiter et securiser le site.
-- Comprendre le trafic et ameliorer le contenu.
-- Repondre aux demandes de contact ou de support.
-- Prevenir les abus, la fraude et les activites malveillantes.
-- Respecter les obligations legales.
+## Jika anda menghubungi saya
 
-## 4. Cookies et technologies similaires
+Jika anda menghantar mesej di LinkedIn, mesej itu dikendalikan di bawah
+[dasar privasi LinkedIn](https://www.linkedin.com/legal/privacy-policy). Saya
+menggunakannya hanya untuk membalas dan tidak berkongsinya.
 
-Ce site peut utiliser des cookies ou le stockage local pour :
+## Hak anda
 
-- Le fonctionnement essentiel (par exemple, memoriser la preference de theme).
-- L'analytique (si activee).
-- Les integrations tierces ou le systeme de commentaires.
+Di bawah Akta Perlindungan Data Peribadi 2010 dan undang-undang yang serupa, anda
+boleh bertanya data peribadi apa yang disimpan tentang anda dan meminta ia
+dibetulkan atau dipadam. Oleh sebab laman ini sendiri tidak menyimpan data
+pelawat, permintaan berkaitan log permintaan lebih sesuai ditujukan kepada
+Cloudflare.
 
-Vous pouvez gerer les cookies via les parametres de votre navigateur. Si votre
-region exige une banniere de consentement, ajoutez-la et configurez-la selon
-vos obligations legales.
+## Perubahan
 
-## 5. Analytique et services tiers
+Jika dasar ini berubah, contohnya kerana komen atau analitik ditambah, halaman
+ini akan dikemaskini dahulu dan tarikh "Kemaskini terakhir" diubah.
 
-Nous pouvons utiliser des sous-traitants tiers qui collectent des donnees selon
-leurs propres conditions de confidentialite :
+## Hubungi
 
-- Hebergement/CDN : **[FOURNISSEUR_HEBERGEMENT]**
-- Analytique : **[FOURNISSEUR_ANALYTIQUE ou "Non utilise"]**
-- Commentaires : **[FOURNISSEUR_COMMENTAIRES ou "Non utilise"]**
-- Email/newsletter : **[FOURNISSEUR_EMAIL ou "Non utilise"]**
-
-Consultez la politique de confidentialite de chaque fournisseur avant
-d'utiliser les fonctionnalites associees.
-
-## 6. Base legale (EEE/Royaume-Uni, si applicable)
-
-Si le RGPD s'applique, nous traitons les donnees selon une ou plusieurs bases :
-
-- Consentement
-- Interet legitime
-- Execution d'un contrat
-- Obligation legale
-
-Documentez la base legale de chaque traitement dans votre registre.
-
-## 7. Conservation des donnees
-
-Nous conservons les donnees uniquement aussi longtemps que necessaire pour les
-finalites ci-dessus, y compris la securite et la conformite legale.
-
-- Duree de conservation analytique : **[DUREE_CONSERVATION]**
-- Duree de conservation messages de contact : **[DUREE_CONSERVATION]**
-- Duree de conservation journaux serveur : **[DUREE_CONSERVATION]**
-
-## 8. Transferts internationaux
-
-Si vos fournisseurs traitent les donnees en dehors de votre pays, des
-garanties de transfert peuvent s'appliquer (par exemple, clauses
-contractuelles types).
-
-## 9. Vos droits
-
-Selon votre lieu de residence, vous pouvez disposer de droits d'acces, de
-rectification, d'effacement, de limitation ou d'opposition au traitement de vos
-donnees personnelles.
-
-Pour exercer vos droits, contactez : **[EMAIL_CONTACT_CONFIDENTIALITE]**
-
-Si vous etes dans l'EEE/Royaume-Uni, vous pouvez egalement saisir votre
-autorite de protection des donnees.
-
-## 10. Confidentialite des enfants
-
-Ce site n'est pas destine aux enfants de moins de
-**[AGE_MINIMUM, ex. 13 ou 16 ans]**. Nous ne collectons pas sciemment de
-donnees personnelles d'enfants.
-
-## 11. Securite
-
-Nous appliquons des mesures techniques et organisationnelles raisonnables,
-mais aucune methode de transmission ou de stockage n'est totalement securisee.
-
-## 12. Modifications de cette politique
-
-Nous pouvons mettre a jour cette politique de confidentialite. Les changements
-prennent effet lors de leur publication sur cette page avec une date de
-"Derniere mise a jour" actualisee.
-
-## 13. Contact
-
-Pour toute question sur la confidentialite, contactez :
-
-- Nom : **[NOM_CONTACT_CONFIDENTIALITE]**
-- Email : **[EMAIL_CONTACT_CONFIDENTIALITE]**
-- Adresse (optionnel) : **[ADRESSE_POSTALE]**
+Soalan tentang dasar ini: hantar mesej kepada
+[Arif Bazli di LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171).

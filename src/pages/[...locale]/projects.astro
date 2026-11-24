@@ -3,14 +3,15 @@
  * Projects page — BM + EN, handled from a single file.
  * Route: /projects (MS default) and /en/projects (EN)
  *
- * Simple static list of current GitHub projects (name, one-line summary,
- * primary language, link) plus a link to the full repositories tab.
- * No live GitHub API calls at build time — see AGENTS.md for why that
- * was removed.
+ * The list is built from the owner's public GitHub repositories at build
+ * time (src/utils/github-projects.ts), so new repositories, renames,
+ * languages and activity dates update on every deploy. The deploy workflow
+ * also rebuilds daily. Curated outcome lines live in PROJECT_HIGHLIGHTS.
  */
-import { SITE, type Locale } from '~/config';
+import { REPO, SITE, type Locale } from '~/config';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import { useTranslations } from '~/i18n/utils';
+import { buildProjects, fetchRepositories } from '~/utils/github-projects';
 import { Icon } from 'astro-icon/components';
 
 export function getStaticPaths() {
@@ -22,127 +23,21 @@ export function getStaticPaths() {
 
 const { locale } = Astro.props as { locale: Locale };
 const t = useTranslations(locale);
-const isBM = locale === 'ms';
 
-interface Project {
-  name: string;
-  url: string;
-  language: string;
-  description: string;
-}
+const owner = REPO.handle || 'arifbazli';
+const githubAllUrl = `https://github.com/${owner}?tab=repositories`;
+const projects = buildProjects(await fetchRepositories(owner), owner, locale);
 
-const GITHUB_HANDLE = 'arifbazli';
-const githubAllUrl = `https://github.com/${GITHUB_HANDLE}?tab=repositories`;
-
-const projects: Project[] = isBM
-  ? [
-      {
-        name: 'malay-tech-journal',
-        url: `https://github.com/${GITHUB_HANDLE}/malay-tech-journal`,
-        language: 'Astro',
-        description: 'Blog ini — penyelidikan & pembangunan agent harness tempatan.',
-      },
-      {
-        name: 'AI-Agent-Guardrails-Hub',
-        url: `https://github.com/${GITHUB_HANDLE}/AI-Agent-Guardrails-Hub`,
-        language: 'Open Policy Agent',
-        description: 'Hab guardrail multi-ejen yang menyembuh sendiri (self-healing).',
-      },
-      {
-        name: 'cyber-pujangga',
-        url: `https://github.com/${GITHUB_HANDLE}/cyber-pujangga`,
-        language: 'Astro',
-        description: 'Penyelidikan & pembangunan agent harness tempatan.',
-      },
-      {
-        name: 'deliverableqa-agent',
-        url: `https://github.com/${GITHUB_HANDLE}/deliverableqa-agent`,
-        language: 'Python',
-        description: 'Ejen QA deliverable menggunakan AWS Bedrock Claude.',
-      },
-      {
-        name: 'GuardAgent_PenTest_Guardrail',
-        url: `https://github.com/${GITHUB_HANDLE}/GuardAgent_PenTest_Guardrail`,
-        language: 'Python',
-        description: 'GuardAgent PenTest — ujian guardrail untuk ejen coding AI.',
-      },
-      {
-        name: 'rust-agentic-sandbox',
-        url: `https://github.com/${GITHUB_HANDLE}/rust-agentic-sandbox`,
-        language: 'Rust',
-        description: 'Orkestrator ejen Rust (CLI — pipeline gateway harness).',
-      },
-      {
-        name: 'Semantic-review-cli-local-mcp',
-        url: `https://github.com/${GITHUB_HANDLE}/Semantic-review-cli-local-mcp`,
-        language: 'TypeScript',
-        description:
-          'Carian kod semantik agnostik-ejen (CLI + pelayan MCP tempatan) — embedding Ollama tempatan + penjejakan call-graph AST tree-sitter.',
-      },
-      {
-        name: 'shift-left-cloud-sandbox',
-        url: `https://github.com/${GITHUB_HANDLE}/shift-left-cloud-sandbox`,
-        language: 'Shell',
-        description: 'Sandbox keselamatan cloud shift-left.',
-      },
-    ]
-  : [
-      {
-        name: 'malay-tech-journal',
-        url: `https://github.com/${GITHUB_HANDLE}/malay-tech-journal`,
-        language: 'Astro',
-        description: 'This blog — local agent harness research and development.',
-      },
-      {
-        name: 'AI-Agent-Guardrails-Hub',
-        url: `https://github.com/${GITHUB_HANDLE}/AI-Agent-Guardrails-Hub`,
-        language: 'Open Policy Agent',
-        description: 'Self-healing multi-agent guardrail hub.',
-      },
-      {
-        name: 'cyber-pujangga',
-        url: `https://github.com/${GITHUB_HANDLE}/cyber-pujangga`,
-        language: 'Astro',
-        description: 'Local agent harness research and development.',
-      },
-      {
-        name: 'deliverableqa-agent',
-        url: `https://github.com/${GITHUB_HANDLE}/deliverableqa-agent`,
-        language: 'Python',
-        description: 'AWS Bedrock Claude — deliverable QA agents.',
-      },
-      {
-        name: 'GuardAgent_PenTest_Guardrail',
-        url: `https://github.com/${GITHUB_HANDLE}/GuardAgent_PenTest_Guardrail`,
-        language: 'Python',
-        description: 'GuardAgent PenTest — guardrail testing for AI coding agents.',
-      },
-      {
-        name: 'rust-agentic-sandbox',
-        url: `https://github.com/${GITHUB_HANDLE}/rust-agentic-sandbox`,
-        language: 'Rust',
-        description: 'Rust agent orchestrator (CLI — Harness gateway pipeline).',
-      },
-      {
-        name: 'Semantic-review-cli-local-mcp',
-        url: `https://github.com/${GITHUB_HANDLE}/Semantic-review-cli-local-mcp`,
-        language: 'TypeScript',
-        description:
-          'Agent-agnostic semantic code search (CLI + local MCP server) — local Ollama embeddings + tree-sitter AST call-graph tracing.',
-      },
-      {
-        name: 'shift-left-cloud-sandbox',
-        url: `https://github.com/${GITHUB_HANDLE}/shift-left-cloud-sandbox`,
-        language: 'Shell',
-        description: 'Shift-left cloud security sandbox.',
-      },
-    ];
+const monthFmt = new Intl.DateTimeFormat(locale === 'ms' ? 'ms-MY' : 'en-GB', {
+  month: 'short',
+  year: 'numeric',
+});
 ---
 
 <BaseLayout
   title={t('projects.title')}
   description={t('projects.subtitle')}
-  pathWithoutLocale="/projects"
+  pathWithoutLocale="/projects/"
   narrow
 >
   <article class="proj">
@@ -155,14 +50,38 @@ const projects: Project[] = isBM
     <ul class="proj__list">
       {projects.map((p) => (
         <li class="proj__item">
-          <a href={p.url} target="_blank" rel="noopener noreferrer" class="proj__link">
-            <div class="proj__item-head">
+          <div class="proj__card">
+            <a href={p.url} target="_blank" rel="noopener noreferrer" class="proj__link">
               <span class="proj__item-name">{p.name}</span>
-              <Icon name="lucide:arrow-up-right" width={13} height={13} class="proj__item-icon" />
+              <Icon
+                name="lucide:arrow-up-right"
+                width={13}
+                height={13}
+                class="proj__item-icon"
+                aria-hidden="true"
+              />
+            </a>
+            {p.summary && <p class="proj__item-desc">{p.summary}</p>}
+            <div class="proj__item-meta">
+              {p.language && <span class="proj__item-lang">{p.language}</span>}
+              {p.pushedAt && (
+                <span class="proj__item-date">
+                  {t('projects.updated')}{' '}
+                  <time datetime={p.pushedAt.toISOString()}>{monthFmt.format(p.pushedAt)}</time>
+                </span>
+              )}
+              {p.homepage && (
+                <a
+                  href={p.homepage}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="proj__item-live"
+                >
+                  {t('projects.live')}
+                </a>
+              )}
             </div>
-            <p class="proj__item-desc">{p.description}</p>
-            <span class="proj__item-lang">{p.language}</span>
-          </a>
+          </div>
         </li>
       ))}
     </ul>
@@ -226,7 +145,8 @@ const projects: Project[] = isBM
   .proj__item {
     min-width: 0;
   }
-  .proj__link {
+  .proj__card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
@@ -235,21 +155,29 @@ const projects: Project[] = isBM
     background: var(--mtj-surface);
     border: 0.5px solid var(--mtj-muted);
     border-radius: 8px;
-    text-decoration: none;
     transition:
       border-color 120ms ease,
       background 120ms ease;
   }
-  .proj__link:hover {
+  .proj__card:hover,
+  .proj__card:focus-within {
     border-color: var(--mtj-accent);
     background: var(--mtj-surface-2);
   }
 
-  .proj__item-head {
+  /* Whole card is clickable through the name link's stretched ::after. */
+  .proj__link {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    text-decoration: none;
+  }
+  .proj__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
   }
   .proj__item-name {
     font-family: ui-monospace, monospace;
@@ -264,7 +192,7 @@ const projects: Project[] = isBM
     flex-shrink: 0;
     color: var(--mtj-muted);
   }
-  .proj__link:hover .proj__item-icon {
+  .proj__card:hover .proj__item-icon {
     color: var(--mtj-accent);
   }
 
@@ -275,11 +203,28 @@ const projects: Project[] = isBM
     color: var(--mtj-muted);
   }
 
-  .proj__item-lang {
+  .proj__item-meta {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.8rem;
     font-family: ui-monospace, monospace;
     font-size: 0.68rem;
     letter-spacing: 0.04em;
+  }
+  .proj__item-lang {
     color: var(--mtj-accent);
+  }
+  .proj__item-date {
+    color: var(--mtj-muted);
+  }
+  .proj__item-live {
+    position: relative;
+    z-index: 1;
+    color: var(--mtj-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .proj__all {

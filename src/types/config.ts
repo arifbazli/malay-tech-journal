@@ -52,6 +52,39 @@ export interface SocialLink {
   icon: string;
 }
 
+/** A string in every supported locale. */
+export interface LocalizedText {
+  en: string;
+  ms: string;
+}
+
+export interface Certification {
+  /** Full certification name, e.g. "AWS Certified Security – Specialty". */
+  name: string;
+  /** Optional verification link (Credly, issuer page). */
+  url?: string;
+}
+
+/**
+ * Professional profile shown on the About page and the homepage byline.
+ * Every field is optional in practice: an empty string, `0` or an empty
+ * list hides that line, so nothing unverified is ever rendered.
+ */
+export interface AuthorProfile {
+  /** Current job title, e.g. "Cloud Security Engineer". */
+  role: LocalizedText;
+  /** Employer or practice; shown after the role. */
+  organization: string;
+  /** Years of hands-on industry experience. `0` hides the line. */
+  yearsOfExperience: number;
+  /** Where you are based. */
+  location: LocalizedText;
+  /** Short focus areas, rendered as chips. */
+  focusAreas: readonly LocalizedText[];
+  /** Certifications you currently hold. Never list one still in progress. */
+  certifications: readonly Certification[];
+}
+
 export interface GiscusConfig {
   /** Master switch. */
   enabled: boolean;

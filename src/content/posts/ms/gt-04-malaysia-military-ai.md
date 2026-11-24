@@ -1,5 +1,5 @@
 ---
-title: 'Infrastruktur AI Pertahanan Malaysia 2026 — Kajian Kes dan Senario Ancaman'
+title: 'Infrastruktur AI pertahanan Malaysia 2026 — kajian kes dan senario ancaman'
 description: 'PSPN 2026-2030, PSEP Cyber Command, dron STRIDE, serangan CL-STA-1062 ke atas infrastruktur kritikal ASEAN, TNB AI grid, dan NACSA Cryptology Centre — kajian kes bagaimana Malaysia membina dan melindungi infrastruktur AI ketenteraan di tengah ancaman sebenar 2026.'
 pubDate: 2026-07-13
 tags:
