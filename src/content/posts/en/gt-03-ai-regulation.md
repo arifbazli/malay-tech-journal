@@ -1,5 +1,5 @@
 ---
-title: 'The World Is Writing AI Law — What Engineers Actually Need to Know'
+title: 'The world is writing AI law — what engineers actually need to know'
 description: 'EU AI Act enforcement began Feb 2025. Malaysia is finalising an AI Governance Bill. ASEAN has its own frameworks. Regulation is shaping how we build AI — whether we are paying attention or not. A guide for engineers.'
 pubDate: 2026-07-12
 tags:

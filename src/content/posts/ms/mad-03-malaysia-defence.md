@@ -1,5 +1,5 @@
 ---
-title: 'Malaysia dan AI Pertahanan: Ketinggalan atau Berhati-hati?'
+title: 'Malaysia dan AI pertahanan: ketinggalan atau berhati-hati?'
 description: 'Singapore dah deploy autonomous drone, DSTA buat AI sistem pengesanan — dan Malaysia? Kita kena tanya soalan ni dengan jujur: di mana kita, dan ke mana patut kita pergi?'
 pubDate: 2026-07-08
 tags:

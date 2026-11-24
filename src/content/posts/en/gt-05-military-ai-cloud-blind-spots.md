@@ -1,5 +1,5 @@
 ---
-title: "Malaysia's Military AI Push: Sovereign Ambition, Cloud-Security Blind Spots"
+title: "Malaysia's military AI push: sovereign ambition, cloud-security blind spots"
 description: "TactiDrone's offline AI is a quiet admission about cloud-dependent C2 risk. The same gaps that plague government cloud security — talent shortage, silos, corruption risk — also bottleneck Malaysia's military AI."
 pubDate: 2026-07-27
 tags:

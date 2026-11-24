@@ -1,5 +1,5 @@
 ---
-title: "Malaysia's Military AI Infrastructure 2026 — Case Study and Threat Scenarios"
+title: "Malaysia's military AI infrastructure 2026 — case study and threat scenarios"
 description: "PSPN 2026-2030, PSEP Cyber Command, STRIDE drone framework, CL-STA-1062 attacks on ASEAN critical infrastructure, TNB AI grid, and NACSA's Cryptology Centre — a case study on how Malaysia is building and defending military AI infrastructure amid real 2026 threats."
 pubDate: 2026-07-13
 tags:

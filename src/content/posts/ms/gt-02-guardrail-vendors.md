@@ -1,5 +1,5 @@
 ---
-title: 'Guardrail Vendor vs Realiti Produksi — Apa yang AWS, Azure dan Google Tak Cerita'
+title: 'Guardrail vendor vs realiti produksi — apa yang AWS, Azure dan Google tak cerita'
 description: 'AWS Bedrock Guardrails, Azure AI Content Safety, Google Vertex AI Safety — semua kelihatan bagus dalam dokumentasi. Tapi dalam production, ada jurang nyata antara janji vendor dan perlindungan sebenar. Data daripada Unit42, AML bypass research, dan production latency benchmarks.'
 pubDate: 2026-07-11
 tags:

@@ -1,5 +1,5 @@
 ---
-title: 'Malaysia & Defence AI: Left Behind or Being Careful?'
+title: 'Malaysia & defence AI: left behind or being careful?'
 description: 'Singapore has deployed autonomous drones, DSTA runs AI detection systems — and Malaysia? We need to ask this question honestly: where do we stand, and where should we go?'
 pubDate: 2026-07-08
 tags:

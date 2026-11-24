@@ -1,5 +1,5 @@
 ---
-title: 'Identiti Adalah Perimeter Baru — Pelajaran dari Snowflake, MGM dan Scattered Spider'
+title: 'Identiti adalah perimeter baru — pelajaran dari Snowflake, MGM dan Scattered Spider'
 description: 'Pada 2024, UNC5537 curi data 165 syarikat Snowflake tanpa exploit sebiji pun. Pada 2023, Scattered Spider letak MGM lumpuh dalam 10 minit telefon. Ini bukan serangan teknikal biasa — ini adalah era baru di mana identiti adalah satu-satunya perimeter yang tinggal.'
 pubDate: 2026-07-10
 tags:

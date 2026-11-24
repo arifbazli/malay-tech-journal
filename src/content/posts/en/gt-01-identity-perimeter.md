@@ -1,5 +1,5 @@
 ---
-title: 'Identity Is the New Perimeter — Lessons from Snowflake, MGM and Scattered Spider'
+title: 'Identity is the new perimeter — lessons from Snowflake, MGM and Scattered Spider'
 description: 'In 2024, UNC5537 stole data from 165 Snowflake customers without exploiting a single vulnerability. In 2023, Scattered Spider paralysed MGM in a 10-minute phone call. This is not a technical attack story — it is the new era where identity is the only perimeter left.'
 pubDate: 2026-07-10
 tags:

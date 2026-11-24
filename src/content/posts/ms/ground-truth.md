@@ -33,13 +33,13 @@ Dua format dalam satu siri:
 
 | #   | Tajuk                                         | Format     | Fokus                                                                         |
 | --- | --------------------------------------------- | ---------- | ----------------------------------------------------------------------------- |
-| 01  | **Identiti Adalah Perimeter Baru**            | Esei       | Snowflake, MGM, Scattered Spider — era serangan cloud berasaskan identiti     |
-| 02  | **Guardrail Vendor vs Realiti Produksi**      | Esei       | AWS, Azure, Google — jurang yang mereka tak cerita dalam dokumen rasmi        |
-| 03  | **Dunia Membuat Undang-undang AI**            | Esei       | EU AI Act, Malaysia AI Governance Bill — apa yang engineer perlu tahu         |
-| 04  | **Infrastruktur AI Pertahanan Malaysia 2026** | Kajian Kes | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — ancaman sebenar, senario serangan |
-| 05  | **Dorongan AI Ketenteraan Malaysia**          | Kajian Kes | AI offline TactiDrone dan blind spot cloud security di belakangnya            |
+| 01  | **Identiti adalah perimeter baru**            | Esei       | Snowflake, MGM, Scattered Spider — era serangan cloud berasaskan identiti     |
+| 02  | **Guardrail vendor vs realiti produksi**      | Esei       | AWS, Azure, Google — jurang yang mereka tak cerita dalam dokumen rasmi        |
+| 03  | **Dunia membuat undang-undang AI**            | Esei       | EU AI Act, Malaysia AI Governance Bill — apa yang engineer perlu tahu         |
+| 04  | **Infrastruktur AI pertahanan Malaysia 2026** | Kajian Kes | PSPN 2026-2030, PSEP, STRIDE, CL-STA-1062 — ancaman sebenar, senario serangan |
+| 05  | **Dorongan AI ketenteraan Malaysia**          | Kajian Kes | AI offline TactiDrone dan blind spot cloud security di belakangnya            |
 | 06  | **Top Threats CSA 2026**                      | Esei       | Identiti menewaskan infrastruktur, AI mula muncul dalam ranking               |
-| 07  | **AI-SPM Bukan Kategori Baru**                | Esei       | Orca dan Microsoft ship sebagai extension CSPM — kecuali satu carve-out 2026  |
+| 07  | **AI-SPM bukan kategori baru**                | Esei       | Orca dan Microsoft ship sebagai extension CSPM — kecuali satu carve-out 2026  |
 
 ---
 

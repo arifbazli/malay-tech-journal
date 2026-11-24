@@ -1,5 +1,5 @@
 ---
-title: "CSA's 2026 Top Threats: Identity Beats Infrastructure, AI Shows Up Twice"
+title: "CSA's 2026 Top Threats: identity beats infrastructure, AI shows up twice"
 description: 'Cloud Security Alliance ranks inadequate IAM — driven by non-human identity sprawl — as the #1 cloud threat for 2026, with two AI-related risks debuting on the list. What actually changed, and what it means for cloud teams.'
 pubDate: 2026-08-27
 tags:

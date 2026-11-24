@@ -1,5 +1,5 @@
 ---
-title: 'ASPM: Apa Yang Betul-Betul Berubah Bila SAST, DAST, dan SCA Digabung Jadi Satu Risk View'
+title: 'ASPM: apa yang betul-betul berubah bila SAST, DAST, dan SCA digabung jadi satu risk view'
 description: 'Tiga vendor independent ship ASPM pada 2026, converge kat idea yang sama: stop layan output scanner sebagai alert berasingan, rank ikut apa yang reachable dan exploitable. Apa yang verified, apa yang vendor framing, dan taruhan satu vendor pasal kod tulisan AI.'
 pubDate: 2026-09-22
 tags:

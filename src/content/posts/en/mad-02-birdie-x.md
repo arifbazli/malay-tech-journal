@@ -1,5 +1,5 @@
 ---
-title: "Malaysia's Birdie-X: A Few Hundred Ringgit Per Shot — How a Homegrown Laser Killed the Cost Equation"
+title: "Malaysia's Birdie-X: a few hundred ringgit per shot — how a homegrown laser killed the cost equation"
 description: "Birdie-X, the RMAF + STRIDE + Benua Defence anti-drone laser unveiled in June 2026, swaps a million-ringgit interceptor missile for a high-powered beam. Cost per engagement drops to a few hundred ringgit. Here is what the field notes say — and what they don't."
 pubDate: 2026-07-28
 tags:

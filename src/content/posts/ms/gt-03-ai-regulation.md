@@ -1,5 +1,5 @@
 ---
-title: 'Dunia Sedang Menulis Undang-Undang AI — Apa yang Engineer Sebenarnya Perlu Tahu'
+title: 'Dunia sedang menulis undang-undang AI — apa yang engineer sebenarnya perlu tahu'
 description: 'EU AI Act mula dikuatkuasakan Feb 2025. Malaysia sedang muktamadkan AI Governance Bill. ASEAN ada framework sendiri. Regulasi sedang membentuk cara kita bina AI — sama ada kita perasan atau tidak. Panduan untuk engineer.'
 pubDate: 2026-07-12
 tags:

@@ -1,5 +1,5 @@
 ---
-title: 'AI-SPM Bukan Kategori Baru — Ia CSPM yang Belajar Nampak AI Workload'
+title: 'AI-SPM bukan kategori baru — ia CSPM yang belajar nampak AI workload'
 description: 'Orca dan Microsoft dua-dua ship AI-SPM sebagai extension kepada platform CSPM sedia ada, bukan produk standalone — kecuali satu perubahan licensing 2026 yang berlaku sebaliknya. Apa AI-SPM betul-betul cover, dan di mana boundary sebenar.'
 pubDate: 2026-09-22
 tags:

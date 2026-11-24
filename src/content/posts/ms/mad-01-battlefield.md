@@ -1,5 +1,5 @@
 ---
-title: 'AI di Medan Perang: Project Maven, Swarm Drone & JADC2'
+title: 'AI di medan perang: Project Maven, swarm drone & JADC2'
 description: 'Dari drone swarm ribuan unit ke sistem targeting AI yang buat keputusan dalam milisaat — AI dah ubah medan perang. Ini bukan fiksyen saintifik. Ini berlaku sekarang.'
 pubDate: 2026-07-07
 tags:

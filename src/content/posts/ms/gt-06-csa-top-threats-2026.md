@@ -1,5 +1,5 @@
 ---
-title: 'Top Threats CSA 2026: Identiti Menewaskan Infrastruktur, AI Muncul Dua Kali'
+title: 'Top Threats CSA 2026: identiti menewaskan infrastruktur, AI muncul dua kali'
 description: 'Cloud Security Alliance letak IAM yang lemah — didorong oleh pertumbuhan identiti bukan manusia — sebagai ancaman #1 cloud untuk 2026, dengan dua ancaman berkaitan AI muncul buat kali pertama. Apa maksudnya untuk pasukan cloud.'
 pubDate: 2026-08-27
 tags:
