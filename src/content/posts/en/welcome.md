@@ -57,7 +57,7 @@ Yes. Nothing is locked. Take it, remix it, credit if you want.
 
 **RSS** — there's an RSS feed at `/rss.xml` for those who want to follow without checking the site.
 
-**Contact** — `desktop_onsite@aol.com` if there's something worth discussing privately. Replies may be slow — I'm not a full-time content creator, this is a side project.
+**Contact** — message me on [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171) if there's something worth discussing privately. Replies may be slow — I'm not a full-time content creator, this is a side project.
 
 **Posts currently on the site:**
 

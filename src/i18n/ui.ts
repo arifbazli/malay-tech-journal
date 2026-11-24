@@ -106,7 +106,7 @@ export const messages = {
     'nav.projects': 'Projects',
     'projects.eyebrow': 'personal r&d',
     'projects.title': 'Projects',
-    'projects.subtitle': 'Experiments and research in cloud security and AI systems.',
+    'projects.subtitle': 'Open-source tools I build for cloud security and AI agent safety.',
     'projects.viewAll': 'View all on GitHub',
     'site.description':
       'Field notes on cloud security, AI guardrails and defence tech, written for engineers who build and defend production systems.',
@@ -133,6 +133,15 @@ export const messages = {
     'home.seriesAi': 'How to design, test and break guardrails for LLM and agentic systems.',
     'home.seriesCloud': 'Posture, identity and remediation for cloud security engineers.',
     'home.seriesMil': 'Military AI and defence tech, with a Malaysian lens.',
+    'home.byline': 'Written by',
+    'home.aboutMe': 'About the author',
+    'author.aboutHeading': 'About the author',
+    'author.experience': '{n}+ years in industry',
+    'author.focus': 'Focus areas',
+    'author.certifications': 'Certifications',
+    'author.links': 'Find me on',
+    'projects.updated': 'updated',
+    'projects.live': 'live site',
   },
 
   ms: {
@@ -230,7 +239,8 @@ export const messages = {
     'nav.projects': 'Projek',
     'projects.eyebrow': 'personal r&d',
     'projects.title': 'Projek',
-    'projects.subtitle': 'Eksperimen dan penyelidikan dalam cloud security dan sistem AI.',
+    'projects.subtitle':
+      'Tool open-source yang aku bina untuk cloud security dan keselamatan AI agent.',
     'projects.viewAll': 'Lihat semua di GitHub',
     'site.description':
       'Nota lapangan tentang cloud security, AI guardrail dan teknologi pertahanan, untuk engineer yang membina dan mempertahankan sistem production.',
@@ -258,6 +268,15 @@ export const messages = {
       'Cara mereka bentuk, menguji dan menembusi guardrail untuk sistem LLM dan agentic.',
     'home.seriesCloud': 'Posture, identiti dan remediasi untuk cloud security engineer.',
     'home.seriesMil': 'AI ketenteraan dan teknologi pertahanan, dari kaca mata Malaysia.',
+    'home.byline': 'Ditulis oleh',
+    'home.aboutMe': 'Tentang penulis',
+    'author.aboutHeading': 'Tentang penulis',
+    'author.experience': '{n}+ tahun dalam industri',
+    'author.focus': 'Bidang fokus',
+    'author.certifications': 'Sijil',
+    'author.links': 'Cari aku di',
+    'projects.updated': 'kemaskini',
+    'projects.live': 'laman live',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

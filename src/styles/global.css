@@ -2656,6 +2656,22 @@ h2.mtj-section-label {
   color: var(--mtj-text-75);
   max-width: 40rem;
 }
+.mtj-hero__byline {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--mtj-muted);
+}
+.mtj-hero__byline a {
+  color: var(--mtj-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--mtj-accent) 60%, transparent);
+  text-underline-offset: 3px;
+}
+.mtj-hero__byline a:hover {
+  color: var(--mtj-accent);
+}
 .mtj-hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2983,6 +2999,75 @@ ul.mtj-footer__links {
   .mtj-author {
     flex-direction: column;
   }
+}
+
+/* -- Author profile (About page) -- */
+.mtj-author__role {
+  margin-top: 0.15rem !important;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--mtj-text);
+}
+.mtj-author__meta {
+  margin-top: 0.15rem !important;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--mtj-muted);
+}
+.mtj-author--profile {
+  margin: 0 0 2rem;
+  padding: 1.5rem;
+}
+.mtj-author--profile .mtj-author__avatar {
+  width: 96px;
+  height: 96px;
+}
+.mtj-author--profile .mtj-author__eyebrow {
+  margin: 0 0 0.25rem;
+  font-weight: 500;
+}
+.mtj-author--profile .mtj-author__name {
+  font-size: 1.35rem;
+}
+.mtj-author__group {
+  margin-top: 1rem;
+}
+.mtj-author__label {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mtj-muted);
+}
+.mtj-author__chips,
+.mtj-author__certs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.mtj-author__chips li,
+.mtj-author__certs li {
+  margin: 0;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--mtj-text-75);
+  box-shadow: inset 0 0 0 1px var(--mtj-border);
+}
+.mtj-author__certs a {
+  color: var(--mtj-accent);
+}
+.mtj-author--profile .mtj-author__links a {
+  width: auto;
+  gap: 0.4rem;
+  padding: 0 0.75rem;
+  font-size: 0.82rem;
+  text-decoration: none;
 }
 
 /* -- Footer copyright: keep "© 2026 Malay Tech Journal" on one line -- */

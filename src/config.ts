@@ -1,7 +1,7 @@
 import process from 'node:process';
 import avatarImg from './assets/images/site/avatar.svg';
 import ogDefaultImg from './assets/images/site/og-default.png';
-import type { GiscusConfig, NavItem, SiteConfig, SocialLink } from './types/config';
+import type { AuthorProfile, GiscusConfig, NavItem, SiteConfig, SocialLink } from './types/config';
 
 /**
  * Global site + theme configuration.
@@ -75,7 +75,7 @@ export const SITE: SiteConfig = {
   /** Automatically generate Open Graph images for posts that don't have a `heroImage`. */
   autoOgImage: true,
   /** Show a link to the Privacy Policy page in the footer. */
-  showPrivacyPolicy: false,
+  showPrivacyPolicy: true,
   /** Footer text/link controls. */
   footer: {
     /**
@@ -89,7 +89,7 @@ export const SITE: SiteConfig = {
      */
     rightText: undefined,
     /** Whether to show the Privacy Policy link in the footer. */
-    showPrivacyPolicy: false,
+    showPrivacyPolicy: true,
     /** Whether to show theme credits in the footer right side. Theme <themeName> */
     showThemeCredits: false,
     /** Label for the theme repository link in the right footer line. */
@@ -122,6 +122,27 @@ export const NAV: readonly NavItem[] = [
 ] as const;
 
 /**
+ * Professional profile for the About page and the homepage byline.
+ * Fill in `role`, `organization`, `yearsOfExperience` and `certifications`
+ * with your real details; empty values are simply not rendered.
+ */
+export const AUTHOR_PROFILE: AuthorProfile = {
+  role: { en: '', ms: '' },
+  organization: '',
+  yearsOfExperience: 0,
+  location: { en: 'Malaysia', ms: 'Malaysia' },
+  focusAreas: [
+    { en: 'Cloud security posture (CSPM, ASPM)', ms: 'Cloud security posture (CSPM, ASPM)' },
+    { en: 'AI guardrails and LLM security', ms: 'AI guardrail dan keselamatan LLM' },
+    { en: 'Agentic AI security', ms: 'Keselamatan agentic AI' },
+    { en: 'Policy-as-code and DevSecOps', ms: 'Policy-as-code dan DevSecOps' },
+  ],
+  certifications: [],
+};
+
+const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL ?? '';
+
+/**
  * SOCIALS is built from the env-driven handles above so users only edit
  * one place (`.env` or the constants at the top of this file). Empty
  * handles are filtered out automatically — the icon simply won't appear
@@ -138,13 +159,11 @@ export const SOCIALS: readonly SocialLink[] = [
       'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     icon: 'simple-icons:linkedin',
   },
-  {
-    label: 'Email',
-    href: import.meta.env.PUBLIC_CONTACT_EMAIL
-      ? `mailto:${import.meta.env.PUBLIC_CONTACT_EMAIL}`
-      : 'mailto:desktop_onsite@aol.com',
-    icon: 'lucide:mail',
-  },
+  // Email appears only when PUBLIC_CONTACT_EMAIL is set (repository variable
+  // in CI, `.env` locally), so no personal address is hard-coded here.
+  ...(CONTACT_EMAIL
+    ? [{ label: 'Email', href: `mailto:${CONTACT_EMAIL}`, icon: 'lucide:mail' }]
+    : []),
 ] as const satisfies SocialLink[];
 
 /**
