@@ -320,6 +320,14 @@ export default defineConfig({
             style: 'normal',
             src: ['./node_modules/@fontsource/inter/files/inter-latin-400-normal.woff2'],
           },
+          // Real italic for <em> and blockquotes; without it browsers
+          // synthesize a slanted (faux) italic. Not preloaded: fetched only
+          // on pages that use italics.
+          {
+            weight: '400',
+            style: 'italic',
+            src: ['./node_modules/@fontsource/inter/files/inter-latin-400-italic.woff2'],
+          },
           {
             weight: '500',
             style: 'normal',
