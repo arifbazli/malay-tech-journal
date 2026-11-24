@@ -11,7 +11,7 @@ categories: ['Military AI & Defence']
 postType: field-note
 toc: true
 translationKey: 'mad-04-malaysia-military-ai-november-2026'
-draft: true
+draft: false
 ---
 
 > Nota lapangan tentang tiga pengumuman November yang membentuk cara Angkatan Tentera Malaysia (ATM) akan guna sistem tanpa pemandu dan sistem berasaskan AI, dan apa maksudnya untuk orang yang akan build dan pertahankan sistem tu.

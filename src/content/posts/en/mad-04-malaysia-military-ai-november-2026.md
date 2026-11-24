@@ -11,7 +11,7 @@ categories: ['Military AI & Defence']
 postType: field-note
 toc: true
 translationKey: 'mad-04-malaysia-military-ai-november-2026'
-draft: true
+draft: false
 ---
 
 > Field notes on three November announcements that shape how Malaysia's armed forces will use unmanned and AI-enabled systems, and what they mean for the people who will build and defend them.

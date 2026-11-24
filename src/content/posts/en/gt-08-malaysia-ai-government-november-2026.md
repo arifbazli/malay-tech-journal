@@ -11,7 +11,7 @@ categories: ['Ground Truth']
 postType: field-note
 toc: true
 translationKey: 'gt-08-malaysia-ai-government-november-2026'
-draft: true
+draft: false
 ---
 
 > Field notes on a busy month for AI policy in Malaysia, checked against what ministers actually said in Parliament and in official statements.
