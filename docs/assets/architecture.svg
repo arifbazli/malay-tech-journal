@@ -1,163 +1,105 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="660" viewBox="0 0 1280 660" role="img" aria-labelledby="title desc">
-  <title id="title">Malay Tech Journal architecture</title>
-  <desc id="desc">A post moves through four stages. Write: bilingual Markdown posts with a shared translation key, validated by a Zod schema, optionally drafted by a research pipeline. Verify: a pull request runs lint, type, test and build checks, merges to main, and the publish label flips draft to false. Build: Astro 7 on Bun renders static pages for both locales, Satori share images, a Projects page from the GitHub API, a Pagefind search index, RSS and sitemaps. Deliver: Wrangler deploys to Cloudflare Pages on every push to main and once a day, with security headers, serving Bahasa Melayu at the root and English under /en/. Weekly jobs, a Bun version monitor and Dependabot keep the repository healthy.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#121521"/>
-      <stop offset="1" stop-color="#0b0d14"/>
-    </linearGradient>
-    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#a78bfa"/>
-      <stop offset="0.35" stop-color="#5b8fff"/>
-      <stop offset="0.68" stop-color="#34d399"/>
-      <stop offset="1" stop-color="#38bdf8"/>
-    </linearGradient>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0 L10 5 L0 10 z" fill="#8b91b3"/>
-    </marker>
-    <style>
-      .sans { font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
-      .mono { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-      .h1 { font-size: 24px; font-weight: 700; fill: #e2e4ef; }
-      .lede { font-size: 14px; fill: #8b91b3; }
-      .step { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; }
-      .colTitle { font-size: 17px; font-weight: 700; fill: #e2e4ef; }
-      .colSub { font-size: 12px; fill: #8b91b3; }
-      .itemTitle { font-size: 14.5px; font-weight: 600; fill: #e2e4ef; }
-      .itemSub { font-size: 11.5px; fill: #8b91b3; }
-      .card { fill: #16181f; stroke: #2a2d3e; stroke-width: 1; }
-      .item { fill: #1e2130; stroke: #2a2d3e; stroke-width: 1; }
-      .chipText { font-size: 12px; fill: #c9cce0; }
-    </style>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="690" viewBox="0 0 880 690" role="img" aria-labelledby="title desc">
+  <title id="title">How Malay Tech Journal is built and published</title>
+  <desc id="desc">Four stages. Write: Markdown posts in Bahasa Melayu and English, paired by translationKey and checked by a Zod schema; a research pipeline opens draft pull requests. Verify: every change is a pull request to main that runs lint, type, test and build checks; merging triggers the deploy and the publish label makes drafts go live. Build: Astro 7 on Bun renders static pages for both languages, share images, a Projects page from the GitHub API, Pagefind search, RSS and sitemaps. Deliver: Cloudflare Pages deploys on every merge and daily, with CSP and HSTS headers, serving Bahasa Melayu at / and English at /en/. Weekly builds, a Bun version monitor and Dependabot keep it maintained.</desc>
+  <style>
+    text { font-family: 'Segoe UI', Inter, -apple-system, Helvetica, Arial, sans-serif; }
+    .title { font-size: 26px; font-weight: 700; fill: #f4f5fb; }
+    .sub { font-size: 15px; fill: #b9bdd6; }
+    .num { font-size: 28px; font-weight: 700; }
+    .label { font-size: 13px; font-weight: 700; letter-spacing: 2px; }
+    .stage { font-size: 19px; font-weight: 700; fill: #f4f5fb; }
+    .chip { font-size: 15px; font-weight: 500; fill: #eceef7; }
+    .card { fill: #171a24; stroke: #2f3347; stroke-width: 1.5; }
+  </style>
 
-  <rect width="1280" height="660" rx="22" fill="url(#bg)"/>
-  <rect x="0.5" y="0.5" width="1279" height="659" rx="22" fill="none" stroke="#2a2d3e"/>
+  <rect width="880" height="690" rx="20" fill="#0f1117"/>
 
-  <!-- Heading -->
-  <text x="40" y="54" class="sans h1">Malay Tech Journal — from Markdown to the edge</text>
-  <text x="40" y="80" class="sans lede">Bilingual (BM / EN) static site · Astro 7 on Bun · every change gated by a pull request · served by Cloudflare Pages</text>
-  <rect x="40" y="96" width="1200" height="3" rx="1.5" fill="url(#flow)" opacity="0.9"/>
+  <text x="32" y="50" class="title">Malay Tech Journal: how a post ships</text>
+  <text x="32" y="78" class="sub">Bilingual static site · every change is a pull request · served from the Cloudflare edge</text>
 
-  <!-- ============ Column 1: WRITE ============ -->
+  <!-- 01 WRITE -->
   <g>
-    <rect x="40" y="124" width="270" height="388" rx="16" class="card"/>
-    <rect x="60" y="124" width="80" height="3" rx="1.5" fill="#a78bfa"/>
-    <text x="60" y="156" class="sans step" fill="#a78bfa">01 · WRITE</text>
-    <text x="60" y="180" class="sans colTitle">Content</text>
-    <text x="60" y="198" class="sans colSub">Markdown, paired by language</text>
-
-    <rect x="54" y="214" width="242" height="64" rx="10" class="item"/>
-    <text x="70" y="240" class="sans itemTitle">Markdown posts</text>
-    <text x="70" y="261" class="mono itemSub">src/content/posts/{ms,en}</text>
-
-    <rect x="54" y="286" width="242" height="64" rx="10" class="item"/>
-    <text x="70" y="312" class="sans itemTitle">EN ↔ MS pairs</text>
-    <text x="70" y="333" class="mono itemSub">shared translationKey</text>
-
-    <rect x="54" y="358" width="242" height="64" rx="10" class="item"/>
-    <text x="70" y="384" class="sans itemTitle">Zod content schema</text>
-    <text x="70" y="405" class="mono itemSub">src/content.config.ts</text>
-
-    <rect x="54" y="430" width="242" height="64" rx="10" class="item"/>
-    <text x="70" y="456" class="sans itemTitle">Research pipeline</text>
-    <text x="70" y="477" class="mono itemSub">/write-post → PR, draft: true</text>
+    <rect x="24" y="104" width="832" height="104" rx="14" class="card"/>
+    <rect x="40" y="124" width="5" height="64" rx="2.5" fill="#b69cff"/>
+    <text x="60" y="148" class="num" fill="#b69cff">01</text>
+    <text x="102" y="144" class="label" fill="#b69cff">WRITE</text>
+    <text x="60" y="182" class="stage">Content</text>
+    <rect x="272" y="120" width="282" height="34" rx="9" fill="#232739" stroke="#b69cff" stroke-opacity="0.45"/>
+    <text x="286" y="142" class="chip">Markdown posts in BM + EN</text>
+    <rect x="566" y="120" width="282" height="34" rx="9" fill="#232739" stroke="#b69cff" stroke-opacity="0.45"/>
+    <text x="580" y="142" class="chip">Pairs linked by translationKey</text>
+    <rect x="272" y="160" width="282" height="34" rx="9" fill="#232739" stroke="#b69cff" stroke-opacity="0.45"/>
+    <text x="286" y="182" class="chip">Zod schema checks every post</text>
+    <rect x="566" y="160" width="282" height="34" rx="9" fill="#232739" stroke="#b69cff" stroke-opacity="0.45"/>
+    <text x="580" y="182" class="chip">Research pipeline → draft PR</text>
   </g>
 
-  <!-- ============ Column 2: VERIFY ============ -->
+  <path d="M92 212 L92 224 M86 219 L92 225 L98 219" stroke="#7c82a3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 02 VERIFY -->
   <g>
-    <rect x="350" y="124" width="270" height="388" rx="16" class="card"/>
-    <rect x="370" y="124" width="80" height="3" rx="1.5" fill="#5b8fff"/>
-    <text x="370" y="156" class="sans step" fill="#5b8fff">02 · VERIFY</text>
-    <text x="370" y="180" class="sans colTitle">GitHub</text>
-    <text x="370" y="198" class="sans colSub">Nothing reaches main unchecked</text>
-
-    <rect x="364" y="214" width="242" height="64" rx="10" class="item"/>
-    <text x="380" y="240" class="sans itemTitle">Pull request</text>
-    <text x="380" y="261" class="mono itemSub">feature branch → main</text>
-
-    <rect x="364" y="286" width="242" height="64" rx="10" class="item"/>
-    <text x="380" y="312" class="sans itemTitle">PR checks</text>
-    <text x="380" y="333" class="mono itemSub">lint · types · tests · build</text>
-
-    <rect x="364" y="358" width="242" height="64" rx="10" class="item"/>
-    <text x="380" y="384" class="sans itemTitle">Merge to main</text>
-    <text x="380" y="405" class="mono itemSub">triggers the deploy</text>
-
-    <rect x="364" y="430" width="242" height="64" rx="10" class="item"/>
-    <text x="380" y="456" class="sans itemTitle">publish label</text>
-    <text x="380" y="477" class="mono itemSub">publish-on-merge → draft: false</text>
+    <rect x="24" y="228" width="832" height="104" rx="14" class="card"/>
+    <rect x="40" y="248" width="5" height="64" rx="2.5" fill="#6f9dff"/>
+    <text x="60" y="272" class="num" fill="#6f9dff">02</text>
+    <text x="102" y="268" class="label" fill="#6f9dff">VERIFY</text>
+    <text x="60" y="306" class="stage">GitHub</text>
+    <rect x="272" y="244" width="282" height="34" rx="9" fill="#232739" stroke="#6f9dff" stroke-opacity="0.45"/>
+    <text x="286" y="266" class="chip">Pull request to main</text>
+    <rect x="566" y="244" width="282" height="34" rx="9" fill="#232739" stroke="#6f9dff" stroke-opacity="0.45"/>
+    <text x="580" y="266" class="chip">Lint · types · tests · build</text>
+    <rect x="272" y="284" width="282" height="34" rx="9" fill="#232739" stroke="#6f9dff" stroke-opacity="0.45"/>
+    <text x="286" y="306" class="chip">Merge triggers the deploy</text>
+    <rect x="566" y="284" width="282" height="34" rx="9" fill="#232739" stroke="#6f9dff" stroke-opacity="0.45"/>
+    <text x="580" y="306" class="chip">“publish” label → post goes live</text>
   </g>
 
-  <!-- ============ Column 3: BUILD ============ -->
+  <path d="M92 336 L92 348 M86 343 L92 349 L98 343" stroke="#7c82a3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 03 BUILD -->
   <g>
-    <rect x="660" y="124" width="270" height="388" rx="16" class="card"/>
-    <rect x="680" y="124" width="80" height="3" rx="1.5" fill="#34d399"/>
-    <text x="680" y="156" class="sans step" fill="#34d399">03 · BUILD</text>
-    <text x="680" y="180" class="sans colTitle">Astro 7 on Bun</text>
-    <text x="680" y="198" class="sans colSub">Fully static output in dist/</text>
-
-    <rect x="674" y="214" width="242" height="64" rx="10" class="item"/>
-    <text x="690" y="240" class="sans itemTitle">Static pages, two locales</text>
-    <text x="690" y="261" class="mono itemSub">content collections + i18n</text>
-
-    <rect x="674" y="286" width="242" height="64" rx="10" class="item"/>
-    <text x="690" y="312" class="sans itemTitle">Share images</text>
-    <text x="690" y="333" class="mono itemSub">Satori → /og/&lt;slug&gt;.png</text>
-
-    <rect x="674" y="358" width="242" height="64" rx="10" class="item"/>
-    <text x="690" y="384" class="sans itemTitle">Projects page</text>
-    <text x="690" y="405" class="mono itemSub">GitHub REST API at build</text>
-
-    <rect x="674" y="430" width="242" height="64" rx="10" class="item"/>
-    <text x="690" y="456" class="sans itemTitle">Search · RSS · sitemap</text>
-    <text x="690" y="477" class="mono itemSub">Pagefind · per-locale feeds</text>
+    <rect x="24" y="352" width="832" height="104" rx="14" class="card"/>
+    <rect x="40" y="372" width="5" height="64" rx="2.5" fill="#3ddc9e"/>
+    <text x="60" y="396" class="num" fill="#3ddc9e">03</text>
+    <text x="102" y="392" class="label" fill="#3ddc9e">BUILD</text>
+    <text x="60" y="430" class="stage">Astro 7 + Bun</text>
+    <rect x="272" y="368" width="282" height="34" rx="9" fill="#232739" stroke="#3ddc9e" stroke-opacity="0.45"/>
+    <text x="286" y="390" class="chip">Static pages, two languages</text>
+    <rect x="566" y="368" width="282" height="34" rx="9" fill="#232739" stroke="#3ddc9e" stroke-opacity="0.45"/>
+    <text x="580" y="390" class="chip">Share images with Satori</text>
+    <rect x="272" y="408" width="282" height="34" rx="9" fill="#232739" stroke="#3ddc9e" stroke-opacity="0.45"/>
+    <text x="286" y="430" class="chip">Projects page from GitHub API</text>
+    <rect x="566" y="408" width="282" height="34" rx="9" fill="#232739" stroke="#3ddc9e" stroke-opacity="0.45"/>
+    <text x="580" y="430" class="chip">Search · RSS · sitemap</text>
   </g>
 
-  <!-- ============ Column 4: DELIVER ============ -->
+  <path d="M92 460 L92 472 M86 467 L92 473 L98 467" stroke="#7c82a3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 04 DELIVER -->
   <g>
-    <rect x="970" y="124" width="270" height="388" rx="16" class="card"/>
-    <rect x="990" y="124" width="80" height="3" rx="1.5" fill="#38bdf8"/>
-    <text x="990" y="156" class="sans step" fill="#38bdf8">04 · DELIVER</text>
-    <text x="990" y="180" class="sans colTitle">Cloudflare Pages</text>
-    <text x="990" y="198" class="sans colSub">Global edge, no server to run</text>
-
-    <rect x="984" y="214" width="242" height="64" rx="10" class="item"/>
-    <text x="1000" y="240" class="sans itemTitle">wrangler pages deploy</text>
-    <text x="1000" y="261" class="mono itemSub">deploy-cloudflare.yml</text>
-
-    <rect x="984" y="286" width="242" height="64" rx="10" class="item"/>
-    <text x="1000" y="312" class="sans itemTitle">Triggers</text>
-    <text x="1000" y="333" class="mono itemSub">push to main · daily 02:23 UTC</text>
-
-    <rect x="984" y="358" width="242" height="64" rx="10" class="item"/>
-    <text x="1000" y="384" class="sans itemTitle">Security headers</text>
-    <text x="1000" y="405" class="mono itemSub">CSP · HSTS · public/_headers</text>
-
-    <rect x="984" y="430" width="242" height="64" rx="10" class="item"/>
-    <text x="1000" y="456" class="sans itemTitle">Readers</text>
-    <text x="1000" y="477" class="mono itemSub">/ (BM) · /en/ (EN)</text>
+    <rect x="24" y="476" width="832" height="104" rx="14" class="card"/>
+    <rect x="40" y="496" width="5" height="64" rx="2.5" fill="#4cc9f8"/>
+    <text x="60" y="520" class="num" fill="#4cc9f8">04</text>
+    <text x="102" y="516" class="label" fill="#4cc9f8">DELIVER</text>
+    <text x="60" y="554" class="stage">Cloudflare Pages</text>
+    <rect x="272" y="492" width="282" height="34" rx="9" fill="#232739" stroke="#4cc9f8" stroke-opacity="0.45"/>
+    <text x="286" y="514" class="chip">Deploy on merge + daily</text>
+    <rect x="566" y="492" width="282" height="34" rx="9" fill="#232739" stroke="#4cc9f8" stroke-opacity="0.45"/>
+    <text x="580" y="514" class="chip">CSP + HSTS security headers</text>
+    <rect x="272" y="532" width="282" height="34" rx="9" fill="#232739" stroke="#4cc9f8" stroke-opacity="0.45"/>
+    <text x="286" y="554" class="chip">/  →  Bahasa Melayu</text>
+    <rect x="566" y="532" width="282" height="34" rx="9" fill="#232739" stroke="#4cc9f8" stroke-opacity="0.45"/>
+    <text x="580" y="554" class="chip">/en/  →  English</text>
   </g>
 
-  <!-- Flow arrows between stages -->
-  <line x1="314" y1="318" x2="344" y2="318" stroke="#8b91b3" stroke-width="2" marker-end="url(#arrow)"/>
-  <line x1="624" y1="318" x2="654" y2="318" stroke="#8b91b3" stroke-width="2" marker-end="url(#arrow)"/>
-  <line x1="934" y1="318" x2="964" y2="318" stroke="#8b91b3" stroke-width="2" marker-end="url(#arrow)"/>
-
-  <!-- ============ Upkeep strip ============ -->
-  <rect x="40" y="536" width="1200" height="92" rx="16" class="card"/>
-  <text x="60" y="566" class="sans step" fill="#fbbf24">SCHEDULED UPKEEP</text>
-  <text x="60" y="590" class="sans colSub">Keeps dependencies and the toolchain current between posts</text>
-
-  <rect x="560" y="556" width="208" height="52" rx="10" class="item"/>
-  <text x="576" y="578" class="sans itemTitle" style="font-size:13px">Weekly smoke build</text>
-  <text x="576" y="597" class="mono itemSub" style="font-size:10.5px">weekly.yml · Mon</text>
-
-  <rect x="784" y="556" width="208" height="52" rx="10" class="item"/>
-  <text x="800" y="578" class="sans itemTitle" style="font-size:13px">Bun version monitor</text>
-  <text x="800" y="597" class="mono itemSub" style="font-size:10.5px">bun-update-monitor.yml</text>
-
-  <rect x="1008" y="556" width="208" height="52" rx="10" class="item"/>
-  <text x="1024" y="578" class="sans itemTitle" style="font-size:13px">Dependabot</text>
-  <text x="1024" y="597" class="mono itemSub" style="font-size:10.5px">grouped npm updates</text>
+  <!-- UPKEEP -->
+  <g>
+    <rect x="24" y="600" width="832" height="66" rx="14" fill="#171a24" stroke="#2f3347" stroke-width="1.5" stroke-dasharray="6 5"/>
+    <text x="44" y="639" class="label" fill="#fcc943">UPKEEP</text>
+    <rect x="164" y="616" width="216" height="34" rx="9" fill="#232739" stroke="#fcc943" stroke-opacity="0.4"/>
+    <text x="180" y="638" class="chip">Weekly smoke build</text>
+    <rect x="398" y="616" width="216" height="34" rx="9" fill="#232739" stroke="#fcc943" stroke-opacity="0.4"/>
+    <text x="414" y="638" class="chip">Bun version monitor</text>
+    <rect x="632" y="616" width="216" height="34" rx="9" fill="#232739" stroke="#fcc943" stroke-opacity="0.4"/>
+    <text x="648" y="638" class="chip">Dependabot updates</text>
+  </g>
 </svg>
