@@ -56,4 +56,4 @@ Boleh. Tulisan di sini dilesenkan di bawah [CC BY 4.0](https://creativecommons.o
 
 ## Hubungi
 
-Cara terbaik nak hubungi aku ialah mesej di [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171). Untuk kod, tengok projek aku di [GitHub](https://github.com/arifbazli). Aku baca semua; balasan mungkin lambat.
+Cara terbaik nak hubungi aku ialah e-mel ke [arifbazli@gmail.com](mailto:arifbazli@gmail.com) atau mesej di [LinkedIn](https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171). Untuk kod, tengok projek aku di [GitHub](https://github.com/arifbazli). Aku baca semua; balasan mungkin lambat.

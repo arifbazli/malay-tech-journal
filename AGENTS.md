@@ -277,7 +277,8 @@ the page stays current.
 The About page and homepage byline read `AUTHOR_PROFILE` in `src/config.ts`
 (role, organisation, years of experience, location, focus areas,
 certifications). Empty values are not rendered, so only list verified facts.
-The Email icon appears only when `PUBLIC_CONTACT_EMAIL` is set.
+The Email icon uses `PUBLIC_CONTACT_EMAIL` when set, otherwise the default
+address in `src/config.ts`.
 
 ## Structured data & licence
 

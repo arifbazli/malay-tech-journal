@@ -128,19 +128,28 @@ export const NAV: readonly NavItem[] = [
  */
 export const AUTHOR_PROFILE: AuthorProfile = {
   role: { en: '', ms: '' },
-  organization: '',
+  organization: 'Deloitte',
   yearsOfExperience: 0,
-  location: { en: 'Malaysia', ms: 'Malaysia' },
+  location: { en: 'Kuala Lumpur, Malaysia', ms: 'Kuala Lumpur, Malaysia' },
   focusAreas: [
     { en: 'Cloud security posture (CSPM, ASPM)', ms: 'Cloud security posture (CSPM, ASPM)' },
     { en: 'AI guardrails and LLM security', ms: 'AI guardrail dan keselamatan LLM' },
     { en: 'Agentic AI security', ms: 'Keselamatan agentic AI' },
     { en: 'Policy-as-code and DevSecOps', ms: 'Policy-as-code dan DevSecOps' },
   ],
-  certifications: [],
+  certifications: [
+    {
+      name: 'AWS Certified Solutions Architect – Associate',
+      url: 'https://www.credly.com/badges/8b08b2b3-c026-4729-ba03-4ddb823f8547',
+    },
+    {
+      name: 'AWS Certified Cloud Practitioner',
+      url: 'https://www.credly.com/badges/45055a3a-4ce7-42bc-aa48-1aa6ca0f6d9f',
+    },
+  ],
 };
 
-const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL ?? '';
+const CONTACT_EMAIL = import.meta.env.PUBLIC_CONTACT_EMAIL || 'arifbazli@gmail.com';
 
 /**
  * SOCIALS is built from the env-driven handles above so users only edit
@@ -159,8 +168,8 @@ export const SOCIALS: readonly SocialLink[] = [
       'https://www.linkedin.com/in/muhammad-arif-bazli-abu-bakar-9aa605171',
     icon: 'simple-icons:linkedin',
   },
-  // Email appears only when PUBLIC_CONTACT_EMAIL is set (repository variable
-  // in CI, `.env` locally), so no personal address is hard-coded here.
+  // Email: PUBLIC_CONTACT_EMAIL (repository variable in CI, `.env` locally)
+  // overrides the default address.
   ...(CONTACT_EMAIL
     ? [{ label: 'Email', href: `mailto:${CONTACT_EMAIL}`, icon: 'lucide:mail' }]
     : []),
