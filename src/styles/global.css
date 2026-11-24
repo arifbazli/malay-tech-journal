@@ -547,6 +547,12 @@
       'liga' 1,
       'calt' 1;
   }
+  /* Line length: cap reading text at ~70–75 characters per line. Without
+     it the column ran ~110 characters wide between 1024 and 1279 px, where
+     the side panel is hidden. Matches the description's max-w-2xl. */
+  .prose-measure {
+    max-width: 42rem;
+  }
   /* Desktop — bump to 18px for comfortable reading on widescreens. The
      old code went to 17px at sm+ which felt just-barely-bigger; the new
      step up to 18px at md+ matches Linear, Vercel docs, and Stripe Press. */
@@ -1370,7 +1376,7 @@
     padding: 5px 10px;
     min-height: 28px;
     border-radius: 6px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -1638,7 +1644,7 @@ html {
 
 .mtj-section-label {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1752,7 +1758,7 @@ html {
   overflow: hidden;
 }
 .mtj-bento--medium .mtj-bento__desc {
-  font-size: 0.69rem;
+  font-size: 0.75rem;
   line-height: 1.45;
   -webkit-line-clamp: 2;
 }
@@ -1763,15 +1769,15 @@ html {
 .mtj-bento__foot {
   margin-top: auto;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   color: var(--mtj-muted);
   padding-top: 0.5rem;
 }
 .mtj-bento--large .mtj-bento__foot {
-  font-size: 0.62rem;
+  font-size: 0.72rem;
 }
 .mtj-bento--small .mtj-bento__foot {
-  font-size: 0.58rem;
+  font-size: 0.6875rem;
 }
 
 /* Bento mobile: stacks to single column */
@@ -1907,10 +1913,10 @@ html {
   -webkit-line-clamp: 2;
 }
 .mtj-card--compact .mtj-card__read {
-  font-size: 0.58rem;
+  font-size: 0.6875rem;
 }
 .mtj-card--compact .mtj-card__type {
-  font-size: 0.58rem;
+  font-size: 0.6875rem;
 }
 
 .mtj-card__link:hover {
@@ -1977,7 +1983,7 @@ html {
   overflow: hidden;
 }
 .mtj-card__type {
-  font-size: 0.6rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   color: var(--mtj-muted);
   letter-spacing: 0.04em;
@@ -1985,7 +1991,7 @@ html {
 /* Reading time (e.g. "6 min baca") — clearly secondary meta text. */
 .mtj-card__read {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.6875rem;
   font-weight: 400;
   color: var(--mtj-muted);
   margin-top: 0.15rem;
@@ -2005,7 +2011,7 @@ html {
     font-size: 0.74rem;
   }
   .mtj-card__read {
-    font-size: 0.6rem;
+    font-size: 0.6875rem;
   }
 }
 @media (max-width: 380px) {
@@ -2134,7 +2140,7 @@ html {
 }
 .mtj-sb-heading {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.6875rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--mtj-muted);
@@ -2258,7 +2264,7 @@ html {
 }
 .mtj-cmdk__item .pill-mini {
   font-family: var(--font-mono);
-  font-size: 0.56rem;
+  font-size: 0.6875rem;
   padding: 0.13rem 0.4rem;
   border-radius: 4px;
 }
@@ -2569,7 +2575,7 @@ html {
   color: var(--mtj-text-75);
 }
 .mtj-card__mon {
-  font-size: 0.66rem;
+  font-size: 0.6875rem;
 }
 .mtj-card--compact .mtj-card__title {
   font-size: 0.875rem;
@@ -2580,7 +2586,7 @@ html {
 }
 .mtj-card--compact .mtj-card__read,
 .mtj-card--compact .mtj-card__type {
-  font-size: 0.68rem;
+  font-size: 0.6875rem;
 }
 .mtj-month__label {
   font-size: 0.72rem;
@@ -2594,7 +2600,7 @@ html {
     -webkit-line-clamp: 2;
   }
   .mtj-card__mon {
-    font-size: 0.62rem;
+    font-size: 0.6875rem;
   }
 }
 
