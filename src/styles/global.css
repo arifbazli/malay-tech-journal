@@ -2708,16 +2708,6 @@ h2.mtj-section-label {
   background: color-mix(in oklch, var(--mtj-accent) 85%, white);
   box-shadow: 0 6px 24px color-mix(in oklch, var(--mtj-accent) 35%, transparent);
 }
-.mtj-btn--ghost {
-  background: transparent;
-  box-shadow: none;
-  color: var(--mtj-text-75);
-}
-.mtj-btn--ghost:hover {
-  color: var(--mtj-text);
-  background: var(--mtj-surface);
-  box-shadow: none;
-}
 .mtj-hero__stats {
   display: flex;
   flex-wrap: wrap;

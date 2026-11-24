@@ -119,17 +119,6 @@ const links = [
           </a>
         </li>
       ))}
-      {!profile && (
-        <li>
-          <a
-            href={localizedPath('/rss.xml', locale)}
-            aria-label={t('footer.rss')}
-            title={t('footer.rss')}
-          >
-            <Icon name="lucide:rss" width={16} height={16} aria-hidden="true" />
-          </a>
-        </li>
-      )}
     </ul>
   </div>
 </aside>
