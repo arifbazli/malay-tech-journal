@@ -5,9 +5,10 @@ name: Publish on Merge
 # applying the `publish` label to a content PR (before or at merge time).
 #
 # This workflow only flips draft: true -> false on the post files that PR
-# actually touched, then pushes straight to main. That push is what
-# triggers deploy-cloudflare.yml (path-filtered on src/**) — there is no
-# separate deploy step here.
+# actually touched, pushes straight to main, then starts
+# deploy-cloudflare.yml. The deploy has to be started explicitly: a push made
+# with the workflow's GITHUB_TOKEN does not trigger other workflows (GitHub
+# blocks that to prevent loops), but a workflow_dispatch call is allowed.
 
 on:
   pull_request:
@@ -15,6 +16,8 @@ on:
 
 permissions:
   contents: write
+  # Needed to start deploy-cloudflare.yml with workflow_dispatch.
+  actions: write
 
 jobs:
   publish:
@@ -66,3 +69,12 @@ jobs:
           git add -A -- src/content/posts
           git commit -m "content: publish post(s) from #${{ github.event.pull_request.number }} (draft:false) [publish-on-merge]"
           git push origin main
+
+      - name: Deploy the published posts
+        if: steps.files.outputs.count != '0' && env.flipped != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run deploy-cloudflare.yml --repo "$GITHUB_REPOSITORY" --ref main
+          echo "Started deploy-cloudflare.yml on main"
